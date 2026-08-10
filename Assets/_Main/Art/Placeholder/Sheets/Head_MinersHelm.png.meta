@@ -1,0 +1,1266 @@
+fileFormatVersion: 2
+guid: 383942f071cbfe4458133b7d07d4016d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7458048344890587704
+    second: Head_MinersHelm_0
+  - first:
+      213: -5285737004734648521
+    second: Head_MinersHelm_1
+  - first:
+      213: 3861967230724250039
+    second: Head_MinersHelm_2
+  - first:
+      213: 3638556581138347441
+    second: Head_MinersHelm_3
+  - first:
+      213: -5414996938334280080
+    second: Head_MinersHelm_4
+  - first:
+      213: 9028746158025430152
+    second: Head_MinersHelm_5
+  - first:
+      213: 5338052234029756243
+    second: Head_MinersHelm_6
+  - first:
+      213: -5371342287602911041
+    second: Head_MinersHelm_7
+  - first:
+      213: 7692695282922980742
+    second: Head_MinersHelm_8
+  - first:
+      213: 6251127110112127402
+    second: Head_MinersHelm_9
+  - first:
+      213: 4388478698645694201
+    second: Head_MinersHelm_10
+  - first:
+      213: 1249060082550249031
+    second: Head_MinersHelm_11
+  - first:
+      213: 1500157431752077626
+    second: Head_MinersHelm_12
+  - first:
+      213: -7845219927345960378
+    second: Head_MinersHelm_13
+  - first:
+      213: -440115600837919766
+    second: Head_MinersHelm_14
+  - first:
+      213: 9098531118073166854
+    second: Head_MinersHelm_15
+  - first:
+      213: 8685650264132504002
+    second: Head_MinersHelm_16
+  - first:
+      213: 7998014271440756667
+    second: Head_MinersHelm_17
+  - first:
+      213: 938839422880883827
+    second: Head_MinersHelm_18
+  - first:
+      213: 2957060324313628656
+    second: Head_MinersHelm_19
+  - first:
+      213: 8783990001894884912
+    second: Head_MinersHelm_20
+  - first:
+      213: -7810075065930691636
+    second: Head_MinersHelm_21
+  - first:
+      213: -603405431395784378
+    second: Head_MinersHelm_22
+  - first:
+      213: -848871517738842110
+    second: Head_MinersHelm_23
+  - first:
+      213: 2216602560612648944
+    second: Head_MinersHelm_0_0
+  - first:
+      213: 737270809604598423
+    second: Head_MinersHelm_0_1
+  - first:
+      213: 1015149987712417262
+    second: Head_MinersHelm_0_2
+  - first:
+      213: -6138119579272522636
+    second: Head_MinersHelm_0_3
+  - first:
+      213: 1564998312395981932
+    second: Head_MinersHelm_1_0
+  - first:
+      213: -4049285003697722283
+    second: Head_MinersHelm_1_1
+  - first:
+      213: -611418214868073746
+    second: Head_MinersHelm_1_2
+  - first:
+      213: 623817354974809050
+    second: Head_MinersHelm_1_3
+  - first:
+      213: -851518997112460264
+    second: Head_MinersHelm_2_0
+  - first:
+      213: -1124799972746811302
+    second: Head_MinersHelm_2_1
+  - first:
+      213: -713114139090046721
+    second: Head_MinersHelm_2_2
+  - first:
+      213: 9128246663802875461
+    second: Head_MinersHelm_2_3
+  - first:
+      213: 1270050218521049452
+    second: Head_MinersHelm_3_0
+  - first:
+      213: 1113762148447974881
+    second: Head_MinersHelm_3_1
+  - first:
+      213: -2099978907573131424
+    second: Head_MinersHelm_3_2
+  - first:
+      213: -6043028257164653506
+    second: Head_MinersHelm_3_3
+  - first:
+      213: 3728866219853184065
+    second: Head_MinersHelm_4_0
+  - first:
+      213: -8487887313554311784
+    second: Head_MinersHelm_4_1
+  - first:
+      213: -5785872287617524612
+    second: Head_MinersHelm_4_2
+  - first:
+      213: -4778612560415902643
+    second: Head_MinersHelm_4_3
+  - first:
+      213: -7910419147957305623
+    second: Head_MinersHelm_5_0
+  - first:
+      213: 1427911428166279617
+    second: Head_MinersHelm_5_1
+  - first:
+      213: -6792563207948309173
+    second: Head_MinersHelm_5_2
+  - first:
+      213: -9200789890052876834
+    second: Head_MinersHelm_5_3
+  - first:
+      213: 5887175857927013288
+    second: Head_MinersHelm_6_0
+  - first:
+      213: 7503375409250832263
+    second: Head_MinersHelm_6_1
+  - first:
+      213: -2679566815984598498
+    second: Head_MinersHelm_6_2
+  - first:
+      213: 5548874415197943069
+    second: Head_MinersHelm_6_3
+  - first:
+      213: 3628725539698565187
+    second: Head_MinersHelm_7_0
+  - first:
+      213: 773257311955080979
+    second: Head_MinersHelm_7_1
+  - first:
+      213: -7670630056533953025
+    second: Head_MinersHelm_7_2
+  - first:
+      213: 1391464284052807119
+    second: Head_MinersHelm_7_3
+  - first:
+      213: 5452442744280603514
+    second: Head_MinersHelm_8_0
+  - first:
+      213: 1507592536712294156
+    second: Head_MinersHelm_8_1
+  - first:
+      213: -1165194726406167200
+    second: Head_MinersHelm_8_2
+  - first:
+      213: 6616175374538400690
+    second: Head_MinersHelm_8_3
+  - first:
+      213: 3645182338511204657
+    second: Head_MinersHelm_9_0
+  - first:
+      213: -8302503519791711069
+    second: Head_MinersHelm_9_1
+  - first:
+      213: 3947818794722236662
+    second: Head_MinersHelm_9_2
+  - first:
+      213: -8622491742190654355
+    second: Head_MinersHelm_9_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Head_MinersHelm_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f7c989e844f2ce10800000000000000
+      internalID: 2216602560612648944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_0_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79a2fb525ef4b3a00800000000000000
+      internalID: 737270809604598423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_0_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eed375b0989861e00800000000000000
+      internalID: 1015149987712417262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_0_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 474579883c401daa0800000000000000
+      internalID: -6138119579272522636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c64c2746cadf7b510800000000000000
+      internalID: 1564998312395981932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55ce7404ebc0ec7c0800000000000000
+      internalID: -4049285003697722283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_1_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee2c59d7f5ec387f0800000000000000
+      internalID: -611418214868073746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adb4ff7449e38a800800000000000000
+      internalID: 623817354974809050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81c6d91dbfbce24f0800000000000000
+      internalID: -851518997112460264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_2_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a58ae0d5268e360f0800000000000000
+      internalID: -1124799972746811302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_2_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff0ba3ff7728a16f0800000000000000
+      internalID: -713114139090046721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_2_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54e6d1a2afb0eae70800000000000000
+      internalID: 9128246663802875461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c69bad9d1ff10a110800000000000000
+      internalID: 1270050218521049452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_3_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e57486e5c0e47f00800000000000000
+      internalID: 1113762148447974881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_3_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0676a4a4f406bd2e0800000000000000
+      internalID: -2099978907573131424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_3_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3c8d0441d9d22ca0800000000000000
+      internalID: -6043028257164653506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14c7d4112189fb330800000000000000
+      internalID: 3728866219853184065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_4_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 895fc068577f43a80800000000000000
+      internalID: -8487887313554311784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_4_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7cd7cc2fc374bfa0800000000000000
+      internalID: -5785872287617524612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_4_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d44b039c135feadb0800000000000000
+      internalID: -4778612560415902643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ee7e8532bb883290800000000000000
+      internalID: -7910419147957305623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_5_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c16296e0e5f0d310800000000000000
+      internalID: 1427911428166279617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_5_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4d6adb30c7fbb1a0800000000000000
+      internalID: -6792563207948309173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_5_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed59466c75a305080800000000000000
+      internalID: -9200789890052876834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_6_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a3cefd404373b150800000000000000
+      internalID: 5887175857927013288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_6_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78f0ccc1e28512860800000000000000
+      internalID: 7503375409250832263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_6_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1240558d2440dad0800000000000000
+      internalID: -2679566815984598498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_6_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d157025a1ef810d40800000000000000
+      internalID: 5548874415197943069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 340ee1d07a2db5230800000000000000
+      internalID: 3628725539698565187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_7_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3175e07ad692bba00800000000000000
+      internalID: 773257311955080979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_7_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff5fbd4ba927c8590800000000000000
+      internalID: -7670630056533953025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_7_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcd5c90e4697f4310800000000000000
+      internalID: 1391464284052807119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_8_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7b5003a9c7faab40800000000000000
+      internalID: 5452442744280603514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_8_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0f24c0bc6b0ce410800000000000000
+      internalID: 1507592536712294156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_8_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 065e66ed19564dfe0800000000000000
+      internalID: -1165194726406167200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_8_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b36c0bf27061db50800000000000000
+      internalID: 6616175374538400690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_9_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 131fc7c160a469230800000000000000
+      internalID: 3645182338511204657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_9_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ac726c890597cc80800000000000000
+      internalID: -8302503519791711069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_9_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f89701074879c630800000000000000
+      internalID: 3947818794722236662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Head_MinersHelm_9_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6cacf3c171c65880800000000000000
+      internalID: -8622491742190654355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Head_MinersHelm_0: -7458048344890587704
+      Head_MinersHelm_0_0: 2216602560612648944
+      Head_MinersHelm_0_1: 737270809604598423
+      Head_MinersHelm_0_2: 1015149987712417262
+      Head_MinersHelm_0_3: -6138119579272522636
+      Head_MinersHelm_1: -5285737004734648521
+      Head_MinersHelm_10: 4388478698645694201
+      Head_MinersHelm_11: 1249060082550249031
+      Head_MinersHelm_12: 1500157431752077626
+      Head_MinersHelm_13: -7845219927345960378
+      Head_MinersHelm_14: -440115600837919766
+      Head_MinersHelm_15: 9098531118073166854
+      Head_MinersHelm_16: 8685650264132504002
+      Head_MinersHelm_17: 7998014271440756667
+      Head_MinersHelm_18: 938839422880883827
+      Head_MinersHelm_19: 2957060324313628656
+      Head_MinersHelm_1_0: 1564998312395981932
+      Head_MinersHelm_1_1: -4049285003697722283
+      Head_MinersHelm_1_2: -611418214868073746
+      Head_MinersHelm_1_3: 623817354974809050
+      Head_MinersHelm_2: 3861967230724250039
+      Head_MinersHelm_20: 8783990001894884912
+      Head_MinersHelm_21: -7810075065930691636
+      Head_MinersHelm_22: -603405431395784378
+      Head_MinersHelm_23: -848871517738842110
+      Head_MinersHelm_2_0: -851518997112460264
+      Head_MinersHelm_2_1: -1124799972746811302
+      Head_MinersHelm_2_2: -713114139090046721
+      Head_MinersHelm_2_3: 9128246663802875461
+      Head_MinersHelm_3: 3638556581138347441
+      Head_MinersHelm_3_0: 1270050218521049452
+      Head_MinersHelm_3_1: 1113762148447974881
+      Head_MinersHelm_3_2: -2099978907573131424
+      Head_MinersHelm_3_3: -6043028257164653506
+      Head_MinersHelm_4: -5414996938334280080
+      Head_MinersHelm_4_0: 3728866219853184065
+      Head_MinersHelm_4_1: -8487887313554311784
+      Head_MinersHelm_4_2: -5785872287617524612
+      Head_MinersHelm_4_3: -4778612560415902643
+      Head_MinersHelm_5: 9028746158025430152
+      Head_MinersHelm_5_0: -7910419147957305623
+      Head_MinersHelm_5_1: 1427911428166279617
+      Head_MinersHelm_5_2: -6792563207948309173
+      Head_MinersHelm_5_3: -9200789890052876834
+      Head_MinersHelm_6: 5338052234029756243
+      Head_MinersHelm_6_0: 5887175857927013288
+      Head_MinersHelm_6_1: 7503375409250832263
+      Head_MinersHelm_6_2: -2679566815984598498
+      Head_MinersHelm_6_3: 5548874415197943069
+      Head_MinersHelm_7: -5371342287602911041
+      Head_MinersHelm_7_0: 3628725539698565187
+      Head_MinersHelm_7_1: 773257311955080979
+      Head_MinersHelm_7_2: -7670630056533953025
+      Head_MinersHelm_7_3: 1391464284052807119
+      Head_MinersHelm_8: 7692695282922980742
+      Head_MinersHelm_8_0: 5452442744280603514
+      Head_MinersHelm_8_1: 1507592536712294156
+      Head_MinersHelm_8_2: -1165194726406167200
+      Head_MinersHelm_8_3: 6616175374538400690
+      Head_MinersHelm_9: 6251127110112127402
+      Head_MinersHelm_9_0: 3645182338511204657
+      Head_MinersHelm_9_1: -8302503519791711069
+      Head_MinersHelm_9_2: 3947818794722236662
+      Head_MinersHelm_9_3: -8622491742190654355
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,1266 @@
+fileFormatVersion: 2
+guid: 7bba4cfe427333f42a392a7c1f283143
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9125980969329227942
+    second: Weapon_Katana_0
+  - first:
+      213: 9037008894314956228
+    second: Weapon_Katana_1
+  - first:
+      213: 1539533446471598413
+    second: Weapon_Katana_2
+  - first:
+      213: -609935372241625938
+    second: Weapon_Katana_3
+  - first:
+      213: 1843604001721149305
+    second: Weapon_Katana_4
+  - first:
+      213: 4099735058728427564
+    second: Weapon_Katana_5
+  - first:
+      213: -8280662416908811735
+    second: Weapon_Katana_6
+  - first:
+      213: 4460645200411611477
+    second: Weapon_Katana_7
+  - first:
+      213: -4726813612906079407
+    second: Weapon_Katana_8
+  - first:
+      213: 1505461780223622070
+    second: Weapon_Katana_9
+  - first:
+      213: -1137170671680191434
+    second: Weapon_Katana_10
+  - first:
+      213: 5455187128086091115
+    second: Weapon_Katana_11
+  - first:
+      213: -6214083471362941095
+    second: Weapon_Katana_12
+  - first:
+      213: -492473782608565703
+    second: Weapon_Katana_13
+  - first:
+      213: -3789493441931990232
+    second: Weapon_Katana_14
+  - first:
+      213: -916353774291401943
+    second: Weapon_Katana_15
+  - first:
+      213: -7170103385432250342
+    second: Weapon_Katana_16
+  - first:
+      213: 2891059541874767043
+    second: Weapon_Katana_17
+  - first:
+      213: 284856167718724840
+    second: Weapon_Katana_18
+  - first:
+      213: -8338352101006768220
+    second: Weapon_Katana_19
+  - first:
+      213: -2472366038734529223
+    second: Weapon_Katana_20
+  - first:
+      213: 9045333889126240520
+    second: Weapon_Katana_21
+  - first:
+      213: 6717011651735750045
+    second: Weapon_Katana_22
+  - first:
+      213: 8779174736118970520
+    second: Weapon_Katana_23
+  - first:
+      213: 3258183445840261223
+    second: Weapon_Katana_0_0
+  - first:
+      213: -417876846882528092
+    second: Weapon_Katana_0_1
+  - first:
+      213: 62404907807998619
+    second: Weapon_Katana_0_2
+  - first:
+      213: -385044337098801030
+    second: Weapon_Katana_0_3
+  - first:
+      213: -3830670996466228146
+    second: Weapon_Katana_1_0
+  - first:
+      213: 8726883074604141040
+    second: Weapon_Katana_1_1
+  - first:
+      213: 6183355786703166727
+    second: Weapon_Katana_1_2
+  - first:
+      213: 1557600391761130728
+    second: Weapon_Katana_1_3
+  - first:
+      213: 9032055129401365239
+    second: Weapon_Katana_2_0
+  - first:
+      213: -3594949542614608104
+    second: Weapon_Katana_2_1
+  - first:
+      213: -656434839384867835
+    second: Weapon_Katana_2_2
+  - first:
+      213: 167237342748221786
+    second: Weapon_Katana_2_3
+  - first:
+      213: 1253214386911166700
+    second: Weapon_Katana_3_0
+  - first:
+      213: 293711139472274543
+    second: Weapon_Katana_3_1
+  - first:
+      213: 470828994311000069
+    second: Weapon_Katana_3_2
+  - first:
+      213: -8894120348727200896
+    second: Weapon_Katana_3_3
+  - first:
+      213: 2397256064690641049
+    second: Weapon_Katana_4_0
+  - first:
+      213: -8446994755169691531
+    second: Weapon_Katana_4_1
+  - first:
+      213: -1366260853151920836
+    second: Weapon_Katana_4_2
+  - first:
+      213: -7922462516215374117
+    second: Weapon_Katana_4_3
+  - first:
+      213: 6115018006902177213
+    second: Weapon_Katana_5_0
+  - first:
+      213: -1460307696096232035
+    second: Weapon_Katana_5_1
+  - first:
+      213: 1211692722589300193
+    second: Weapon_Katana_5_2
+  - first:
+      213: 4806855441649031221
+    second: Weapon_Katana_5_3
+  - first:
+      213: -988337535384586630
+    second: Weapon_Katana_6_0
+  - first:
+      213: -2435485694029304230
+    second: Weapon_Katana_6_1
+  - first:
+      213: -9152865064787388570
+    second: Weapon_Katana_6_2
+  - first:
+      213: 8020443270045241799
+    second: Weapon_Katana_6_3
+  - first:
+      213: 6493166518804587495
+    second: Weapon_Katana_7_0
+  - first:
+      213: 1518053574549838169
+    second: Weapon_Katana_7_1
+  - first:
+      213: 7108655745870178209
+    second: Weapon_Katana_7_2
+  - first:
+      213: -3710430041638971100
+    second: Weapon_Katana_7_3
+  - first:
+      213: 9036233163962124284
+    second: Weapon_Katana_8_0
+  - first:
+      213: -8100834876881650636
+    second: Weapon_Katana_8_1
+  - first:
+      213: -4203769551275696040
+    second: Weapon_Katana_8_2
+  - first:
+      213: 1939907327856187988
+    second: Weapon_Katana_8_3
+  - first:
+      213: -5826045009197774741
+    second: Weapon_Katana_9_0
+  - first:
+      213: -3946336435304393951
+    second: Weapon_Katana_9_1
+  - first:
+      213: -7995879141278995175
+    second: Weapon_Katana_9_2
+  - first:
+      213: -4646356099139562982
+    second: Weapon_Katana_9_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Weapon_Katana_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 760fd56d494673d20800000000000000
+      internalID: 3258183445840261223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_0_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a4e4b5c837633af0800000000000000
+      internalID: -417876846882528092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_0_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b92032adee4bdd000800000000000000
+      internalID: 62404907807998619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_0_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a704378273c08aaf0800000000000000
+      internalID: -385044337098801030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e442d344609b6dac0800000000000000
+      internalID: -3830670996466228146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f9062a5bed1c1970800000000000000
+      internalID: 8726883074604141040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_1_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70d5c42c351bfc550800000000000000
+      internalID: 6183355786703166727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e47ee4cd45bd9510800000000000000
+      internalID: 1557600391761130728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f296bb494e485d70800000000000000
+      internalID: 9032055129401365239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_2_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 817d007107c2c1ec0800000000000000
+      internalID: -3594949542614608104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_2_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50c3644ddffd3e6f0800000000000000
+      internalID: -656434839384867835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_2_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5120b72a75225200800000000000000
+      internalID: 167237342748221786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce0cf3758df446110800000000000000
+      internalID: 1253214386911166700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_3_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f64f1d6a9b8731400800000000000000
+      internalID: 293711139472274543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_3_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5009cdbc978b88600800000000000000
+      internalID: 470828994311000069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_3_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 083ba887aacb19480800000000000000
+      internalID: -8894120348727200896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 998598b80b3c44120800000000000000
+      internalID: 2397256064690641049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_4_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 578d586360f36ca80800000000000000
+      internalID: -8446994755169691531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_4_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3d8b592ef01a0de0800000000000000
+      internalID: -1366260853151920836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_4_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bde92a60152cd0290800000000000000
+      internalID: -7922462516215374117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbd75808a78ecd450800000000000000
+      internalID: 6115018006902177213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_5_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9d3a6f23e1fbbbe0800000000000000
+      internalID: -1460307696096232035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_5_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e57cd28c1cc0d010800000000000000
+      internalID: 1211692722589300193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_5_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 538d42e6e8165b240800000000000000
+      internalID: 4806855441649031221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_6_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a76773d7f38b842f0800000000000000
+      internalID: -988337535384586630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_6_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5e66df3aaa633ed0800000000000000
+      internalID: -2435485694029304230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_6_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 667d340b7bd7af080800000000000000
+      internalID: -9152865064787388570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_6_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c11834f8a65e4f60800000000000000
+      internalID: 8020443270045241799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e3aecceb8c5c1a50800000000000000
+      internalID: 6493166518804587495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_7_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9591e0ddea5311510800000000000000
+      internalID: 1518053574549838169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_7_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a7a123dcb407a260800000000000000
+      internalID: 7108655745870178209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_7_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 429db2c2987e18cc0800000000000000
+      internalID: -3710430041638971100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_8_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf70195cf26276d70800000000000000
+      internalID: 9036233163962124284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_8_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43cbf5b799d049f80800000000000000
+      internalID: -8100834876881650636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_8_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 850eb9a9dd539a5c0800000000000000
+      internalID: -4203769551275696040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_8_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45a9b06cf6febea10800000000000000
+      internalID: 1939907327856187988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_9_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b68445d8eeab52fa0800000000000000
+      internalID: -5826045009197774741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_9_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1231081bbebcb39c0800000000000000
+      internalID: -3946336435304393951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_9_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91d2c15f84ee80190800000000000000
+      internalID: -7995879141278995175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Katana_9_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1211daceb3d48fb0800000000000000
+      internalID: -4646356099139562982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Weapon_Katana_0: 9125980969329227942
+      Weapon_Katana_0_0: 3258183445840261223
+      Weapon_Katana_0_1: -417876846882528092
+      Weapon_Katana_0_2: 62404907807998619
+      Weapon_Katana_0_3: -385044337098801030
+      Weapon_Katana_1: 9037008894314956228
+      Weapon_Katana_10: -1137170671680191434
+      Weapon_Katana_11: 5455187128086091115
+      Weapon_Katana_12: -6214083471362941095
+      Weapon_Katana_13: -492473782608565703
+      Weapon_Katana_14: -3789493441931990232
+      Weapon_Katana_15: -916353774291401943
+      Weapon_Katana_16: -7170103385432250342
+      Weapon_Katana_17: 2891059541874767043
+      Weapon_Katana_18: 284856167718724840
+      Weapon_Katana_19: -8338352101006768220
+      Weapon_Katana_1_0: -3830670996466228146
+      Weapon_Katana_1_1: 8726883074604141040
+      Weapon_Katana_1_2: 6183355786703166727
+      Weapon_Katana_1_3: 1557600391761130728
+      Weapon_Katana_2: 1539533446471598413
+      Weapon_Katana_20: -2472366038734529223
+      Weapon_Katana_21: 9045333889126240520
+      Weapon_Katana_22: 6717011651735750045
+      Weapon_Katana_23: 8779174736118970520
+      Weapon_Katana_2_0: 9032055129401365239
+      Weapon_Katana_2_1: -3594949542614608104
+      Weapon_Katana_2_2: -656434839384867835
+      Weapon_Katana_2_3: 167237342748221786
+      Weapon_Katana_3: -609935372241625938
+      Weapon_Katana_3_0: 1253214386911166700
+      Weapon_Katana_3_1: 293711139472274543
+      Weapon_Katana_3_2: 470828994311000069
+      Weapon_Katana_3_3: -8894120348727200896
+      Weapon_Katana_4: 1843604001721149305
+      Weapon_Katana_4_0: 2397256064690641049
+      Weapon_Katana_4_1: -8446994755169691531
+      Weapon_Katana_4_2: -1366260853151920836
+      Weapon_Katana_4_3: -7922462516215374117
+      Weapon_Katana_5: 4099735058728427564
+      Weapon_Katana_5_0: 6115018006902177213
+      Weapon_Katana_5_1: -1460307696096232035
+      Weapon_Katana_5_2: 1211692722589300193
+      Weapon_Katana_5_3: 4806855441649031221
+      Weapon_Katana_6: -8280662416908811735
+      Weapon_Katana_6_0: -988337535384586630
+      Weapon_Katana_6_1: -2435485694029304230
+      Weapon_Katana_6_2: -9152865064787388570
+      Weapon_Katana_6_3: 8020443270045241799
+      Weapon_Katana_7: 4460645200411611477
+      Weapon_Katana_7_0: 6493166518804587495
+      Weapon_Katana_7_1: 1518053574549838169
+      Weapon_Katana_7_2: 7108655745870178209
+      Weapon_Katana_7_3: -3710430041638971100
+      Weapon_Katana_8: -4726813612906079407
+      Weapon_Katana_8_0: 9036233163962124284
+      Weapon_Katana_8_1: -8100834876881650636
+      Weapon_Katana_8_2: -4203769551275696040
+      Weapon_Katana_8_3: 1939907327856187988
+      Weapon_Katana_9: 1505461780223622070
+      Weapon_Katana_9_0: -5826045009197774741
+      Weapon_Katana_9_1: -3946336435304393951
+      Weapon_Katana_9_2: -7995879141278995175
+      Weapon_Katana_9_3: -4646356099139562982
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

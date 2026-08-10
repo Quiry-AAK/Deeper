@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4a669d8d02dbc4d8a7cdd51ccc56d5, type: 3}
+  m_Name: Anim_Head_MinersHelm
+  m_EditorClassIdentifier: 
+  clips:
+  - State: 0
+    Down:
+    - {fileID: 2216602560612648944, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 737270809604598423, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 1015149987712417262, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -6138119579272522636, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    Up:
+    - {fileID: 1564998312395981932, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -4049285003697722283, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -611418214868073746, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 623817354974809050, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    Side:
+    - {fileID: -851518997112460264, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -1124799972746811302, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -713114139090046721, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 9128246663802875461, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    DownDiagonal:
+    - {fileID: 1270050218521049452, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 1113762148447974881, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -2099978907573131424, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -6043028257164653506, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    UpDiagonal:
+    - {fileID: 3728866219853184065, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -8487887313554311784, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -5785872287617524612, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -4778612560415902643, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+  - State: 1
+    Down:
+    - {fileID: -7910419147957305623, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 1427911428166279617, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -6792563207948309173, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -9200789890052876834, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    Up:
+    - {fileID: 5887175857927013288, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 7503375409250832263, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -2679566815984598498, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 5548874415197943069, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    Side:
+    - {fileID: 3628725539698565187, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 773257311955080979, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -7670630056533953025, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 1391464284052807119, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    DownDiagonal:
+    - {fileID: 5452442744280603514, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 1507592536712294156, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -1165194726406167200, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 6616175374538400690, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    UpDiagonal:
+    - {fileID: 3645182338511204657, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -8302503519791711069, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: 3947818794722236662, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}
+    - {fileID: -8622491742190654355, guid: 383942f071cbfe4458133b7d07d4016d, type: 3}

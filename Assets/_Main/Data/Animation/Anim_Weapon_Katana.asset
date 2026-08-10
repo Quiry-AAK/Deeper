@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4a669d8d02dbc4d8a7cdd51ccc56d5, type: 3}
+  m_Name: Anim_Weapon_Katana
+  m_EditorClassIdentifier: 
+  clips:
+  - State: 0
+    Down:
+    - {fileID: 3258183445840261223, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -417876846882528092, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 62404907807998619, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -385044337098801030, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    Up:
+    - {fileID: -3830670996466228146, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 8726883074604141040, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 6183355786703166727, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 1557600391761130728, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    Side:
+    - {fileID: 9032055129401365239, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -3594949542614608104, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -656434839384867835, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 167237342748221786, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    DownDiagonal:
+    - {fileID: 1253214386911166700, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 293711139472274543, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 470828994311000069, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -8894120348727200896, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    UpDiagonal:
+    - {fileID: 2397256064690641049, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -8446994755169691531, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -1366260853151920836, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -7922462516215374117, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+  - State: 1
+    Down:
+    - {fileID: 6115018006902177213, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -1460307696096232035, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 1211692722589300193, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 4806855441649031221, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    Up:
+    - {fileID: -988337535384586630, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -2435485694029304230, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -9152865064787388570, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 8020443270045241799, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    Side:
+    - {fileID: 6493166518804587495, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 1518053574549838169, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 7108655745870178209, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -3710430041638971100, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    DownDiagonal:
+    - {fileID: 9036233163962124284, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -8100834876881650636, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -4203769551275696040, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: 1939907327856187988, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    UpDiagonal:
+    - {fileID: -5826045009197774741, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -3946336435304393951, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -7995879141278995175, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}
+    - {fileID: -4646356099139562982, guid: 7bba4cfe427333f42a392a7c1f283143, type: 3}

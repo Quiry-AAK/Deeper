@@ -1,0 +1,1266 @@
+fileFormatVersion: 2
+guid: 386d46fd68602eb4085b52a19680ee89
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2617027252272030528
+    second: Feet_GripBoots_0
+  - first:
+      213: 6895423151930733017
+    second: Feet_GripBoots_1
+  - first:
+      213: 7990991118346588501
+    second: Feet_GripBoots_2
+  - first:
+      213: 9130979094818518386
+    second: Feet_GripBoots_3
+  - first:
+      213: 3001645542694870574
+    second: Feet_GripBoots_4
+  - first:
+      213: 8079944196432680337
+    second: Feet_GripBoots_5
+  - first:
+      213: -8803513614315659799
+    second: Feet_GripBoots_6
+  - first:
+      213: 9174459331606242068
+    second: Feet_GripBoots_7
+  - first:
+      213: -5923088842375541428
+    second: Feet_GripBoots_8
+  - first:
+      213: -5025840110237371697
+    second: Feet_GripBoots_9
+  - first:
+      213: 5933030134384994862
+    second: Feet_GripBoots_10
+  - first:
+      213: -236713629382757041
+    second: Feet_GripBoots_11
+  - first:
+      213: -9144874716647650119
+    second: Feet_GripBoots_12
+  - first:
+      213: -4221991550146052453
+    second: Feet_GripBoots_13
+  - first:
+      213: 6716553560440932709
+    second: Feet_GripBoots_14
+  - first:
+      213: 6225047342776425128
+    second: Feet_GripBoots_15
+  - first:
+      213: 4984610211670610273
+    second: Feet_GripBoots_16
+  - first:
+      213: -3710937356289146115
+    second: Feet_GripBoots_17
+  - first:
+      213: -8252009347216957129
+    second: Feet_GripBoots_18
+  - first:
+      213: 342330802650754087
+    second: Feet_GripBoots_19
+  - first:
+      213: 289981381416244576
+    second: Feet_GripBoots_20
+  - first:
+      213: -2050453494957178249
+    second: Feet_GripBoots_21
+  - first:
+      213: -4242960741541925690
+    second: Feet_GripBoots_22
+  - first:
+      213: 3975512776678637126
+    second: Feet_GripBoots_23
+  - first:
+      213: -9111523650193403608
+    second: Feet_GripBoots_0_0
+  - first:
+      213: 730456300708325153
+    second: Feet_GripBoots_0_1
+  - first:
+      213: -7580304162970929657
+    second: Feet_GripBoots_0_2
+  - first:
+      213: -3608854761502896694
+    second: Feet_GripBoots_0_3
+  - first:
+      213: -4158777646238870730
+    second: Feet_GripBoots_1_0
+  - first:
+      213: 8048650259409679826
+    second: Feet_GripBoots_1_1
+  - first:
+      213: -1475631092254488702
+    second: Feet_GripBoots_1_2
+  - first:
+      213: 7803054253496177826
+    second: Feet_GripBoots_1_3
+  - first:
+      213: 7921847424999703459
+    second: Feet_GripBoots_2_0
+  - first:
+      213: -499469233478002434
+    second: Feet_GripBoots_2_1
+  - first:
+      213: -7016133784898081567
+    second: Feet_GripBoots_2_2
+  - first:
+      213: 8603398283314415219
+    second: Feet_GripBoots_2_3
+  - first:
+      213: -6369614614007794753
+    second: Feet_GripBoots_3_0
+  - first:
+      213: -1152630342863342362
+    second: Feet_GripBoots_3_1
+  - first:
+      213: -72270942621883509
+    second: Feet_GripBoots_3_2
+  - first:
+      213: -6806223519950025702
+    second: Feet_GripBoots_3_3
+  - first:
+      213: -2091204562615513940
+    second: Feet_GripBoots_4_0
+  - first:
+      213: -2598938499224186205
+    second: Feet_GripBoots_4_1
+  - first:
+      213: 7534435863927238370
+    second: Feet_GripBoots_4_2
+  - first:
+      213: -4778277931591955324
+    second: Feet_GripBoots_4_3
+  - first:
+      213: -8543122824700488705
+    second: Feet_GripBoots_5_0
+  - first:
+      213: -850018981282959647
+    second: Feet_GripBoots_5_1
+  - first:
+      213: -5514419791766884340
+    second: Feet_GripBoots_5_2
+  - first:
+      213: 1818407924992442290
+    second: Feet_GripBoots_5_3
+  - first:
+      213: -5950171007810002409
+    second: Feet_GripBoots_6_0
+  - first:
+      213: -4971734589153563598
+    second: Feet_GripBoots_6_1
+  - first:
+      213: -5506743639266197271
+    second: Feet_GripBoots_6_2
+  - first:
+      213: -4302613093061092674
+    second: Feet_GripBoots_6_3
+  - first:
+      213: 3193660153868930131
+    second: Feet_GripBoots_7_0
+  - first:
+      213: -1222642173381714407
+    second: Feet_GripBoots_7_1
+  - first:
+      213: 7601755620327827880
+    second: Feet_GripBoots_7_2
+  - first:
+      213: 1036490314893296000
+    second: Feet_GripBoots_7_3
+  - first:
+      213: -2145565910057296284
+    second: Feet_GripBoots_8_0
+  - first:
+      213: -5955486852414900399
+    second: Feet_GripBoots_8_1
+  - first:
+      213: -5104932650099493282
+    second: Feet_GripBoots_8_2
+  - first:
+      213: 6636308627851852303
+    second: Feet_GripBoots_8_3
+  - first:
+      213: -6533245583526727384
+    second: Feet_GripBoots_9_0
+  - first:
+      213: -2066792220022927712
+    second: Feet_GripBoots_9_1
+  - first:
+      213: -6874327519306446594
+    second: Feet_GripBoots_9_2
+  - first:
+      213: -1459690235699935271
+    second: Feet_GripBoots_9_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Feet_GripBoots_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 821d6abd38d5d8180800000000000000
+      internalID: -9111523650193403608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_0_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1276aa7a22a132a00800000000000000
+      internalID: 730456300708325153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_0_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 706f3b4a6895dc690800000000000000
+      internalID: -7580304162970929657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_0_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acd84a607b5caedc0800000000000000
+      internalID: -3608854761502896694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 633d810d3cd0946c0800000000000000
+      internalID: -4158777646238870730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d5387174cc82bf60800000000000000
+      internalID: 8048650259409679826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_1_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28746aef651858be0800000000000000
+      internalID: -1475631092254488702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a49dbe40840a4c60800000000000000
+      internalID: 7803054253496177826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a343f3e24e00fd60800000000000000
+      internalID: 7921847424999703459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_2_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef89e42e0678119f0800000000000000
+      internalID: -499469233478002434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_2_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ec6886ee7fa1ae90800000000000000
+      internalID: -7016133784898081567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_2_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 376492ae729656770800000000000000
+      internalID: 8603398283314415219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb3bde791459a97a0800000000000000
+      internalID: -6369614614007794753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_3_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e43b406fc80100f0800000000000000
+      internalID: -1152630342863342362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_3_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b83a079e5fd3ffef0800000000000000
+      internalID: -72270942621883509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_3_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1c487ff4cf6b81a0800000000000000
+      internalID: -6806223519950025702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cac40aca78c8af2e0800000000000000
+      internalID: -2091204562615513940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_4_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a2d7a86437beebd0800000000000000
+      internalID: -2598938499224186205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_4_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2eea854cf71bf8860800000000000000
+      internalID: 7534435863927238370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_4_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48c8f51a98520bdb0800000000000000
+      internalID: -4778277931591955324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff31239ed0bb07980800000000000000
+      internalID: -8543122824700488705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_5_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ee2a487d302434f0800000000000000
+      internalID: -850018981282959647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_5_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c00f9518a68d873b0800000000000000
+      internalID: -5514419791766884340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_5_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bffde99f584c3910800000000000000
+      internalID: 1818407924992442290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_6_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71228a66efebc6da0800000000000000
+      internalID: -5950171007810002409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_6_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23caaf78bb9d00bb0800000000000000
+      internalID: -4971734589153563598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_6_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e0856806dd1493b0800000000000000
+      internalID: -5506743639266197271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_6_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eba1626203c0a44c0800000000000000
+      internalID: -4302613093061092674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35c4dac3df8225c20800000000000000
+      internalID: 3193660153868930131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_7_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91edb20db6d480fe0800000000000000
+      internalID: -1222642173381714407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_7_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a928faf57cde7960800000000000000
+      internalID: 7601755620327827880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_7_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0810958237a526e00800000000000000
+      internalID: 1036490314893296000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_8_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46ed8d82c2b6932e0800000000000000
+      internalID: -2145565910057296284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_8_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 157fc41e24cd95da0800000000000000
+      internalID: -5955486852414900399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_8_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e56b6844dc2a729b0800000000000000
+      internalID: -5104932650099493282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_8_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0a38fe4987e81c50800000000000000
+      internalID: 6636308627851852303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_9_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 821ff73a1cf3555a0800000000000000
+      internalID: -6533245583526727384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_9_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ae0efc1d674153e0800000000000000
+      internalID: -2066792220022927712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_9_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef80c0efa8b7990a0800000000000000
+      internalID: -6874327519306446594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feet_GripBoots_9_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d7cff2e6732ebbe0800000000000000
+      internalID: -1459690235699935271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Feet_GripBoots_0: -2617027252272030528
+      Feet_GripBoots_0_0: -9111523650193403608
+      Feet_GripBoots_0_1: 730456300708325153
+      Feet_GripBoots_0_2: -7580304162970929657
+      Feet_GripBoots_0_3: -3608854761502896694
+      Feet_GripBoots_1: 6895423151930733017
+      Feet_GripBoots_10: 5933030134384994862
+      Feet_GripBoots_11: -236713629382757041
+      Feet_GripBoots_12: -9144874716647650119
+      Feet_GripBoots_13: -4221991550146052453
+      Feet_GripBoots_14: 6716553560440932709
+      Feet_GripBoots_15: 6225047342776425128
+      Feet_GripBoots_16: 4984610211670610273
+      Feet_GripBoots_17: -3710937356289146115
+      Feet_GripBoots_18: -8252009347216957129
+      Feet_GripBoots_19: 342330802650754087
+      Feet_GripBoots_1_0: -4158777646238870730
+      Feet_GripBoots_1_1: 8048650259409679826
+      Feet_GripBoots_1_2: -1475631092254488702
+      Feet_GripBoots_1_3: 7803054253496177826
+      Feet_GripBoots_2: 7990991118346588501
+      Feet_GripBoots_20: 289981381416244576
+      Feet_GripBoots_21: -2050453494957178249
+      Feet_GripBoots_22: -4242960741541925690
+      Feet_GripBoots_23: 3975512776678637126
+      Feet_GripBoots_2_0: 7921847424999703459
+      Feet_GripBoots_2_1: -499469233478002434
+      Feet_GripBoots_2_2: -7016133784898081567
+      Feet_GripBoots_2_3: 8603398283314415219
+      Feet_GripBoots_3: 9130979094818518386
+      Feet_GripBoots_3_0: -6369614614007794753
+      Feet_GripBoots_3_1: -1152630342863342362
+      Feet_GripBoots_3_2: -72270942621883509
+      Feet_GripBoots_3_3: -6806223519950025702
+      Feet_GripBoots_4: 3001645542694870574
+      Feet_GripBoots_4_0: -2091204562615513940
+      Feet_GripBoots_4_1: -2598938499224186205
+      Feet_GripBoots_4_2: 7534435863927238370
+      Feet_GripBoots_4_3: -4778277931591955324
+      Feet_GripBoots_5: 8079944196432680337
+      Feet_GripBoots_5_0: -8543122824700488705
+      Feet_GripBoots_5_1: -850018981282959647
+      Feet_GripBoots_5_2: -5514419791766884340
+      Feet_GripBoots_5_3: 1818407924992442290
+      Feet_GripBoots_6: -8803513614315659799
+      Feet_GripBoots_6_0: -5950171007810002409
+      Feet_GripBoots_6_1: -4971734589153563598
+      Feet_GripBoots_6_2: -5506743639266197271
+      Feet_GripBoots_6_3: -4302613093061092674
+      Feet_GripBoots_7: 9174459331606242068
+      Feet_GripBoots_7_0: 3193660153868930131
+      Feet_GripBoots_7_1: -1222642173381714407
+      Feet_GripBoots_7_2: 7601755620327827880
+      Feet_GripBoots_7_3: 1036490314893296000
+      Feet_GripBoots_8: -5923088842375541428
+      Feet_GripBoots_8_0: -2145565910057296284
+      Feet_GripBoots_8_1: -5955486852414900399
+      Feet_GripBoots_8_2: -5104932650099493282
+      Feet_GripBoots_8_3: 6636308627851852303
+      Feet_GripBoots_9: -5025840110237371697
+      Feet_GripBoots_9_0: -6533245583526727384
+      Feet_GripBoots_9_1: -2066792220022927712
+      Feet_GripBoots_9_2: -6874327519306446594
+      Feet_GripBoots_9_3: -1459690235699935271
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

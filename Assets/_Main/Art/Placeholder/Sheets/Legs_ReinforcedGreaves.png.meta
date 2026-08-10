@@ -1,0 +1,1266 @@
+fileFormatVersion: 2
+guid: 25e2955257f113944a634f28ddfa0ab2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4566076014703004273
+    second: Legs_ReinforcedGreaves_0
+  - first:
+      213: -6378087622628276735
+    second: Legs_ReinforcedGreaves_1
+  - first:
+      213: -8048329640517920259
+    second: Legs_ReinforcedGreaves_2
+  - first:
+      213: 3602104772475078325
+    second: Legs_ReinforcedGreaves_3
+  - first:
+      213: 204336290382056436
+    second: Legs_ReinforcedGreaves_4
+  - first:
+      213: 6379486064787007780
+    second: Legs_ReinforcedGreaves_5
+  - first:
+      213: 5544456370329677811
+    second: Legs_ReinforcedGreaves_6
+  - first:
+      213: -2094644680558002351
+    second: Legs_ReinforcedGreaves_7
+  - first:
+      213: -3709749328600469829
+    second: Legs_ReinforcedGreaves_8
+  - first:
+      213: -2568723028792896552
+    second: Legs_ReinforcedGreaves_9
+  - first:
+      213: 6473273645979122604
+    second: Legs_ReinforcedGreaves_10
+  - first:
+      213: -258813624377030499
+    second: Legs_ReinforcedGreaves_11
+  - first:
+      213: -1316922524170409059
+    second: Legs_ReinforcedGreaves_12
+  - first:
+      213: 2537183776642418403
+    second: Legs_ReinforcedGreaves_13
+  - first:
+      213: 1058565771114227999
+    second: Legs_ReinforcedGreaves_14
+  - first:
+      213: 3209496653370277762
+    second: Legs_ReinforcedGreaves_15
+  - first:
+      213: 8277877465188272983
+    second: Legs_ReinforcedGreaves_16
+  - first:
+      213: 4736591670631083822
+    second: Legs_ReinforcedGreaves_17
+  - first:
+      213: 6320229971686749858
+    second: Legs_ReinforcedGreaves_18
+  - first:
+      213: -7701716295966927547
+    second: Legs_ReinforcedGreaves_19
+  - first:
+      213: -7567389270134940943
+    second: Legs_ReinforcedGreaves_20
+  - first:
+      213: -1017814696711966491
+    second: Legs_ReinforcedGreaves_21
+  - first:
+      213: 4600363620546424683
+    second: Legs_ReinforcedGreaves_22
+  - first:
+      213: -4880146108308967903
+    second: Legs_ReinforcedGreaves_23
+  - first:
+      213: 5286941133806829536
+    second: Legs_ReinforcedGreaves_0_0
+  - first:
+      213: 1998537065389575630
+    second: Legs_ReinforcedGreaves_0_1
+  - first:
+      213: -7931175576000017350
+    second: Legs_ReinforcedGreaves_0_2
+  - first:
+      213: -7868369531739156000
+    second: Legs_ReinforcedGreaves_0_3
+  - first:
+      213: -403501372878814767
+    second: Legs_ReinforcedGreaves_1_0
+  - first:
+      213: -6361636454684354609
+    second: Legs_ReinforcedGreaves_1_1
+  - first:
+      213: 4900352896781668059
+    second: Legs_ReinforcedGreaves_1_2
+  - first:
+      213: -7874719949155810044
+    second: Legs_ReinforcedGreaves_1_3
+  - first:
+      213: -3399624567481874216
+    second: Legs_ReinforcedGreaves_2_0
+  - first:
+      213: 970307606406907458
+    second: Legs_ReinforcedGreaves_2_1
+  - first:
+      213: -7363681817138325446
+    second: Legs_ReinforcedGreaves_2_2
+  - first:
+      213: -7029851791795703536
+    second: Legs_ReinforcedGreaves_2_3
+  - first:
+      213: -7605223626535271991
+    second: Legs_ReinforcedGreaves_3_0
+  - first:
+      213: 3115637512393292337
+    second: Legs_ReinforcedGreaves_3_1
+  - first:
+      213: -1146175492003251966
+    second: Legs_ReinforcedGreaves_3_2
+  - first:
+      213: -2016859434547929826
+    second: Legs_ReinforcedGreaves_3_3
+  - first:
+      213: -2291203489537939406
+    second: Legs_ReinforcedGreaves_4_0
+  - first:
+      213: -731982007237992379
+    second: Legs_ReinforcedGreaves_4_1
+  - first:
+      213: 5084304446721527209
+    second: Legs_ReinforcedGreaves_4_2
+  - first:
+      213: -4476466446037903935
+    second: Legs_ReinforcedGreaves_4_3
+  - first:
+      213: 2255850334211059267
+    second: Legs_ReinforcedGreaves_5_0
+  - first:
+      213: -3386645419411193003
+    second: Legs_ReinforcedGreaves_5_1
+  - first:
+      213: 3772619416561328447
+    second: Legs_ReinforcedGreaves_5_2
+  - first:
+      213: -4158848937755779075
+    second: Legs_ReinforcedGreaves_5_3
+  - first:
+      213: -3567421527819728070
+    second: Legs_ReinforcedGreaves_6_0
+  - first:
+      213: -6769049894335161746
+    second: Legs_ReinforcedGreaves_6_1
+  - first:
+      213: -8295821894374254465
+    second: Legs_ReinforcedGreaves_6_2
+  - first:
+      213: -531929384377394334
+    second: Legs_ReinforcedGreaves_6_3
+  - first:
+      213: 2908307091503530293
+    second: Legs_ReinforcedGreaves_7_0
+  - first:
+      213: 2176976432006961949
+    second: Legs_ReinforcedGreaves_7_1
+  - first:
+      213: -6456262799351475674
+    second: Legs_ReinforcedGreaves_7_2
+  - first:
+      213: 3232426037012584339
+    second: Legs_ReinforcedGreaves_7_3
+  - first:
+      213: 3682129198194282144
+    second: Legs_ReinforcedGreaves_8_0
+  - first:
+      213: -2987973356588746981
+    second: Legs_ReinforcedGreaves_8_1
+  - first:
+      213: 2004841084409044097
+    second: Legs_ReinforcedGreaves_8_2
+  - first:
+      213: -687311748294264301
+    second: Legs_ReinforcedGreaves_8_3
+  - first:
+      213: 8351858089114888858
+    second: Legs_ReinforcedGreaves_9_0
+  - first:
+      213: 2252896820420116078
+    second: Legs_ReinforcedGreaves_9_1
+  - first:
+      213: -8136947509946494466
+    second: Legs_ReinforcedGreaves_9_2
+  - first:
+      213: 7006326727658006100
+    second: Legs_ReinforcedGreaves_9_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0eff4f423fcfe5940800000000000000
+      internalID: 5286941133806829536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_0_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecd4ffc4fda3cbb10800000000000000
+      internalID: 1998537065389575630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_0_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3cc345b5ddcee190800000000000000
+      internalID: -7931175576000017350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_0_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e15e2b699fedc290800000000000000
+      internalID: -7868369531739156000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d10d23a3a9766af0800000000000000
+      internalID: -403501372878814767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc71d50995de6b7a0800000000000000
+      internalID: -6361636454684354609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_1_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bde4ab61ffc810440800000000000000
+      internalID: 4900352896781668059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 405c2e4adef57b290800000000000000
+      internalID: -7874719949155810044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d84d85c77b12d0d0800000000000000
+      internalID: -3399624567481874216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_2_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2464eba80a9377d00800000000000000
+      internalID: 970307606406907458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_2_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a38977ad662fec990800000000000000
+      internalID: -7363681817138325446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_2_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 011bf568a03f07e90800000000000000
+      internalID: -7029851791795703536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c105f6e761d47690800000000000000
+      internalID: -7605223626535271991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_3_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13a75176fc7fc3b20800000000000000
+      internalID: 3115637512393292337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_3_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20933e47677f710f0800000000000000
+      internalID: -1146175492003251966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_3_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1d10e1b70da204e0800000000000000
+      internalID: -2016859434547929826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 238a4f9c0920430e0800000000000000
+      internalID: -2291203489537939406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_4_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5402a9c1e3a77d5f0800000000000000
+      internalID: -731982007237992379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_4_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ad86ccd4f31f8640800000000000000
+      internalID: 5084304446721527209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_4_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c594f21c7560e1c0800000000000000
+      internalID: -4476466446037903935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34ea81d4de36e4f10800000000000000
+      internalID: 2255850334211059267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_5_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 553cacb2fe73001d0800000000000000
+      internalID: -3386645419411193003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_5_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3121e40f590b5430800000000000000
+      internalID: 3772619416561328447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_5_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dff5e86fcecc846c0800000000000000
+      internalID: -4158848937755779075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_6_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3b493e7509fd7ec0800000000000000
+      internalID: -3567421527819728070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_6_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6ad14d2cf08f02a0800000000000000
+      internalID: -6769049894335161746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_6_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f781ae1b0f15fdc80800000000000000
+      internalID: -8295821894374254465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_6_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26bd79e0b053e98f0800000000000000
+      internalID: -531929384377394334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53141de04e16c5820800000000000000
+      internalID: 2908307091503530293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_7_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1b1c22e78c263e10800000000000000
+      internalID: 2176976432006961949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_7_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6221614d03fb666a0800000000000000
+      internalID: -6456262799351475674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_7_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 397dbd2ca52ebdc20800000000000000
+      internalID: 3232426037012584339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_8_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aec67b3ffc891330800000000000000
+      internalID: 3682129198194282144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_8_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b17323a20169886d0800000000000000
+      internalID: -2987973356588746981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_8_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18c5f4b1850a2db10800000000000000
+      internalID: 2004841084409044097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_8_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31ab7f04b9d2676f0800000000000000
+      internalID: -687311748294264301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_9_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9a6a289ea2c7e370800000000000000
+      internalID: 8351858089114888858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_9_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6e7fb8c8b5e34f10800000000000000
+      internalID: 2252896820420116078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_9_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef1d3a1e951c31f80800000000000000
+      internalID: -8136947509946494466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Legs_ReinforcedGreaves_9_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4566166a9097b3160800000000000000
+      internalID: 7006326727658006100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Legs_ReinforcedGreaves_0: 4566076014703004273
+      Legs_ReinforcedGreaves_0_0: 5286941133806829536
+      Legs_ReinforcedGreaves_0_1: 1998537065389575630
+      Legs_ReinforcedGreaves_0_2: -7931175576000017350
+      Legs_ReinforcedGreaves_0_3: -7868369531739156000
+      Legs_ReinforcedGreaves_1: -6378087622628276735
+      Legs_ReinforcedGreaves_10: 6473273645979122604
+      Legs_ReinforcedGreaves_11: -258813624377030499
+      Legs_ReinforcedGreaves_12: -1316922524170409059
+      Legs_ReinforcedGreaves_13: 2537183776642418403
+      Legs_ReinforcedGreaves_14: 1058565771114227999
+      Legs_ReinforcedGreaves_15: 3209496653370277762
+      Legs_ReinforcedGreaves_16: 8277877465188272983
+      Legs_ReinforcedGreaves_17: 4736591670631083822
+      Legs_ReinforcedGreaves_18: 6320229971686749858
+      Legs_ReinforcedGreaves_19: -7701716295966927547
+      Legs_ReinforcedGreaves_1_0: -403501372878814767
+      Legs_ReinforcedGreaves_1_1: -6361636454684354609
+      Legs_ReinforcedGreaves_1_2: 4900352896781668059
+      Legs_ReinforcedGreaves_1_3: -7874719949155810044
+      Legs_ReinforcedGreaves_2: -8048329640517920259
+      Legs_ReinforcedGreaves_20: -7567389270134940943
+      Legs_ReinforcedGreaves_21: -1017814696711966491
+      Legs_ReinforcedGreaves_22: 4600363620546424683
+      Legs_ReinforcedGreaves_23: -4880146108308967903
+      Legs_ReinforcedGreaves_2_0: -3399624567481874216
+      Legs_ReinforcedGreaves_2_1: 970307606406907458
+      Legs_ReinforcedGreaves_2_2: -7363681817138325446
+      Legs_ReinforcedGreaves_2_3: -7029851791795703536
+      Legs_ReinforcedGreaves_3: 3602104772475078325
+      Legs_ReinforcedGreaves_3_0: -7605223626535271991
+      Legs_ReinforcedGreaves_3_1: 3115637512393292337
+      Legs_ReinforcedGreaves_3_2: -1146175492003251966
+      Legs_ReinforcedGreaves_3_3: -2016859434547929826
+      Legs_ReinforcedGreaves_4: 204336290382056436
+      Legs_ReinforcedGreaves_4_0: -2291203489537939406
+      Legs_ReinforcedGreaves_4_1: -731982007237992379
+      Legs_ReinforcedGreaves_4_2: 5084304446721527209
+      Legs_ReinforcedGreaves_4_3: -4476466446037903935
+      Legs_ReinforcedGreaves_5: 6379486064787007780
+      Legs_ReinforcedGreaves_5_0: 2255850334211059267
+      Legs_ReinforcedGreaves_5_1: -3386645419411193003
+      Legs_ReinforcedGreaves_5_2: 3772619416561328447
+      Legs_ReinforcedGreaves_5_3: -4158848937755779075
+      Legs_ReinforcedGreaves_6: 5544456370329677811
+      Legs_ReinforcedGreaves_6_0: -3567421527819728070
+      Legs_ReinforcedGreaves_6_1: -6769049894335161746
+      Legs_ReinforcedGreaves_6_2: -8295821894374254465
+      Legs_ReinforcedGreaves_6_3: -531929384377394334
+      Legs_ReinforcedGreaves_7: -2094644680558002351
+      Legs_ReinforcedGreaves_7_0: 2908307091503530293
+      Legs_ReinforcedGreaves_7_1: 2176976432006961949
+      Legs_ReinforcedGreaves_7_2: -6456262799351475674
+      Legs_ReinforcedGreaves_7_3: 3232426037012584339
+      Legs_ReinforcedGreaves_8: -3709749328600469829
+      Legs_ReinforcedGreaves_8_0: 3682129198194282144
+      Legs_ReinforcedGreaves_8_1: -2987973356588746981
+      Legs_ReinforcedGreaves_8_2: 2004841084409044097
+      Legs_ReinforcedGreaves_8_3: -687311748294264301
+      Legs_ReinforcedGreaves_9: -2568723028792896552
+      Legs_ReinforcedGreaves_9_0: 8351858089114888858
+      Legs_ReinforcedGreaves_9_1: 2252896820420116078
+      Legs_ReinforcedGreaves_9_2: -8136947509946494466
+      Legs_ReinforcedGreaves_9_3: 7006326727658006100
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

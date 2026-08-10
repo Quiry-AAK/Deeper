@@ -1,0 +1,1266 @@
+fileFormatVersion: 2
+guid: 4a54ef81c08325d43bdbdff581a09801
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4960420361596311582
+    second: Weapon_Greatsword_0
+  - first:
+      213: -2449579171560122433
+    second: Weapon_Greatsword_1
+  - first:
+      213: -178092209742773443
+    second: Weapon_Greatsword_2
+  - first:
+      213: -5577644519832583400
+    second: Weapon_Greatsword_3
+  - first:
+      213: 5624223299655189459
+    second: Weapon_Greatsword_4
+  - first:
+      213: 4470004501532631305
+    second: Weapon_Greatsword_5
+  - first:
+      213: 4924910933991088780
+    second: Weapon_Greatsword_6
+  - first:
+      213: -5699837618056814436
+    second: Weapon_Greatsword_7
+  - first:
+      213: -5342134702822174615
+    second: Weapon_Greatsword_8
+  - first:
+      213: -7115384158638468823
+    second: Weapon_Greatsword_9
+  - first:
+      213: -391979014309989924
+    second: Weapon_Greatsword_10
+  - first:
+      213: 8590150228134567736
+    second: Weapon_Greatsword_11
+  - first:
+      213: 6050910353202829832
+    second: Weapon_Greatsword_12
+  - first:
+      213: 6682411871737324507
+    second: Weapon_Greatsword_13
+  - first:
+      213: -4072363408540850591
+    second: Weapon_Greatsword_14
+  - first:
+      213: 8346231578815491586
+    second: Weapon_Greatsword_15
+  - first:
+      213: -746046937747218104
+    second: Weapon_Greatsword_16
+  - first:
+      213: -766850216987611950
+    second: Weapon_Greatsword_17
+  - first:
+      213: -544544723002106179
+    second: Weapon_Greatsword_18
+  - first:
+      213: -5206202746613767823
+    second: Weapon_Greatsword_19
+  - first:
+      213: 1489538583230277440
+    second: Weapon_Greatsword_20
+  - first:
+      213: 1171689842177646587
+    second: Weapon_Greatsword_21
+  - first:
+      213: -2895572454811775471
+    second: Weapon_Greatsword_22
+  - first:
+      213: 5942834008654112068
+    second: Weapon_Greatsword_23
+  - first:
+      213: -6112506476905903117
+    second: Weapon_Greatsword_0_0
+  - first:
+      213: 3922830707513522627
+    second: Weapon_Greatsword_0_1
+  - first:
+      213: 5269758821659334875
+    second: Weapon_Greatsword_0_2
+  - first:
+      213: -2425824696287151879
+    second: Weapon_Greatsword_0_3
+  - first:
+      213: 5547654352111806568
+    second: Weapon_Greatsword_1_0
+  - first:
+      213: 3261799210878573864
+    second: Weapon_Greatsword_1_1
+  - first:
+      213: 1617584037864974641
+    second: Weapon_Greatsword_1_2
+  - first:
+      213: 7967063722145663750
+    second: Weapon_Greatsword_1_3
+  - first:
+      213: -1275859985293391368
+    second: Weapon_Greatsword_2_0
+  - first:
+      213: 4626626468700135331
+    second: Weapon_Greatsword_2_1
+  - first:
+      213: -839420040839989933
+    second: Weapon_Greatsword_2_2
+  - first:
+      213: 8087715924391282681
+    second: Weapon_Greatsword_2_3
+  - first:
+      213: 6528969157809132595
+    second: Weapon_Greatsword_3_0
+  - first:
+      213: 4581847469203492788
+    second: Weapon_Greatsword_3_1
+  - first:
+      213: -7617969478013863808
+    second: Weapon_Greatsword_3_2
+  - first:
+      213: 759078446222250193
+    second: Weapon_Greatsword_3_3
+  - first:
+      213: -8042652916741711704
+    second: Weapon_Greatsword_4_0
+  - first:
+      213: 5491844071847684461
+    second: Weapon_Greatsword_4_1
+  - first:
+      213: -816294893468625794
+    second: Weapon_Greatsword_4_2
+  - first:
+      213: -2932374792316697746
+    second: Weapon_Greatsword_4_3
+  - first:
+      213: 2391771386695387474
+    second: Weapon_Greatsword_5_0
+  - first:
+      213: -5095894408112683693
+    second: Weapon_Greatsword_5_1
+  - first:
+      213: -187095964389252132
+    second: Weapon_Greatsword_5_2
+  - first:
+      213: -3782117169486555517
+    second: Weapon_Greatsword_5_3
+  - first:
+      213: 8502628099522909423
+    second: Weapon_Greatsword_6_0
+  - first:
+      213: -716113799405918188
+    second: Weapon_Greatsword_6_1
+  - first:
+      213: 2393269932626446981
+    second: Weapon_Greatsword_6_2
+  - first:
+      213: 8332830948322176773
+    second: Weapon_Greatsword_6_3
+  - first:
+      213: 4632020749545524286
+    second: Weapon_Greatsword_7_0
+  - first:
+      213: -5238405088152256438
+    second: Weapon_Greatsword_7_1
+  - first:
+      213: -6247720876398806697
+    second: Weapon_Greatsword_7_2
+  - first:
+      213: -5955313123463991276
+    second: Weapon_Greatsword_7_3
+  - first:
+      213: -7094120784878091874
+    second: Weapon_Greatsword_8_0
+  - first:
+      213: 6474045729725332438
+    second: Weapon_Greatsword_8_1
+  - first:
+      213: 5702646350929667437
+    second: Weapon_Greatsword_8_2
+  - first:
+      213: -605905292868284683
+    second: Weapon_Greatsword_8_3
+  - first:
+      213: 2615469863521176341
+    second: Weapon_Greatsword_9_0
+  - first:
+      213: -8123537181999698265
+    second: Weapon_Greatsword_9_1
+  - first:
+      213: -210559351682756664
+    second: Weapon_Greatsword_9_2
+  - first:
+      213: -2393806746435773541
+    second: Weapon_Greatsword_9_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Weapon_Greatsword_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fbcfb4aeb30c2ba0800000000000000
+      internalID: -6112506476905903117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_0_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c976539eb1b07630800000000000000
+      internalID: 3922830707513522627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_0_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd85cf85ab1f12940800000000000000
+      internalID: 5269758821659334875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_0_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f83f629a4db55ed0800000000000000
+      internalID: -2425824696287151879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86826429d3a3dfc40800000000000000
+      internalID: 5547654352111806568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82d111db91d344d20800000000000000
+      internalID: 3261799210878573864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_1_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 139a843bc10d27610800000000000000
+      internalID: 1617584037864974641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60bc4657e32b09e60800000000000000
+      internalID: 7967063722145663750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f9c3796a1c3b4ee0800000000000000
+      internalID: -1275859985293391368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_2_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3af9a47a244153040800000000000000
+      internalID: 4626626468700135331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_2_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35573689be7c954f0800000000000000
+      internalID: -839420040839989933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_2_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f7cc9d58c65d3070800000000000000
+      internalID: 8087715924391282681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 334d1b86bde8b9a50800000000000000
+      internalID: 6528969157809132595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_3_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bf85e06ffdf59f30800000000000000
+      internalID: 4581847469203492788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_3_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08837391f19874690800000000000000
+      internalID: -7617969478013863808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_3_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d09bb733d9c88a00800000000000000
+      internalID: 759078446222250193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a8d9d5b8c1c26090800000000000000
+      internalID: -8042652916741711704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_4_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d69e0581613f63c40800000000000000
+      internalID: 5491844071847684461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_4_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7456da8e10fba4f0800000000000000
+      internalID: -816294893468625794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_4_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6347aba9ac1e47d0800000000000000
+      internalID: -2932374792316697746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2590cef6767413120800000000000000
+      internalID: 2391771386695387474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_5_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3554b87f80fb749b0800000000000000
+      internalID: -5095894408112683693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_5_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd36baf263d476df0800000000000000
+      internalID: -187095964389252132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_5_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38619dd0978338bc0800000000000000
+      internalID: -3782117169486555517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_6_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe4515925376ff570800000000000000
+      internalID: 8502628099522909423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_6_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 418a7a72b4adf06f0800000000000000
+      internalID: -716113799405918188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_6_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58a82d9d25a963120800000000000000
+      internalID: 2393269932626446981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_6_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50fef18299924a370800000000000000
+      internalID: 8332830948322176773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3c46e8845e384040800000000000000
+      internalID: 4632020749545524286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_7_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a40061b93527d47b0800000000000000
+      internalID: -5238405088152256438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_7_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 759f47af6f2ab49a0800000000000000
+      internalID: -6247720876398806697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_7_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 410f4bd444a7a5da0800000000000000
+      internalID: -5955313123463991276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_8_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9140af7bbe9c8d90800000000000000
+      internalID: -7094120784878091874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_8_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dbb9eb4a4e68d950800000000000000
+      internalID: 6474045729725332438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_8_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6527da64aed32f40800000000000000
+      internalID: 5702646350929667437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_8_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fe8e0ba8546797f0800000000000000
+      internalID: -605905292868284683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_9_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51b4be7cbf30c4420800000000000000
+      internalID: 2615469863521176341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_9_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aeea3b29f5634f80800000000000000
+      internalID: -8123537181999698265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_9_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cf00de9261f31df0800000000000000
+      internalID: -210559351682756664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon_Greatsword_9_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9b13c1727d77ced0800000000000000
+      internalID: -2393806746435773541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Weapon_Greatsword_0: 4960420361596311582
+      Weapon_Greatsword_0_0: -6112506476905903117
+      Weapon_Greatsword_0_1: 3922830707513522627
+      Weapon_Greatsword_0_2: 5269758821659334875
+      Weapon_Greatsword_0_3: -2425824696287151879
+      Weapon_Greatsword_1: -2449579171560122433
+      Weapon_Greatsword_10: -391979014309989924
+      Weapon_Greatsword_11: 8590150228134567736
+      Weapon_Greatsword_12: 6050910353202829832
+      Weapon_Greatsword_13: 6682411871737324507
+      Weapon_Greatsword_14: -4072363408540850591
+      Weapon_Greatsword_15: 8346231578815491586
+      Weapon_Greatsword_16: -746046937747218104
+      Weapon_Greatsword_17: -766850216987611950
+      Weapon_Greatsword_18: -544544723002106179
+      Weapon_Greatsword_19: -5206202746613767823
+      Weapon_Greatsword_1_0: 5547654352111806568
+      Weapon_Greatsword_1_1: 3261799210878573864
+      Weapon_Greatsword_1_2: 1617584037864974641
+      Weapon_Greatsword_1_3: 7967063722145663750
+      Weapon_Greatsword_2: -178092209742773443
+      Weapon_Greatsword_20: 1489538583230277440
+      Weapon_Greatsword_21: 1171689842177646587
+      Weapon_Greatsword_22: -2895572454811775471
+      Weapon_Greatsword_23: 5942834008654112068
+      Weapon_Greatsword_2_0: -1275859985293391368
+      Weapon_Greatsword_2_1: 4626626468700135331
+      Weapon_Greatsword_2_2: -839420040839989933
+      Weapon_Greatsword_2_3: 8087715924391282681
+      Weapon_Greatsword_3: -5577644519832583400
+      Weapon_Greatsword_3_0: 6528969157809132595
+      Weapon_Greatsword_3_1: 4581847469203492788
+      Weapon_Greatsword_3_2: -7617969478013863808
+      Weapon_Greatsword_3_3: 759078446222250193
+      Weapon_Greatsword_4: 5624223299655189459
+      Weapon_Greatsword_4_0: -8042652916741711704
+      Weapon_Greatsword_4_1: 5491844071847684461
+      Weapon_Greatsword_4_2: -816294893468625794
+      Weapon_Greatsword_4_3: -2932374792316697746
+      Weapon_Greatsword_5: 4470004501532631305
+      Weapon_Greatsword_5_0: 2391771386695387474
+      Weapon_Greatsword_5_1: -5095894408112683693
+      Weapon_Greatsword_5_2: -187095964389252132
+      Weapon_Greatsword_5_3: -3782117169486555517
+      Weapon_Greatsword_6: 4924910933991088780
+      Weapon_Greatsword_6_0: 8502628099522909423
+      Weapon_Greatsword_6_1: -716113799405918188
+      Weapon_Greatsword_6_2: 2393269932626446981
+      Weapon_Greatsword_6_3: 8332830948322176773
+      Weapon_Greatsword_7: -5699837618056814436
+      Weapon_Greatsword_7_0: 4632020749545524286
+      Weapon_Greatsword_7_1: -5238405088152256438
+      Weapon_Greatsword_7_2: -6247720876398806697
+      Weapon_Greatsword_7_3: -5955313123463991276
+      Weapon_Greatsword_8: -5342134702822174615
+      Weapon_Greatsword_8_0: -7094120784878091874
+      Weapon_Greatsword_8_1: 6474045729725332438
+      Weapon_Greatsword_8_2: 5702646350929667437
+      Weapon_Greatsword_8_3: -605905292868284683
+      Weapon_Greatsword_9: -7115384158638468823
+      Weapon_Greatsword_9_0: 2615469863521176341
+      Weapon_Greatsword_9_1: -8123537181999698265
+      Weapon_Greatsword_9_2: -210559351682756664
+      Weapon_Greatsword_9_3: -2393806746435773541
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

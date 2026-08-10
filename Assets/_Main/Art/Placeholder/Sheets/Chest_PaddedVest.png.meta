@@ -1,0 +1,1266 @@
+fileFormatVersion: 2
+guid: 68102a419f0f72240bd689d29e301660
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -607307187178502629
+    second: Chest_PaddedVest_0
+  - first:
+      213: -277469393953709621
+    second: Chest_PaddedVest_1
+  - first:
+      213: 8032752524703109872
+    second: Chest_PaddedVest_2
+  - first:
+      213: 3629922864525013473
+    second: Chest_PaddedVest_3
+  - first:
+      213: 619060924020353910
+    second: Chest_PaddedVest_4
+  - first:
+      213: 1729859016275621782
+    second: Chest_PaddedVest_5
+  - first:
+      213: -5426978117888573103
+    second: Chest_PaddedVest_6
+  - first:
+      213: -5667318074978262670
+    second: Chest_PaddedVest_7
+  - first:
+      213: 1347630622516574782
+    second: Chest_PaddedVest_8
+  - first:
+      213: -6704072326274616565
+    second: Chest_PaddedVest_9
+  - first:
+      213: 3425050333534433235
+    second: Chest_PaddedVest_10
+  - first:
+      213: -3274671424692970714
+    second: Chest_PaddedVest_11
+  - first:
+      213: 133665358521222481
+    second: Chest_PaddedVest_12
+  - first:
+      213: -7901275192065111139
+    second: Chest_PaddedVest_13
+  - first:
+      213: 1699545903600255752
+    second: Chest_PaddedVest_14
+  - first:
+      213: 8249112268892406900
+    second: Chest_PaddedVest_15
+  - first:
+      213: 8216295558574121983
+    second: Chest_PaddedVest_16
+  - first:
+      213: -7195516907885999641
+    second: Chest_PaddedVest_17
+  - first:
+      213: 4337486107758090911
+    second: Chest_PaddedVest_18
+  - first:
+      213: 7902596736818043661
+    second: Chest_PaddedVest_19
+  - first:
+      213: -1498285188734941421
+    second: Chest_PaddedVest_20
+  - first:
+      213: 4139147251560866739
+    second: Chest_PaddedVest_21
+  - first:
+      213: 5628945643211726169
+    second: Chest_PaddedVest_22
+  - first:
+      213: -3527227066825321031
+    second: Chest_PaddedVest_23
+  - first:
+      213: -452222599779917623
+    second: Chest_PaddedVest_0_0
+  - first:
+      213: -4780533914812483182
+    second: Chest_PaddedVest_0_1
+  - first:
+      213: 509401323370588969
+    second: Chest_PaddedVest_0_2
+  - first:
+      213: -4153342191421196501
+    second: Chest_PaddedVest_0_3
+  - first:
+      213: -985173224687208823
+    second: Chest_PaddedVest_1_0
+  - first:
+      213: 7242646359169781996
+    second: Chest_PaddedVest_1_1
+  - first:
+      213: 2945634875164312399
+    second: Chest_PaddedVest_1_2
+  - first:
+      213: -3202883480366054878
+    second: Chest_PaddedVest_1_3
+  - first:
+      213: 8307280404877654752
+    second: Chest_PaddedVest_2_0
+  - first:
+      213: 1569619430229403995
+    second: Chest_PaddedVest_2_1
+  - first:
+      213: 7163184801841605202
+    second: Chest_PaddedVest_2_2
+  - first:
+      213: 5674540872666142374
+    second: Chest_PaddedVest_2_3
+  - first:
+      213: 5523158795375601226
+    second: Chest_PaddedVest_3_0
+  - first:
+      213: 714717815121440281
+    second: Chest_PaddedVest_3_1
+  - first:
+      213: -540088326043651018
+    second: Chest_PaddedVest_3_2
+  - first:
+      213: -5696255640677255538
+    second: Chest_PaddedVest_3_3
+  - first:
+      213: 885679233016338278
+    second: Chest_PaddedVest_4_0
+  - first:
+      213: -6870260515762508326
+    second: Chest_PaddedVest_4_1
+  - first:
+      213: -5259699064208095769
+    second: Chest_PaddedVest_4_2
+  - first:
+      213: -6793575335592654315
+    second: Chest_PaddedVest_4_3
+  - first:
+      213: 3288286029441774237
+    second: Chest_PaddedVest_5_0
+  - first:
+      213: -6011867199071812171
+    second: Chest_PaddedVest_5_1
+  - first:
+      213: -936065465108393160
+    second: Chest_PaddedVest_5_2
+  - first:
+      213: 8055282819996513016
+    second: Chest_PaddedVest_5_3
+  - first:
+      213: -1216440612904548084
+    second: Chest_PaddedVest_6_0
+  - first:
+      213: 5262787815968981066
+    second: Chest_PaddedVest_6_1
+  - first:
+      213: -391278027487369380
+    second: Chest_PaddedVest_6_2
+  - first:
+      213: -8524245756096952088
+    second: Chest_PaddedVest_6_3
+  - first:
+      213: 2595999834110321402
+    second: Chest_PaddedVest_7_0
+  - first:
+      213: 2895966039185375959
+    second: Chest_PaddedVest_7_1
+  - first:
+      213: 3051619127498026431
+    second: Chest_PaddedVest_7_2
+  - first:
+      213: 1531983026287018401
+    second: Chest_PaddedVest_7_3
+  - first:
+      213: 847180124115785938
+    second: Chest_PaddedVest_8_0
+  - first:
+      213: 4012037591728898857
+    second: Chest_PaddedVest_8_1
+  - first:
+      213: 7791180755954117354
+    second: Chest_PaddedVest_8_2
+  - first:
+      213: -4880164496019101789
+    second: Chest_PaddedVest_8_3
+  - first:
+      213: -3561958932378259872
+    second: Chest_PaddedVest_9_0
+  - first:
+      213: 135033241956575269
+    second: Chest_PaddedVest_9_1
+  - first:
+      213: -441658789693162432
+    second: Chest_PaddedVest_9_2
+  - first:
+      213: 3622964816358039832
+    second: Chest_PaddedVest_9_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Chest_PaddedVest_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c0e6b401f169b9f0800000000000000
+      internalID: -452222599779917623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_0_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 299f4ea9bb128adb0800000000000000
+      internalID: -4780533914812483182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_0_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92b2e9ffdc1c11700800000000000000
+      internalID: 509401323370588969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_0_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2772b1484d5c56c0800000000000000
+      internalID: -4153342191421196501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 986fa4cfb26f352f0800000000000000
+      internalID: -985173224687208823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce057109d7c038460800000000000000
+      internalID: 7242646359169781996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_1_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f43cb24ff4ff0e820800000000000000
+      internalID: 2945634875164312399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22280d7b1721d83d0800000000000000
+      internalID: -3202883480366054878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0eabb4ea383694370800000000000000
+      internalID: 8307280404877654752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_2_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b59ef5b3e8868c510800000000000000
+      internalID: 1569619430229403995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_2_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25aee3600aeb86360800000000000000
+      internalID: 7163184801841605202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_2_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a653b2dbd400ce40800000000000000
+      internalID: 5674540872666142374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a46ef6459a336ac40800000000000000
+      internalID: 5523158795375601226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_3_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91ee4fce0103be900800000000000000
+      internalID: 714717815121440281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_3_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63435da67883188f0800000000000000
+      internalID: -540088326043651018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_3_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e86fd93cca5d2f0b0800000000000000
+      internalID: -5696255640677255538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66711e4e1909a4c00800000000000000
+      internalID: 885679233016338278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_4_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: add659b067ee7a0a0800000000000000
+      internalID: -6870260515762508326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_4_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e50c64719bc107b0800000000000000
+      internalID: -5259699064208095769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_4_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51a0527e93f58b1a0800000000000000
+      internalID: -6793575335592654315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d92b1c0c8b652ad20800000000000000
+      internalID: 3288286029441774237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_5_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b5808a72ae819ca0800000000000000
+      internalID: -6011867199071812171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_5_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83314b14b6d6203f0800000000000000
+      internalID: -936065465108393160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_5_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f2f23bcb0d1acf60800000000000000
+      internalID: 8055282819996513016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_6_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c09477125b55e1fe0800000000000000
+      internalID: -1216440612904548084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_6_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a40c51b92ad290940800000000000000
+      internalID: 5262787815968981066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_6_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c57233305b6e19af0800000000000000
+      internalID: -391278027487369380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_6_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e8c5b1f5abc3b980800000000000000
+      internalID: -8524245756096952088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af26e1d4818d60420800000000000000
+      internalID: 2595999834110321402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_7_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d24d37e4c9803820800000000000000
+      internalID: 2895966039185375959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_7_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbdae44ad67895a20800000000000000
+      internalID: 3051619127498026431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_7_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a104c31272b24510800000000000000
+      internalID: 1531983026287018401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_8_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d851b695d9c1cb00800000000000000
+      internalID: 847180124115785938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_8_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 923c388deee9da730800000000000000
+      internalID: 4012037591728898857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_8_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aea218b3e95df1c60800000000000000
+      internalID: 7791180755954117354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_8_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a7ee414f3c264cb0800000000000000
+      internalID: -4880164496019101789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_9_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06e601b1931619ec0800000000000000
+      internalID: -3561958932378259872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_9_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 528e0b3a40cbfd100800000000000000
+      internalID: 135033241956575269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_9_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04cf868bba9eed9f0800000000000000
+      internalID: -441658789693162432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PaddedVest_9_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81162c02e4b574230800000000000000
+      internalID: 3622964816358039832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Chest_PaddedVest_0: -607307187178502629
+      Chest_PaddedVest_0_0: -452222599779917623
+      Chest_PaddedVest_0_1: -4780533914812483182
+      Chest_PaddedVest_0_2: 509401323370588969
+      Chest_PaddedVest_0_3: -4153342191421196501
+      Chest_PaddedVest_1: -277469393953709621
+      Chest_PaddedVest_10: 3425050333534433235
+      Chest_PaddedVest_11: -3274671424692970714
+      Chest_PaddedVest_12: 133665358521222481
+      Chest_PaddedVest_13: -7901275192065111139
+      Chest_PaddedVest_14: 1699545903600255752
+      Chest_PaddedVest_15: 8249112268892406900
+      Chest_PaddedVest_16: 8216295558574121983
+      Chest_PaddedVest_17: -7195516907885999641
+      Chest_PaddedVest_18: 4337486107758090911
+      Chest_PaddedVest_19: 7902596736818043661
+      Chest_PaddedVest_1_0: -985173224687208823
+      Chest_PaddedVest_1_1: 7242646359169781996
+      Chest_PaddedVest_1_2: 2945634875164312399
+      Chest_PaddedVest_1_3: -3202883480366054878
+      Chest_PaddedVest_2: 8032752524703109872
+      Chest_PaddedVest_20: -1498285188734941421
+      Chest_PaddedVest_21: 4139147251560866739
+      Chest_PaddedVest_22: 5628945643211726169
+      Chest_PaddedVest_23: -3527227066825321031
+      Chest_PaddedVest_2_0: 8307280404877654752
+      Chest_PaddedVest_2_1: 1569619430229403995
+      Chest_PaddedVest_2_2: 7163184801841605202
+      Chest_PaddedVest_2_3: 5674540872666142374
+      Chest_PaddedVest_3: 3629922864525013473
+      Chest_PaddedVest_3_0: 5523158795375601226
+      Chest_PaddedVest_3_1: 714717815121440281
+      Chest_PaddedVest_3_2: -540088326043651018
+      Chest_PaddedVest_3_3: -5696255640677255538
+      Chest_PaddedVest_4: 619060924020353910
+      Chest_PaddedVest_4_0: 885679233016338278
+      Chest_PaddedVest_4_1: -6870260515762508326
+      Chest_PaddedVest_4_2: -5259699064208095769
+      Chest_PaddedVest_4_3: -6793575335592654315
+      Chest_PaddedVest_5: 1729859016275621782
+      Chest_PaddedVest_5_0: 3288286029441774237
+      Chest_PaddedVest_5_1: -6011867199071812171
+      Chest_PaddedVest_5_2: -936065465108393160
+      Chest_PaddedVest_5_3: 8055282819996513016
+      Chest_PaddedVest_6: -5426978117888573103
+      Chest_PaddedVest_6_0: -1216440612904548084
+      Chest_PaddedVest_6_1: 5262787815968981066
+      Chest_PaddedVest_6_2: -391278027487369380
+      Chest_PaddedVest_6_3: -8524245756096952088
+      Chest_PaddedVest_7: -5667318074978262670
+      Chest_PaddedVest_7_0: 2595999834110321402
+      Chest_PaddedVest_7_1: 2895966039185375959
+      Chest_PaddedVest_7_2: 3051619127498026431
+      Chest_PaddedVest_7_3: 1531983026287018401
+      Chest_PaddedVest_8: 1347630622516574782
+      Chest_PaddedVest_8_0: 847180124115785938
+      Chest_PaddedVest_8_1: 4012037591728898857
+      Chest_PaddedVest_8_2: 7791180755954117354
+      Chest_PaddedVest_8_3: -4880164496019101789
+      Chest_PaddedVest_9: -6704072326274616565
+      Chest_PaddedVest_9_0: -3561958932378259872
+      Chest_PaddedVest_9_1: 135033241956575269
+      Chest_PaddedVest_9_2: -441658789693162432
+      Chest_PaddedVest_9_3: 3622964816358039832
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

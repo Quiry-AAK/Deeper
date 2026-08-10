@@ -1,0 +1,1266 @@
+fileFormatVersion: 2
+guid: 6c0f70119d80ecf42822ce6fdf467961
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5095919911645012870
+    second: Chest_PlatedRig_0
+  - first:
+      213: 5830607059801317729
+    second: Chest_PlatedRig_1
+  - first:
+      213: 7181880136808061619
+    second: Chest_PlatedRig_2
+  - first:
+      213: -375139896709334188
+    second: Chest_PlatedRig_3
+  - first:
+      213: -8812066248701668840
+    second: Chest_PlatedRig_4
+  - first:
+      213: -2679329665471439768
+    second: Chest_PlatedRig_5
+  - first:
+      213: -3243560804329576188
+    second: Chest_PlatedRig_6
+  - first:
+      213: -2647170246613079533
+    second: Chest_PlatedRig_7
+  - first:
+      213: 336054899878016304
+    second: Chest_PlatedRig_8
+  - first:
+      213: -8431027396164073891
+    second: Chest_PlatedRig_9
+  - first:
+      213: -4054641843959965541
+    second: Chest_PlatedRig_10
+  - first:
+      213: -801317899972455269
+    second: Chest_PlatedRig_11
+  - first:
+      213: -8695522000700379257
+    second: Chest_PlatedRig_12
+  - first:
+      213: -7557988197651235366
+    second: Chest_PlatedRig_13
+  - first:
+      213: -8042924448042871445
+    second: Chest_PlatedRig_14
+  - first:
+      213: 233205910940316454
+    second: Chest_PlatedRig_15
+  - first:
+      213: 3052531102076511914
+    second: Chest_PlatedRig_16
+  - first:
+      213: 3287418182212733235
+    second: Chest_PlatedRig_17
+  - first:
+      213: 2436269458750832909
+    second: Chest_PlatedRig_18
+  - first:
+      213: -2311013245099370214
+    second: Chest_PlatedRig_19
+  - first:
+      213: -788195136120123690
+    second: Chest_PlatedRig_20
+  - first:
+      213: 382578534871835179
+    second: Chest_PlatedRig_21
+  - first:
+      213: -8302363447767971908
+    second: Chest_PlatedRig_22
+  - first:
+      213: -877235370149038400
+    second: Chest_PlatedRig_23
+  - first:
+      213: 8896118093016334127
+    second: Chest_PlatedRig_0_0
+  - first:
+      213: 117461498609454567
+    second: Chest_PlatedRig_0_1
+  - first:
+      213: 850127386435975444
+    second: Chest_PlatedRig_0_2
+  - first:
+      213: 6145257103864724405
+    second: Chest_PlatedRig_0_3
+  - first:
+      213: -1255613659851395116
+    second: Chest_PlatedRig_1_0
+  - first:
+      213: 6143287092888997733
+    second: Chest_PlatedRig_1_1
+  - first:
+      213: 2389061828660010061
+    second: Chest_PlatedRig_1_2
+  - first:
+      213: -165891006762289897
+    second: Chest_PlatedRig_1_3
+  - first:
+      213: -5225611725052378623
+    second: Chest_PlatedRig_2_0
+  - first:
+      213: 5030393538311033101
+    second: Chest_PlatedRig_2_1
+  - first:
+      213: -4057958234595103569
+    second: Chest_PlatedRig_2_2
+  - first:
+      213: 9060689330279069769
+    second: Chest_PlatedRig_2_3
+  - first:
+      213: 2401962674060182735
+    second: Chest_PlatedRig_3_0
+  - first:
+      213: -6313567536398513119
+    second: Chest_PlatedRig_3_1
+  - first:
+      213: 8784404691222745825
+    second: Chest_PlatedRig_3_2
+  - first:
+      213: 6804761178098874679
+    second: Chest_PlatedRig_3_3
+  - first:
+      213: -8630836355114398634
+    second: Chest_PlatedRig_4_0
+  - first:
+      213: 3913649045352307493
+    second: Chest_PlatedRig_4_1
+  - first:
+      213: -3853015668827933337
+    second: Chest_PlatedRig_4_2
+  - first:
+      213: 9147555088286706571
+    second: Chest_PlatedRig_4_3
+  - first:
+      213: -7999186317689546888
+    second: Chest_PlatedRig_5_0
+  - first:
+      213: 5385847014863952520
+    second: Chest_PlatedRig_5_1
+  - first:
+      213: 2043009775284609268
+    second: Chest_PlatedRig_5_2
+  - first:
+      213: 7571327962580682202
+    second: Chest_PlatedRig_5_3
+  - first:
+      213: -3989582654931445616
+    second: Chest_PlatedRig_6_0
+  - first:
+      213: 5078060112505821911
+    second: Chest_PlatedRig_6_1
+  - first:
+      213: 4284284598347066953
+    second: Chest_PlatedRig_6_2
+  - first:
+      213: 2393426873703177019
+    second: Chest_PlatedRig_6_3
+  - first:
+      213: 9118450683718281467
+    second: Chest_PlatedRig_7_0
+  - first:
+      213: -1941209904902591995
+    second: Chest_PlatedRig_7_1
+  - first:
+      213: 8478138879372476953
+    second: Chest_PlatedRig_7_2
+  - first:
+      213: 5344718614895103947
+    second: Chest_PlatedRig_7_3
+  - first:
+      213: -724286778894069670
+    second: Chest_PlatedRig_8_0
+  - first:
+      213: 4106129803019764560
+    second: Chest_PlatedRig_8_1
+  - first:
+      213: 2033825277697539951
+    second: Chest_PlatedRig_8_2
+  - first:
+      213: -994272832829226197
+    second: Chest_PlatedRig_8_3
+  - first:
+      213: -5608845828415173399
+    second: Chest_PlatedRig_9_0
+  - first:
+      213: -5388522188570117386
+    second: Chest_PlatedRig_9_1
+  - first:
+      213: 2206656679616664422
+    second: Chest_PlatedRig_9_2
+  - first:
+      213: 5479780055766515238
+    second: Chest_PlatedRig_9_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Chest_PlatedRig_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2ff92e954c557b70800000000000000
+      internalID: 8896118093016334127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_0_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7edc6635c9e41a100800000000000000
+      internalID: 117461498609454567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_0_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 419f8529a524ccb00800000000000000
+      internalID: 850127386435975444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_0_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 432
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bb7d49e6c6584550800000000000000
+      internalID: 6145257103864724405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dfed65670a239ee0800000000000000
+      internalID: -1255613659851395116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56f04ecff07514550800000000000000
+      internalID: 6143287092888997733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_1_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c99bb4317a72120800000000000000
+      internalID: 2389061828660010061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 715708e1203a2bdf0800000000000000
+      internalID: -165891006762289897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 102032292d5ea77b0800000000000000
+      internalID: -5225611725052378623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_2_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d01137b554c8fc540800000000000000
+      internalID: 5030393538311033101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_2_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fac66915c7c3fa7c0800000000000000
+      internalID: -4057958234595103569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_2_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 336
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 948b477b0f80ebd70800000000000000
+      internalID: 9060689330279069769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc4ca1f635c755120800000000000000
+      internalID: 2401962674060182735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_3_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12c478fb6c3b168a0800000000000000
+      internalID: -6313567536398513119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_3_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e25b9f568978e970800000000000000
+      internalID: 8784404691222745825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_3_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 739b3f10d3e5f6e50800000000000000
+      internalID: 6804761178098874679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65c01ea201c193880800000000000000
+      internalID: -8630836355114398634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_4_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52b55c34213105630800000000000000
+      internalID: 3913649045352307493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_4_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7653f71d9a6578ac0800000000000000
+      internalID: -3853015668827933337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_4_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8b65a013e4a2fe70800000000000000
+      internalID: 9147555088286706571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87713f1fc6e2df090800000000000000
+      internalID: -7999186317689546888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_5_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88a5097135f5eba40800000000000000
+      internalID: 5385847014863952520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_5_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f06d78f09a3a5c10800000000000000
+      internalID: 2043009775284609268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_5_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad58a97daa2c21960800000000000000
+      internalID: 7571327962580682202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_6_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09850ca86b722a8c0800000000000000
+      internalID: -3989582654931445616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_6_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7da5df184c4e87640800000000000000
+      internalID: 5078060112505821911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_6_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94e6721a426d47b30800000000000000
+      internalID: 4284284598347066953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_6_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3b93fa8f09273120800000000000000
+      internalID: 2393426873703177019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf822f0d59e3b8e70800000000000000
+      internalID: 9118450683718281467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_7_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50aafcf50ef6f05e0800000000000000
+      internalID: -1941209904902591995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_7_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 912cc65446668a570800000000000000
+      internalID: 8478138879372476953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_7_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcf8d3143414c2a40800000000000000
+      internalID: 5344718614895103947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_8_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a50d1841301d2f5f0800000000000000
+      internalID: -724286778894069670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_8_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05343a6fc47ebf830800000000000000
+      internalID: 4106129803019764560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_8_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6f3f5c7059993c10800000000000000
+      internalID: 2033825277697539951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_8_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b23846d5022a332f0800000000000000
+      internalID: -994272832829226197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_9_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ecc16d9f606922b0800000000000000
+      internalID: -5608845828415173399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_9_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fab7fd7e9f1835b0800000000000000
+      internalID: -5388522188570117386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_9_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6635bc90f8e9f9e10800000000000000
+      internalID: 2206656679616664422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_PlatedRig_9_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62ebb377de61c0c40800000000000000
+      internalID: 5479780055766515238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Chest_PlatedRig_0: 5095919911645012870
+      Chest_PlatedRig_0_0: 8896118093016334127
+      Chest_PlatedRig_0_1: 117461498609454567
+      Chest_PlatedRig_0_2: 850127386435975444
+      Chest_PlatedRig_0_3: 6145257103864724405
+      Chest_PlatedRig_1: 5830607059801317729
+      Chest_PlatedRig_10: -4054641843959965541
+      Chest_PlatedRig_11: -801317899972455269
+      Chest_PlatedRig_12: -8695522000700379257
+      Chest_PlatedRig_13: -7557988197651235366
+      Chest_PlatedRig_14: -8042924448042871445
+      Chest_PlatedRig_15: 233205910940316454
+      Chest_PlatedRig_16: 3052531102076511914
+      Chest_PlatedRig_17: 3287418182212733235
+      Chest_PlatedRig_18: 2436269458750832909
+      Chest_PlatedRig_19: -2311013245099370214
+      Chest_PlatedRig_1_0: -1255613659851395116
+      Chest_PlatedRig_1_1: 6143287092888997733
+      Chest_PlatedRig_1_2: 2389061828660010061
+      Chest_PlatedRig_1_3: -165891006762289897
+      Chest_PlatedRig_2: 7181880136808061619
+      Chest_PlatedRig_20: -788195136120123690
+      Chest_PlatedRig_21: 382578534871835179
+      Chest_PlatedRig_22: -8302363447767971908
+      Chest_PlatedRig_23: -877235370149038400
+      Chest_PlatedRig_2_0: -5225611725052378623
+      Chest_PlatedRig_2_1: 5030393538311033101
+      Chest_PlatedRig_2_2: -4057958234595103569
+      Chest_PlatedRig_2_3: 9060689330279069769
+      Chest_PlatedRig_3: -375139896709334188
+      Chest_PlatedRig_3_0: 2401962674060182735
+      Chest_PlatedRig_3_1: -6313567536398513119
+      Chest_PlatedRig_3_2: 8784404691222745825
+      Chest_PlatedRig_3_3: 6804761178098874679
+      Chest_PlatedRig_4: -8812066248701668840
+      Chest_PlatedRig_4_0: -8630836355114398634
+      Chest_PlatedRig_4_1: 3913649045352307493
+      Chest_PlatedRig_4_2: -3853015668827933337
+      Chest_PlatedRig_4_3: 9147555088286706571
+      Chest_PlatedRig_5: -2679329665471439768
+      Chest_PlatedRig_5_0: -7999186317689546888
+      Chest_PlatedRig_5_1: 5385847014863952520
+      Chest_PlatedRig_5_2: 2043009775284609268
+      Chest_PlatedRig_5_3: 7571327962580682202
+      Chest_PlatedRig_6: -3243560804329576188
+      Chest_PlatedRig_6_0: -3989582654931445616
+      Chest_PlatedRig_6_1: 5078060112505821911
+      Chest_PlatedRig_6_2: 4284284598347066953
+      Chest_PlatedRig_6_3: 2393426873703177019
+      Chest_PlatedRig_7: -2647170246613079533
+      Chest_PlatedRig_7_0: 9118450683718281467
+      Chest_PlatedRig_7_1: -1941209904902591995
+      Chest_PlatedRig_7_2: 8478138879372476953
+      Chest_PlatedRig_7_3: 5344718614895103947
+      Chest_PlatedRig_8: 336054899878016304
+      Chest_PlatedRig_8_0: -724286778894069670
+      Chest_PlatedRig_8_1: 4106129803019764560
+      Chest_PlatedRig_8_2: 2033825277697539951
+      Chest_PlatedRig_8_3: -994272832829226197
+      Chest_PlatedRig_9: -8431027396164073891
+      Chest_PlatedRig_9_0: -5608845828415173399
+      Chest_PlatedRig_9_1: -5388522188570117386
+      Chest_PlatedRig_9_2: 2206656679616664422
+      Chest_PlatedRig_9_3: 5479780055766515238
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
