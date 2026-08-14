@@ -9,11 +9,13 @@ Technical breakdown of every system described in 01-GDD.md. This document define
 All 3 weapons (Katana, Bow, Greatsword) implement a shared interface so the rest of the game (animation triggers, upgrade system, HUD, Ultimate Gauge) never needs to know which weapon is equipped.
 
 **Shared interface — `IWeapon`:**
-- `BasicAttack()` — triggers the LClick swing/shot
+- `BasicAttack()` — triggers the LClick swing/shot. **Built as a 2-hit chain that loops** (reuses `AttackStateMachine`'s cancel-window pattern already defined for Heavy Strike, §3): each hit re-enters Windup→Active→Recovery, and the chain breaks unless the player presses again within a 0.25s window. Free from the start, not upgrade-gated.
 - `HeavyStrike()` — triggers the RClick action (base: single hit; upgradeable, see §3)
-- `Ultimate()` — triggers the R action, only callable when Ultimate Gauge is full (see §4)
+- `Ultimate()` — triggers the R action, only callable when Ultimate Gauge is full (see §4). **Branches on weapon data rather than assuming an attack** — `WeaponDefinition.UltimateShape` is `Attack` or `Buff`. Katana is `Buff`; Bow and Greatsword are `Attack` until design says otherwise.
 - `OnHitLanded(target)` — callback fired whenever any of the above connects; feeds the Ultimate Gauge and the weapon's Signature Trait system
 - `GetAttackTiming()` — returns per-weapon Windup/Active/Recovery frame data (values in BALANCE.md)
+
+**No inventory or armor system.** The player never carries, equips, or swaps gear. A run is one weapon, chosen in the Hub, locked until the run ends — this was already true of the interface above and is now also true of the game as a whole (armor/helmets return post-launch as pure cosmetics, no stats, no slots).
 
 **Per-weapon implementation notes:**
 - **Katana** — melee arc hitbox, short Windup/Recovery, feeds Combo Counter (§5a)
@@ -57,17 +59,18 @@ Only one Heavy Strike modification is "active" at a time — if a player takes a
 Replaces a traditional cooldown. Purely resource-gated (Hades Cast-style pacing).
 
 - Gauge range: 0–100%
-- Every `OnHitLanded()` call from Basic Attack or Heavy Strike adds a fixed percentage (value in BALANCE.md; Heavy Strike likely contributes more than Basic per hit — tuned during playtesting)
+- **Built as a flat 1% per landed hit, every weapon, every action** (Basic and Heavy Strike alike — no per-weapon table). This replaced an earlier per-weapon fill table (BALANCE §4 history) and deleted the weapon-differentiation that table provided. ⚠️ **NEEDS DECISION:** keep gauge fill flat, or restore per-weapon differentiation? See `00-DESIGN_CHANGE_BRIEF.md` §7g.
+- Taking damage also fills the gauge, **+1% at base, flat regardless of hit severity** — this used to be exclusive to the "Gauge: Vengeance" upgrade (+5%, CONTENT_DESIGN §7/BALANCE §10). Now that gain-on-damage is base behavior, ⚠️ **Gauge: Vengeance has no remaining job and needs either a new effect or removal from the pool.**
 - At 100%, `Ultimate()` becomes callable via R
 - On activation, gauge drains instantly to 0% — no partial-use, no banking excess
-- Gauge upgrades (from the pool) can modify: gain-per-hit, gain-on-taking-damage (defensive playstyle support), or a small passive trickle over time (low priority, only if base pacing feels too melee-favored for Bow)
+- Gauge upgrades (from the pool) can further modify gain-per-hit, gain-on-taking-damage, or add a small passive trickle over time
 
 **Ultimate effects per weapon** (full numeric tuning in BALANCE.md):
-- **Katana** — Combo Finisher: a rapid multi-hit burst that consumes and converts the current Combo Counter stack into bonus damage
+- **Katana** — now a **Buff**, not an attack: a short cast raises an aura on her and the katana; for its duration she deals more damage, attacks faster, and moves faster, and every attack lands through the buff. Deals no damage of its own. ⚠️ **The Katana Ultimate still consumes the Combo Counter stack on cast and discards the result — a live gameplay hole, not a doc gap.** At a full 10-stack combo, casting silently throws away −20% damage at the exact moment a +50% damage buff starts; because the combo also resets on any hit taken, the optimal play becomes casting at *zero* stacks — the opposite of what a "finisher" should reward. Needs one of: (1) stop consuming the combo entirely, (2) convert consumed stacks into buff strength (duration/damage scaling with stacks spent), or (3) keep consuming for nothing and rewrite this section to drop "finisher" framing. See `00-DESIGN_CHANGE_BRIEF.md` §7h.
 - **Bow** — Full-Charge Piercing Shot: an instant max-charge Charge Shot that pierces all enemies in a line, no hold-time required
 - **Greatsword** — Ground Slam: AoE hit centered on the player, knocks back and damages all enemies in radius
 
-**Alt Ultimate (upgrade-gated):** Each weapon has one Epic-tier upgrade (CONTENT_DESIGN.md §2) that swaps `Ultimate()`'s implementation for a more mobile, skill-style variant instead of the default static burst (e.g., Katana's Thousand Cuts becomes a movable flurry rather than a stationary finisher). Implemented as a swappable strategy on the `IWeapon` instance — taking the upgrade reassigns which Ultimate implementation `Ultimate()` calls; the gauge-fill and full-drain rules are unchanged regardless of which variant is active.
+**Alt Ultimate (upgrade-gated):** Each weapon has one Epic-tier upgrade (CONTENT_DESIGN.md §2) that swaps `Ultimate()`'s implementation for a more mobile, skill-style variant instead of the default (e.g., Katana's Thousand Cuts becomes a movable flurry). Implemented as a swappable strategy on the `IWeapon` instance — taking the upgrade reassigns which Ultimate implementation `Ultimate()` calls; the gauge-fill and full-drain rules are unchanged regardless of which variant is active. ⚠️ **NEEDS DECISION:** Alt Ultimates are currently written as alternative Attacks only — can a weapon's Alt Ultimate also be a Buff (relevant to Katana specifically), or does an Attack-shaped weapon always get an Attack-shaped Alt?
 
 ---
 
@@ -97,7 +100,7 @@ Each weapon has one passive mechanical hook, always active regardless of upgrade
 
 - Flat damage per hit — no crit system anywhere in the game (run or permanent). Permanent power growth is delivered instead through the Hub Stat System's Core Stats (flat/percentage bonuses) and Miner's Traits (unique named effects) — see §10.
 - Damage sources: Basic Attack, Heavy Strike, Ultimate, enemy attacks, Hazard Kills, environmental hazards (geysers, scorched ground, currents — per biome)
-- `OnDamageDealt(source, target, amount)` is the single event both the HUD (damage numbers, optional) and the Combo Counter/Ultimate Gauge subscribe to — one event, multiple listeners, avoids duplicated damage-application logic
+- **As documented:** a single `OnDamageDealt(source, target, amount)` event that the HUD, Combo Counter, and Ultimate Gauge all subscribe to. **As built:** `AttackHitbox.Landed(action, target, amount)` plus `Damageable.Damaged(amount)` — two events, and **neither carries `source`**. This works today only because the player is the only damage source that exists. Milestone 4's on-hit upgrade procs and any future "damage dealt by X" upgrade will need `source` on the event — ⚠️ **needs settling (add `source` to the built pipeline, or formally drop the single-event model from this doc) before that upgrade pool is authored.**
 - **Hazard Kills:** if an enemy is pushed/dashed into the Rising Hazard's leading edge, it's an instant kill regardless of remaining HP — implemented as a trigger volume check on the Hazard front, not a damage-system special case
 
 ---
@@ -165,6 +168,17 @@ Not a separate system — implemented as boss-specific phase logic that reads th
 ## 12. Mini-Boss Weapon Rewards
 
 On Mini-Boss defeat, in addition to the normal floor-end upgrade offer, the player receives a temporary "Overcharge" buff scoped to their current weapon, active for the remainder of that biome only (cleared on entering the next biome's Mini-Boss room or floor 1 of the next biome — exact clear trigger TBD in BALANCE.md). Implemented as a timed/scoped buff on the existing upgrade-modifier stack, not a new buff system.
+
+---
+
+## 13. Narrative & Dialogue System (new — did not exist in any prior doc)
+
+Full story content lives in `10-NARRATIVE.md`; this is the system-level shape.
+
+- **Story state:** a single knowledge flag, `HasSeenTheTruth`, set once when the first run resolves (the manipulation is exposed, the children get out safely). Dialogue is gated on this flag, **never on a run counter** — a player can die on floor 3 of run 4 without ever reaching the father, and a run-count gate would have her react to a man she hasn't yet recognized. This is a hard rule for every future line, not just the launch set.
+- **Delivery:** first-run dialogue is minimal/absent by design — the story is carried by easter eggs the player isn't expected to understand yet. Post-`HasSeenTheTruth` runs add unique lines at specific beats (e.g. reaching the Final Boss).
+- **Not yet built:** dialogue UI and a trigger/line-lookup system. Not in any MVP tier yet — see `08-MVP.md`.
+- ⚠️ **NEEDS DECISION (owner proposal, not approved — `10-NARRATIVE.md` §4):** whether post-story runs recontextualize existing enemies (palette swap + new identity/dialogue, reusing the Elite aura pipeline in ART_DIRECTION §4) rather than adding new content, and whether the Final Boss becomes Zyno (via The Depth Warden slot) on runs 2+. Until this is decided, "what the game is after the story ends" has no answer.
 
 ---
 

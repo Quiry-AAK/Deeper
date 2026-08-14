@@ -4,6 +4,14 @@ Visual style, animation budget, and asset scope for every system defined in the 
 
 ---
 
+## 0. Protagonist
+
+A single, fixed character — no body/gender selection. A woman, cloaked, in light armour. Name TBD (`10-NARRATIVE.md` §5). Cosmetic armor/helmets are planned post-launch (no stats, no slots) and need an art budget line whenever they're scheduled.
+
+**New, unbudgeted scope from the narrative system (§13 in CORE_SYSTEMS.md):** dialogue UI, and likely character portraits for her, Zyno, and the father. Nothing below this line covers narrative presentation — §5 (UI Style) below covers HUD, Upgrade, and Hub screens only.
+
+---
+
 ## 1. Visual Style
 
 - **Genre:** 2D pixel art, top-down.
@@ -22,6 +30,8 @@ Visual style, animation budget, and asset scope for every system defined in the 
 | Molten Depths | Charcoal black, dark red, ember orange | Bright yellow-orange (geyser telegraph, lava front) |
 
 Hazard accent colors are reserved exclusively for hazard telegraphs and the Hazard Front itself — never reused for decorative purposes, so players always read "that color = danger" instantly regardless of biome.
+
+⚠️ **Style conflict, shipped and unresolved:** the Katana Ultimate's cyan-white slash arcs are baked directly into the character frames — cyan-white is reserved above as the Flooded Tunnels hazard accent, so a player-power effect is currently reading in hazard colors. This also means the arcs can't be pulled out as separate VFX without regenerating the frames. Note also that a prior, deliberate fix was reopened: the arc used to be a separate `SlashVFX` layer, pulled out of the character frames because a measurement found the baked arc had 197 bright pixels facing sideways against only 14 facing up (she turns away from camera and a dark arc vanishes against her pale cloak) — that layer was since deleted (owner-agreed) because the attack frames now draw their own arc and two arcs were appearing per swing. **Re-measure the shipped sheets before treating the color conflict as settled**, and if the readability problem still holds, fix it in the art rather than reintroducing a second arc layer.
 
 ---
 
@@ -56,6 +66,13 @@ Per weapon, the following states are required. Frame counts are a ceiling — hi
 | Attack | 3 |
 | Death | 3 |
 | Elite variant | Palette-swap + 1 additional "aura" VFX layer only — no new frames |
+
+**Enemy sprite-sheet contract (built, previously undocumented — this section gave a frame budget but no row order or direction count, and the enemy content pass had to invent one):**
+
+- **Enemies author 3 directions (Down, Up, Side), not the Player's 5** (§3 above). Basics are 4-directional, mirrored to cover all 8 facings; the full 5-row Player set is reserved for bosses. Diagonal rows earn the least per cell, and 2-directional art can't show whether an enemy is *facing you* — the information every telegraphed fight is built on.
+- **Sheet layout: 128×576px, 4 columns × 12 rows of 32×48.** Rows 0–2 Idle/Move, 3–5 Telegraph, 6–8 Attack, 9–11 Death.
+
+⚠️ **Elite aura layer is unbuilt, not just undocumented.** The Deep Warden ships as a palette swap only (Brute recolored violet) — the "+1 aura VFX layer" this table promises doesn't exist yet, and isn't a simple add: `AuraVisuals` currently resolves `UltimateBuff` and `AttackStateMachine`, coupling it to the player. It needs rework before it can target an enemy. Worth resolving before Biome 2/3 add Tideheart and Cinder Warden, which need the same layer.
 
 Mini-Bosses and the Final Boss get an expanded budget (their own animation set, phase-specific poses) — exact count deferred to when their movesets are storyboarded, not needed for MVP planning.
 

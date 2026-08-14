@@ -3,7 +3,8 @@
 ## Game Overview
 
 - **Title:** Deeper
-- **Pitch:** A lone miner dives through a collapsing shaft, growing stronger with every reckless floor, racing the rising danger below.
+- **Pitch:** A woman descends a collapsing shaft, growing stronger with every reckless floor, racing the rising danger below. She believes she is hunting two children her country is evacuating — manipulated by a villain, **Zyno**, into seeing everyone in her path as an enemy. The truth, and her father waiting at the bottom, breaks that manipulation by the time she reaches Floor 16. Full story: `10-NARRATIVE.md`.
+- ⚠️ **NEEDS DECISION:** the game's economy (Ore, Ore Shards, the Hub) still uses mining vocabulary inherited from the old "lone miner" pitch. Confirm whether that vocabulary survives the new premise (she's not a miner) or gets renamed. See `00-DESIGN_CHANGE_BRIEF.md` §3.
 - **Genre:** Pixel-art action roguelike (vertical descent)
 - **Platform:** PC (Windows/Mac), built in Unity/C#
 - **Target Session Length:** 15–25 minutes per run
@@ -23,7 +24,8 @@
 
 ## Player
 
-- **Movement:** 8-directional top-down movement, fixed speed, no acceleration curve (keeps controls crisp and easy to tune).
+- **Character:** A single, fixed protagonist — no body or gender selection. She is a woman, cloaked, in light armour, name TBD. There is no inventory or gear-swapping: what she wears never changes and carries no stats (see Weapon below). Full backstory, motivation and the Zyno/father relationship: `10-NARRATIVE.md`.
+- **Movement:** 8-directional top-down. Movement **ramps** rather than snapping to full speed: 0.055s to reach full speed, 0.085s to coast to a stop (stopping slower than starting reads as weight). Both values are tunable and can be set to 0 to restore instant on/off velocity if ramping ever feels sluggish.
 - **Health:** Starts at a base HP value (see BALANCE.md), increased by run upgrades and permanent upgrades.
 - **Weapon:** Player chooses **1 of 3 weapons in the Hub before descending**. Locked for the full run. All 3 are unlocked from the start — no gating. The weapon is the single build-defining choice — it fully determines the player's kit (basic attack, Heavy Strike, Ultimate).
   - **Katana** — Fast light melee. Low damage per hit, quick windup/recovery, short range. **Signature trait: Combo Counter** — consecutive hits without missing or taking damage build a small stacking damage bonus, resets on miss or on taking a hit.
@@ -31,9 +33,9 @@
   - **Greatsword** — Heavy melee. High damage, wide arc, slow windup/recovery, big whiff punish window. **Signature trait: Hyper Armor** — can't be knocked back and takes reduced (not zero) damage during windup; distinct from Dig-Dash i-frames, which remain the only true invulnerability.
   - Each weapon has a clearly different function (fast/low-risk, ranged/positional, slow/high-commitment), giving weapon choice real weight both build-wise and moment-to-moment.
 - **Controls:** `LClick` — basic attack. `RClick` — Heavy Strike (slower, stronger, weapon-specific variant). `LShift` — Dig-Dash. `R` — Ultimate (weapon-specific, gauge-gated, see below). No separate ability-select keys — the weapon itself defines the full kit.
-- **Attack:** Weapon-dependent swing/shot, short cooldown, hitbox shape and timing vary by weapon (see Combat section).
+- **Attack:** Weapon-dependent swing/shot, short cooldown, hitbox shape and timing vary by weapon (see Combat section). **Basic Attack is a 2-hit chain that loops** (hit 1 → hit 2 → hit 1 again, reusing the same two animations, so it reads as a continuous flurry rather than a fixed 2-count) — each hit re-enters Windup→Active→Recovery and the chain breaks if the player doesn't press again within a 0.25s window after Recovery. Free from the start on all 3 weapons, not upgrade-gated. ⚠️ **NEEDS DECISION:** does each chain hit deal equal damage, or should a later hit act as a finisher? Does the chain interact with the Katana's Combo Counter beyond each hit adding a stack? See `00-DESIGN_CHANGE_BRIEF.md` §7b.
 - **Heavy Strike (RClick):** A single stronger, slower hit per weapon at base. The upgrade pool can modify this slot directly — extending it into a 2–3 hit chain, or replacing it outright with a repurposed effect (e.g., a Dynamite Throw or Grapple Pull variant, now framed as a Heavy Strike replacement rather than a separate Hub-selected ability). This is the primary build-customization slot within a run.
-- **Ultimate (R):** Weapon-specific, tied to that weapon's signature trait — Katana combo finisher, Bow full-charge piercing shot, Greatsword ground-slam AoE by default. No cooldown — instead gated by an **Ultimate Gauge** that fills as a percentage per landed attack (basic and Heavy Strike both contribute). Activating the Ultimate fully drains the gauge back to zero. Purely resource-gated, not time-gated — aggressive, connected play refills it faster, similar in feel to Hades' Cast/meter-style resource pacing rather than a traditional cooldown ability. A rare in-run upgrade per weapon (**Alt Ultimate**) can replace the default effect with a more mobile, skill-style alternative rather than a static burst — see CONTENT_DESIGN.md.
+- **Ultimate (R):** Weapon-specific, tied to that weapon's signature trait. Two shapes exist: an **Attack** (a burst of damage, e.g. Bow's full-charge piercing shot, Greatsword's ground-slam AoE) or a **Buff** (a temporary self-empowerment with no damage of its own). **Katana's Ultimate is now a Buff**, not the "combo finisher" attack originally documented: a short cast raises an aura on her and the katana, and for its duration she deals more damage, attacks faster, and moves faster — every attack lands *through* the buff rather than the Ultimate being a hit in its own right. No cooldown either way — gated by an **Ultimate Gauge** that fills as a flat 1% per landed attack of any kind, from any weapon (basic and Heavy Strike both contribute equally). Activating the Ultimate fully drains the gauge back to zero. A rare in-run upgrade per weapon (**Alt Ultimate**) can replace the default effect with a more mobile, skill-style alternative — see CONTENT_DESIGN.md. ⚠️ **NEEDS DECISION (several, see `00-DESIGN_CHANGE_BRIEF.md` §7f–§7h):** Katana's Combo Counter is consumed by the Ultimate cast but currently converts into nothing (a real gameplay hole, not just a doc gap); the buff's numbers (duration, damage/speed bonus) are unbalanced placeholders; and whether Alt Ultimates can also be Buffs, or must stay Attacks, is undecided.
 - **Defense:** No blocking. Damage mitigation comes from avoidance (dig-dash i-frames), Hyper Armor (Greatsword only, partial), and HP/armor upgrades.
 - **Dodge/Mobility:** Dig-Dash — short dash in facing direction, grants brief invulnerability frames, can break through cracked walls (used for shortcuts/flanking). **Dash-Attack Cancel:** the recovery frames of any weapon's swing/strike can be canceled early into a dash — no tutorial prompt, a piece of movement tech for players to discover and optimize around.
 - **Resource Systems:**
@@ -45,6 +47,7 @@
 
 - **Attack Behavior:** Weapon-dependent (Katana / Bow / Greatsword — see Player section). Each weapon implements a shared attack interface (basic attack, Heavy Strike, Ultimate) so the underlying system stays uniform even though feel differs.
 - **Attack Timing:** Fixed windup → active hitbox/hit frame(s) → recovery, per weapon (Bow's windup is variable-length due to Charge Shot). Values tuned in BALANCE.md.
+- **Attack Movement:** Attacks are not rooted in place — each swing drives a short forward lunge (0.75/1.15/0.9 world units for Basic/Heavy/Greatsword, on an ease-out curve, direction locked at the start of the hit). The player can't steer mid-swing, but she isn't stationary either — this is what gives attacks their sense of weight.
 - **Hit Detection:** Katana and Greatsword use melee arc/box hitboxes in front of the player; Bow uses a projectile, reusing the hit-detection pattern already established for enemy ranged attacks.
 - **Damage:** Flat damage per hit within a run — no crit system anywhere in the game, keeping in-run math simple and readable. Permanent power growth comes from the Hub Stat System's Core Stats and Miner's Traits (see Progression), not from a crit roll.
 - **Enemy Damage:** Flat damage per enemy attack, telegraphed with a short wind-up animation/color flash.
@@ -107,7 +110,7 @@ This remains a **small, bounded** meta-progression tree — not a skill tree, a 
 
 ## UI
 
-- **HUD (in-run):** HP bar, equipped weapon icon, Heavy Strike cooldown icon, Ultimate Gauge (fill meter, not a cooldown), current floor/depth indicator, hazard proximity meter, Ore counter, Wave indicator (e.g. "Wave 2/3") shown only inside Wave Rooms.
+- **HUD (in-run):** HP bar, equipped weapon icon, ~~Heavy Strike cooldown icon~~, Ultimate Gauge (fill meter, not a cooldown), current floor/depth indicator, hazard proximity meter, Ore counter, Wave indicator (e.g. "Wave 2/3") shown only inside Wave Rooms. ⚠️ **NEEDS DECISION:** Heavy Strike has no cooldown anywhere in CORE_SYSTEMS or BALANCE — it's gated only by its own 0.3–0.65s Windup/Recovery. Either give it a real cooldown (a balance change) or drop this HUD element for good. See `00-DESIGN_CHANGE_BRIEF.md` §7n.
 - **Upgrade Screen:** 3 standard cards (icon, name, short description) plus a 4th, visually distinct Curse card.
 - **Hub Screen:** Ore Shard total, list of permanent upgrades (purchased/available/locked), Weapon selector, Weapon Mastery progress per weapon, Relic Vault, "Descend" button.
 - **Death/Victory Screen:** Depth reached, Ore Shards earned, run time, weapon used, "Return to Hub" button.

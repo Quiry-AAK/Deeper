@@ -52,6 +52,8 @@ A design decision documented in these files (e.g., "no crit system," "Pickaxe is
 
 When a request would significantly increase scope, change a locked decision, or conflict with an existing system, that gets raised *before* writing it into the docs — not implemented first and explained afterward. The person making the call should always have the tradeoff in front of them at decision time.
 
+**Working sub-rule, added once this started happening in practice:** when the project owner directs something in person (outside a written doc) that contradicts a locked doc, the change gets built as directed — a locked value is a record of what was true when written, not a blocker on the owner's own instruction. The divergence still gets flagged in `00-DESIGN_CHANGE_BRIEF.md` for the designer to reconcile into the locked docs afterward; it just doesn't block the owner in the moment.
+
 ## Rule 13 — The core loop is protected above all optional content
 
 Per MVP.md: Movement → Combat → Dig-Dash → Room Clear → Upgrade Pick → Descend must work end-to-end before any optional content (extra biomes, full upgrade pools, Weapon Mastery, etc.) is prioritized. Every CUT IF NECESSARY item in MVP.md is chosen specifically because cutting it doesn't touch this loop.

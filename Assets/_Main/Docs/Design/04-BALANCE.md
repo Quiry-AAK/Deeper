@@ -4,6 +4,8 @@ Numeric tuning for every system/content item defined in 01-GDD.md, 02-CORE_SYSTE
 
 ---
 
+**Confirmed:** mitigation in this doc is exclusively Dig-Dash i-frames, Hyper Armor, Iron Skin (§9), and Second Skin (§15) — no armor/gear system exists or is implied by any value below (see CORE_SYSTEMS §1, inventory/armor deleted).
+
 ## 1. Player Base Stats
 
 | Stat | Value |
@@ -54,29 +56,62 @@ All timing in seconds. Damage in flat HP.
 
 ## 4. Ultimate Gauge & Ultimate Damage
 
-**Gauge gain per landed hit (base, before upgrades):**
+**Gauge gain per landed hit — built as flat, not per-weapon (supersedes the per-weapon table this section used to have):**
 
-| Weapon | Basic Attack | Heavy Strike |
-|---|---|---|
-| Katana | +8% | +15% |
-| Bow | +6% (uncharged) / +12% (full charge) | +15% |
-| Greatsword | +10% | +20% |
+| | Value |
+|---|---|
+| Gain per landed hit, any weapon, any action (Basic or Heavy Strike) | +1% (100 landed hits to fill) |
+| Gain on taking damage, base (was upgrade-only) | +1% flat, not scaled by hit severity |
+
+⚠️ **NEEDS DECISION:** the deleted per-weapon table was what made the gauge a weapon-differentiating knob (Greatsword's slower rhythm used to buy a faster Ultimate). Decide whether that's wanted back, or whether weapon feel now lives entirely in timing/damage. See `00-DESIGN_CHANGE_BRIEF.md` §7g.
 
 **Ultimate damage/effect (base, before Alt Ultimate or mods):**
 
 | Weapon | Ultimate | Base Value |
 |---|---|---|
-| Katana | Combo Finisher | 40 damage + 5 per Combo Counter stack consumed |
+| Katana | **Aura Buff** (was "Combo Finisher," see below) | No damage. **Placeholder, not balanced:** Duration 8s, +50% damage, +40% attack speed (shortens Windup/Active/Recovery on all 3 attack phases together — a buffed Basic runs 0.36s→0.26s, Heavy 0.77s→0.55s), +15% move speed. Re-casting refreshes duration rather than stacking. |
 | Bow | Full-Charge Piercing Shot | 35 damage, pierces all enemies in line |
 | Greatsword | Ground Slam | 45 damage, radius 3.0 units, knockback |
+
+**Katana Ultimate is now a self-buff, not a damage move** (owner-directed, built) — the old "Combo Finisher" row above (40 damage + 5 per Combo Counter stack consumed) no longer applies; nothing converts damage from consumed stacks anymore. ⚠️ **The cast still consumes the Combo Counter stack and discards the result — see CORE_SYSTEMS §4 and `00-DESIGN_CHANGE_BRIEF.md` §7h for the three resolution options; this needs a decision, not a default.** No Windup/Active/Recovery timing exists yet for any Ultimate (Katana's buff-cast included) — three placeholder phase timings are in code and need a real design pass.
+
+**New stat, not yet in the Hub Core Stats table below:** `StatType.AttackSpeed` (added for the Katana buff, appended as value 8 so existing serialized modifiers keep their meaning). ⚠️ **NEEDS DECISION:** should Hub Core Stats (§15) be able to buy permanent attack speed, or does it stay a run-only buff stat?
 
 **Alt Ultimate damage (same total-output budget as default, redistributed for mobility):**
 
 | Weapon | Alt Ultimate | Base Value |
 |---|---|---|
-| Katana | Thousand Cuts | 6 hits × 8 damage over 1.2s, player-mobile |
+| Katana | Thousand Cuts | 6 hits × 8 damage over 1.2s, ~~player-mobile~~ (see note below) |
 | Bow | Rain of Arrows | 10 arrows × 5 damage over 2.5s in a 2.5-unit zone |
 | Greatsword | Earthbreaker Charge | 4 damage per 0.1s tick while charging (up to 3s) + 30 damage slam on impact/end |
+
+**Note on "player-mobile":** all attacks now drive a forward lunge rather than rooting the player (GDD §Combat, "Attack Movement") — so "player-mobile" no longer distinguishes Thousand Cuts from a base attack the way it did when this row was written. ⚠️ **NEEDS DECISION:** what should distinguish the Alt Ultimate now — full free movement during the hits (actual player-steered mobility, vs. the locked-direction lunge every attack gets), or something else entirely?
+
+---
+
+## 4a. Enemy Behavior Timing (new — no prior design source, ~30 numbers currently invented in code)
+
+None of the values below trace to any design doc. All are serialized with in-code "placeholder" tooltips and need a balance pass — recorded here so a decision, not a guess, replaces them.
+
+| | Crawler | Slinger | Brute | Warden (Elite) |
+|---|---|---|---|---|
+| Windup (telegraph) | 0.35 | 0.50 | 0.75 | 0.70 |
+| Active | 0.18 | 0.06 | 0.12 | 0.12 |
+| Recovery | 0.45 | 0.60 | 0.90 | 0.85 |
+| Cooldown | 1.20 | 2.20 | 2.50 | 2.20 |
+| Aggro radius | 10 | 12 | 12 | 14 |
+| Attack range | 1.6 | 7.0 | 2.0 | 2.2 |
+| Stop distance | 0.9 | 5.5 | 1.2 | 1.2 |
+| Retreat distance | 0 | 3.5 | 0 | 0 |
+
+Per-move geometry: lunge distance 1.8 (Crawler), slam radius 2.2 / knockback speed 12 / knockback time 0.30 (Brute/Warden), rock speed 4.5 / lifetime 4.0 (Slinger).
+
+Two numbers are anchored to something real: ART_DIRECTION §4 caps enemy Telegraph at 3 frames (0.375s at 8fps), which is where the Crawler's 0.35 Windup came from; and the player moves at 5.0 units/sec (§1 above), so the Slinger's 4.5 rock speed is outrunnable by design. Everything else is a guess pending playtesting.
+
+**How each enemy delivers damage** (an engineering interpretation, not a design source — confirm or overrule):
+- **Cave Crawler** — contact damage plus a lunge that closes distance. The pressure enemy.
+- **Rock Slinger** — no contact damage; all 6 damage is the thrown rock, so it's safe to stand next to and punishes range instead of proximity.
+- **Tunnel Brute / Deep Warden** — no contact damage; all 15/18 is the slam, leaving a safe window beside them between slams (the whiff-punish space LEVEL_DESIGN §2 wants preserved for Greatsword). Giving them both contact and slam damage would double-dip and delete that window.
 
 ---
 
@@ -97,6 +132,8 @@ All timing in seconds. Damage in flat HP.
 | Forge Golem | 80 | 18 | 1.8 |
 | Elite: Cinder Warden | 130 | 22 | 1.8 |
 
+⚠️ **The Deep Warden is missing half its Elite spec:** ART_DIRECTION §4 defines an Elite as "palette-swap + 1 additional aura VFX layer only." The palette swap shipped (Warden is the Brute recolored violet); the aura layer did not, and isn't a simple add — `AuraVisuals` currently resolves `UltimateBuff` and `AttackStateMachine`, so it's coupled to the player and needs rework before it can point at an enemy. Worth fixing before Biome 2/3 add Tideheart and Cinder Warden, which need the same layer.
+
 ---
 
 ## 6. Mini-Boss & Final Boss
@@ -107,6 +144,8 @@ All timing in seconds. Damage in flat HP.
 | The Drowned Custodian (Biome 2) | 450 | 2 | Phase 2 at 50% HP: water hazard covers 75% of room. Homing projectile speed: 2.5 units/sec (snipeable by Bow for 1.5x damage) |
 | The Molten Sentinel (Biome 3) | 600 | 3 | Geyser eruption every 8s; Hyper Armor absorbs 1 tick fully at 40% reduction |
 | The Depth Warden (Final Boss) | 1200 | 3 | Phase 1: collapsing-tile theme, Phase 2: rising water theme, Phase 3: lava geyser theme. Weapon-check moment in Phase 3 |
+
+⚠️ **CONFLICT, unresolved:** `10-NARRATIVE.md` (decided) makes run 1's Final Boss **her father**, not The Depth Warden. Either the Depth Warden *is* the father (this stat block just gets renamed/re-skinned), or the Depth Warden moves to a different role — a leading candidate being Zyno, as the true-form final encounter for runs after the truth is known (`10-NARRATIVE.md` §4c, proposed but not approved). This needs an explicit decision; see `00-DESIGN_CHANGE_BRIEF.md` §5–§6.
 
 ---
 
