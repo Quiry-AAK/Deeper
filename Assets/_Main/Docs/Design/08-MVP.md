@@ -6,6 +6,8 @@ Defines what must be playable at the end of the 45-day extended timeline (see 07
 
 ⚠️ **NEEDS DECISION: narrative/dialogue has no tier below.** `10-NARRATIVE.md` (decided) adds a whole system class — story state, dialogue, first-run-vs-later-run variation — that appears in none of MUST SHIP / SHOULD SHIP / CUT IF NECESSARY. For reference: the first run itself needs **no dialogue UI** (the story is carried by easter eggs the player isn't expected to understand yet, per `10-NARRATIVE.md` §2), so the core loop isn't blocked by this. What's undecided is whether dialogue UI + the `HasSeenTheTruth`-gated later-run lines belong in this MVP at all, since content authoring is already this project's identified schedule risk (see below). See `00-DESIGN_CHANGE_BRIEF.md` §4, §9.
 
+⚠️ **NEW SCOPE, NEEDS A TIER: Zyno as a second Floor 16 boss.** Per the owner's decision (`10-NARRATIVE.md` §1, `03-CONTENT_DESIGN.md` Floor 16), the father/Depth Warden fight is unchanged (already budgeted), but **Zyno's fight is entirely new content — no moveset, stats, arena, or art exist.** This needs an explicit MUST/SHOULD/CUT/post-MVP call; see `03-CONTENT_DESIGN.md`'s Floor 16 scope options (post-MVP, reuse-heavy MVP version, or full new boss).
+
 ## MUST SHIP
 
 Non-negotiable. The MVP is not the MVP without these.

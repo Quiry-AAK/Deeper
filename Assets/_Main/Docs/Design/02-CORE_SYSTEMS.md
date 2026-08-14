@@ -59,14 +59,14 @@ Only one Heavy Strike modification is "active" at a time — if a player takes a
 Replaces a traditional cooldown. Purely resource-gated (Hades Cast-style pacing).
 
 - Gauge range: 0–100%
-- **Built as a flat 1% per landed hit, every weapon, every action** (Basic and Heavy Strike alike — no per-weapon table). This replaced an earlier per-weapon fill table (BALANCE §4 history) and deleted the weapon-differentiation that table provided. ⚠️ **NEEDS DECISION:** keep gauge fill flat, or restore per-weapon differentiation? See `00-DESIGN_CHANGE_BRIEF.md` §7g.
+- **DECIDED: per-weapon gauge fill is restored** (this had been built as a flat 1% for every weapon/action, deleting weapon differentiation — that's now reverted). Exact rates: BALANCE §4. **This is a build task** — the flat-1% version is what's currently in the codebase; it needs to be reverted to the per-weapon table.
 - Taking damage also fills the gauge, **+1% at base, flat regardless of hit severity** — this used to be exclusive to the "Gauge: Vengeance" upgrade (+5%, CONTENT_DESIGN §7/BALANCE §10). Now that gain-on-damage is base behavior, ⚠️ **Gauge: Vengeance has no remaining job and needs either a new effect or removal from the pool.**
 - At 100%, `Ultimate()` becomes callable via R
 - On activation, gauge drains instantly to 0% — no partial-use, no banking excess
 - Gauge upgrades (from the pool) can further modify gain-per-hit, gain-on-taking-damage, or add a small passive trickle over time
 
 **Ultimate effects per weapon** (full numeric tuning in BALANCE.md):
-- **Katana** — now a **Buff**, not an attack: a short cast raises an aura on her and the katana; for its duration she deals more damage, attacks faster, and moves faster, and every attack lands through the buff. Deals no damage of its own. ⚠️ **The Katana Ultimate still consumes the Combo Counter stack on cast and discards the result — a live gameplay hole, not a doc gap.** At a full 10-stack combo, casting silently throws away −20% damage at the exact moment a +50% damage buff starts; because the combo also resets on any hit taken, the optimal play becomes casting at *zero* stacks — the opposite of what a "finisher" should reward. Needs one of: (1) stop consuming the combo entirely, (2) convert consumed stacks into buff strength (duration/damage scaling with stacks spent), or (3) keep consuming for nothing and rewrite this section to drop "finisher" framing. See `00-DESIGN_CHANGE_BRIEF.md` §7h.
+- **Katana** — a **Buff**, not an attack: a short cast raises an aura on her and the katana; for its duration she deals more damage, attacks faster, and moves faster, and every attack lands through the buff. Deals no damage of its own. **DECIDED: the buff does not touch the Combo Counter at all.** It no longer consumes or converts stacks on cast — the combo just keeps running through the Ultimate cast exactly as it would through any other action. This removes the old "Combo Finisher" framing entirely; the buff and the Combo Counter are now two independent systems that both key off landing hits.
 - **Bow** — Full-Charge Piercing Shot: an instant max-charge Charge Shot that pierces all enemies in a line, no hold-time required
 - **Greatsword** — Ground Slam: AoE hit centered on the player, knocks back and damages all enemies in radius
 

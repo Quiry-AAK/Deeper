@@ -3,7 +3,7 @@
 ## Game Overview
 
 - **Title:** Deeper
-- **Pitch:** A woman descends a collapsing shaft, growing stronger with every reckless floor, racing the rising danger below. She believes she is hunting two children her country is evacuating — manipulated by a villain, **Zyno**, into seeing everyone in her path as an enemy. The truth, and her father waiting at the bottom, breaks that manipulation by the time she reaches Floor 16. Full story: `10-NARRATIVE.md`.
+- **Pitch:** A woman descends a collapsing shaft, growing stronger with every reckless floor, racing the rising danger below. She believes she is hunting two children her country is evacuating — manipulated by a villain, **Zyno**, into seeing everyone in her path as an enemy. On Floor 16 she confronts her father — the truth breaks there — then faces Zyno himself as the true final battle. Full story: `10-NARRATIVE.md`.
 - ⚠️ **NEEDS DECISION:** the game's economy (Ore, Ore Shards, the Hub) still uses mining vocabulary inherited from the old "lone miner" pitch. Confirm whether that vocabulary survives the new premise (she's not a miner) or gets renamed. See `00-DESIGN_CHANGE_BRIEF.md` §3.
 - **Genre:** Pixel-art action roguelike (vertical descent)
 - **Platform:** PC (Windows/Mac), built in Unity/C#

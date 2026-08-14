@@ -56,14 +56,15 @@ All timing in seconds. Damage in flat HP.
 
 ## 4. Ultimate Gauge & Ultimate Damage
 
-**Gauge gain per landed hit — built as flat, not per-weapon (supersedes the per-weapon table this section used to have):**
+**Gauge gain per landed hit — DECIDED: per-weapon differentiation is restored** (reverts the flat-1%-for-everyone version that had been built; this is a build task, not just a doc fix):
 
-| | Value |
-|---|---|
-| Gain per landed hit, any weapon, any action (Basic or Heavy Strike) | +1% (100 landed hits to fill) |
-| Gain on taking damage, base (was upgrade-only) | +1% flat, not scaled by hit severity |
+| Weapon | Basic Attack | Heavy Strike |
+|---|---|---|
+| Katana | +8% | +15% |
+| Bow | +6% (uncharged) / +12% (full charge) | +15% |
+| Greatsword | +10% | +20% |
 
-⚠️ **NEEDS DECISION:** the deleted per-weapon table was what made the gauge a weapon-differentiating knob (Greatsword's slower rhythm used to buy a faster Ultimate). Decide whether that's wanted back, or whether weapon feel now lives entirely in timing/damage. See `00-DESIGN_CHANGE_BRIEF.md` §7g.
+**Gain on taking damage, base:** +1% flat, not scaled by hit severity (this used to be exclusive to the "Gauge: Vengeance" upgrade at +5% — see CORE_SYSTEMS §4 for the open question on what that upgrade does now that its old job is base behavior).
 
 **Ultimate damage/effect (base, before Alt Ultimate or mods):**
 
@@ -73,7 +74,7 @@ All timing in seconds. Damage in flat HP.
 | Bow | Full-Charge Piercing Shot | 35 damage, pierces all enemies in line |
 | Greatsword | Ground Slam | 45 damage, radius 3.0 units, knockback |
 
-**Katana Ultimate is now a self-buff, not a damage move** (owner-directed, built) — the old "Combo Finisher" row above (40 damage + 5 per Combo Counter stack consumed) no longer applies; nothing converts damage from consumed stacks anymore. ⚠️ **The cast still consumes the Combo Counter stack and discards the result — see CORE_SYSTEMS §4 and `00-DESIGN_CHANGE_BRIEF.md` §7h for the three resolution options; this needs a decision, not a default.** No Windup/Active/Recovery timing exists yet for any Ultimate (Katana's buff-cast included) — three placeholder phase timings are in code and need a real design pass.
+**Katana Ultimate is a self-buff, not a damage move** (owner-directed, built) — the old "Combo Finisher" row above (40 damage + 5 per Combo Counter stack consumed) no longer applies. **DECIDED: the buff does not touch the Combo Counter.** It no longer consumes stacks on cast — the combo runs independently and keeps its stacks through an Ultimate cast, exactly as it would through any other action. `Finisher+` and `Echo Slash` (CONTENT_DESIGN §2a) are removed from the Katana Ultimate mod pool as a direct consequence — both were written to modify a stack-consuming conversion that no longer exists (Design Rule 10, redundant/non-functional content). No Windup/Active/Recovery timing exists yet for any Ultimate (Katana's buff-cast included) — three placeholder phase timings are in code and need a real design pass.
 
 **New stat, not yet in the Hub Core Stats table below:** `StatType.AttackSpeed` (added for the Katana buff, appended as value 8 so existing serialized modifiers keep their meaning). ⚠️ **NEEDS DECISION:** should Hub Core Stats (§15) be able to buy permanent attack speed, or does it stay a run-only buff stat?
 
@@ -143,9 +144,8 @@ Two numbers are anchored to something real: ART_DIRECTION §4 caps enemy Telegra
 | The Collapsed King (Biome 1) | 350 | 2 | Phase 2 at 50% HP: slam AoE cadence increases. Weapon-check: rubble shield = 1 hit (Greatsword) / 3 hits (others) |
 | The Drowned Custodian (Biome 2) | 450 | 2 | Phase 2 at 50% HP: water hazard covers 75% of room. Homing projectile speed: 2.5 units/sec (snipeable by Bow for 1.5x damage) |
 | The Molten Sentinel (Biome 3) | 600 | 3 | Geyser eruption every 8s; Hyper Armor absorbs 1 tick fully at 40% reduction |
-| The Depth Warden (Final Boss) | 1200 | 3 | Phase 1: collapsing-tile theme, Phase 2: rising water theme, Phase 3: lava geyser theme. Weapon-check moment in Phase 3 |
-
-⚠️ **CONFLICT, unresolved:** `10-NARRATIVE.md` (decided) makes run 1's Final Boss **her father**, not The Depth Warden. Either the Depth Warden *is* the father (this stat block just gets renamed/re-skinned), or the Depth Warden moves to a different role — a leading candidate being Zyno, as the true-form final encounter for runs after the truth is known (`10-NARRATIVE.md` §4c, proposed but not approved). This needs an explicit decision; see `00-DESIGN_CHANGE_BRIEF.md` §5–§6.
+| The Depth Warden (her father) | 1200 | 3 | Phase 1: collapsing-tile theme, Phase 2: rising water theme, Phase 3: lava geyser theme. Weapon-check moment in Phase 3. Fought first, on Floor 16 — no longer the final encounter of the floor. |
+| **Zyno** (True Final Boss) | — | — | Fought immediately after the Depth Warden, same floor. **No stats exist yet — new content, not budgeted.** See `03-CONTENT_DESIGN.md`'s Floor 16 scope flag for the MVP-vs-post-MVP options. |
 
 ---
 
@@ -220,8 +220,6 @@ Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension bina
 | Gauge: Bloodrush | Basic gauge gain +4% (12% total) |
 | Gauge: Vengeance | +5% gauge on taking damage |
 | Gauge: Adrenal Rush | +50% gauge gain while at 8+ stacks |
-| Finisher+ | Conversion rate +40% |
-| Echo Slash | 2nd Finisher hit at 60% value |
 | Thousand Cuts | See §4 |
 | Deathmark | Marked target takes +25% from next Heavy Strike |
 | Windcutter | +15% Basic Attack range, thin pierce (1 extra enemy) |

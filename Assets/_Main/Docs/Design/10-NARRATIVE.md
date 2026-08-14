@@ -16,7 +16,13 @@ Her country took in **two children** in order to get them safely out. Under Zyno
 believes her purpose is to **capture those two children**. The manipulation makes her see everyone
 around her as an enemy, so descending after the children means killing everything in her path.
 
-The **Final Boss of the first run is her father.**
+**DECIDED: Floor 16 is two fights.** She first fights **The Depth Warden — who is her father** —
+using his existing boss design (multi-phase, all 3 biome hazard themes, weapon-check moment).
+Defeating him doesn't end the run: **Zyno is the true Final Boss**, fought immediately after, on the
+same floor. This resolves what was previously an open conflict between this file and
+`03-CONTENT_DESIGN.md` (which named "The Depth Warden" without connecting him to the father) — see
+`03-CONTENT_DESIGN.md`'s Floor 16 entry and its scope flag; Zyno's fight is new content with no
+moveset/stats/art yet, and needs an MVP-vs-post-MVP call before it's built.
 
 ---
 
@@ -51,6 +57,13 @@ condition — and it stays correct however the player reaches it.
 
 The owner's question: once the children are safe, why descend again? Four pieces, cheapest first.
 
+⚠️ **§4b and §4c below are superseded by §1's decision** that Zyno is fought as the true Final Boss
+*within run 1*, immediately after the Depth Warden/father. Zyno no longer "escapes run 1," and The
+Depth Warden doesn't need to *become* Zyno later — they're both already on Floor 16. §4a and §4d are
+unaffected and remain open proposals. Whether Zyno is defeated, escapes, or something else happens
+at the end of that fight is now the actual open question for "why descend again" — not yet answered
+anywhere.
+
 ### 4a. Run 1 is the lie. Runs 2+ are the same descent, seen true.
 
 The manipulation made her see everyone as an enemy. Once it breaks, the enemies are revealed as what
@@ -66,28 +79,18 @@ worth far more than its price.
 
 It also pays off §2's easter eggs: what was uninterpretable on run 1 becomes legible on run 2.
 
-### 4b. Zyno is the unfinished thread.
+### 4b. ~~Zyno is the unfinished thread, escapes run 1~~ — superseded, see note above.
 
-Nothing in the owner's premise says Zyno is defeated — only that the father is fought and the
-children are saved. **Zyno escapes run 1.** Runs 2+ change objective from *capture the children* to
-*reach Zyno*, which gives the loop a goal without inventing a new premise.
-
-### 4c. The Depth Warden becomes Zyno.
-
-CONTENT_DESIGN §Enemies already budgets a multi-phase Final Boss, **The Depth Warden**, separate from
-the three biome Mini-Bosses. Assigning that existing slot to Zyno's true form gives the post-story
-game a real final encounter **without adding an unplanned boss**:
-
-| | Final encounter |
-|---|---|
-| Run 1 | Her father |
-| Runs 2+ (after `HasSeenTheTruth`) | The Depth Warden — Zyno |
+### 4c. ~~The Depth Warden becomes Zyno~~ — superseded, see note above. Both are now fought in run 1,
+back to back, on Floor 16.
 
 ### 4d. Escalating difficulty, skinned as Zyno tightening his grip.
 
 The genre-standard replay driver (Hades' Pact of Punishment, Dead Cells' Boss Cells) is optional
 escalating difficulty. Here it has a ready-made fiction: each tier is **Zyno digging further into her
-head**. A mechanical system the game needs anyway, wearing the story's clothes.
+head**. A mechanical system the game needs anyway, wearing the story's clothes. ⚠️ Needs a fictional
+tweak now that Zyno is fought (not just implied) in run 1 — this framing works better if he survives
+that fight in some form rather than being cleanly defeated.
 
 ### Deliberately not proposed
 
@@ -102,12 +105,13 @@ list in 08-MVP.md is already the identified schedule risk.
 | Name | Role | Notes |
 |---|---|---|
 | *(unnamed)* | Player character | Woman. Needs a name — referenced throughout as "she". |
-| **Zyno** | Villain | Manipulator. Never fought in run 1. Proposed as the post-story Final Boss (§4c). |
-| Her father | Run 1 Final Boss | Relationship unknown to the player until the run resolves. |
+| **Zyno** | Villain, **True Final Boss** | Manipulator. Fought in run 1, immediately after her father, on Floor 16 — new boss content, not yet built (see `03-CONTENT_DESIGN.md`'s scope flag). |
+| Her father | The Depth Warden — first Floor 16 fight | Relationship unknown to the player until the run resolves. Uses the existing Depth Warden boss design. |
 | The two children | Objective | Believed targets to capture; actually being evacuated. Safe after run 1. |
 
-**Open:** the protagonist has no name, the country has no name, and Zyno's motive for the
-manipulation is unstated. All three are needed before dialogue can be written.
+**Open:** the protagonist has no name, the country has no name, Zyno's motive for the manipulation is
+unstated, and **what happens to Zyno at the end of that Floor 16 fight** (defeated? escapes? something
+else?) is now the open thread for "why descend again" — see §4's note.
 
 ---
 
@@ -127,15 +131,14 @@ manipulation is unstated. All three are needed before dialogue can be written.
 Per Design Rules 11/12/14, these are flagged rather than silently resolved. **01-GDD.md has not been
 amended.**
 
-1. **The premise contradicts the GDD pitch.** 01-GDD.md §Pitch reads *"A lone miner dives through a
-   collapsing shaft, growing stronger with every reckless floor, racing the rising danger below."*
-   The protagonist is now a specific named woman with a backstory, a manipulator and a father —
-   not a lone miner. The entire framing of the game changes.
-2. **The game had no narrative layer at all.** No design doc describes story, dialogue, cutscenes or
-   characters. This adds a system class that does not exist in 02-CORE_SYSTEMS.md and is absent from
-   08-MVP.md's MUST SHIP / SHOULD SHIP / CUT lists.
-3. **Final Boss identity changes.** 03-CONTENT_DESIGN.md names The Depth Warden as the Final Boss,
-   "multi-phase; incorporates all 3 biome hazard types". Run 1's final boss is now her father.
+1. **The premise contradicts the GDD pitch — RESOLVED.** 01-GDD.md §Pitch has been rewritten to match
+   this file's premise (woman, Zyno's manipulation, her father) instead of "a lone miner."
+2. **The game had no narrative layer at all — PARTIALLY RESOLVED.** 02-CORE_SYSTEMS.md §13 now
+   describes the system shape (HasSeenTheTruth flag, dialogue gating rule). Still absent from
+   08-MVP.md's MUST SHIP / SHOULD SHIP / CUT lists — see that doc's open flag.
+3. **Final Boss identity — RESOLVED.** 03-CONTENT_DESIGN.md now names The Depth Warden as her father,
+   fought first on Floor 16, followed immediately by Zyno as the true Final Boss (new content, not yet
+   built — see that doc's scope flag).
 4. **Scope.** Dialogue, story state, recontextualised enemy sets and a second final encounter are
    none of them in the MVP. 08-MVP.md already identifies content authoring as the schedule risk.
 

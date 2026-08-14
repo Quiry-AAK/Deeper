@@ -81,8 +81,9 @@ Each weapon's sub-pool covers Heavy Strike mods, Signature Trait mods, Ultimate 
 | Gauge: Bloodrush | Ultimate Gauge | Common | Basic Attacks contribute more % to the gauge |
 | Gauge: Vengeance | Ultimate Gauge | Common | ⚠️ **Job unclear** — gain-on-taking-damage is now base behavior (BALANCE §4), not upgrade-gated. Needs a new effect or removal from the pool. |
 | Gauge: Adrenal Rush | Ultimate Gauge | Rare | Gauge gain increased while Combo Counter is at or near its cap |
-| Finisher+ | Ultimate mod | Rare | ⚠️ **Needs a new target.** Written against the old "Combo Finisher" attack, which converted stacks into bonus damage; the Ultimate is now a Buff that deals no damage, so there's nothing to convert into unless BALANCE §4/§7h resolves toward converting stacks into buff strength. |
-| Echo Slash | Ultimate mod | Epic | ⚠️ **Same issue as Finisher+** — "strikes twice" assumed a damage-dealing Ultimate that no longer exists in this form. |
+~~| Finisher+ | Ultimate mod | Rare | Combo Finisher converts stacks into bonus damage at a higher rate |~~
+~~| Echo Slash | Ultimate mod | Epic | Combo Finisher strikes twice |~~
+**DECIDED: Finisher+ and Echo Slash are removed from the pool.** Both modified the old Combo-Finisher-consumes-stacks behavior; per the owner's decision that the Katana Ultimate buff no longer touches the Combo Counter at all (BALANCE §4, CORE_SYSTEMS §4), there's nothing left for either upgrade to modify (Design Rule 10).
 | **Thousand Cuts** | Alt Ultimate | Epic | Replaces the default Ultimate: a mobile flurry — player can move freely while unleashing a rapid multi-hit dash-strike combo for a short duration. ⚠️ Written as an alternative to the old Combo Finisher *attack*; now that the default Katana Ultimate is a Buff, decide whether Thousand Cuts stays Attack-shaped or should also become buff-shaped. |
 | Deathmark | Build-defining | Rare | Basic Attacks mark the target; Heavy Strike deals bonus damage to a marked enemy |
 | Windcutter | Build-defining | Common | Basic Attack gains slightly more range and a thin piercing edge |
@@ -194,12 +195,19 @@ Unchanged from prior pass — numeric stats live in BALANCE.md, this defines rol
 | **Elite: Cinder Warden** | Rare elite (key drop) | Tougher Forge Golem variant, drops Secret Floor key on death |
 | **Mini-Boss: The Molten Sentinel** | Biome 3 boss | Periodic geyser eruptions mid-fight; Greatsword's Hyper Armor lets players tank a tick and keep swinging |
 
-### Floor 16 — Final Boss
+### Floor 16 — Final Boss Sequence
+
+**DECIDED (owner-directed): two fights, not one.** The Depth Warden **is her father** — same boss slot and mechanics as originally designed, reidentified rather than replaced. Defeating him doesn't end the floor: **Zyno is the true Final Boss**, fought immediately after.
+
 | Enemy | Role | Behavior |
 |---|---|---|
-| **The Depth Warden** | Final Boss | Multi-phase; incorporates all 3 biome hazard types in sequence as the arena degrades; includes a weapon-check moment per the Mini-Boss pattern |
+| **The Depth Warden (her father)** | First fight, Floor 16 | Unchanged from the original design: multi-phase, incorporates all 3 biome hazard types in sequence as the arena degrades, weapon-check moment per the Mini-Boss pattern. Stats/phases: BALANCE §6 (existing "Depth Warden" row, reidentified — no numbers need to change). |
+| **Zyno** | True Final Boss, Floor 16 (after the Warden) | ⚠️ **Entirely new boss content — no moveset, no stats, no arena, no art exist for this fight yet.** See the scope note below. |
 
-⚠️ **CONFLICT, unresolved.** `10-NARRATIVE.md` (decided) makes run 1's Final Boss **her father**, not a monster named The Depth Warden. This entry needs to either become the father (reskinned/renamed, mechanics kept) or move — the leading proposal (`10-NARRATIVE.md` §4c, **not approved**) reassigns this slot to **Zyno**'s true form as the Final Boss for runs after the truth is known, with the father as a separate run-1-only encounter. See `00-DESIGN_CHANGE_BRIEF.md` §5–§6 for the full decision this depends on — it isn't resolvable in this doc alone.
+⚠️ **SCOPE FLAG (per PROJECT scope-discipline rules — this needs an explicit call, not a silent add to a tier):** Zyno as a full second final-boss encounter is new content on top of everything `07-IMPLEMENTATION_PLAN.md` and `08-MVP.md` already account for. It competes directly with the same Phase 3/5 content-authoring risk those docs already flag as this project's binding constraint. Options, cheapest first:
+- **Post-MVP:** ship the Depth Warden/father fight as Floor 16's Final Boss for MVP (this is a pure rename of already-budgeted content — zero new cost); add Zyno as a true final encounter after MVP.
+- **Reuse-heavy MVP version:** Zyno's fight for MVP reuses an existing Mini-Boss's moveset/arena with a palette-swap + new dialogue (matches the "recontextualization is nearly free" logic already established for the post-story enemies in `10-NARRATIVE.md` §4a), deferring a bespoke Zyno moveset to post-MVP polish.
+- **Full new boss for MVP:** budget it properly — new moveset, stats, arena, art, balance pass — which is a genuine timeline conversation, not a rounding error.
 
 ---
 
