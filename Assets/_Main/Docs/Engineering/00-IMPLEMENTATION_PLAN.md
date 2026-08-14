@@ -120,7 +120,7 @@ Weighted across three frames around the strike, and shifted backwards when the s
 |---|---|---|---|---|---|---|
 | Basic | LMB / gamepad west | 0.10 | 0.08 | 0.18 | 0.36 | 8 |
 | Heavy Strike | RMB / gamepad north | 0.30 | 0.12 | 0.35 | 0.77 | 20 |
-| Ultimate | Q / gamepad LB | 0.25 | 0.40 | 0.45 | 1.10 | 40 |
+| Ultimate | R / gamepad LB | 0.25 | 0.40 | 0.45 | 1.10 | 40 |
 
 Basic and Heavy are BALANCE §2 verbatim. **BALANCE has no Windup/Active/Recovery row for Ultimates** — those three numbers are placeholders and need a design answer.
 
@@ -180,7 +180,7 @@ The loop is seamless because the noise field **tiles vertically** — the lattic
 
 **The aura also needs no art on the character itself, and the katana out-glows her for free.** `AuraVisuals` draws an **additive** copy of whatever sprite the rig is already showing. Additive blending adds each pixel in proportion to its own brightness, so the near-white blade blows out hard while dark armour barely lifts — the requested "katana has a lot more" falls out of the blend mode instead of needing the blade masked by hand. Because it copies the live sprite it stays correct for every pose, frame and facing, including animations added later. The sheathed weapon layer gets its own aura at `weaponAuraBoost` (2.4×) since it is a separate renderer during Idle/Move, and follows that renderer's enabled state — the layer hides itself during attacks, when the blade is baked into the body art instead. Attack trails are a fixed pool of fading afterimages, so a long combo cannot allocate.
 
-**Input bindings were missing and had to be added.** The Player map had only `Attack`; `RightClick` exists but lives in the **UI** map, so binding Heavy to it would have silently failed. Added `HeavyStrike` (RMB, matching CONTENT_DESIGN's "RClick") and `Ultimate` (Q — no design doc specifies an Ultimate binding) to the Player map.
+**Input bindings were missing and had to be added.** The Player map had only `Attack`; `RightClick` exists but lives in the **UI** map, so binding Heavy to it would have silently failed. Added `HeavyStrike` (RMB, matching CONTENT_DESIGN's "RClick") and `Ultimate` (**R**, matching GDD §Controls and CORE_SYSTEMS §4, which both specify it — an earlier note here claimed no design doc did, and was wrong) to the Player map.
 
 **Attack clips cannot use the animator's shared frame rate.** Katana Basic totals 0.36s, shorter than its four frames take at 8fps. `CharacterAnimator.PlayAction(state, duration, frameCount)` therefore stretches an action's clip across the action's own duration; the free-running counter still drives Idle/Move. `SetMotion` keeps updating **facing** during an action but no longer overrides **state**, so the player can aim mid-swing without cutting the animation short.
 
@@ -237,7 +237,7 @@ Enemies and bosses are **whole characters** and never need inpainting, so they u
 - Attack **lunge** — 0.75/1.15/0.9 world units on an ease-out curve, direction locked per hit. Replaced an earlier root-in-place behaviour that was inferred from one adjective in BALANCE and was the main reason attacks felt weightless.
 - `CameraRig` — smooth follow (0.15s), look-ahead (1.1 units) leading the player's input, and Perlin-based impact shake on **unscaled** time so shake and hitstop overlap rather than cancelling. The camera was previously static, which is a large part of why the game felt stiff.
 
-**Not done, deliberately:** Hades-style movement acceleration. GDD §Movement locks *"fixed speed, no acceleration curve (keeps controls crisp and easy to tune)"*. Adding momentum would contradict a locked decision — it needs a Rule 11 reopen, not a silent change.
+**Movement acceleration — later built, owner-directed.** This section previously recorded it as deliberately *not* done, because GDD §Movement locks *"fixed speed, no acceleration curve (keeps controls crisp and easy to tune)"*. The owner subsequently directed it: `PlayerController.accelerationTime` is **0.055s** and `decelerationTime` **0.085s**, the asymmetry being what reads as weight rather than float. The intent behind the locked rule is preserved — 55ms is about three frames at 60fps, imperceptible as lag — and both values tune to zero to restore the documented behaviour exactly. Recorded in `00-DESIGN_CHANGE_BRIEF.md` §7d, pending a Rule 14 pass. `EnemyChase` uses the same ramp at 0.12 / 0.16.
 
 **No longer temporary:** hitstop, shake and gauge fill used to fire on the Active phase rather than on contact, gated behind `UltimateGauge.fillOnSwingUntilEnemiesExist`, so whiffs stuttered. All three now hang off `AttackHitbox`'s contact reports and the flag is gone — see **Damage pipeline & training dummy** below.
 
@@ -361,7 +361,9 @@ Actors used to overlap flatly, and which one won could flip as they moved. Four 
 | `Design/04-BALANCE.md` §4 | Katana +8% Basic / +15% Heavy; Bow +6%/+15%; Greatsword +10%/+20% per landed hit | **1% flat, every weapon, every action** | Owner-directed. 100 landed hits to fill. Values stay serialized on `UltimateGauge.fillRates`, retunable without a recompile (Design Rule 8). |
 | `Design/02-CORE_SYSTEMS.md` §4 + `04-BALANCE.md` §10 | Gain-on-taking-damage is the **"Gauge: Vengeance"** upgrade (+5%), not base behaviour | **+1% on taking damage at base** (`gainOnDamageTaken`) | Owner-directed. A flat percentage, deliberately not scaled by how hard the hit was. |
 
-Both need a Rule 14 reopen if they are to become design; until then BALANCE §4 remains the locked table and this section is the record of the deviation.
+Both need a Rule 14 reopen if they are to become design; until then BALANCE §4 remains the locked table and this section is the record of the deviation. **Also in `00-DESIGN_CHANGE_BRIEF.md` §7g**, with the two consequences that need deciding rather than just recording: a flat rate deletes the gauge as a weapon-differentiating knob, and gain-on-damage at base leaves the "Gauge: Vengeance" upgrade with no job.
+
+**A third divergence, and the only one that is a live gameplay hole:** the Ultimate still calls `ComboCounter.Consume()` and **discards the result**. CORE_SYSTEMS §4 and BALANCE §4 convert those stacks into bonus damage, and a buff Ultimate has no damage to convert them into — so casting at 10 stacks silently throws away −20% damage at the exact moment a +50% damage buff starts, making the optimal play to cast at *zero* stacks. That inverts what a "Combo Finisher" is for. Brief §7h lays out the three ways out; **this wants a decision before any further Ultimate work.**
 
 ### Still missing from Milestone 1
 
@@ -461,7 +463,10 @@ component order, and the Warden would flash back to untinted on its first hit.
 `ART_DIRECTION` §4 gives enemies a frame budget but defines **no row order and no direction count**
 for them (§3's 8-way-mirrored rule sits under *Player* Animation Budget). This pass had to invent one.
 **Recorded here, deliberately not written into the locked design doc** — Design Rules 11/12. A Rule 14
-pass should fold it into ART_DIRECTION properly.
+pass should fold it into ART_DIRECTION properly; it is on the designer's list as
+`00-DESIGN_CHANGE_BRIEF.md` §7i, along with the two other things this pass invented that BALANCE and
+CONTENT_DESIGN never specified — how each enemy delivers its damage (§7j) and roughly thirty
+behaviour numbers with no design source (§7k).
 
 Sheet is **128 × 576** — 4 columns × 12 rows of 32×48 cells, 32 PPU, Point, uncompressed, pivot Center.
 Sub-sprites are `<Enemy>_<row>_<col>`, matching the existing player convention. Row 0 is the top row.

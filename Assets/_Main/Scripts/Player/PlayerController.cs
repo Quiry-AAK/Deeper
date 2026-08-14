@@ -7,9 +7,12 @@ using UnityEngine.InputSystem;
 namespace Deeper.Player
 {
     /// <summary>
-    /// 8-directional top-down movement at a fixed speed with no acceleration curve, per GDD
-    /// §Player. Speed is read from <see cref="PlayerStats"/> every frame, so equipment and (later)
-    /// upgrades and Hub stats change it without touching this class.
+    /// 8-directional top-down movement, per GDD §Player. Speed is read from
+    /// <see cref="PlayerStats"/> every frame, so equipment and (later) upgrades and Hub stats change
+    /// it without touching this class.
+    ///
+    /// GDD §Player specifies a *fixed* speed with no acceleration curve; the short ramp below is
+    /// owner-directed and diverges from it, recorded in <c>Docs/00-DESIGN_CHANGE_BRIEF.md</c> §7d.
     ///
     /// Input comes from the <c>.inputactions</c> asset rather than hardcoded keys, so rebinding
     /// stays a data change (see the Milestone 1 input risk note in the engineering plan).
