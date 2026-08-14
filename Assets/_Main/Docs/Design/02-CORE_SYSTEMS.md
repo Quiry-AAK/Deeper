@@ -60,7 +60,7 @@ Replaces a traditional cooldown. Purely resource-gated (Hades Cast-style pacing)
 
 - Gauge range: 0–100%
 - **DECIDED: per-weapon gauge fill is restored** (this had been built as a flat 1% for every weapon/action, deleting weapon differentiation — that's now reverted). Exact rates: BALANCE §4. **This is a build task** — the flat-1% version is what's currently in the codebase; it needs to be reverted to the per-weapon table.
-- Taking damage also fills the gauge, **+1% at base, flat regardless of hit severity** — this used to be exclusive to the "Gauge: Vengeance" upgrade (+5%, CONTENT_DESIGN §7/BALANCE §10). Now that gain-on-damage is base behavior, ⚠️ **Gauge: Vengeance has no remaining job and needs either a new effect or removal from the pool.**
+- Taking damage also fills the gauge, **+1% at base, flat regardless of hit severity**. **DECIDED:** the "Gauge: Vengeance" upgrade (CONTENT_DESIGN §7/BALANCE §10) now stacks *on top of* that base — it grants an additional +2% on taking damage (3% total), rather than duplicating the base 1% for no gain.
 - At 100%, `Ultimate()` becomes callable via R
 - On activation, gauge drains instantly to 0% — no partial-use, no banking excess
 - Gauge upgrades (from the pool) can further modify gain-per-hit, gain-on-taking-damage, or add a small passive trickle over time
@@ -70,7 +70,7 @@ Replaces a traditional cooldown. Purely resource-gated (Hades Cast-style pacing)
 - **Bow** — Full-Charge Piercing Shot: an instant max-charge Charge Shot that pierces all enemies in a line, no hold-time required
 - **Greatsword** — Ground Slam: AoE hit centered on the player, knocks back and damages all enemies in radius
 
-**Alt Ultimate (upgrade-gated):** Each weapon has one Epic-tier upgrade (CONTENT_DESIGN.md §2) that swaps `Ultimate()`'s implementation for a more mobile, skill-style variant instead of the default (e.g., Katana's Thousand Cuts becomes a movable flurry). Implemented as a swappable strategy on the `IWeapon` instance — taking the upgrade reassigns which Ultimate implementation `Ultimate()` calls; the gauge-fill and full-drain rules are unchanged regardless of which variant is active. ⚠️ **NEEDS DECISION:** Alt Ultimates are currently written as alternative Attacks only — can a weapon's Alt Ultimate also be a Buff (relevant to Katana specifically), or does an Attack-shaped weapon always get an Attack-shaped Alt?
+**Alt Ultimate (upgrade-gated):** Each weapon has one Epic-tier upgrade (CONTENT_DESIGN.md §2) that swaps `Ultimate()`'s implementation for a more mobile, skill-style variant instead of the default. Implemented as a swappable strategy on the `IWeapon` instance — taking the upgrade reassigns which Ultimate implementation `Ultimate()` calls; the gauge-fill and full-drain rules are unchanged regardless of which variant is active. **DECIDED: Katana's Thousand Cuts stays Attack-shaped**, not converted to a Buff. This gives Katana players a real choice between the default (empower herself, keep attacking normally through the buff) and the Alt (a mobile burst of real damage, no empowerment) — two genuinely different shapes rather than two buffs. Bow and Greatsword's Alt Ultimates remain Attack-shaped as before, unaffected by this question.
 
 ---
 
@@ -98,9 +98,9 @@ Each weapon has one passive mechanical hook, always active regardless of upgrade
 
 ## 6. Damage System
 
-- Flat damage per hit — no crit system anywhere in the game (run or permanent). Permanent power growth is delivered instead through the Hub Stat System's Core Stats (flat/percentage bonuses) and Miner's Traits (unique named effects) — see §10.
+- Flat damage per hit — no crit system anywhere in the game (run or permanent). Permanent power growth is delivered instead through the Hub Stat System's Core Stats (flat/percentage bonuses) and Marks (unique named effects) — see §10.
 - Damage sources: Basic Attack, Heavy Strike, Ultimate, enemy attacks, Hazard Kills, environmental hazards (geysers, scorched ground, currents — per biome)
-- **As documented:** a single `OnDamageDealt(source, target, amount)` event that the HUD, Combo Counter, and Ultimate Gauge all subscribe to. **As built:** `AttackHitbox.Landed(action, target, amount)` plus `Damageable.Damaged(amount)` — two events, and **neither carries `source`**. This works today only because the player is the only damage source that exists. Milestone 4's on-hit upgrade procs and any future "damage dealt by X" upgrade will need `source` on the event — ⚠️ **needs settling (add `source` to the built pipeline, or formally drop the single-event model from this doc) before that upgrade pool is authored.**
+- **DECIDED (per engineering recommendation):** `source` gets added to the built pipeline. Current build has `AttackHitbox.Landed(action, target, amount)` plus `Damageable.Damaged(amount)`, neither carrying `source` — that's fine today only because the player is the only damage source that exists. Milestone 4's on-hit upgrade procs and any future "damage dealt by X" upgrade need it, so both events gain a `source` parameter before that pool is authored. The single-event model this doc originally described (`OnDamageDealt(source, target, amount)`) stays aspirational/simplified for documentation purposes — the two-event split is what's actually built and stays built, just with `source` added to each.
 - **Hazard Kills:** if an enemy is pushed/dashed into the Rising Hazard's leading edge, it's an instant kill regardless of remaining HP — implemented as a trigger volume check on the Hazard front, not a damage-system special case
 
 ---
@@ -136,14 +136,14 @@ One underlying timer-driven system, reskinned per biome (GDD §Biome Identity).
 
 **Secret Floors:**
 - A locked door prefab requires a `SecretKey` flag on the player's inventory, granted by defeating a rare elite spawn earlier in that biome
-- Leads to a Vault Room (large Ore payout or guaranteed Legendary-tier upgrade offer)
+- Leads to a Vault Room (large Glimmer payout or guaranteed Legendary-tier upgrade offer)
 - No separate hazard override — entering costs real time against the same biome hazard timer, which is the entire risk/reward tension (no new system required)
 
 ---
 
 ## 9. Upgrade & Curse System
 
-- End of each floor: draw 3 upgrade offers via weighted random draw from a pool = shared pool (HP, Ore, Speed, Dash) + weapon-specific sub-pool (Heavy Strike mods, Ultimate mods, Ultimate Gauge mods) matching the equipped weapon
+- End of each floor: draw 3 upgrade offers via weighted random draw from a pool = shared pool (HP, Glimmer, Speed, Dash) + weapon-specific sub-pool (Heavy Strike mods, Ultimate mods, Ultimate Gauge mods) matching the equipped weapon
 - A 4th slot is always populated with a **Curse** — drawn separately from its own small Curse pool, always visible, never mandatory
 - Weighting can vary by depth/biome (e.g., certain upgrade tags weighted higher in later biomes) — same weighted-draw function, just a different weight table per biome, no new system
 - Legendary-tier upgrades (Relics, §10) use the same draw pipeline but are excluded from normal weighted draws — only appear via Mini-Boss guaranteed drop, Secret Floor vault, or Relic Vault guarantee
@@ -152,8 +152,8 @@ One underlying timer-driven system, reskinned per biome (GDD §Biome Identity).
 
 ## 10. Meta-Progression Systems
 
-- **Ore → Ore Shards:** conversion happens once, at run end (win or death), formula based on Ore collected + depth reached (formula in BALANCE.md). No in-run shop — Ore has zero utility until the run ends.
-- **Hub Stat System:** two tiers, both purchased with Ore Shards, no dependency tree (Rule: bounded, not a skill tree). **Core Stats** are rank-based (Max HP, Base Damage, Move Speed, Ultimate Gauge Gain, Ore Gain, Dash Cooldown). **Miner's Traits** are unique, mostly single-purchase named effects (Hades Mirror of Night-style — e.g., Death Defiance, Boiling Blood, Warm-Up) that create build-defining decisions rather than flat number lines. Plus two flat non-stat unlocks (extra Curse slot, Relic Cache) that sit outside both tiers. Full table in CONTENT_DESIGN.md §7.
+- **Glimmer → Shards:** conversion happens once, at run end (win or death), formula based on Glimmer collected + depth reached (formula in BALANCE.md). No in-run shop — Glimmer has zero utility until the run ends.
+- **Hub Stat System:** two tiers, both purchased with Shards, no dependency tree (Rule: bounded, not a skill tree). **Core Stats** are rank-based (Max HP, Base Damage, Move Speed, Ultimate Gauge Gain, Glimmer Gain, Dash Cooldown). **Marks** are unique, mostly single-purchase named effects (Hades Mirror of Night-style — e.g., Death Defiance, Boiling Blood, Warm-Up) that create build-defining decisions rather than flat number lines. Plus two flat non-stat unlocks (extra Curse slot, Relic Cache) that sit outside both tiers. Full table in CONTENT_DESIGN.md §7.
 - **Weapon Mastery:** a small per-weapon counter incremented by run-usage (not Shard spend) — e.g., "floors cleared with this weapon equipped" — crossing thresholds unlocks the 3–5 mastery nodes per weapon
 - **Relics:** the Legendary upgrade rarity, one per weapon. First time a given weapon's Relic is offered and taken, it's flagged "discovered" on the save file. Discovered Relics become purchasable from the Relic Vault (Hub) at high Shard cost — purchasing guarantees that Relic appears as an offer once in the player's next run.
 

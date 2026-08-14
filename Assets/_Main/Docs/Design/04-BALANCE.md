@@ -64,7 +64,7 @@ All timing in seconds. Damage in flat HP.
 | Bow | +6% (uncharged) / +12% (full charge) | +15% |
 | Greatsword | +10% | +20% |
 
-**Gain on taking damage, base:** +1% flat, not scaled by hit severity (this used to be exclusive to the "Gauge: Vengeance" upgrade at +5% — see CORE_SYSTEMS §4 for the open question on what that upgrade does now that its old job is base behavior).
+**Gain on taking damage, base:** +1% flat, not scaled by hit severity. **DECIDED:** the "Gauge: Vengeance" upgrade now adds +2% on top of this base (3% total), giving it a real job instead of duplicating base behavior — see §9/§10 for the updated value.
 
 **Ultimate damage/effect (base, before Alt Ultimate or mods):**
 
@@ -82,11 +82,11 @@ All timing in seconds. Damage in flat HP.
 
 | Weapon | Alt Ultimate | Base Value |
 |---|---|---|
-| Katana | Thousand Cuts | 6 hits × 8 damage over 1.2s, ~~player-mobile~~ (see note below) |
+| Katana | Thousand Cuts | 6 hits × 8 damage over 1.2s, **full free player movement during the hits** (see note below) |
 | Bow | Rain of Arrows | 10 arrows × 5 damage over 2.5s in a 2.5-unit zone |
 | Greatsword | Earthbreaker Charge | 4 damage per 0.1s tick while charging (up to 3s) + 30 damage slam on impact/end |
 
-**Note on "player-mobile":** all attacks now drive a forward lunge rather than rooting the player (GDD §Combat, "Attack Movement") — so "player-mobile" no longer distinguishes Thousand Cuts from a base attack the way it did when this row was written. ⚠️ **NEEDS DECISION:** what should distinguish the Alt Ultimate now — full free movement during the hits (actual player-steered mobility, vs. the locked-direction lunge every attack gets), or something else entirely?
+**"Player-mobile" resolved:** all attacks now drive a forward lunge rather than rooting the player (GDD §Combat, "Attack Movement"), so a locked-direction lunge no longer distinguishes anything on its own. **DECIDED:** what distinguishes Thousand Cuts is genuine player-steered movement during the hits — she can actually change direction mid-flurry, unlike the locked-direction lunge every other attack gets. This needs implementing as real free movement, not the existing lunge behavior.
 
 ---
 
@@ -133,7 +133,7 @@ Two numbers are anchored to something real: ART_DIRECTION §4 caps enemy Telegra
 | Forge Golem | 80 | 18 | 1.8 |
 | Elite: Cinder Warden | 130 | 22 | 1.8 |
 
-⚠️ **The Deep Warden is missing half its Elite spec:** ART_DIRECTION §4 defines an Elite as "palette-swap + 1 additional aura VFX layer only." The palette swap shipped (Warden is the Brute recolored violet); the aura layer did not, and isn't a simple add — `AuraVisuals` currently resolves `UltimateBuff` and `AttackStateMachine`, so it's coupled to the player and needs rework before it can point at an enemy. Worth fixing before Biome 2/3 add Tideheart and Cinder Warden, which need the same layer.
+**Deep Warden's Elite spec, resolved:** the palette swap (Brute recolored violet) is now the full MVP spec — the aura VFX layer ART_DIRECTION §4 originally called for is cut for MVP and deferred to post-MVP polish (see that doc). No open item here anymore.
 
 ---
 
@@ -145,7 +145,7 @@ Two numbers are anchored to something real: ART_DIRECTION §4 caps enemy Telegra
 | The Drowned Custodian (Biome 2) | 450 | 2 | Phase 2 at 50% HP: water hazard covers 75% of room. Homing projectile speed: 2.5 units/sec (snipeable by Bow for 1.5x damage) |
 | The Molten Sentinel (Biome 3) | 600 | 3 | Geyser eruption every 8s; Hyper Armor absorbs 1 tick fully at 40% reduction |
 | The Depth Warden (her father) | 1200 | 3 | Phase 1: collapsing-tile theme, Phase 2: rising water theme, Phase 3: lava geyser theme. Weapon-check moment in Phase 3. Fought first, on Floor 16 — no longer the final encounter of the floor. |
-| **Zyno** (True Final Boss) | — | — | Fought immediately after the Depth Warden, same floor. **No stats exist yet — new content, not budgeted.** See `03-CONTENT_DESIGN.md`'s Floor 16 scope flag for the MVP-vs-post-MVP options. |
+| **Zyno** (True Final Boss) | Reuses an existing Mini-Boss's HP/phases for MVP (specific choice TBD) | — | Fought immediately after the Depth Warden, same floor. **DECIDED: MUST SHIP.** MVP version is a palette-swap + dialogue pass on an existing Mini-Boss (cheapest way to make this real for the timeline); a bespoke stat block/moveset is SHOULD SHIP. See `03-CONTENT_DESIGN.md` Floor 16 and `08-MVP.md`. |
 
 ---
 
@@ -194,9 +194,9 @@ Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension bina
 | Long Dash | Common | +25% Dig-Dash distance |
 | Phase Step | Rare | +0.1s i-frame duration |
 | Blink Strike | Epic | Dig-Dash deals 12 damage to enemies passed through |
-| Prospector's Eye | Common | +20% Ore from enemies |
-| Lucky Vein | Common | +30% Ore from chests |
-| Ore Magnet | Rare | Pull radius 3.0 units |
+| Keen Eye | Common | +20% Glimmer from enemies |
+| Lucky Find | Common | +30% Glimmer from chests |
+| Glimmer Magnet | Rare | Pull radius 3.0 units |
 | Frost Touch | Rare | -30% enemy move speed for 1.5s on hit |
 | Venom Edge | Rare | 2 damage/tick DoT, 4 ticks, stacks to 5 |
 | Static Discharge | Epic | 4 damage arc to 1 nearby enemy (range 3.0 units) |
@@ -218,7 +218,7 @@ Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension bina
 | Razor Focus | Decay over 1.5s instead of instant reset |
 | Combo Overflow | Stacks beyond cap: +3% gauge each |
 | Gauge: Bloodrush | Basic gauge gain +4% (12% total) |
-| Gauge: Vengeance | +5% gauge on taking damage |
+| Gauge: Vengeance | +2% gauge on taking damage, stacks with the 1% base (3% total) |
 | Gauge: Adrenal Rush | +50% gauge gain while at 8+ stacks |
 | Thousand Cuts | See §4 |
 | Deathmark | Marked target takes +25% from next Heavy Strike |
@@ -253,7 +253,7 @@ Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension bina
 | Unshakable | Hyper Armor extends 0.1s into Active |
 | Juggernaut | Hyper Armor (25% reduction) for 0.3s after landing a hit |
 | Gauge: Warbringer | Heavy Strike gauge +5% (25% total) |
-| Gauge: Vengeance | +5% gauge on taking damage |
+| Gauge: Vengeance | +2% gauge on taking damage, stacks with the 1% base (3% total) |
 | Gauge: Momentum Forge | +50% gauge gain while Hyper Armor active |
 | Aftershock | Lingering zone: 6 damage/tick, 2 ticks |
 | Seismic Wave | Secondary ring: 20 damage, radius 5.0 units |
@@ -268,7 +268,7 @@ Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension bina
 | Curse | Values |
 |---|---|
 | Glass Cannon | +40% damage dealt / +100% damage taken |
-| Greed's Toll | +200% Ore from enemies / Hazard timer -20% (faster) |
+| Greed's Toll | +200% Glimmer from enemies / Hazard timer -20% (faster) |
 | Reckless Vigor | +50% gauge gain / -25% Ultimate damage |
 | Frail Grip | +1 free Heavy Strike chain hit / Heavy Strike gauge gain = 0 |
 | Blood Debt | Full heal now / Max HP -20% for rest of run |
@@ -300,13 +300,13 @@ Curses are drawn from their own pool (flat, uniform weight) and don't participat
 
 ---
 
-## 14. Ore → Ore Shards Conversion
+## 14. Glimmer → Shards Conversion
 
 ```
-OreShards = floor(OreCollected × 0.5) + (DepthReached × 10)
+Shards = floor(GlimmerCollected × 0.5) + (DepthReached × 10)
 ```
 
-Example: dying on floor 8 with 200 Ore collected → floor(200 × 0.5) + (8 × 10) = 100 + 80 = **180 Ore Shards**.
+Example: dying on floor 8 with 200 Glimmer collected → floor(200 × 0.5) + (8 × 10) = 100 + 80 = **180 Shards**.
 
 ---
 
@@ -320,10 +320,10 @@ Example: dying on floor 8 with 200 Ore collected → floor(200 × 0.5) + (8 × 1
 | Base Damage | +2 damage | +10 damage | 120 |
 | Move Speed | +2% | +10% | 130 |
 | Ultimate Gauge Gain | +4% | +20% | 110 |
-| Ore Gain | +6% | +30% | 90 |
+| Glimmer Gain | +6% | +30% | 90 |
 | Dash Cooldown | -4% | -20% | 100 |
 
-**Miner's Traits:** single-purchase flat cost (Death Defiance has 2 ranks, all others are 1).
+**Marks:** single-purchase flat cost (Death Defiance has 2 ranks, all others are 1).
 
 | Trait | Value | Cost |
 |---|---|---|
@@ -332,8 +332,8 @@ Example: dying on floor 8 with 200 Ore collected → floor(200 × 0.5) + (8 × 1
 | Boiling Blood | +1% damage per 5% HP missing | 300 |
 | Warm-Up | Ultimate Gauge starts each floor at 20% | 280 |
 | Nerves of Steel | First hit each floor negated | 320 |
-| Old Prospector | +50 starting Ore | 200 |
-| Miner's Sixth Sense | Post-floor-5: 1 guaranteed Rare+ upgrade per offer | 400 |
+| Head Start | +50 starting Glimmer | 200 |
+| Sixth Sense | Post-floor-5: 1 guaranteed Rare+ upgrade per offer | 400 |
 | Steadfast Grip | Curse downsides reduced 15% | 300 |
 | Second Skin | -2 flat damage taken, always active | 250 |
 
@@ -344,7 +344,7 @@ Example: dying on floor 8 with 200 Ore collected → floor(200 × 0.5) + (8 × 1
 | Second Curse Slot | 400 |
 | Relic Cache | 500 |
 
-**Relic Vault:** 600 Ore Shards per Relic, purchasable once discovered (per weapon), guarantees that Relic as an offer once in the next run.
+**Relic Vault:** 600 Shards per Relic, purchasable once discovered (per weapon), guarantees that Relic as an offer once in the next run.
 
 ---
 

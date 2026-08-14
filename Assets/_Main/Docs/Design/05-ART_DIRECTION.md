@@ -65,14 +65,14 @@ Per weapon, the following states are required. Frame counts are a ceiling — hi
 | Telegraph (wind-up before attack) | 3 |
 | Attack | 3 |
 | Death | 3 |
-| Elite variant | Palette-swap + 1 additional "aura" VFX layer only — no new frames |
+| Elite variant | Palette-swap only for MVP — no new frames, **no aura VFX layer** (see decision below) |
 
 **Enemy sprite-sheet contract (built, previously undocumented — this section gave a frame budget but no row order or direction count, and the enemy content pass had to invent one):**
 
 - **Enemies author 3 directions (Down, Up, Side), not the Player's 5** (§3 above). Basics are 4-directional, mirrored to cover all 8 facings; the full 5-row Player set is reserved for bosses. Diagonal rows earn the least per cell, and 2-directional art can't show whether an enemy is *facing you* — the information every telegraphed fight is built on.
 - **Sheet layout: 128×576px, 4 columns × 12 rows of 32×48.** Rows 0–2 Idle/Move, 3–5 Telegraph, 6–8 Attack, 9–11 Death.
 
-⚠️ **Elite aura layer is unbuilt, not just undocumented.** The Deep Warden ships as a palette swap only (Brute recolored violet) — the "+1 aura VFX layer" this table promises doesn't exist yet, and isn't a simple add: `AuraVisuals` currently resolves `UltimateBuff` and `AttackStateMachine`, coupling it to the player. It needs rework before it can target an enemy. Worth resolving before Biome 2/3 add Tideheart and Cinder Warden, which need the same layer.
+**DECIDED: Elite aura VFX cut for MVP, deferred to post-MVP polish.** The Deep Warden ships as a palette swap only (Brute recolored violet) — that's now the whole MVP spec, not a gap. The aura layer wasn't a simple add anyway: `AuraVisuals` currently resolves `UltimateBuff` and `AttackStateMachine`, coupling it to the player, and needs rework before it can target an enemy. Revisit for Biome 2/3's Tideheart and Cinder Warden as part of the general post-MVP polish pass.
 
 Mini-Bosses and the Final Boss get an expanded budget (their own animation set, phase-specific poses) — exact count deferred to when their movesets are storyboarded, not needed for MVP planning.
 
@@ -80,9 +80,9 @@ Mini-Bosses and the Final Boss get an expanded budget (their own animation set, 
 
 ## 5. UI Style
 
-- **HUD:** minimal, corner-anchored — HP bar top-left, Ultimate Gauge and weapon icon bottom-center (mirrors the "resource, not cooldown" framing — the gauge should visually read as filling, not counting down), Ore counter top-right, hazard proximity meter as a subtle screen-edge vignette rather than a numeric readout (keeps tension environmental, not spreadsheet-y).
+- **HUD:** minimal, corner-anchored — HP bar top-left, Ultimate Gauge and weapon icon bottom-center (mirrors the "resource, not cooldown" framing — the gauge should visually read as filling, not counting down), Glimmer counter top-right, hazard proximity meter as a subtle screen-edge vignette rather than a numeric readout (keeps tension environmental, not spreadsheet-y).
 - **Upgrade Screen:** 3 cards in shared/weapon-pool color coding (Common = white/gray border, Rare = blue, Epic = purple, Legendary/Relic = gold), 4th Curse card visually distinct with a red/black treatment so it's never confused with a normal offer.
-- **Hub Screen:** Core Stats and Miner's Traits visually separated into two distinct panels (per CONTENT_DESIGN §7) rather than one long list, so the "these are different kinds of upgrades" distinction is legible at a glance.
+- **Hub Screen:** Core Stats and Marks visually separated into two distinct panels (per CONTENT_DESIGN §7) rather than one long list, so the "these are different kinds of upgrades" distinction is legible at a glance.
 
 ---
 

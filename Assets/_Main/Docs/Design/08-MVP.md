@@ -6,7 +6,7 @@ Defines what must be playable at the end of the 45-day extended timeline (see 07
 
 ⚠️ **NEEDS DECISION: narrative/dialogue has no tier below.** `10-NARRATIVE.md` (decided) adds a whole system class — story state, dialogue, first-run-vs-later-run variation — that appears in none of MUST SHIP / SHOULD SHIP / CUT IF NECESSARY. For reference: the first run itself needs **no dialogue UI** (the story is carried by easter eggs the player isn't expected to understand yet, per `10-NARRATIVE.md` §2), so the core loop isn't blocked by this. What's undecided is whether dialogue UI + the `HasSeenTheTruth`-gated later-run lines belong in this MVP at all, since content authoring is already this project's identified schedule risk (see below). See `00-DESIGN_CHANGE_BRIEF.md` §4, §9.
 
-⚠️ **NEW SCOPE, NEEDS A TIER: Zyno as a second Floor 16 boss.** Per the owner's decision (`10-NARRATIVE.md` §1, `03-CONTENT_DESIGN.md` Floor 16), the father/Depth Warden fight is unchanged (already budgeted), but **Zyno's fight is entirely new content — no moveset, stats, arena, or art exist.** This needs an explicit MUST/SHOULD/CUT/post-MVP call; see `03-CONTENT_DESIGN.md`'s Floor 16 scope options (post-MVP, reuse-heavy MVP version, or full new boss).
+**DECIDED: Zyno is MUST SHIP.** This removes the "placeholder win condition room" safety valve Floor 16 used to have (below) — the MVP now needs a real Zyno encounter, not a stub. Because Zyno's fight is genuinely new content (no moveset, stats, arena, or art exist yet) landing on top of a timeline that was already extended once for the 3-weapon system, the MUST SHIP entry below recommends the cheapest version that still counts as "real": reuse an existing Mini-Boss's moveset/arena, palette-swapped with new dialogue — the same recontextualization technique already budgeted for Elites (ART_DIRECTION §4, NARRATIVE §4a) — rather than a bespoke moveset. A fully custom Zyno fight remains possible, but is a genuine additional-timeline conversation, not something the current 45-day plan absorbs for free.
 
 ## MUST SHIP
 
@@ -20,20 +20,21 @@ Non-negotiable. The MVP is not the MVP without these.
 - [ ] Rising Hazard system, at least the Upper Caves variant (rockfall + cracked tiles)
 - [ ] Weighted-draw Upgrade system with the shared upgrade pool (can ship with a reduced subset — see CUT IF NECESSARY)
 - [ ] Curse system (4th slot, at least 4–5 of the 8 curses)
-- [ ] Full Hub loop: weapon select, Descend, Death/Victory screen, Ore→Ore Shard conversion, return to Hub
+- [ ] Full Hub loop: weapon select, Descend, Death/Victory screen, Glimmer→Shard conversion, return to Hub
 - [ ] At least a minimal Hub Stat System (2–3 Core Stats purchasable) proving the meta-progression loop works end to end
-- [ ] Floor 16 stub: does not need to be the full Depth Warden fight — a placeholder "win condition" room is acceptable to prove the loop closes (full Final Boss is SHOULD SHIP, see below)
+- [ ] **Floor 16 Final Boss Sequence — no longer a placeholder stub.** The Depth Warden/father fight can ship as a stub or full fight (see SHOULD SHIP below, unchanged from before), but **a real Zyno encounter must be reachable and beatable** — minimum version: an existing Mini-Boss moveset/arena, palette-swapped, with new Zyno dialogue and a distinct name/identity. This is the one item on this list that's genuinely new scope; see the flag above.
 
 ## SHOULD SHIP
 
 Strongly desired, real quality-of-experience impact, but the game is still recognizably "Deeper" without them at MVP time.
 
 - [ ] Biomes 2 & 3 (Flooded Tunnels, Molten Depths) fully playable
-- [ ] Full Final Boss (The Depth Warden) with all 3 phases
+- [ ] Full Depth Warden/father fight with all 3 phases (the fight itself is unchanged from the original Final Boss design — just reidentified; it's SHOULD SHIP the same way it always was, independent of the Zyno requirement above)
+- [ ] A bespoke Zyno moveset/arena, replacing the reused-Mini-Boss MVP version above
 - [ ] Full weapon-specific upgrade sub-pools (all 45 entries across 3 weapons)
 - [ ] All 8 Curses
 - [ ] Alt Ultimates (all 3 weapons)
-- [ ] Full Hub Stat System (all 6 Core Stats + all 8 Miner's Traits)
+- [ ] Full Hub Stat System (all 6 Core Stats + all 8 Marks)
 - [ ] Secret Floors (key-gated vault rooms)
 - [ ] Relics (all 3, Legendary tier) + Relic Vault
 
@@ -58,9 +59,9 @@ A single unbroken playthrough must be possible:
 2. Select a weapon → Descend
 3. Clear Biome 1 (floors 1–5) using core loop, encountering the Upgrade/Curse screen each floor
 4. Defeat Mini-Boss 1
-5. Reach Floor 16 (full 3-biome run if Biomes 2/3 shipped, or the Floor 16 stub if not)
-6. Win or die → see Death/Victory screen showing depth reached and Ore Shards earned
-7. Return to Hub with Ore Shards, spend on at least one Core Stat, redescend
+5. Reach Floor 16 (full 3-biome run if Biomes 2/3 shipped, or a Biome 1-only run to Floor 16 if not) and beat the Floor 16 sequence — Depth Warden/father (stub or full, per SHOULD SHIP) then Zyno (minimum: reused-content version, per MUST SHIP)
+6. Win or die → see Death/Victory screen showing depth reached and Shards earned
+7. Return to Hub with Shards, spend on at least one Core Stat, redescend
 
 If this sequence is unbroken and the 3 weapons feel meaningfully different while doing it, the MVP has succeeded — everything else is depth to layer on post-MVP.
 

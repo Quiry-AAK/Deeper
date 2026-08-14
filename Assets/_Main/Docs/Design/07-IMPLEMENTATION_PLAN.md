@@ -54,7 +54,7 @@ Day-by-day build plan. Original scope was a 30-day MVP; the plan below reflects 
 
 - Day 41: Final Boss (The Depth Warden) — multi-phase, reuses all 3 hazard themes
 - Day 42: Escape sequence (post-boss countdown, reuses Dig-Dash/Hazard systems)
-- Day 43: Hub Stat System (Core Stats + Miner's Traits), Ore→Ore Shard conversion, Death/Victory screens
+- Day 43: Hub Stat System (Core Stats + Marks), Glimmer→Shard conversion, Death/Victory screens
 - Day 44: Relic Vault, Weapon Mastery stub (tracking only — full node effects are a post-MVP item per CONTENT_DESIGN open items)
 - Day 45: Full end-to-end playtest, Hub→Run→Death/Victory→Hub loop — **exit criteria: see 08-MVP.md MUST SHIP list, all items checked**
 

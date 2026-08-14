@@ -39,12 +39,12 @@ Offered regardless of equipped weapon, drawn alongside the weapon-specific sub-p
 | Phase Step | Rare | Dig-Dash grants slightly longer i-frames |
 | Blink Strike | Epic | Dig-Dash deals damage to any enemy it passes through |
 
-### Ore / Meta
+### Glimmer / Meta
 | Upgrade | Tier | Effect |
 |---|---|---|
-| Prospector's Eye | Common | +% Ore drop from enemies |
-| Lucky Vein | Common | +% Ore drop from chests |
-| Ore Magnet | Rare | Ore is pulled toward the player from a small radius |
+| Keen Eye | Common | +% Glimmer drop from enemies |
+| Lucky Find | Common | +% Glimmer drop from chests |
+| Glimmer Magnet | Rare | Glimmer is pulled toward the player from a small radius |
 
 ### On-Hit Procs
 | Upgrade | Tier | Effect |
@@ -79,12 +79,12 @@ Each weapon's sub-pool covers Heavy Strike mods, Signature Trait mods, Ultimate 
 | Razor Focus | Combo Counter | Rare | Combo stack decays over a couple seconds on miss instead of resetting instantly |
 | Combo Overflow | Combo Counter | Epic | Stacks earned beyond the cap convert into bonus Ultimate Gauge instead of being wasted |
 | Gauge: Bloodrush | Ultimate Gauge | Common | Basic Attacks contribute more % to the gauge |
-| Gauge: Vengeance | Ultimate Gauge | Common | ⚠️ **Job unclear** — gain-on-taking-damage is now base behavior (BALANCE §4), not upgrade-gated. Needs a new effect or removal from the pool. |
+| Gauge: Vengeance | Ultimate Gauge | Common | +2% gauge on taking damage, on top of the 1% base everyone gets (3% total) |
 | Gauge: Adrenal Rush | Ultimate Gauge | Rare | Gauge gain increased while Combo Counter is at or near its cap |
 ~~| Finisher+ | Ultimate mod | Rare | Combo Finisher converts stacks into bonus damage at a higher rate |~~
 ~~| Echo Slash | Ultimate mod | Epic | Combo Finisher strikes twice |~~
 **DECIDED: Finisher+ and Echo Slash are removed from the pool.** Both modified the old Combo-Finisher-consumes-stacks behavior; per the owner's decision that the Katana Ultimate buff no longer touches the Combo Counter at all (BALANCE §4, CORE_SYSTEMS §4), there's nothing left for either upgrade to modify (Design Rule 10).
-| **Thousand Cuts** | Alt Ultimate | Epic | Replaces the default Ultimate: a mobile flurry — player can move freely while unleashing a rapid multi-hit dash-strike combo for a short duration. ⚠️ Written as an alternative to the old Combo Finisher *attack*; now that the default Katana Ultimate is a Buff, decide whether Thousand Cuts stays Attack-shaped or should also become buff-shaped. |
+| **Thousand Cuts** | Alt Ultimate | Epic | Replaces the default Ultimate: a mobile flurry — player has **full free movement** (not the locked-direction lunge every other attack gets) while unleashing a rapid multi-hit dash-strike combo for a short duration. **DECIDED: stays Attack-shaped**, not converted to a Buff — deals real damage where the default Ultimate (now a Buff) deals none, giving a genuine choice of shape rather than two buffs. |
 | Deathmark | Build-defining | Rare | Basic Attacks mark the target; Heavy Strike deals bonus damage to a marked enemy |
 | Windcutter | Build-defining | Common | Basic Attack gains slightly more range and a thin piercing edge |
 
@@ -119,7 +119,7 @@ Each weapon's sub-pool covers Heavy Strike mods, Signature Trait mods, Ultimate 
 | Unshakable | Hyper Armor | Common | Hyper Armor extends slightly into early Active frames |
 | Juggernaut | Hyper Armor | Rare | Landing a hit grants brief Hyper Armor during the following Recovery |
 | Gauge: Warbringer | Ultimate Gauge | Common | Heavy Strike contributes more % to the gauge |
-| Gauge: Vengeance | Ultimate Gauge | Common | ⚠️ Same job-loss issue as the Katana version above (line 82) — gain-on-taking-damage is now base behavior. |
+| Gauge: Vengeance | Ultimate Gauge | Common | Same as the Katana version above (line 82) — +2% on top of the 1% base (3% total) |
 | Gauge: Momentum Forge | Ultimate Gauge | Rare | Gauge gain increased while Hyper Armor is active |
 | Aftershock | Ultimate mod | Rare | Ground Slam leaves a brief lingering damage zone after impact |
 | Seismic Wave | Ultimate mod | Epic | Ground Slam sends out a secondary shockwave ring beyond the initial radius |
@@ -138,7 +138,7 @@ Always offered as a visible, optional 4th slot. High-risk, high-reward, never ma
 | Curse | Effect |
 |---|---|
 | Glass Cannon | +40% damage dealt, but take double damage |
-| Greed's Toll | Enemies drop 3x Ore, but Rising Hazard advances 20% faster |
+| Greed's Toll | Enemies drop 3x Glimmer, but Rising Hazard advances 20% faster |
 | Reckless Vigor | Ultimate Gauge fills 50% faster, but Ultimate deals 25% less damage |
 | Frail Grip | +1 free Heavy Strike chain hit, but Heavy Strike no longer contributes to Ultimate Gauge |
 | Blood Debt | Heal to full HP now, but max HP is reduced for the rest of the run |
@@ -202,12 +202,7 @@ Unchanged from prior pass — numeric stats live in BALANCE.md, this defines rol
 | Enemy | Role | Behavior |
 |---|---|---|
 | **The Depth Warden (her father)** | First fight, Floor 16 | Unchanged from the original design: multi-phase, incorporates all 3 biome hazard types in sequence as the arena degrades, weapon-check moment per the Mini-Boss pattern. Stats/phases: BALANCE §6 (existing "Depth Warden" row, reidentified — no numbers need to change). |
-| **Zyno** | True Final Boss, Floor 16 (after the Warden) | ⚠️ **Entirely new boss content — no moveset, no stats, no arena, no art exist for this fight yet.** See the scope note below. |
-
-⚠️ **SCOPE FLAG (per PROJECT scope-discipline rules — this needs an explicit call, not a silent add to a tier):** Zyno as a full second final-boss encounter is new content on top of everything `07-IMPLEMENTATION_PLAN.md` and `08-MVP.md` already account for. It competes directly with the same Phase 3/5 content-authoring risk those docs already flag as this project's binding constraint. Options, cheapest first:
-- **Post-MVP:** ship the Depth Warden/father fight as Floor 16's Final Boss for MVP (this is a pure rename of already-budgeted content — zero new cost); add Zyno as a true final encounter after MVP.
-- **Reuse-heavy MVP version:** Zyno's fight for MVP reuses an existing Mini-Boss's moveset/arena with a palette-swap + new dialogue (matches the "recontextualization is nearly free" logic already established for the post-story enemies in `10-NARRATIVE.md` §4a), deferring a bespoke Zyno moveset to post-MVP polish.
-- **Full new boss for MVP:** budget it properly — new moveset, stats, arena, art, balance pass — which is a genuine timeline conversation, not a rounding error.
+| **Zyno** | True Final Boss, Floor 16 (after the Warden) — **MUST SHIP** | **DECIDED: Zyno is essential, not optional.** MVP version reuses an existing Mini-Boss's moveset/arena, palette-swapped, with new dialogue and identity (same technique already budgeted for recontextualized enemies, `10-NARRATIVE.md` §4a) — a bespoke Zyno moveset/arena/balance pass is SHOULD SHIP, layered on later. See `08-MVP.md`. |
 
 ---
 
@@ -218,7 +213,7 @@ Unchanged from prior pass.
 | Room Type | Count per Biome | Notes |
 |---|---|---|
 | Combat Room | 6 layouts | 1–2 of the 6 flagged `IsWaveRoom = true` per biome |
-| Reward Room | 2 layouts | Ore and/or upgrade-adjacent, no combat |
+| Reward Room | 2 layouts | Glimmer and/or upgrade-adjacent, no combat |
 | Secret Vault Room | 1 layout | Locked, key-gated, reused across biomes with biome-specific dressing |
 | Mini-Boss Room | 1 layout | Unique per biome |
 
@@ -226,7 +221,7 @@ Unchanged from prior pass.
 
 ## 7. Permanent Progression — Hub Stat System
 
-Replaces the old flat upgrade list. Two tiers, both purchased with Ore Shards, no dependency tree between entries (bounded, not a skill tree).
+Replaces the old flat upgrade list. Two tiers, both purchased with Shards, no dependency tree between entries (bounded, not a skill tree).
 
 **Core Stats** — rank-based, purchased independently:
 
@@ -236,10 +231,10 @@ Replaces the old flat upgrade list. Two tiers, both purchased with Ore Shards, n
 | Base Damage | +Flat damage to all attacks |
 | Move Speed | +% move speed |
 | Ultimate Gauge Gain | +% gauge gained per landed hit, all weapons |
-| Ore Gain | +% Ore collected from all sources |
+| Glimmer Gain | +% Glimmer collected from all sources |
 | Dash Cooldown | -% Dig-Dash cooldown |
 
-**Miner's Traits** — unique, mostly single-purchase named effects (Hades Mirror of Night-style), each creates a small build-defining decision rather than a flat number line:
+**Marks** — unique, mostly single-purchase named effects (Hades Mirror of Night-style), each creates a small build-defining decision rather than a flat number line:
 
 | Trait | Effect |
 |---|---|
@@ -247,8 +242,8 @@ Replaces the old flat upgrade list. Two tiers, both purchased with Ore Shards, n
 | Boiling Blood | +1% damage per 5% max HP missing |
 | Warm-Up | Ultimate Gauge starts each floor at 20% instead of 0% |
 | Nerves of Steel | The first hit taken each floor is fully negated |
-| Old Prospector | Start each run with a flat bonus amount of Ore |
-| Miner's Sixth Sense | After floor 5, one Common upgrade slot each offer is guaranteed upgraded to Rare or higher |
+| Head Start | Start each run with a flat bonus amount of Glimmer |
+| Sixth Sense | After floor 5, one Common upgrade slot each offer is guaranteed upgraded to Rare or higher |
 | Steadfast Grip | Curse downside effects are reduced by 15% |
 | Second Skin | Small permanent flat damage reduction, always active |
 
@@ -269,5 +264,5 @@ Replaces the old flat upgrade list. Two tiers, both purchased with Ore Shards, n
 - Enemy HP/damage/speed per biome tier
 - Mini-Boss and Final Boss HP/phase thresholds
 - Weighted-draw probability table by rarity tier (Common/Rare/Epic), and per-biome weighting shifts
-- Hub Stat System rank counts and Ore Shard cost curve per Core Stat, and flat costs for each Miner's Trait
-- Ore Shard cost for Relic Vault purchases and the two non-stat unlocks
+- Hub Stat System rank counts and Shard cost curve per Core Stat, and flat costs for each Mark
+- Shard cost for Relic Vault purchases and the two non-stat unlocks

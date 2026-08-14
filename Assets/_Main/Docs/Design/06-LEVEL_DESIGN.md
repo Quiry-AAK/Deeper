@@ -17,8 +17,8 @@ Room layout philosophy and per-biome pool detail. Builds on the room counts defi
 | Room Type | Count | Layout Notes |
 |---|---|---|
 | Combat Room | 6 | 1–2 flagged `IsWaveRoom` (CORE_SYSTEMS §8). Each needs at least 2 viable player positioning zones so Greatsword's whiff-punish window and Bow's kiting space both have room to exist — a room that's just one open box favors Katana by default, which isn't the goal. |
-| Reward Room | 2 | No combat. Contains Ore and/or an upgrade-adjacent prop. Small footprint — these are pacing breathers between Combat Rooms, not exploration challenges. |
-| Secret Vault Room | 1 (reused across biomes) | Locked door, key-gated (CORE_SYSTEMS §8). Same base layout reused with biome-specific tile dressing to save art budget — the room's function (large Ore payout or guaranteed Legendary offer) matters more than layout novelty here. |
+| Reward Room | 2 | No combat. Contains Glimmer and/or an upgrade-adjacent prop. Small footprint — these are pacing breathers between Combat Rooms, not exploration challenges. |
+| Secret Vault Room | 1 (reused across biomes) | Locked door, key-gated (CORE_SYSTEMS §8). Same base layout reused with biome-specific tile dressing to save art budget — the room's function (large Glimmer payout or guaranteed Legendary offer) matters more than layout novelty here. |
 | Mini-Boss Room | 1 (unique per biome) | Large open arena, must accommodate the boss's full attack radius plus room for the player to kite. Includes the biome's hazard-behavior layer active during the fight (e.g., Molten Sentinel's geysers erupt mid-fight in its own room). |
 
 ---

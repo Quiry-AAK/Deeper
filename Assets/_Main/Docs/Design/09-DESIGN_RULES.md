@@ -22,7 +22,7 @@ Stat variation alone (higher damage, lower HP) is not sufficient differentiation
 
 ## Rule 5 — New mechanics must serve one of the four core verbs
 
-Movement, Combat, Collect, or Descend (the core loop verbs from the GDD). A proposed mechanic that doesn't clearly strengthen one of these needs a strong justification to be included — "it would be cool" is not sufficient on its own; "it makes Collect a real decision" (e.g., Ore-banking risk) is.
+Movement, Combat, Collect, or Descend (the core loop verbs from the GDD). A proposed mechanic that doesn't clearly strengthen one of these needs a strong justification to be included — "it would be cool" is not sufficient on its own; "it makes Collect a real decision" (e.g., Glimmer-banking risk) is.
 
 ## Rule 6 — Animation/art budgets are ceilings, not targets
 
@@ -30,7 +30,7 @@ Per-state frame counts in ART_DIRECTION.md are hard limits agreed on before cont
 
 ## Rule 7 — No feature exists "because roguelikes usually have it"
 
-Every mechanic in these docs should trace back to a specific reason it belongs in *this* game (see Rule 5). Genre convention is a reasonable source of inspiration, not a justification on its own — this is why generic Crit Chance/Crit Damage was cut in favor of Miner's Traits, which are specific to this project's identity rather than a default RPG stat block.
+Every mechanic in these docs should trace back to a specific reason it belongs in *this* game (see Rule 5). Genre convention is a reasonable source of inspiration, not a justification on its own — this is why generic Crit Chance/Crit Damage was cut in favor of Marks, which are specific to this project's identity rather than a default RPG stat block.
 
 ## Rule 8 — Numbers are placeholders until playtested
 
