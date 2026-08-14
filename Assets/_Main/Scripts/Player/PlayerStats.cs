@@ -32,6 +32,10 @@ namespace Deeper.Player
         [Tooltip("Flat damage subtracted per hit taken, as Iron Skin / Second Skin describe it.")]
         [SerializeField] private float baseDamageReduction;
 
+        [Tooltip("Multiplier on attack phase speed. 1 = unmodified. Not a BALANCE stat — added " +
+                 "for the owner-directed buff Ultimate.")]
+        [SerializeField] private float baseAttackSpeed = 1f;
+
         private static readonly StatType[] AllStats = (StatType[])Enum.GetValues(typeof(StatType));
 
         private readonly Dictionary<object, StatModifier[]> _sources = new Dictionary<object, StatModifier[]>();
@@ -51,6 +55,7 @@ namespace Deeper.Player
         public float UltimateGaugeGain => Get(StatType.UltimateGaugeGain);
         public float OreGain => Get(StatType.OreGain);
         public float DamageReduction => Get(StatType.DamageReduction);
+        public float AttackSpeed => Get(StatType.AttackSpeed);
 
         public float Get(StatType stat)
         {
@@ -130,6 +135,7 @@ namespace Deeper.Player
                 case StatType.UltimateGaugeGain: return baseUltimateGaugeGain;
                 case StatType.OreGain: return baseOreGain;
                 case StatType.DamageReduction: return baseDamageReduction;
+                case StatType.AttackSpeed: return baseAttackSpeed;
                 default: return 0f;
             }
         }

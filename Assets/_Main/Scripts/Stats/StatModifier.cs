@@ -20,6 +20,17 @@ namespace Deeper.Stats
         UltimateGaugeGain = 5,
         OreGain = 6,
         DamageReduction = 7,
+
+        /// <summary>
+        /// Multiplier on how fast attack phases play. 1 = unmodified, 1.3 = 30% faster, which
+        /// shortens Windup/Active/Recovery together so the animation stays in step with the
+        /// damage window.
+        ///
+        /// Not in BALANCE's Hub Core Stats table — added for the owner-directed buff Ultimate.
+        /// Appended rather than inserted because <see cref="StatType"/> serialises by integer
+        /// value, so renumbering the existing entries would silently repoint saved modifiers.
+        /// </summary>
+        AttackSpeed = 8,
     }
 
     /// <summary>

@@ -1,0 +1,2170 @@
+fileFormatVersion: 2
+guid: a8af454277de371448f011fa34f43c7d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6238205731164930100
+    second: Katana_Attacks_0
+  - first:
+      213: -6150470834194922231
+    second: Katana_Attacks_1
+  - first:
+      213: -5944811589635058657
+    second: Katana_Attacks_2
+  - first:
+      213: -6339630497854027784
+    second: Katana_Attacks_3
+  - first:
+      213: -6951467568083929815
+    second: Katana_Attacks_4
+  - first:
+      213: -4505686268327542583
+    second: Katana_Attacks_5
+  - first:
+      213: 2762585074616566049
+    second: Katana_Attacks_6
+  - first:
+      213: 1505582589585729516
+    second: Katana_Attacks_7
+  - first:
+      213: 2726756848361441546
+    second: Katana_Attacks_8
+  - first:
+      213: 734697058115116537
+    second: Katana_Attacks_9
+  - first:
+      213: 1857464965313778844
+    second: Katana_Attacks_10
+  - first:
+      213: 6380964978333472941
+    second: Katana_Attacks_11
+  - first:
+      213: 6649386227178046695
+    second: Katana_Attacks_12
+  - first:
+      213: 9077084910100368687
+    second: Katana_Attacks_13
+  - first:
+      213: 1171488343471223582
+    second: Katana_Attacks_14
+  - first:
+      213: -1588611736965362734
+    second: Katana_Attacks_15
+  - first:
+      213: -636826945693737783
+    second: Katana_Attacks_16
+  - first:
+      213: -7367031536706076339
+    second: Katana_Attacks_17
+  - first:
+      213: 5955258748940313371
+    second: Katana_Attacks_18
+  - first:
+      213: 7288200302848838935
+    second: Katana_Attacks_19
+  - first:
+      213: 3440527060491755552
+    second: Katana_Attacks_20
+  - first:
+      213: -630722575343690847
+    second: Katana_Attacks_21
+  - first:
+      213: 857001385200042815
+    second: Katana_Attacks_22
+  - first:
+      213: -978596741487509534
+    second: Katana_Attacks_23
+  - first:
+      213: 1395594779245660443
+    second: Katana_Attacks_24
+  - first:
+      213: -681118022118265382
+    second: Katana_Attacks_25
+  - first:
+      213: 6547084723970260425
+    second: Katana_Attacks_26
+  - first:
+      213: -1787705864392171029
+    second: Katana_Attacks_27
+  - first:
+      213: -8014076166014594084
+    second: Katana_Attacks_28
+  - first:
+      213: -2879765448001984171
+    second: Katana_Attacks_29
+  - first:
+      213: 3738110455995774985
+    second: Katana_Attacks_30
+  - first:
+      213: -6721288995440707671
+    second: Katana_Attacks_31
+  - first:
+      213: 3685931873042005817
+    second: Katana_Attacks_32
+  - first:
+      213: 7364349716380736613
+    second: Katana_Attacks_33
+  - first:
+      213: 3816502751320015150
+    second: Katana_Attacks_34
+  - first:
+      213: 5350853412933653170
+    second: Katana_Attacks_35
+  - first:
+      213: 4991743519939352835
+    second: Katana_Attacks_36
+  - first:
+      213: 2844042598012854528
+    second: Katana_Attacks_37
+  - first:
+      213: -1650118165369439377
+    second: Katana_Attacks_38
+  - first:
+      213: 1525481374802288270
+    second: Katana_Attacks_39
+  - first:
+      213: -6481384079453471772
+    second: Katana_Attacks_40
+  - first:
+      213: -5366804000382679795
+    second: Katana_Attacks_41
+  - first:
+      213: -6429672158414900401
+    second: Katana_Attacks_42
+  - first:
+      213: 8881840615904009407
+    second: Katana_Attacks_43
+  - first:
+      213: 1449994751785984380
+    second: Katana_Attacks_44
+  - first:
+      213: 4039882147098612165
+    second: Katana_Attacks_45
+  - first:
+      213: 5175669013993772814
+    second: Katana_Attacks_46
+  - first:
+      213: 3392642299876021287
+    second: Katana_Attacks_47
+  - first:
+      213: 914859649110505877
+    second: Katana_Attacks_48
+  - first:
+      213: 3872553068615279593
+    second: Katana_Attacks_49
+  - first:
+      213: -5662561413443849574
+    second: Katana_Attacks_50
+  - first:
+      213: -7814814960405915681
+    second: Katana_Attacks_51
+  - first:
+      213: 1311799990830663943
+    second: Katana_Attacks_52
+  - first:
+      213: 8813959372343922801
+    second: Katana_Attacks_53
+  - first:
+      213: 2297999009909215668
+    second: Katana_Attacks_54
+  - first:
+      213: 6119101091199591346
+    second: Katana_Attacks_55
+  - first:
+      213: -7901904431244627870
+    second: Katana_Attacks_56
+  - first:
+      213: -6358483195397727579
+    second: Katana_Attacks_57
+  - first:
+      213: 962281090310193416
+    second: Katana_Attacks_58
+  - first:
+      213: -2878557556071475881
+    second: Katana_Attacks_59
+  - first:
+      213: 3367459404755438136
+    second: Katana_Attacks_60
+  - first:
+      213: -2310556743924455576
+    second: Katana_Attacks_61
+  - first:
+      213: -6681212544373503775
+    second: Katana_Attacks_62
+  - first:
+      213: 5485643910148199379
+    second: Katana_Attacks_63
+  - first:
+      213: 1695970854461296238
+    second: Katana_Attacks_64
+  - first:
+      213: 2983750097443828157
+    second: Katana_Attacks_65
+  - first:
+      213: -3290217300764006934
+    second: Katana_Attacks_66
+  - first:
+      213: 374946691679917659
+    second: Katana_Attacks_67
+  - first:
+      213: 620067066916690477
+    second: Katana_Attacks_68
+  - first:
+      213: 8986153526785914563
+    second: Katana_Attacks_69
+  - first:
+      213: -2777669517752680354
+    second: Katana_Attacks_70
+  - first:
+      213: 3400884662748180782
+    second: Katana_Attacks_71
+  - first:
+      213: -5522746367067264854
+    second: Katana_Attacks_72
+  - first:
+      213: -7591265742548873896
+    second: Katana_Attacks_73
+  - first:
+      213: -7136983040412356754
+    second: Katana_Attacks_74
+  - first:
+      213: -8690090857164483082
+    second: Katana_Attacks_75
+  - first:
+      213: 4112966803607253496
+    second: Katana_Attacks_76
+  - first:
+      213: 3633095748369292358
+    second: Katana_Attacks_77
+  - first:
+      213: -5612715180341970919
+    second: Katana_Attacks_78
+  - first:
+      213: -2322449213575997467
+    second: Katana_Attacks_79
+  - first:
+      213: -8859752684528912074
+    second: Katana_Attacks_80
+  - first:
+      213: 5518841662692822973
+    second: Katana_Attacks_81
+  - first:
+      213: 8761890610664658912
+    second: Katana_Attacks_82
+  - first:
+      213: 5349935614659135500
+    second: Katana_Attacks_83
+  - first:
+      213: 4208366021839809915
+    second: Katana_Attacks_84
+  - first:
+      213: 6206490794610583698
+    second: Katana_Attacks_85
+  - first:
+      213: -3467095457740043782
+    second: Katana_Attacks_86
+  - first:
+      213: 6126148817118585068
+    second: Katana_Attacks_87
+  - first:
+      213: -127928779422925282
+    second: Katana_Attacks_88
+  - first:
+      213: -1944020832405797269
+    second: Katana_Attacks_89
+  - first:
+      213: -4130128675002540046
+    second: Katana_Attacks_0_0
+  - first:
+      213: -4719770117310825703
+    second: Katana_Attacks_0_1
+  - first:
+      213: -7076458697020982781
+    second: Katana_Attacks_0_2
+  - first:
+      213: 5490074228167728707
+    second: Katana_Attacks_0_3
+  - first:
+      213: 7920641138663355397
+    second: Katana_Attacks_1_0
+  - first:
+      213: -4884238591542687238
+    second: Katana_Attacks_1_1
+  - first:
+      213: -3724338924457551351
+    second: Katana_Attacks_1_2
+  - first:
+      213: 1346198657267135716
+    second: Katana_Attacks_1_3
+  - first:
+      213: 2719773911031705476
+    second: Katana_Attacks_2_0
+  - first:
+      213: 1471096587168006923
+    second: Katana_Attacks_2_1
+  - first:
+      213: -3372172050458317276
+    second: Katana_Attacks_2_2
+  - first:
+      213: 5543569483073149743
+    second: Katana_Attacks_2_3
+  - first:
+      213: -2706024598151930797
+    second: Katana_Attacks_3_0
+  - first:
+      213: -3949296911933709029
+    second: Katana_Attacks_3_1
+  - first:
+      213: 4807323597093715858
+    second: Katana_Attacks_3_2
+  - first:
+      213: 4346430251966297212
+    second: Katana_Attacks_3_3
+  - first:
+      213: -6039641928727299681
+    second: Katana_Attacks_4_0
+  - first:
+      213: -6303246504920326212
+    second: Katana_Attacks_4_1
+  - first:
+      213: 7004565595638406276
+    second: Katana_Attacks_4_2
+  - first:
+      213: -5789740756191793596
+    second: Katana_Attacks_4_3
+  - first:
+      213: -4971255163529972378
+    second: Katana_Attacks_5_0
+  - first:
+      213: -6345293003028777723
+    second: Katana_Attacks_5_1
+  - first:
+      213: -4547194087463447023
+    second: Katana_Attacks_5_2
+  - first:
+      213: 7165272963155999476
+    second: Katana_Attacks_5_3
+  - first:
+      213: -8614203261495118442
+    second: Katana_Attacks_5_4
+  - first:
+      213: 3780424963016888489
+    second: Katana_Attacks_5_5
+  - first:
+      213: -2933518560910338043
+    second: Katana_Attacks_6_0
+  - first:
+      213: 5824307162010880381
+    second: Katana_Attacks_6_1
+  - first:
+      213: 2962244422801728300
+    second: Katana_Attacks_6_2
+  - first:
+      213: 4734826170087696477
+    second: Katana_Attacks_6_3
+  - first:
+      213: 7595641649907847786
+    second: Katana_Attacks_6_4
+  - first:
+      213: 586053724840231803
+    second: Katana_Attacks_6_5
+  - first:
+      213: 8368953088537432999
+    second: Katana_Attacks_7_0
+  - first:
+      213: -6341093605759224426
+    second: Katana_Attacks_7_1
+  - first:
+      213: 590661808715408373
+    second: Katana_Attacks_7_2
+  - first:
+      213: 3563308562293834220
+    second: Katana_Attacks_7_3
+  - first:
+      213: -3034577461765107365
+    second: Katana_Attacks_7_4
+  - first:
+      213: 5814795983997818729
+    second: Katana_Attacks_7_5
+  - first:
+      213: -2511529897846067924
+    second: Katana_Attacks_8_0
+  - first:
+      213: 1087212847822239182
+    second: Katana_Attacks_8_1
+  - first:
+      213: 8172941803880390964
+    second: Katana_Attacks_8_2
+  - first:
+      213: -8706951547266310717
+    second: Katana_Attacks_8_3
+  - first:
+      213: 3749099048587836229
+    second: Katana_Attacks_8_4
+  - first:
+      213: -1734412632081820247
+    second: Katana_Attacks_8_5
+  - first:
+      213: 2857300183568293002
+    second: Katana_Attacks_9_0
+  - first:
+      213: -715822633252836226
+    second: Katana_Attacks_9_1
+  - first:
+      213: -5288013082201372374
+    second: Katana_Attacks_9_2
+  - first:
+      213: 864647600369351507
+    second: Katana_Attacks_9_3
+  - first:
+      213: -8172450841835153071
+    second: Katana_Attacks_9_4
+  - first:
+      213: -7477317868468667043
+    second: Katana_Attacks_9_5
+  - first:
+      213: 3401768916420725166
+    second: Katana_Attacks_10_0
+  - first:
+      213: 6766700527496174854
+    second: Katana_Attacks_10_1
+  - first:
+      213: 3320777983479838796
+    second: Katana_Attacks_10_2
+  - first:
+      213: -7204053826654186802
+    second: Katana_Attacks_10_3
+  - first:
+      213: 8233241045857898727
+    second: Katana_Attacks_10_4
+  - first:
+      213: 5861532324892984878
+    second: Katana_Attacks_10_5
+  - first:
+      213: 388139091260598328
+    second: Katana_Attacks_10_6
+  - first:
+      213: -4993229534534758134
+    second: Katana_Attacks_10_7
+  - first:
+      213: -143757372033442479
+    second: Katana_Attacks_11_0
+  - first:
+      213: -3796594541608692407
+    second: Katana_Attacks_11_1
+  - first:
+      213: 2250108394062056481
+    second: Katana_Attacks_11_2
+  - first:
+      213: 6586585425534436964
+    second: Katana_Attacks_11_3
+  - first:
+      213: 4871573005621228461
+    second: Katana_Attacks_11_4
+  - first:
+      213: 4429227920742924553
+    second: Katana_Attacks_11_5
+  - first:
+      213: -1260546420820642672
+    second: Katana_Attacks_11_6
+  - first:
+      213: -6367013282061179175
+    second: Katana_Attacks_11_7
+  - first:
+      213: 511669980292885499
+    second: Katana_Attacks_12_0
+  - first:
+      213: 3337676893460934326
+    second: Katana_Attacks_12_1
+  - first:
+      213: 7833040599504025468
+    second: Katana_Attacks_12_2
+  - first:
+      213: 8503308400855441093
+    second: Katana_Attacks_12_3
+  - first:
+      213: -4964116816114563420
+    second: Katana_Attacks_12_4
+  - first:
+      213: -2665882550761725945
+    second: Katana_Attacks_12_5
+  - first:
+      213: -4952262872449644970
+    second: Katana_Attacks_12_6
+  - first:
+      213: -2577818802568388986
+    second: Katana_Attacks_12_7
+  - first:
+      213: -2769866214143010575
+    second: Katana_Attacks_13_0
+  - first:
+      213: 6926467341860084205
+    second: Katana_Attacks_13_1
+  - first:
+      213: -1261472288205347267
+    second: Katana_Attacks_13_2
+  - first:
+      213: -6180406847840501328
+    second: Katana_Attacks_13_3
+  - first:
+      213: -8935039321938710652
+    second: Katana_Attacks_13_4
+  - first:
+      213: -1633805732267873842
+    second: Katana_Attacks_13_5
+  - first:
+      213: 1046442504116140002
+    second: Katana_Attacks_13_6
+  - first:
+      213: 1540504914947963793
+    second: Katana_Attacks_13_7
+  - first:
+      213: 7286908836292142448
+    second: Katana_Attacks_14_0
+  - first:
+      213: -2952359198249081944
+    second: Katana_Attacks_14_1
+  - first:
+      213: 6636769457196002093
+    second: Katana_Attacks_14_2
+  - first:
+      213: -2621860882543375018
+    second: Katana_Attacks_14_3
+  - first:
+      213: -143666981690563379
+    second: Katana_Attacks_14_4
+  - first:
+      213: -1787348327490047295
+    second: Katana_Attacks_14_5
+  - first:
+      213: 284717310834152405
+    second: Katana_Attacks_14_6
+  - first:
+      213: -2332447981002487527
+    second: Katana_Attacks_14_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Katana_Attacks_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1316
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ff91d93ad5dea6c0800000000000000
+      internalID: -4130128675002540046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_0_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 1316
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91b3f20b512008eb0800000000000000
+      internalID: -4719770117310825703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_0_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 1316
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30a3758ce4e5bcd90800000000000000
+      internalID: -7076458697020982781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_0_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 1316
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34ed6704c69a03c40800000000000000
+      internalID: 5490074228167728707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1222
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 504ff577625cbed60800000000000000
+      internalID: 7920641138663355397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_1_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 1222
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af908d8f0e2b73cb0800000000000000
+      internalID: -4884238591542687238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_1_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 1222
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90a1c880b7d705cc0800000000000000
+      internalID: -3724338924457551351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_1_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 1222
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e4f38bdb88aea210800000000000000
+      internalID: 1346198657267135716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1128
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48f6b6c46f39eb520800000000000000
+      internalID: 2719773911031705476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_2_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 1128
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0340744d826a6410800000000000000
+      internalID: 1471096587168006923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_2_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 1128
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42e6eeaf263a331d0800000000000000
+      internalID: -3372172050458317276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_2_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 1128
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2b5542e217beec40800000000000000
+      internalID: 5543569483073149743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1034
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35c5fa117f4427ad0800000000000000
+      internalID: -2706024598151930797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_3_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 1034
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b15e4a302674139c0800000000000000
+      internalID: -3949296911933709029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_3_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 1034
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29fbf1d575b07b240800000000000000
+      internalID: 4807323597093715858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_3_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 1034
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c747679294f915c30800000000000000
+      internalID: 4346430251966297212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 940
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9977ab4aa1ee2ca0800000000000000
+      internalID: -6039641928727299681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_4_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 940
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbf508623be5688a0800000000000000
+      internalID: -6303246504920326212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_4_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 940
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48c13f52c47353160800000000000000
+      internalID: 7004565595638406276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_4_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 940
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44e26952575b6afa0800000000000000
+      internalID: -5789740756191793596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 846
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66538f184cd820bb0800000000000000
+      internalID: -4971255163529972378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_5_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 846
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 505b2bee1adf0f7a0800000000000000
+      internalID: -6345293003028777723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_5_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 846
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1161cfbc11f15e0c0800000000000000
+      internalID: -4547194087463447023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_5_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 846
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fabf97fbc9207360800000000000000
+      internalID: 7165272963155999476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_6_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 752
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5089cea496c0a47d0800000000000000
+      internalID: -2933518560910338043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_6_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 752
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d790c6e518814d050800000000000000
+      internalID: 5824307162010880381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_6_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 752
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c23aafe9b910c1920800000000000000
+      internalID: 2962244422801728300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_6_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 752
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d58ec45c05b75b140800000000000000
+      internalID: 4734826170087696477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 658
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a39e205e7e742470800000000000000
+      internalID: 8368953088537432999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_7_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 658
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 695783d46f8eff7a0800000000000000
+      internalID: -6341093605759224426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_7_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 658
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f32fda19c3723800800000000000000
+      internalID: 590661808715408373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_7_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 658
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce1c1a8124a637130800000000000000
+      internalID: 3563308562293834220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_8_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 564
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2dac145dd0452dd0800000000000000
+      internalID: -2511529897846067924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_8_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 564
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec57fa5235e861f00800000000000000
+      internalID: 1087212847822239182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_8_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 564
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4312b3eb44f1c6170800000000000000
+      internalID: 8172941803880390964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_8_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 564
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cd57acf2b1ba2780800000000000000
+      internalID: -8706951547266310717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_9_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 470
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8c1f3ad06b27a720800000000000000
+      internalID: 2857300183568293002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_9_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 470
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7ca7ce8b13e016f0800000000000000
+      internalID: -715822633252836226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_9_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 470
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a29c4cb6e143d96b0800000000000000
+      internalID: -5288013082201372374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_9_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 470
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35bb8e35968dffb00800000000000000
+      internalID: 864647600369351507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_10_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 376
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea9093f5ec2853f20800000000000000
+      internalID: 3401768916420725166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_10_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 376
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60d9bda374628ed50800000000000000
+      internalID: 6766700527496174854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_10_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 376
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c48f0435bf5c51e20800000000000000
+      internalID: 3320777983479838796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_10_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 376
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec2db7f963f060c90800000000000000
+      internalID: -7204053826654186802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_11_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 282
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15d5a1a8e65410ef0800000000000000
+      internalID: -143757372033442479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_11_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 282
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9451a3f2169cf4bc0800000000000000
+      internalID: -3796594541608692407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_11_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 282
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12c813ea9adf93f10800000000000000
+      internalID: 2250108394062056481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_11_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 282
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 466cebb1c80486b50800000000000000
+      internalID: 6586585425534436964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_12_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 188
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfba699d221d91700800000000000000
+      internalID: 511669980292885499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_12_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 188
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bea4c9637fc15e20800000000000000
+      internalID: 3337676893460934326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_12_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 188
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7776ac8cec84bc60800000000000000
+      internalID: 7833040599504025468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_12_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 188
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ce559820f1d10670800000000000000
+      internalID: 8503308400855441093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_13_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 94
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f856a68a557f89d0800000000000000
+      internalID: -2769866214143010575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_13_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 94
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de91ae37951cf1060800000000000000
+      internalID: 6926467341860084205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_13_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 94
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d36658f23a95e7ee0800000000000000
+      internalID: -1261472288205347267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_13_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 94
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b1431397b8ca3aa0800000000000000
+      internalID: -6180406847840501328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_14_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07529d99afc402560800000000000000
+      internalID: 7286908836292142448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_14_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a3a10393fc1707d0800000000000000
+      internalID: -2952359198249081944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_14_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2b645088aa8a1c50800000000000000
+      internalID: 6636769457196002093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_Attacks_14_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 0
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65d82852b674d9bd0800000000000000
+      internalID: -2621860882543375018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Katana_Attacks_0: -6238205731164930100
+      Katana_Attacks_0_0: -4130128675002540046
+      Katana_Attacks_0_1: -4719770117310825703
+      Katana_Attacks_0_2: -7076458697020982781
+      Katana_Attacks_0_3: 5490074228167728707
+      Katana_Attacks_1: -6150470834194922231
+      Katana_Attacks_10: 1857464965313778844
+      Katana_Attacks_10_0: 3401768916420725166
+      Katana_Attacks_10_1: 6766700527496174854
+      Katana_Attacks_10_2: 3320777983479838796
+      Katana_Attacks_10_3: -7204053826654186802
+      Katana_Attacks_10_4: 8233241045857898727
+      Katana_Attacks_10_5: 5861532324892984878
+      Katana_Attacks_10_6: 388139091260598328
+      Katana_Attacks_10_7: -4993229534534758134
+      Katana_Attacks_11: 6380964978333472941
+      Katana_Attacks_11_0: -143757372033442479
+      Katana_Attacks_11_1: -3796594541608692407
+      Katana_Attacks_11_2: 2250108394062056481
+      Katana_Attacks_11_3: 6586585425534436964
+      Katana_Attacks_11_4: 4871573005621228461
+      Katana_Attacks_11_5: 4429227920742924553
+      Katana_Attacks_11_6: -1260546420820642672
+      Katana_Attacks_11_7: -6367013282061179175
+      Katana_Attacks_12: 6649386227178046695
+      Katana_Attacks_12_0: 511669980292885499
+      Katana_Attacks_12_1: 3337676893460934326
+      Katana_Attacks_12_2: 7833040599504025468
+      Katana_Attacks_12_3: 8503308400855441093
+      Katana_Attacks_12_4: -4964116816114563420
+      Katana_Attacks_12_5: -2665882550761725945
+      Katana_Attacks_12_6: -4952262872449644970
+      Katana_Attacks_12_7: -2577818802568388986
+      Katana_Attacks_13: 9077084910100368687
+      Katana_Attacks_13_0: -2769866214143010575
+      Katana_Attacks_13_1: 6926467341860084205
+      Katana_Attacks_13_2: -1261472288205347267
+      Katana_Attacks_13_3: -6180406847840501328
+      Katana_Attacks_13_4: -8935039321938710652
+      Katana_Attacks_13_5: -1633805732267873842
+      Katana_Attacks_13_6: 1046442504116140002
+      Katana_Attacks_13_7: 1540504914947963793
+      Katana_Attacks_14: 1171488343471223582
+      Katana_Attacks_14_0: 7286908836292142448
+      Katana_Attacks_14_1: -2952359198249081944
+      Katana_Attacks_14_2: 6636769457196002093
+      Katana_Attacks_14_3: -2621860882543375018
+      Katana_Attacks_14_4: -143666981690563379
+      Katana_Attacks_14_5: -1787348327490047295
+      Katana_Attacks_14_6: 284717310834152405
+      Katana_Attacks_14_7: -2332447981002487527
+      Katana_Attacks_15: -1588611736965362734
+      Katana_Attacks_16: -636826945693737783
+      Katana_Attacks_17: -7367031536706076339
+      Katana_Attacks_18: 5955258748940313371
+      Katana_Attacks_19: 7288200302848838935
+      Katana_Attacks_1_0: 7920641138663355397
+      Katana_Attacks_1_1: -4884238591542687238
+      Katana_Attacks_1_2: -3724338924457551351
+      Katana_Attacks_1_3: 1346198657267135716
+      Katana_Attacks_2: -5944811589635058657
+      Katana_Attacks_20: 3440527060491755552
+      Katana_Attacks_21: -630722575343690847
+      Katana_Attacks_22: 857001385200042815
+      Katana_Attacks_23: -978596741487509534
+      Katana_Attacks_24: 1395594779245660443
+      Katana_Attacks_25: -681118022118265382
+      Katana_Attacks_26: 6547084723970260425
+      Katana_Attacks_27: -1787705864392171029
+      Katana_Attacks_28: -8014076166014594084
+      Katana_Attacks_29: -2879765448001984171
+      Katana_Attacks_2_0: 2719773911031705476
+      Katana_Attacks_2_1: 1471096587168006923
+      Katana_Attacks_2_2: -3372172050458317276
+      Katana_Attacks_2_3: 5543569483073149743
+      Katana_Attacks_3: -6339630497854027784
+      Katana_Attacks_30: 3738110455995774985
+      Katana_Attacks_31: -6721288995440707671
+      Katana_Attacks_32: 3685931873042005817
+      Katana_Attacks_33: 7364349716380736613
+      Katana_Attacks_34: 3816502751320015150
+      Katana_Attacks_35: 5350853412933653170
+      Katana_Attacks_36: 4991743519939352835
+      Katana_Attacks_37: 2844042598012854528
+      Katana_Attacks_38: -1650118165369439377
+      Katana_Attacks_39: 1525481374802288270
+      Katana_Attacks_3_0: -2706024598151930797
+      Katana_Attacks_3_1: -3949296911933709029
+      Katana_Attacks_3_2: 4807323597093715858
+      Katana_Attacks_3_3: 4346430251966297212
+      Katana_Attacks_4: -6951467568083929815
+      Katana_Attacks_40: -6481384079453471772
+      Katana_Attacks_41: -5366804000382679795
+      Katana_Attacks_42: -6429672158414900401
+      Katana_Attacks_43: 8881840615904009407
+      Katana_Attacks_44: 1449994751785984380
+      Katana_Attacks_45: 4039882147098612165
+      Katana_Attacks_46: 5175669013993772814
+      Katana_Attacks_47: 3392642299876021287
+      Katana_Attacks_48: 914859649110505877
+      Katana_Attacks_49: 3872553068615279593
+      Katana_Attacks_4_0: -6039641928727299681
+      Katana_Attacks_4_1: -6303246504920326212
+      Katana_Attacks_4_2: 7004565595638406276
+      Katana_Attacks_4_3: -5789740756191793596
+      Katana_Attacks_5: -4505686268327542583
+      Katana_Attacks_50: -5662561413443849574
+      Katana_Attacks_51: -7814814960405915681
+      Katana_Attacks_52: 1311799990830663943
+      Katana_Attacks_53: 8813959372343922801
+      Katana_Attacks_54: 2297999009909215668
+      Katana_Attacks_55: 6119101091199591346
+      Katana_Attacks_56: -7901904431244627870
+      Katana_Attacks_57: -6358483195397727579
+      Katana_Attacks_58: 962281090310193416
+      Katana_Attacks_59: -2878557556071475881
+      Katana_Attacks_5_0: -4971255163529972378
+      Katana_Attacks_5_1: -6345293003028777723
+      Katana_Attacks_5_2: -4547194087463447023
+      Katana_Attacks_5_3: 7165272963155999476
+      Katana_Attacks_5_4: -8614203261495118442
+      Katana_Attacks_5_5: 3780424963016888489
+      Katana_Attacks_6: 2762585074616566049
+      Katana_Attacks_60: 3367459404755438136
+      Katana_Attacks_61: -2310556743924455576
+      Katana_Attacks_62: -6681212544373503775
+      Katana_Attacks_63: 5485643910148199379
+      Katana_Attacks_64: 1695970854461296238
+      Katana_Attacks_65: 2983750097443828157
+      Katana_Attacks_66: -3290217300764006934
+      Katana_Attacks_67: 374946691679917659
+      Katana_Attacks_68: 620067066916690477
+      Katana_Attacks_69: 8986153526785914563
+      Katana_Attacks_6_0: -2933518560910338043
+      Katana_Attacks_6_1: 5824307162010880381
+      Katana_Attacks_6_2: 2962244422801728300
+      Katana_Attacks_6_3: 4734826170087696477
+      Katana_Attacks_6_4: 7595641649907847786
+      Katana_Attacks_6_5: 586053724840231803
+      Katana_Attacks_7: 1505582589585729516
+      Katana_Attacks_70: -2777669517752680354
+      Katana_Attacks_71: 3400884662748180782
+      Katana_Attacks_72: -5522746367067264854
+      Katana_Attacks_73: -7591265742548873896
+      Katana_Attacks_74: -7136983040412356754
+      Katana_Attacks_75: -8690090857164483082
+      Katana_Attacks_76: 4112966803607253496
+      Katana_Attacks_77: 3633095748369292358
+      Katana_Attacks_78: -5612715180341970919
+      Katana_Attacks_79: -2322449213575997467
+      Katana_Attacks_7_0: 8368953088537432999
+      Katana_Attacks_7_1: -6341093605759224426
+      Katana_Attacks_7_2: 590661808715408373
+      Katana_Attacks_7_3: 3563308562293834220
+      Katana_Attacks_7_4: -3034577461765107365
+      Katana_Attacks_7_5: 5814795983997818729
+      Katana_Attacks_8: 2726756848361441546
+      Katana_Attacks_80: -8859752684528912074
+      Katana_Attacks_81: 5518841662692822973
+      Katana_Attacks_82: 8761890610664658912
+      Katana_Attacks_83: 5349935614659135500
+      Katana_Attacks_84: 4208366021839809915
+      Katana_Attacks_85: 6206490794610583698
+      Katana_Attacks_86: -3467095457740043782
+      Katana_Attacks_87: 6126148817118585068
+      Katana_Attacks_88: -127928779422925282
+      Katana_Attacks_89: -1944020832405797269
+      Katana_Attacks_8_0: -2511529897846067924
+      Katana_Attacks_8_1: 1087212847822239182
+      Katana_Attacks_8_2: 8172941803880390964
+      Katana_Attacks_8_3: -8706951547266310717
+      Katana_Attacks_8_4: 3749099048587836229
+      Katana_Attacks_8_5: -1734412632081820247
+      Katana_Attacks_9: 734697058115116537
+      Katana_Attacks_9_0: 2857300183568293002
+      Katana_Attacks_9_1: -715822633252836226
+      Katana_Attacks_9_2: -5288013082201372374
+      Katana_Attacks_9_3: 864647600369351507
+      Katana_Attacks_9_4: -8172450841835153071
+      Katana_Attacks_9_5: -7477317868468667043
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
