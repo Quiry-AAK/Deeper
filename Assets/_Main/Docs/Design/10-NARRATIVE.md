@@ -25,7 +25,7 @@ believes her purpose is to **capture those two children**. The manipulation make
 around her as an enemy, so descending after the children means killing everything in her path.
 
 **DECIDED: Floor 16 is two fights.** She first fights **The Depth Warden — who is her father** —
-using his existing boss design (multi-phase, all 3 biome hazard themes, weapon-check moment).
+using his existing boss design (multi-phase, weapon-check moment; its three hazard-themed phases need re-theming now that the Rising Hazard is cut — CORE_SYSTEMS §7).
 Defeating him doesn't end the run: **Zyno is the true Final Boss**, fought immediately after, on the
 same floor. This resolves what was previously an open conflict between this file and
 `03-CONTENT_DESIGN.md` (which named "The Depth Warden" without connecting him to the father) — see

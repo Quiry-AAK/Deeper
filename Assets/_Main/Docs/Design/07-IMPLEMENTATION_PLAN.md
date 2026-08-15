@@ -84,7 +84,9 @@ Day-by-day build plan. Original scope was a 30-day MVP; the plan below reflects 
 - Flicker Recognition (blocked on animation-budget review)
 - Post-Completion Truth Pass (blocked on full Whisper Layer/Refusal State existing first)
 
-**Phases above are now stale in three places** and will be corrected by the re-sequencing pass, not silently here: Phase 3 Days 19–20/23–24 still load and author Reward Rooms, Phase 4 Days 27–32 still describes a floor-gated upgrade draw, and Phase 6 Day 43 still says "Glimmer→Shard conversion" for a currency that no longer drops.
+**Cut from MVP entirely (owner, 2026-08-15): the Rising Hazard** — no hazard front, no per-biome timer (CORE_SYSTEMS §7). This *removes* scheduled work: part of Phase 3 Days 19–20 (Hazard Front system), Phase 5's two hazard variants (Days 33–35 rising water + room-geometry change, Days 36–38 lava flow + scorched ground), and the low/high tile-zone data Flooded Tunnels rooms needed. It also leaves Day 41's boss without its phase themes and Day 42's escape sequence without the system it was supposed to reuse.
+
+**Phases above are stale in several places** and will be corrected by the re-sequencing pass, not silently here: Phase 3 Days 19–20/23–24 still load and author Reward Rooms and the Hazard Front, Phase 4 Days 27–32 still describes a floor-gated upgrade draw, Phase 5 still schedules both hazard variants, and Phase 6 Day 43 still says "Glimmer→Shard conversion" for a currency that no longer drops.
 
 ⚠️ **Day 41 is under-scoped.** It schedules one Final Boss, but Floor 16 is **two fights** — the Depth Warden (her father) and then Zyno, who is MUST SHIP (owner, 2026-08-15; `03-CONTENT_DESIGN.md` §5, `08-MVP.md`). Even at the cheap MVP version (an existing Mini-Boss reskinned with new dialogue), Zyno needs his own slot; a bespoke fight needs more than that. This is a scheduling gap for the re-sequencing pass, not a design question.
 
@@ -93,7 +95,7 @@ Day-by-day build plan. Original scope was a 30-day MVP; the plan below reflects 
 ## Sequencing Notes
 
 - **Weapon generalization (Phase 2) is deliberately not Day 1.** Building one weapon fully first, then abstracting, avoids designing an interface for 3 unknowns simultaneously — a common source of over-engineered abstractions that don't fit any of the 3 concrete cases well.
-- **Biome 1 (Phase 3) is the expensive one.** Every system built here (room loading, hazard, wave rooms, mini-boss weapon-check pattern) gets reused, not rebuilt, for Biomes 2–3 — which is why Phase 5 covers two biomes in roughly the same time Phase 3 spent on one.
+- **Biome 1 (Phase 3) is the expensive one.** Every system built here (room loading, wave rooms, mini-boss weapon-check pattern) gets reused, not rebuilt, for Biomes 2–3 — which is why Phase 5 covers two biomes in roughly the same time Phase 3 spent on one. ⚠️ **The hazard was the biggest item on that reuse list**, and cutting it means Phase 5's biomes now inherit less; what makes them feel different is a design question before it is a scheduling one.
 - **Content authoring (room layouts specifically, per LEVEL_DESIGN.md Open Items) is the single biggest risk to this schedule.** 18 Combat Room layouts alone is a lot of hand-authored content — if Phase 3 or Phase 5 slip, this is almost certainly why, and it's the first place to look for cuts per 08-MVP.md.
 
 ---

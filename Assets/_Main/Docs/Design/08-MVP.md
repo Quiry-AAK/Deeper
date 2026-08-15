@@ -17,7 +17,7 @@ Non-negotiable. The MVP is not the MVP without these.
 - [ ] Attack State Machine (Windup/Active/Recovery) + Dash-Attack Cancel
 - [ ] Dig-Dash with i-frames
 - [ ] Biome 1 (Upper Caves) fully playable: all 6 Combat Rooms (incl. 1 Wave Room minimum), Mini-Boss (The Collapsed King) with weapon-check
-- [ ] Rising Hazard system, at least the Upper Caves variant (rockfall + cracked tiles)
+- [ ] Upper Caves cracked tiles (collapse under standing weight) — the biome's environmental mechanic. ~~Rising Hazard system~~ **cut entirely (owner, 2026-08-15, CORE_SYSTEMS §7)**; the cracked tiles were bundled into that line and survive on their own
 - [ ] Weighted-draw Upgrade system with the shared upgrade pool (can ship with a reduced subset — see CUT IF NECESSARY)
 - [ ] Curse system (4th slot, at least 4–5 of the 8 curses)
 - [ ] XP/Leveling system: enemies drop XP, level-up pauses game and opens a mixed-tier upgrade offer (single weighted draw across the full pool, not floor-gated)

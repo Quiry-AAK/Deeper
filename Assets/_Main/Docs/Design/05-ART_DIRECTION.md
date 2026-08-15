@@ -29,7 +29,7 @@ A single, fixed character — no body/gender selection. A woman, cloaked, in lig
 | Flooded Tunnels | Deep blues, teal, slate | Pale cyan-white (current highlights, rising water edge) |
 | Molten Depths | Charcoal black, dark red, ember orange | Bright yellow-orange (geyser telegraph, lava front) |
 
-Hazard accent colors are reserved exclusively for hazard telegraphs and the Hazard Front itself — never reused for decorative purposes, so players always read "that color = danger" instantly regardless of biome.
+Hazard accent colors are reserved exclusively for danger telegraphs — cracked-tile warnings, geyser wind-ups, enemy attack tells — never reused for decorative purposes, so players always read "that color = danger" instantly regardless of biome. (The Hazard Front they were also reserved for is cut — CORE_SYSTEMS §7 — but the reservation stands for everything else.)
 
 ⚠️ **Style conflict, shipped and unresolved:** the Katana Ultimate's cyan-white slash arcs are baked directly into the character frames — cyan-white is reserved above as the Flooded Tunnels hazard accent, so a player-power effect is currently reading in hazard colors. This also means the arcs can't be pulled out as separate VFX without regenerating the frames. Note also that a prior, deliberate fix was reopened: the arc used to be a separate `SlashVFX` layer, pulled out of the character frames because a measurement found the baked arc had 197 bright pixels facing sideways against only 14 facing up (she turns away from camera and a dark arc vanishes against her pale cloak) — that layer was since deleted (owner-agreed) because the attack frames now draw their own arc and two arcs were appearing per swing. **Re-measure the shipped sheets before treating the color conflict as settled**, and if the readability problem still holds, fix it in the art rather than reintroducing a second arc layer.
 
@@ -80,7 +80,7 @@ Mini-Bosses and the Final Boss get an expanded budget (their own animation set, 
 
 ## 5. UI Style
 
-- **HUD:** minimal, corner-anchored — HP bar top-left, Ultimate Gauge and weapon icon bottom-center (mirrors the "resource, not cooldown" framing — the gauge should visually read as filling, not counting down), XP bar + level readout top-right, hazard proximity meter as a subtle screen-edge vignette rather than a numeric readout (keeps tension environmental, not spreadsheet-y).
+- **HUD:** minimal, corner-anchored — HP bar top-left, Ultimate Gauge and weapon icon bottom-center (mirrors the "resource, not cooldown" framing — the gauge should visually read as filling, not counting down), XP bar + level readout top-right. (The hazard proximity vignette is cut with the Rising Hazard, CORE_SYSTEMS §7 — the HUD has no ambient-tension element now.)
 - **Upgrade Screen:** 3 cards in shared/weapon-pool color coding (Common = white/gray border, Rare = blue, Epic = purple, Legendary/Relic = gold), 4th Curse card visually distinct with a red/black treatment so it's never confused with a normal offer.
 - **Hub Screen:** Core Stats and Marks visually separated into two distinct panels (per CONTENT_DESIGN §7) rather than one long list, so the "these are different kinds of upgrades" distinction is legible at a glance.
 
@@ -90,7 +90,7 @@ Mini-Bosses and the Final Boss get an expanded budget (their own animation set, 
 
 - Weapon hit-flash (per weapon, can share a base flash effect tinted per weapon color)
 - Ultimate Gauge full pulse (on the HUD element itself)
-- Hazard Front edge (biome-specific: rockfall dust / water shimmer / lava glow)
+- ~~Hazard Front edge~~ — cut with the Rising Hazard (CORE_SYSTEMS §7). Per-biome environmental telegraphs (cracked-tile warning, geyser wind-up, current direction) still need VFX and are the cheaper remainder of this line
 - Dig-Dash trail
 - Curse-pick screen flash (red) vs. normal upgrade-pick flash (white/gold)
 

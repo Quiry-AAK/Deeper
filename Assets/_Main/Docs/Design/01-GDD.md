@@ -14,7 +14,7 @@
 
 **Protagonist:** A girl manipulated by **Zyno**, who has convinced her that her own village are monstrous enemies. She descends to hunt them down, unaware. Her real motive — surfaced only gradually — is that Zyno used her desire to protect two children (the last descendants of an unspecified elite bloodline) to turn her against her own people.
 
-**Floor 16 — two fights, in this order:** **The Depth Warden is her father**, fought first, using the boss design already budgeted (multi-phase, all 3 biome hazard themes, weapon-check moment) — framed as an ordinary boss on a first playthrough, with no telegraphing that breaks the "he's a monster" illusion. Beating him does not end the floor: **Zyno is fought immediately after, as the true Final Boss.** Biome 1's Mini-Boss remains **The Collapsed King** (CONTENT_DESIGN §5).
+**Floor 16 — two fights, in this order:** **The Depth Warden is her father**, fought first, using the boss design already budgeted (multi-phase, weapon-check moment — its hazard-themed phases need re-theming, see CORE_SYSTEMS §7) — framed as an ordinary boss on a first playthrough, with no telegraphing that breaks the "he's a monster" illusion. Beating him does not end the floor: **Zyno is fought immediately after, as the true Final Boss.** Biome 1's Mini-Boss remains **The Collapsed King** (CONTENT_DESIGN §5).
 
 **Antagonist:** Zyno — present throughout the descent via the Whisper Layer (see Core Systems), then fought in person on Floor 16 after the father. His MVP fight reuses an existing Mini-Boss moveset/arena, palette-swapped with his own dialogue and identity; a bespoke moveset is SHOULD SHIP (CONTENT_DESIGN §5, 08-MVP.md).
 
@@ -28,9 +28,9 @@
 2. **Descend:** Enter the shaft. Move through a sequence of hand-built rooms per floor.
 3. **Fight:** Clear enemies in combat rooms using the chosen weapon's basic attack, Heavy Strike, Ultimate, and Dig-Dash. Enemies drop **XP** on death.
 4. **Level Up:** When XP crosses the level threshold, the game pauses and presents an upgrade offer — 3 randomized upgrades drawn from the full shared + weapon pool in one weighted draw (not floor-gated, not tier-gated — Common/Rare/Epic can appear in the same offer), plus a visible 4th **Curse** option. Every 5th level, this is replaced by an **Evolution** offer instead (see Core Systems).
-5. **Repeat:** Descend deeper. Floors pull **3–5 rooms** from a per-biome pool via reshuffling bag (see Core Systems §8). Every 5th floor ends in a Mini-Boss room. Difficulty and hazard pressure increase with depth.
+5. **Repeat:** Descend deeper. Floors pull **3–5 rooms** from a per-biome pool via reshuffling bag (see Core Systems §8). Every 5th floor ends in a Mini-Boss room. Difficulty increases with depth.
 6. **Final Boss:** At the bottom of the mine (floor 16), face the Final Boss.
-7. **Win/Die:** Defeat the boss and escape (win), or reach 0 HP / get caught by the rising hazard (die).
+7. **Win/Die:** Defeat the boss and escape (win), or reach 0 HP (die).
 8. **Return to Hub:** Shards earned carry over — computed once at run end from Levels Gained and Depth Reached (BALANCE §14), not collected during the run. Spend on permanent upgrades. Start a new run.
 
 ## Player
@@ -65,33 +65,33 @@
 - **Player Survivability:** Base HP + dig-dash i-frames + Hyper Armor (Greatsword) + optional defensive upgrades (see CONTENT_DESIGN.md).
 - **Invulnerability Frames:** Granted only during dig-dash active frames, and briefly after taking damage (standard hit-stun immunity). Hyper Armor reduces damage but does not grant invulnerability — it stays mechanically distinct from Dig-Dash.
 - **Feedback:** Screen shake on hit, hit-flash on enemies, damage numbers optional (nice-to-have), sound cue per hit type, per weapon where relevant.
-- **Hazard Kills:** Pushing or dashing an enemy into the Rising Hazard's edge instakills it — a tactical option layered onto the existing Damage and Hazard systems.
+- ~~**Hazard Kills:**~~ **Removed with the Rising Hazard (owner, 2026-08-15).** There is no hazard edge to push enemies into, so the knockback-as-a-kill tactic no longer exists. Greatsword's Colossus upgrade (CONTENT_DESIGN §2c) still rewards knockback via wall/enemy collision damage; nothing else replaces this.
 
 ## Roguelike Structure
 
 - **Run Start:** Player exits Hub into Floor 1 of Biome 1 (Upper Caves), with chosen Weapon.
 - **Rooms/Encounters:** Each floor = 3–5 hand-built rooms pulled from a per-biome room pool via a reshuffling bag, connected linearly downward. No branching paths (keeps navigation simple and always-forward). Layouts will repeat within a run — see CORE_SYSTEMS §8.
   - **Wave Rooms:** A subset of existing Combat Room layouts (capped at 1–2 per biome's pool) are flagged as Wave Rooms. Instead of spawning all enemies at once, enemies spawn in 2–3 triggered batches — the next wave begins when the current one drops to roughly one enemy remaining, not on a pure timer, so players can't stall it out. The room stays locked until the final wave clears, reusing the existing room-lock logic. No new enemy types are introduced for Wave Rooms — only existing per-biome enemies, resequenced.
-- **Secret Floors:** Some floors contain a visible locked door requiring a key dropped by a rare elite enemy encountered earlier in that biome. The door leads to a small bonus vault room (large XP payout or a guaranteed Legendary-tier upgrade) — reachable, but costs time against the rising hazard, creating a risk/clock decision.
-- **Trapped Souls:** Some floors contain a bound soul the player can free at the cost of real time against the hazard, granting a persistent in-run effect (CORE_SYSTEMS §14).
+- **Secret Floors:** Some floors contain a visible locked door requiring a key dropped by a rare elite enemy encountered earlier in that biome. The door leads to a small bonus vault room (large XP payout or a guaranteed Legendary-tier upgrade). ⚠️ **HOLE — the Rising Hazard was cut (owner, 2026-08-15), and the clock it created *was* this feature's cost.** With no timer, a Secret Floor is pure upside and the risk/reward decision is gone. It needs a new cost or it stops being a decision.
+- **Trapped Souls:** Some floors contain a bound soul the player can free, granting a persistent in-run effect (CORE_SYSTEMS §14). ⚠️ **Same hole:** "costs real time against the Hazard" was the price of freeing one.
 - **Rewards:** XP drops from enemies; upgrade choice on level-up; occasional relics (see Progression).
 - **Randomization:** Room order within a biome's pool is drawn per run via a reshuffling bag (not live procgen). Upgrade offers are randomly drawn (weighted) from the upgrade pool on each level-up.
 - **Upgrades:** On each level-up, the player picks 1 of 3 offered upgrades, drawn in a single weighted draw across the shared pool (HP, XP, Speed, Dash) *plus* the weapon-specific sub-pool matching the equipped weapon — including Heavy Strike modifiers (extra hits in the chain, full replacement effects), Ultimate effect modifiers, and Ultimate Gauge modifiers (faster gain per hit, gain on taking damage, etc.) (see CONTENT_DESIGN.md for full tables). Every 5th level offers an **Evolution** instead (CORE_SYSTEMS §13).
-- **Curses:** Alongside the normal 3 upgrade offers, a 4th slot always presents a visible **Curse** — a high-risk, high-reward modifier (e.g., "+40% damage, but take double damage" or "Enemies drop 3x XP, but hazard rises 20% faster"). Optional every time; gives runs a distinct identity for players who want them.
-- **Difficulty Progression:** Enemy HP/damage scale up per biome tier; rising hazard timer speeds up in later biomes.
+- **Curses:** Alongside the normal 3 upgrade offers, a 4th slot always presents a visible **Curse** — a high-risk, high-reward modifier (e.g., "+40% damage, but take double damage"). Optional every time; gives runs a distinct identity for players who want them. ⚠️ **One Curse lost its downside:** Greed's Toll traded XP for a faster hazard — see CONTENT_DESIGN §3 / BALANCE §11.
+- **Difficulty Progression:** Enemy HP/damage scale up per biome tier. ⚠️ **This is now the only escalation axis** — the hazard timer speeding up per biome was the other one.
 - **Boss:** Mini-boss every 5th floor (end of each biome); Final Boss at floor 16. Bosses include at least one phase or mechanic that meaningfully rewards or punishes specific weapon types (e.g., a breakable shield that Greatsword drops in one hit but Katana needs several, or slow projectiles Bow players can snipe for bonus damage but melee players must dodge). Not a hard gate — just a moment where weapon choice matters at peak tension.
 - **Death:** Immediate run end, return to Hub.
 - **Restart:** New run begins from Hub with fresh run-state but persistent meta-progression.
 
 ## Biome Identity
 
-Each biome has a distinct environmental mechanic and hazard "personality," not just adjusted stats:
+**DECIDED (owner, 2026-08-15): the Rising Hazard is cut from the game.** No hazard front, no per-biome timer, no chase. Each biome keeps its *environmental* mechanic — those were always separate micro-systems — but loses the pursuing hazard half of its identity:
 
-- **Upper Caves (Biome 1):** Certain floor tiles show warning cracks and collapse after a few seconds of standing on them — live positioning pressure during fights. Hazard: a visible, audible rockfall front.
-- **Flooded Tunnels (Biome 2):** Water tiles slow movement and swings; currents can push the player or enemies toward hazards or ledges. Bow travels unaffected through water, giving it a situational edge; melee is punished for wading in. Hazard: a rising water level that also changes room geometry — low areas flood first, forcing route changes mid-floor.
-- **Molten Depths (Biome 3):** Periodic lava geysers erupt from marked tiles, forcing mid-fight repositioning. Greatsword's Hyper Armor is especially valuable here — tanking a geyser tick and continuing to swing. Hazard: a spreading lava flow that leaves lightly damaging scorched ground behind it, even after the front has passed.
+- **Upper Caves (Biome 1):** Certain floor tiles show warning cracks and collapse after a few seconds of standing on them — live positioning pressure during fights. ~~Hazard: rockfall front.~~
+- **Flooded Tunnels (Biome 2):** Water tiles slow movement and swings; currents can push the player or enemies toward ledges. Bow travels unaffected through water, giving it a situational edge; melee is punished for wading in. ~~Hazard: rising water level that changes room geometry.~~
+- **Molten Depths (Biome 3):** Periodic lava geysers erupt from marked tiles, forcing mid-fight repositioning. Greatsword's Hyper Armor is especially valuable here — tanking a geyser tick and continuing to swing. ~~Hazard: spreading lava flow leaving scorched ground.~~
 
-All three reuse the same underlying Rising Hazard timer system — only presentation and secondary effects differ per biome.
+⚠️ **Two holes this leaves.** First, **the game no longer has a clock** — nothing pushes the player downward, and the pitch's "racing the danger below" now describes a mechanic that doesn't exist. Whether descent pressure comes back in another form (a per-floor timer, an escalating spawn rate, something else) or the game becomes purely combat-paced is undecided. Second, **Biomes 2 and 3 are thinner than Biome 1**: cracked tiles are a real fight mechanic, while "water slows you" and "geysers erupt" carried less of the identity than the water level and lava flow did (DESIGN_RULES Rule 5 requires biomes to differ mechanically, not just in stats).
 
 ## Progression
 
@@ -126,7 +126,7 @@ This remains a **small, bounded** meta-progression tree — not a skill tree, a 
 
 ## UI
 
-- **HUD (in-run):** HP bar, equipped weapon icon, Ultimate Gauge (fill meter, not a cooldown), current floor/depth indicator, hazard proximity meter, XP bar + current level, Wave indicator (e.g. "Wave 2/3") shown only inside Wave Rooms, and the Whisper Layer line area (CORE_SYSTEMS §15). **DECIDED: no Heavy Strike cooldown icon.** Heavy Strike has no cooldown anywhere in CORE_SYSTEMS or BALANCE — it's gated only by its own 0.3–0.65s Windup/Recovery, and that stays true. The HUD element is dropped for good.
+- **HUD (in-run):** HP bar, equipped weapon icon, Ultimate Gauge (fill meter, not a cooldown), current floor/depth indicator, XP bar + current level, Wave indicator (e.g. "Wave 2/3") shown only inside Wave Rooms, and the Whisper Layer line area (CORE_SYSTEMS §15). **DECIDED: no Heavy Strike cooldown icon.** Heavy Strike has no cooldown anywhere in CORE_SYSTEMS or BALANCE — it's gated only by its own 0.3–0.65s Windup/Recovery, and that stays true. The HUD element is dropped for good.
 - **Upgrade Screen:** 3 standard cards (icon, name, short description) plus a 4th, visually distinct Curse card. Opens on level-up (game paused), not at floor end. Every 5th level it is replaced by the Evolution offer — 2–3 mutually exclusive cards (CORE_SYSTEMS §13).
 - **Hub Screen:** Shard total, list of permanent upgrades (purchased/available/locked), Weapon selector, Weapon Mastery progress per weapon, Relic Vault, "Descend" button.
 - **Death/Victory Screen:** Depth reached, Shards earned, run time, weapon used, "Return to Hub" button.
@@ -138,4 +138,4 @@ This remains a **small, bounded** meta-progression tree — not a skill tree, a 
 
 ## Victory
 
-The player wins by defeating the Final Boss on Floor 16 and surviving the escape sequence that follows (a short, hazard-timed dash back to the surface — reuses the dig-dash and rising-hazard mechanics already built, no new systems required).
+The player wins by defeating the Final Boss on Floor 16 and surviving the escape sequence that follows — a short, timed dash back to the surface on a fixed countdown (BALANCE §7). ⚠️ **This is now the only timer in the game.** It used to be justified as reusing the Rising Hazard system; with that cut, the escape sequence is a small standalone system, and whether it survives at all is worth a deliberate call rather than inheritance.

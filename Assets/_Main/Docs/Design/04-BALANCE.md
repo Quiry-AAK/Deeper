@@ -149,16 +149,13 @@ Two numbers are anchored to something real: ART_DIRECTION §4 caps enemy Telegra
 
 ---
 
-## 7. Hazard Timer
+## 7. Hazard Timer — **REMOVED (owner, 2026-08-15)**
 
-| Biome | Time for Hazard Front to clear a full floor's rooms |
-|---|---|
-| Upper Caves | 90s |
-| Flooded Tunnels | 75s |
-| Molten Depths | 60s |
-| Final Boss floor | No hazard front — escape sequence uses a fixed 45s countdown instead |
+*Section number retained so cross-references to §8–§17 stay valid.*
 
-Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension binary and readable).
+The Rising Hazard is cut (CORE_SYSTEMS §7). The per-biome table that lived here — 90s / 75s / 60s to clear a floor — describes a system that no longer exists, along with the instant-kill-on-touch rule.
+
+**The one number that survives:** the post-boss escape sequence on Floor 16 runs on a **fixed 45s countdown**. It never used the hazard front, so it stands on its own — but it is now the only timer in the game, which is worth a deliberate keep/cut call rather than leaving it by inheritance.
 
 ---
 
@@ -169,7 +166,7 @@ Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension bina
 | Combat Room clear time | 30–60s |
 | Wave Room clear time (2–3 waves) | 60–100s |
 | Rooms per floor | 3–5 |
-| Floor total time budget (vs. Hazard Timer above) | Comfortably under the hazard time at Common-upgrade play; Wave Rooms and Secret Floor detours are what create real time pressure |
+| Floor total time budget | ⚠️ **No longer bounded by anything.** This row used to read "comfortably under the hazard time"; with §7 cut there is no clock, so 3–5 rooms at 30–60s each is simply 90–300s of combat per floor, ×16 floors. This is the number to check the 30–60 min session target against |
 
 ---
 
@@ -267,7 +264,7 @@ Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension bina
 | Curse | Values |
 |---|---|
 | Glass Cannon | +40% damage dealt / +100% damage taken |
-| Greed's Toll | +200% XP from enemies / Hazard timer -20% (faster) |
+| Greed's Toll | +200% XP from enemies / ⚠️ **downside removed with the Hazard timer — needs a new one, or the Curse is pure upside** |
 | Reckless Vigor | +50% gauge gain / -25% Ultimate damage |
 | Frail Grip | +1 free Heavy Strike chain hit / Heavy Strike gauge gain = 0 |
 | Blood Debt | Full heal now / Max HP -20% for rest of run |
@@ -373,5 +370,7 @@ Per-enemy XP drop values are unresolved for the same reason: the two numbers onl
 - Trapped Soul numeric values (§17 gives behaviour only — no HP, taunt radius, duration or slot count yet)
 - Shard multipliers in §14 — placeholder, revisit once a run actually takes 30–60 min
 - **Zyno has no stat row of his own** (§6 points at "an existing Mini-Boss's HP/phases, specific choice TBD"). Which Mini-Boss he reuses is the next decision — it sets his HP, phase count and arena in one go. The Floor 16 structure itself is settled: father first, Zyno after (owner, 2026-08-15)
-- **§7's hazard timer contradicts §8's room count:** 90s to clear a floor vs 3–5 rooms at 30–60s each
+- **Greed's Toll needs a new downside** (§11) — its cost was the hazard timer
+- **A run is now unbounded in time** (§8) — 16 floors × 3–5 rooms × 30–60s is 24–80 min of pure combat with nothing pushing the player along; check this against the 30–60 min session target
+- **Keep or cut the 45s escape countdown** (§7) — the last timer standing
 - Playtesting pass on all values above — first-pass numbers only, expect significant movement once the core loop is actually playable

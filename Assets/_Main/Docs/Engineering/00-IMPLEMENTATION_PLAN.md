@@ -10,6 +10,8 @@ Update this file (check boxes, add notes) at the end of every implementation tas
 
 **Current status:** Milestone 0 done. Owner-directed work has landed outside the milestone plan — see **Run Loadout**, **Player Movement, Animation & Test Level**, **Real Character Art**, **Katana attacks**, **Player prefab structure**, **Damage pipeline & training dummy**, **Biome 1 basic enemies** and **TestScene** below. Milestone 1 is largely covered by that work (movement, animation rig, test room, Attack State Machine, Katana Basic/Heavy/Ultimate, Ultimate Gauge, Combo Counter, hitbox + damage pipeline), and its "real enemy with AI" gap is now closed: the whole Upper Caves basic roster — Cave Crawler, Rock Slinger, Tunnel Brute and the Elite Deep Warden — chases, telegraphs, attacks and dies, on placeholder art. Still missing from Milestone 1: Dig-Dash and its Dash-Attack Cancel, and player death / run-end — which four enemies that can actually kill her make considerably more urgent.
 
+**The Rising Hazard was cut on 2026-08-15 (owner).** No `HazardFront`, no per-biome timer, no chase — see `Design/02-CORE_SYSTEMS.md` §7, now a removal notice. Milestones 3, 5 and 6 below are updated. Per-biome environmental mechanics (cracked tiles, water/currents, geysers) survive as room-authored components. The knock-ons are design questions, not engineering ones, and are listed in `Docs/00-DESIGN_CHANGE_BRIEF.md` §12 — chief among them that **the game now has no clock**, and that Secret Floors, Trapped Souls and Greed's Toll were all priced in time against it.
+
 **The design docs were amended on 2026-08-14** (owner-directed, applied from the designer's session changelog — the one and only time `Design/` was edited from this side; see `Docs/00-DESIGN_CHANGE_BRIEF.md` §11). Nothing built so far changes, but several *unbuilt* milestone items below are now stale and are corrected by that changelog, not by this file: **Reward Rooms no longer exist** (Milestone 3 room loading and room authoring), **upgrades are triggered by level-up, not floor end** (Milestone 4), **floors pull 3–5 rooms via a reshuffling bag, not 1–3 by shuffle** (Milestone 3), **Ore Shards are awarded once at run end from Levels Gained + Depth Reached, with no in-level Ore pickup** (Milestone 6), and four new systems joined MUST SHIP — XP/Leveling, Evolution Tiers, Trapped Souls, and the narrative subset (Whisper Layer, Memory Fragments, Refusal State). Design's own day-by-day re-sequencing is a deferred follow-up, so **the milestone bodies below have not been rewritten yet**.
 
 The inventory/armor system has been **removed** at the owner's direction: a run is now one weapon chosen in the Hub, and the protagonist is a single fixed character — a woman in a hooded cape and light armour. A narrative layer was introduced in the same pass and is recorded in `Design/10-NARRATIVE.md`; a handoff for the designer listing every change and conflict is in `Docs/00-DESIGN_CHANGE_BRIEF.md`. Both are owner-directed and not locked. The player has real animated art — Idle and Move, 4 frames × 5 directions, plus a sheathed Katana layer.
@@ -776,14 +778,16 @@ after every landed hit, so it would snap back on the next connect and read as br
 
 ---
 
-## Milestone 3 — Biome 1 Content: Rooms, Enemies, Hazard
+## Milestone 3 — Biome 1 Content: Rooms, Enemies
 *(maps to Design/07 Phase 3, Days 19–26)*
 
 **Goal:** First full playable biome, start to finish.
 
+> **The Rising Hazard is cut (owner, 2026-08-15).** `HazardFront` and its per-biome reskins are **not to be built** — see CORE_SYSTEMS §7, now a removal notice. The cracked-tile collapse micro-system survives on its own; it was always separate. This deletes the largest reusable system Milestone 5 was going to inherit, so the "Biome 2/3 are pure reskins" assumption below is weaker than it was. Rooms also no longer need low/high flood-zone data.
+
 **Systems/features involved:**
-- Room system: Combat/Reward room loading, room-lock logic (CORE_SYSTEMS §8)
-- Hazard Front system: timer-driven, Upper Caves variant (rockfall + cracked tiles) (CORE_SYSTEMS §7)
+- Room system: room loading (no Reward Rooms — removed), room-lock logic, reshuffling-bag draw of 3–5 rooms per floor (CORE_SYSTEMS §8)
+- Cracked tiles: collapse-under-standing-weight micro-system, Upper Caves (GDD §Biome Identity)
 - ~~Upper Caves enemy roster~~ — **done ahead of this milestone**, see *Biome 1 basic enemies*. All four exist on placeholder art. Only the Collapsed King is left.
 - Upper Caves room layouts: 6 Combat Rooms (1–2 flagged `IsWaveRoom`), 2 Reward Rooms (LEVEL_DESIGN §2–3)
 - Mini-Boss: The Collapsed King, with weapon-check mechanic (CORE_SYSTEMS §11)
@@ -794,20 +798,19 @@ after every landed hit, so it would snap back on the next connect and read as br
 **Files/systems likely to be created:**
 - `Scripts/Rooms/Room.cs`, `Scripts/Rooms/RoomManager.cs` (per-floor room sequencing, deterministic shuffle)
 - `Scripts/Rooms/CombatRoom.cs` (room-lock logic, `IsWaveRoom` flag + wave-batch trigger)
-- `Scripts/Hazards/HazardFront.cs` (core timer-driven system)
-- `Scripts/Hazards/UpperCavesHazard.cs` (rockfall presentation + cracked-tile collapse micro-system)
+- ~~`Scripts/Hazards/HazardFront.cs`~~, ~~`Scripts/Hazards/UpperCavesHazard.cs`~~ — **not to be written; the Rising Hazard is cut.** The cracked-tile collapse survives as a small room-authored component (`Scripts/Rooms/CrackedTile.cs` or similar), not as a hazard skin
 - ~~`Scripts/Enemies/RockSlinger.cs`, `TunnelBrute.cs`, `DeepWarden.cs`~~ — **these were never written, on purpose.** The roster shipped as composed components plus one `EnemyDefinition` asset each; a per-enemy class would have held nothing. See *Biome 1 basic enemies*.
 - `Scripts/Enemies/BossPhaseController.cs` (weapon-check read, reused by all bosses per CORE_SYSTEMS §11)
 - `Scripts/Rooms/SecretVault.cs`, `Scripts/Player/Inventory.cs` (SecretKey flag)
 - Room prefabs/scenes under `Assets/_Main/Scenes/` or `Prefabs/Rooms/`
 
-**Implementation order:** room loading + lock logic → Hazard Front (generic) → Upper Caves hazard skin → 3 base enemies → 6 Combat Room layouts + 2 Reward Rooms → Mini-Boss + weapon-check → Secret Vault + key drop → full-biome playtest.
+**Implementation order:** room loading + lock logic → reshuffling-bag draw → cracked tiles → 6 Combat Room layouts → Mini-Boss + weapon-check → Secret Vault + key drop → full-biome playtest. (3 base enemies are already done; Reward Rooms and the Hazard Front are cut.)
 
 **Definition of Done:** Full Biome 1 clear is playable start to finish with all 3 weapons. Matches Design/07 Phase 3 exit criteria (MVP.md's largest content-authoring risk — see below).
 
 **Potential technical risks:**
-- Room-layout authoring (18 total Combat Rooms across all biomes eventually) is explicitly flagged in Design/07 and LEVEL_DESIGN.md as the single biggest schedule risk — this milestone alone authors 6 of them plus 2 Reward Rooms.
-- `HazardFront` must be built generic enough that Biome 2/3 variants (rising water + geometry change, lava + scorched ground) are pure reskins per Design Rule 2 — verify this before considering the milestone done, not after Milestone 5 discovers it doesn't generalize.
+- Room-layout authoring (18 total Combat Rooms across all biomes eventually) is explicitly flagged in Design/07 and LEVEL_DESIGN.md as the single biggest schedule risk — this milestone alone authors 6 of them. Reward Rooms are cut, but floors now draw **3–5** rooms from that same pool of 6, so the same layouts are seen far more often per run.
+- ~~`HazardFront` must generalize to Biome 2/3 variants~~ — moot, the system is cut. **The residual risk is the opposite one:** with no hazard to reskin, Biomes 2 and 3 have much less to inherit from this milestone, and what differentiates them is now an open design question (GDD §Biome Identity, DESIGN_RULES Rule 5).
 
 ---
 
@@ -848,25 +851,25 @@ after every landed hit, so it would snap back on the next connect and read as br
 **Goal:** Content-scale the Biome 1 pattern across the remaining two biomes — pure content authoring, no new core systems if Milestone 3 generalized correctly.
 
 **Systems/features involved:**
-- Flooded Tunnels: enemies (Eel Diver, Current Wisp, Bloated Drifter, Elite: Tideheart), rooms with low/high water-tile data, Mini-Boss (Drowned Custodian), hazard variant (rising water + room geometry change)
-- Molten Depths: enemies (Ember Wisp, Magma Crawler, Forge Golem, Elite: Cinder Warden), rooms with geyser tiles + scorched ground, Mini-Boss (Molten Sentinel), hazard variant (lava flow)
+- Flooded Tunnels: enemies (Eel Diver, Current Wisp, Bloated Drifter, Elite: Tideheart), rooms with water patches and currents, Mini-Boss (Drowned Custodian). ~~Low/high water-tile data, hazard variant (rising water + room geometry change)~~ — cut with the Rising Hazard
+- Molten Depths: enemies (Ember Wisp, Magma Crawler, Forge Golem, Elite: Cinder Warden), rooms with geyser tiles, Mini-Boss (Molten Sentinel). ~~Scorched ground, hazard variant (lava flow)~~ — cut with the Rising Hazard
 
-**Dependencies:** Milestone 3 (`HazardFront`, `Room`, `BossPhaseController` must already be generic/reusable — this milestone is the test of that).
+**Dependencies:** Milestone 3 (`Room` and `BossPhaseController` must already be generic/reusable — this milestone is the test of that). `HazardFront` is no longer part of that contract; it is cut.
 
 **Files/systems likely to be created:**
-- `Scripts/Hazards/FloodedTunnelsHazard.cs`, `Scripts/Hazards/MoltenDepthsHazard.cs` (reskins of `HazardFront`)
+- ~~`Scripts/Hazards/FloodedTunnelsHazard.cs`, `Scripts/Hazards/MoltenDepthsHazard.cs`~~ — not to be written; the Rising Hazard is cut. Water/current and geyser tiles remain as room-authored components
 - `Scripts/Enemies/EelDiver.cs`, `CurrentWisp.cs`, `BloatedDrifter.cs`, `Tideheart.cs`
 - `Scripts/Enemies/EmberWisp.cs`, `MagmaCrawler.cs`, `ForgeGolem.cs`, `CinderWarden.cs`
 - `Scripts/Enemies/DrownedCustodian.cs`, `Scripts/Enemies/MoltenSentinel.cs`
-- Room prefabs for both biomes (12 more Combat Rooms + 4 Reward Rooms + 2 Mini-Boss arenas)
+- Room prefabs for both biomes (12 more Combat Rooms + 2 Mini-Boss arenas; Reward Rooms are cut)
 
-**Implementation order:** Flooded Tunnels (enemies → rooms → hazard → Mini-Boss) → Molten Depths (same order) → cross-biome playtest.
+**Implementation order:** Flooded Tunnels (enemies → rooms → Mini-Boss) → Molten Depths (same order) → cross-biome playtest.
 
 **Definition of Done:** A full 3-biome run (floors 1–15) is completable. Matches Design/07 Phase 5 exit criteria.
 
 **Potential technical risks:**
 - If this phase does *not* run faster than Milestone 3 per-biome, it means Milestone 3's systems weren't actually generalized — that's a signal to stop and fix the abstraction rather than push through with biome-specific hacks (Design Rule 2).
-- Water/lava room-geometry changes (CORE_SYSTEMS §7) require rooms to define low/high tile zones in layout data — confirm this data format was actually built into the Milestone 3 room system, not bolted on ad hoc here.
+- ~~Water/lava room-geometry changes require low/high tile-zone data~~ — moot, cut with the Rising Hazard. **The replacement risk is design-side:** without their hazards, Biomes 2 and 3 differ from Biome 1 mainly in enemy roster and tile art, which DESIGN_RULES Rule 5 says is not enough. Raise it before authoring 12 rooms against it.
 
 ---
 
@@ -876,14 +879,15 @@ after every landed hit, so it would snap back on the next connect and read as br
 **Goal:** Close the loop — death/victory return the player to a Hub that actually matters.
 
 **Systems/features involved:**
-- Final Boss: The Depth Warden, multi-phase, reuses all 3 hazard themes (BALANCE §6)
-- Escape sequence (post-boss countdown, reuses Dig-Dash + Hazard systems)
+- Final Boss: The Depth Warden — **her father** — multi-phase (BALANCE §6). ⚠️ Its phases were themed on the 3 biome hazards, which are cut; they need re-theming before this is buildable
+- **Zyno, fought immediately after the father — MUST SHIP** (CONTENT_DESIGN §5). MVP version reuses an existing Mini-Boss's moveset/arena, palette-swapped, with his own dialogue. Which Mini-Boss is undecided. This is unscheduled work: Design/07 Day 41 budgets one boss, not two
+- Escape sequence (post-boss 45s countdown). It was specified as reusing the Hazard system, which no longer exists — it is now a small standalone timer, and worth confirming it survives at all
 - Hub Stat System: Core Stats + Miner's Traits (CONTENT_DESIGN §7, BALANCE §15)
 - Ore → Ore Shard conversion (BALANCE §14)
 - Death/Victory screens (GDD §UI)
 - Relic Vault, Weapon Mastery stub (tracking only, per MVP.md)
 
-**Dependencies:** Milestone 5 (Final Boss arena "incorporates all 3 biome hazard types in sequence" — needs all 3 hazard variants to exist first, per LEVEL_DESIGN §6).
+**Dependencies:** Milestone 5 — but weakened: the Final Boss arena was specified as incorporating "all 3 biome hazard types in sequence," and those no longer exist. What the degrading arena is built from is now an open design question (LEVEL_DESIGN §6).
 
 **Files/systems likely to be created:**
 - `Scripts/Enemies/DepthWarden.cs` (multi-phase, own dedicated arena logic per LEVEL_DESIGN §6)
@@ -916,7 +920,7 @@ after every landed hit, so it would snap back on the next connect and read as br
 
 Carried from design docs' own "Open Items" sections — these affect implementation but are design calls, not engineering ones. Flagged here so they're not missed, per Design Rule 9 (undefined terms/decisions get resolved, not left ambiguous):
 
-- Hazard-touch: confirmed instant-kill (BALANCE §7) — implement as such, no lingering "heavy damage" branch needed.
+- ~~Hazard-touch: confirmed instant-kill~~ — **the Rising Hazard is cut entirely (owner, 2026-08-15).** Nothing hazard-related gets built. The open question it leaves is a design one: **does anything replace the descent clock?** Secret Floors, Trapped Souls and Greed's Toll were all priced in time against it and are currently free.
 - Mini-Boss Overcharge exact clear-trigger condition (CORE_SYSTEMS §16, renumbered from §12 when the XP/Evolution/Souls/Narrative sections were added) — needs a design decision before Milestone 3/5 boss work locks it in.
 - XP level-threshold curve and per-enemy XP drop values (BALANCE §16) — explicitly unresolved in design. Milestone 4's upgrade system is now level-triggered rather than floor-triggered, so this gates it.
 - Weapon Mastery node effects (3–5 per weapon) — explicitly deferred past MVP; Milestone 6 only needs the counter, not the effects.

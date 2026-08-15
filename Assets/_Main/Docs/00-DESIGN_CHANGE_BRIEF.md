@@ -4,10 +4,10 @@
 can be brought back into line. Everything in §1–§10 below was flagged rather than written into
 `Design/`, per Design Rules 11/12.
 
-**One exception, 2026-08-14:** the owner directed a single pass in which the designer's own session
-changelog was applied **directly** to `Design/01`, `02`, `04`, `05`, `06`, `07`, `08` and `10`,
-because the designer could not reach the repository. That pass is recorded in **§11**, including the
-places where applying it left other documents stale. It does **not** resolve any item in §1–§10.
+**One exception, 2026-08-14/15:** the owner directed edits straight into `Design/` — first applying the
+designer's own session changelog (the designer could not reach the repository), then two rulings on top
+of it. Recorded in **§11** (the changelog, and the two overrides the owner later reversed) and **§12**
+(the Rising Hazard cut). Neither resolves any item in §1–§10.
 
 Each item is tagged:
 
@@ -22,7 +22,8 @@ hole), **§3/§5/§6** (the premise, the Final Boss and what the game is after t
 coordinated decision, not three), and **§7g** (a flat gauge fill has deleted the per-weapon pacing
 difference and left an upgrade with no job).
 
-**Last refreshed** 2026-08-14, when the designer's session changelog was applied to `Design/` (§11).
+**Last refreshed** 2026-08-15, when the Rising Hazard was cut (§12). Before that, 2026-08-14, when the
+designer's session changelog was applied to `Design/` (§11).
 The refresh before that followed the Biome 1 enemy roster and staged combat pass: §7g–§7n and §10 were
 added then, and §7b and §7c were **corrected** — they previously described a 3-hit chain and a gauge
 matching BALANCE §4, and both statements were wrong.
@@ -428,12 +429,55 @@ listed under "Where the changelog overrode a pushed decision" below.
   Warm-Up ("gauge starts each floor at 20%"), Nerves of Steel ("first hit each floor negated") and
   Sixth Sense ("one slot per offer guaranteed Rare+", which also interacts with the new mixed-tier
   single draw). Each needs re-scoping to level, floor or offer explicitly.
-- **The hazard timer and the new room count now contradict each other.** BALANCE §7 gives Upper Caves
-  **90s to clear a full floor's rooms**, and §8 budgets **30–60s per Combat Room**. At 3–5 rooms a
-  floor that is 90–300s of combat against a 90s front — the hazard is unbeatable at the top of the
-  range before any Trapped Soul or Secret Vault detour is taken. Either the timer scales with the
-  drawn room count or §7's numbers need a full re-pass.
+- ~~**The hazard timer and the new room count contradict each other.**~~ **Resolved by deletion** — the
+  Rising Hazard was cut on 2026-08-15, see §12.
 - **Whether the Evolution offer also shows a Curse** is undefined (CORE_SYSTEMS §13 says the normal
   offer is "replaced").
 - **Which Mini-Boss does Zyno's MVP fight reuse?** He is MUST SHIP with no stat row of his own; picking
   the donor sets his HP, phase count and arena at once. Until then Day 41 can't be scheduled honestly.
+
+---
+
+## 12. DECIDED — the Rising Hazard is cut from the game (owner, 2026-08-15)
+
+**No hazard front, no per-biome timer, no chase, no instant-kill edge, no scorched ground.** Asked what
+the hazard timer was, the owner's answer was that there is no hazard timer at all; asked to choose
+between "not built yet", "keep it but drop the fixed times" and "cut it entirely", they chose **cut it
+entirely**. `CORE_SYSTEMS §7` and `BALANCE §7` are now removal notices — the section *numbers* are kept
+so the ~20 cross-references to §8–§17 across the docs stay valid.
+
+**Surviving:** each biome's *environmental* mechanics, which were always separate micro-systems —
+Upper Caves' cracked tiles, Flooded Tunnels' slowing water and pushing currents, Molten Depths'
+erupting geysers. Also the Floor 16 escape sequence's fixed 45s countdown, which never used the
+hazard front.
+
+### What the cut removes from the build
+
+Genuinely less work: `HazardFront` and its three reskins, the per-biome timer tuning, the low/high
+flood-zone data every Flooded Tunnels room needed, scorched-ground volumes, the Hazard Front VFX
+(rockfall dust / water shimmer / lava glow), and the HUD's proximity vignette.
+
+### Six holes, none of them filled here
+
+1. **The game has no clock.** Nothing pushes the player downward. GDD's pitch still says "racing the
+   danger below," which now describes nothing. Whether descent pressure returns in another form or the
+   game becomes purely combat-paced is undecided — and it is the question the other five hang off.
+2. **Secret Floors are pure upside.** "Costs time against the hazard" *was* the risk half. Same for
+   **Trapped Souls**, whose interactable was priced the same way.
+3. **Greed's Toll has no downside** (CONTENT_DESIGN §3, BALANCE §11) — its cost was a faster hazard.
+4. **Hazard Kills are gone** (GDD §Combat, CORE_SYSTEMS §6) — no edge to push enemies into. Nothing
+   replaces knockback-as-a-kill; Greatsword's Colossus is the only knockback payoff left.
+5. **Biomes 2 and 3 are now thin.** They lose the larger half of their identity (rising water changing
+   room geometry; the lava flow), leaving "water slows you" and "geysers erupt" against Biome 1's
+   cracked tiles. `DESIGN_RULES` Rule 5 requires mechanical differentiation, not stat variation — as
+   written, they no longer clear it. This also weakens Milestone 5's "pure reskin" assumption, since
+   the hazard was the biggest system Biomes 2–3 were going to inherit.
+6. **The Depth Warden's phases were the three hazard themes** (CONTENT_DESIGN §5, BALANCE §6), and the
+   Final Boss arena was specified as degrading through all three (LEVEL_DESIGN §6). Both need
+   re-theming onto what survives. The Drowned Custodian's "summons rising water" needs the same call.
+
+### Run length is now unbounded
+
+With no clock, a floor is 3–5 rooms at 30–60s each — 90–300s — across 16 floors, so **24–80 minutes of
+pure combat** against a stated 30–60 minute session target, before detours. The hazard used to be what
+capped this. Worth checking early, because it argues for fewer rooms per floor, not more.

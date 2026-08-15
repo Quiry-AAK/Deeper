@@ -138,7 +138,7 @@ Always offered as a visible, optional 4th slot. High-risk, high-reward, never ma
 | Curse | Effect |
 |---|---|
 | Glass Cannon | +40% damage dealt, but take double damage |
-| Greed's Toll | Enemies drop 3x Glimmer, but Rising Hazard advances 20% faster |
+| Greed's Toll | Enemies drop 3x XP, but ⚠️ **its downside is gone** — the Rising Hazard was cut (owner, 2026-08-15, CORE_SYSTEMS §7). Needs a replacement cost or the Curse is pure upside |
 | Reckless Vigor | Ultimate Gauge fills 50% faster, but Ultimate deals 25% less damage |
 | Frail Grip | +1 free Heavy Strike chain hit, but Heavy Strike no longer contributes to Ultimate Gauge |
 | Blood Debt | Heal to full HP now, but max HP is reduced for the rest of the run |
@@ -184,7 +184,7 @@ Unchanged from prior pass — numeric stats live in BALANCE.md, this defines rol
 | Current Wisp | Ranged/utility | Fires a projectile that also pushes player via current on hit |
 | Bloated Drifter | Heavy/area | Slow-moving, explodes into a damaging puddle on death |
 | **Elite: Tideheart** | Rare elite (key drop) | Tougher Current Wisp variant, drops Secret Floor key on death |
-| **Mini-Boss: The Drowned Custodian** | Biome 2 boss | Summons rising water hazard early in its room; fires slow homing projectiles Bow players can snipe for bonus damage |
+| **Mini-Boss: The Drowned Custodian** | Biome 2 boss | Summons rising water early in its room — ⚠️ **this was the biome hazard, now cut (CORE_SYSTEMS §7); confirm whether the boss keeps a room-scoped version of it or needs a new phase mechanic**; fires slow homing projectiles Bow players can snipe for bonus damage |
 
 ### Biome 3 — Molten Depths
 | Enemy | Role | Behavior |
@@ -201,7 +201,7 @@ Unchanged from prior pass — numeric stats live in BALANCE.md, this defines rol
 
 | Enemy | Role | Behavior |
 |---|---|---|
-| **The Depth Warden (her father)** | First fight, Floor 16 | Unchanged from the original design: multi-phase, incorporates all 3 biome hazard types in sequence as the arena degrades, weapon-check moment per the Mini-Boss pattern. Stats/phases: BALANCE §6 (existing "Depth Warden" row, reidentified — no numbers need to change). |
+| **The Depth Warden (her father)** | First fight, Floor 16 | Multi-phase, weapon-check moment per the Mini-Boss pattern. ⚠️ **Its three phases were themed on the three biome hazards, which are now cut** (CORE_SYSTEMS §7) — the phases need re-theming onto what survives (collapsing tiles / water and currents / geysers) or onto something new. Stats/phases: BALANCE §6 (existing "Depth Warden" row, reidentified — no numbers need to change). |
 | **Zyno** | True Final Boss, Floor 16 (after the Warden) — **MUST SHIP** | **DECIDED: Zyno is essential, not optional.** MVP version reuses an existing Mini-Boss's moveset/arena, palette-swapped, with new dialogue and identity (same technique already budgeted for recontextualized enemies, `10-NARRATIVE.md` §4a) — a bespoke Zyno moveset/arena/balance pass is SHOULD SHIP, layered on later. See `08-MVP.md`. |
 
 ---

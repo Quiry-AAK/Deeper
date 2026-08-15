@@ -10,7 +10,7 @@ If a new feature adds meaningful development time, it must be paired with one of
 
 ## Rule 2 — Reuse existing systems before building new ones
 
-Before proposing a new system, check whether an existing one (Attack State Machine, Hazard timer, weighted-draw pool, buff/modifier stack, etc.) can be extended or reskinned to cover the need. Mini-Boss Overcharge, Wave Rooms, and all 3 biomes' hazard variants are built this way — one underlying system, different presentation layers. New architecture is the expensive option; only reach for it when reuse genuinely doesn't fit.
+Before proposing a new system, check whether an existing one (Attack State Machine, weighted-draw pool, buff/modifier stack, etc.) can be extended or reskinned to cover the need. Mini-Boss Overcharge and Wave Rooms are built this way — one underlying system, different presentation layers. (The Hazard timer used to be the headline example of this, reskinned three ways; it was cut on 2026-08-15, which also removed the cheapest reuse target the biomes had.) New architecture is the expensive option; only reach for it when reuse genuinely doesn't fit.
 
 ## Rule 3 — Prefer systemic replayability over hand-authored content
 
@@ -18,7 +18,7 @@ When choosing between "add more static content" and "add a system that generates
 
 ## Rule 4 — Each weapon/enemy/biome needs a clearly different function, not just different numbers
 
-Stat variation alone (higher damage, lower HP) is not sufficient differentiation. Katana/Bow/Greatsword each have a distinct mechanical hook (Combo Counter/Charge Shot/Hyper Armor) precisely because "faster but weaker" isn't enough to justify tripling the animation and upgrade-pool budget. Applies equally to enemy roles and biome hazard identities.
+Stat variation alone (higher damage, lower HP) is not sufficient differentiation. Katana/Bow/Greatsword each have a distinct mechanical hook (Combo Counter/Charge Shot/Hyper Armor) precisely because "faster but weaker" isn't enough to justify tripling the animation and upgrade-pool budget. Applies equally to enemy roles and biome identities — and with the Rising Hazard cut, Biomes 2 and 3 currently fall short of this rule (see GDD §Biome Identity).
 
 ## Rule 5 — New mechanics must serve one of the four core verbs
 

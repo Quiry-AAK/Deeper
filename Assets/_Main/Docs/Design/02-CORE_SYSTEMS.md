@@ -99,25 +99,27 @@ Each weapon has one passive mechanical hook, always active regardless of upgrade
 ## 6. Damage System
 
 - Flat damage per hit — no crit system anywhere in the game (run or permanent). Permanent power growth is delivered instead through the Hub Stat System's Core Stats (flat/percentage bonuses) and Marks (unique named effects) — see §10.
-- Damage sources: Basic Attack, Heavy Strike, Ultimate, enemy attacks, Hazard Kills, environmental hazards (geysers, scorched ground, currents — per biome)
+- Damage sources: Basic Attack, Heavy Strike, Ultimate, enemy attacks, environmental hazards (collapsing tiles, geysers, currents — per biome). Hazard Kills and scorched ground are gone with the Rising Hazard (§7)
 - **DECIDED (per engineering recommendation):** `source` gets added to the built pipeline. Current build has `AttackHitbox.Landed(action, target, amount)` plus `Damageable.Damaged(amount)`, neither carrying `source` — that's fine today only because the player is the only damage source that exists. Milestone 4's on-hit upgrade procs and any future "damage dealt by X" upgrade need it, so both events gain a `source` parameter before that pool is authored. The single-event model this doc originally described (`OnDamageDealt(source, target, amount)`) stays aspirational/simplified for documentation purposes — the two-event split is what's actually built and stays built, just with `source` added to each.
-- **Hazard Kills:** if an enemy is pushed/dashed into the Rising Hazard's leading edge, it's an instant kill regardless of remaining HP — implemented as a trigger volume check on the Hazard front, not a damage-system special case
+- ~~**Hazard Kills**~~ — removed with §7. There is no hazard edge to push an enemy into.
 
 ---
 
-## 7. Hazard System
+## 7. Hazard System — **REMOVED (owner, 2026-08-15)**
 
-One underlying timer-driven system, reskinned per biome (GDD §Biome Identity).
+*Section number retained so every cross-reference to §8–§16 in this and other docs stays valid.*
 
-**Core loop:**
-- A `HazardFront` object advances upward (or outward, depending on presentation) on a per-biome timer
-- Reaching the player = instant death (or heavy damage + forced retreat, TBD in BALANCE.md playtesting)
-- Timer speed increases per biome tier (Upper Caves slowest, Molten Depths fastest)
+**The Rising Hazard is cut from the game.** No `HazardFront`, no per-biome timer, no pursuing front, no instant-kill edge, no `ScorchedGround`. The system this doc described — one timer-driven front reskinned three ways — does not get built.
 
-**Per-biome behavior layer (cosmetic + secondary effect, same underlying timer):**
-- **Upper Caves:** visible/audible rockfall front; some floor tiles independently crack and collapse after a few seconds of player weight (separate micro-system, same "collapse" visual language)
-- **Flooded Tunnels:** hazard is a rising water level; also triggers room-geometry changes (low-lying tiles become impassable/water-slowed as the level rises) — requires rooms to define "low" vs "high" tile zones in their layout data
-- **Molten Depths:** hazard is a spreading lava flow that leaves a `ScorchedGround` trigger volume behind it after passing — deals light recurring damage to anything standing in it, distinct from the instant-kill front itself
+**What survives:** the per-biome *environmental* mechanics, which were always separate micro-systems and are unaffected — Upper Caves' cracked tiles that collapse under standing weight, Flooded Tunnels' movement-slowing water and pushing currents, Molten Depths' erupting geysers. These are room-authored features, not a chase.
+
+**What this breaks, none of it resolved here:**
+- **There is no clock.** Nothing pushes the player downward; a floor can be taken at any pace. GDD's "racing the danger below" no longer describes a mechanic.
+- **Secret Floors and Trapped Souls lost their cost** (§8, §14) — "costs real time against the hazard" *was* the risk half of both.
+- **Greed's Toll lost its downside** (CONTENT_DESIGN §3, BALANCE §11).
+- **Per-biome escalation lost one of its two axes** — enemy stat scaling is now the only one.
+- **Biomes 2 and 3 lost the larger half of their identity** (rising water changing room geometry; the lava flow), leaving them thinner than Biome 1 against DESIGN_RULES Rule 5.
+- **BALANCE §7's timer table and §8's "floor time vs hazard" budget** no longer describe anything. (This does resolve the 90s-vs-3–5-rooms contradiction — by deleting one side of it.)
 
 ---
 
@@ -137,7 +139,7 @@ One underlying timer-driven system, reskinned per biome (GDD §Biome Identity).
 **Secret Floors:**
 - A locked door prefab requires a `SecretKey` flag on the player's inventory, granted by defeating a rare elite spawn earlier in that biome
 - Leads to a Vault Room (large XP payout or guaranteed Legendary-tier upgrade offer)
-- No separate hazard override — entering costs real time against the same biome hazard timer, which is the entire risk/reward tension (no new system required)
+- ⚠️ **The risk half is gone.** Entering used to cost real time against the biome hazard timer, which *was* the entire risk/reward tension. With §7 removed, a Secret Floor is pure upside — it needs a new cost (a fight, a resource, a one-per-run limit) or it stops being a decision
 
 ---
 
@@ -185,7 +187,7 @@ Not a separate system — implemented as boss-specific phase logic that reads th
 
 ## 14. Trapped Souls
 
-- Certain rooms (flagged, reuse Secret-Vault-style footprint) contain a **bound soul** — a spectral figure the player can free via a short interactable, costing real time against the Hazard.
+- Certain rooms (flagged, reuse Secret-Vault-style footprint) contain a **bound soul** — a spectral figure the player can free via a short interactable. ⚠️ The interactable was priced in "real time against the Hazard"; with §7 removed, freeing a soul currently costs nothing and needs a new price.
 - Player has **2–3 soul slots per run**. Freeing a soul grants a persistent in-run effect (see BALANCE.md for the 3 soul types). A freed soul can be lost permanently for the run if it dies.
 - **MVP scope: 1 soul type implemented**, 1 Trapped Soul room in Biome 1's pool. Remaining soul types are Post-MVP.
 
@@ -227,7 +229,7 @@ On Mini-Boss defeat, in addition to the normal level-up upgrade offer, the playe
 - Combo Counter stack cap and per-stack bonus
 - Charge Shot hold-time-to-damage curve
 - Hyper Armor damage-reduction percentage
-- Hazard timer speed per biome, and Hazard-touch damage vs. instant-kill decision
+- **Does anything replace the descent clock now that §7 is cut?** — and if not, what makes Secret Floors, Trapped Souls and Greed's Toll into decisions again
 - Full Heavy Strike modifier list and which ones chain vs. replace
 - Curse pool contents and weighting
 - Weapon Mastery node effects (3–5 per weapon)
