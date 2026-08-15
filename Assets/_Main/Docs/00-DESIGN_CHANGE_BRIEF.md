@@ -369,15 +369,18 @@ listed under "Where the changelog overrode a pushed decision" below.
 
 ### Where the changelog overrode a pushed decision
 
-1. **The father moves from Floor 16 to Biome 1.** Pass 2 decided *"The Depth Warden IS her father,"*
-   fought on Floor 16. The changelog makes him **Biome 1's Mini-Boss, framed as an ordinary boss on a
-   first playthrough.** Applied as the changelog states — which leaves **Floor 16 with no identity**,
-   because the changelog never says what replaces him. Flagged in GDD §Narrative Premise, BALANCE §6's
-   open items, MVP, the plan's Day 41, and NARRATIVE §7.5. **This is the first thing to settle.**
-2. **Zyno drops out of MUST SHIP.** Pass 3 decided Zyno is MUST SHIP and removed Floor 16's
-   placeholder-stub valve. The changelog says he *"never appears physically in the MVP"* and is
-   carried entirely by the Whisper Layer. Applied as the changelog states; pass 3's costing of a
-   reused-Mini-Boss Zyno is preserved in 08-MVP.md in case he goes back in.
+1. ~~**The father moves from Floor 16 to Biome 1.**~~ **REVERSED by the owner, 2026-08-15.** The
+   changelog made him Biome 1's Mini-Boss; the owner ruled that **the father is the Final Boss, fought
+   before Zyno**, restoring pass 2's structure. Floor 16 is two fights — The Depth Warden (her father)
+   then Zyno — and Biome 1's Mini-Boss is **The Collapsed King** again. GDD §Narrative Premise,
+   CORE_SYSTEMS §15, BALANCE §6, LEVEL_DESIGN §2, the plan's Day 41 note, MVP and NARRATIVE §7.5 were
+   all put back. `03-CONTENT_DESIGN.md` never moved and needed no edit.
+2. ~~**Zyno drops out of MUST SHIP.**~~ **REVERSED in the same ruling.** Zyno is **MUST SHIP**, fought
+   immediately after the father, at the cheap version pass 3 costed: an existing Mini-Boss's
+   moveset/arena, palette-swapped, with his own dialogue and identity. A bespoke fight is SHOULD SHIP.
+   Two things this leaves open: **which** Mini-Boss he reuses (that choice sets his HP, phases and
+   arena in one go — BALANCE §6 has no Zyno stat row), and the fact that **the 45-day plan schedules
+   one boss on Day 41, not two.**
 3. **The Glimmer rename is moot for the run currency.** Pass 3 renamed Ore → **Glimmer** (run),
    Ore Shards → **Shards** (meta), Miner's Traits → **Marks**. The changelog then **deletes the run
    currency outright** in favour of XP. So: **Shards and Marks survive and are used throughout**;
@@ -432,7 +435,5 @@ listed under "Where the changelog overrode a pushed decision" below.
   drawn room count or §7's numbers need a full re-pass.
 - **Whether the Evolution offer also shows a Curse** is undefined (CORE_SYSTEMS §13 says the normal
   offer is "replaced").
-- **Floor 16 has no identity.** With the father moved to Biome 1 and Zyno out of the MVP, nothing
-  states who or what the Final Boss is. `03-CONTENT_DESIGN.md`, `04-BALANCE.md §6`, `10-NARRATIVE.md`
-  and the plan's Day 41 all still describe the superseded structure. **This is the single decision
-  that unblocks the most documents.**
+- **Which Mini-Boss does Zyno's MVP fight reuse?** He is MUST SHIP with no stat row of his own; picking
+  the donor sets his HP, phase count and arena at once. Until then Day 41 can't be scheduled honestly.

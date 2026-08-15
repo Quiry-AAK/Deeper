@@ -6,7 +6,7 @@ Defines what must be playable at the end of the 45-day extended timeline (see 07
 
 ✅ **RESOLVED: narrative now has tiers.** The session changelog gives the narrative layer an explicit MVP subset — minimal Whisper Layer lines (Biome 1 + the father fight), a Memory Fragment pickup with a Codex UI stub, and the Refusal State on the father fight only — all MUST SHIP below. Everything beyond that subset is in Explicitly Post-MVP. The earlier "no tier assigned" flag is closed.
 
-⚠️ **SUPERSEDED, needs the owner's confirmation: "Zyno is MUST SHIP."** The previous pass made a real Zyno encounter MUST SHIP and removed Floor 16's placeholder-stub safety valve. **The session changelog overrides that** — it states Zyno *"never appears physically in the MVP"* and is present only through the Whisper Layer, and the owner directed the changelog to take precedence. The MUST SHIP list below now reflects the changelog. The previous pass's costing still stands if Zyno is later put back: the cheapest real version is a reused Mini-Boss moveset/arena, palette-swapped with new dialogue (the Elite recontextualization technique, ART_DIRECTION §4 / NARRATIVE §4a), and a bespoke fight is an additional-timeline conversation the 45-day plan does not absorb for free. **What Floor 16 is now — with the father moved to Biome 1 and Zyno absent — is undecided.** See `00-DESIGN_CHANGE_BRIEF.md` §11.
+**DECIDED: Zyno is MUST SHIP, fought after the father on Floor 16.** The session changelog briefly moved the father to Biome 1 and kept Zyno out of the MVP; the owner reversed that on 2026-08-15 — **the father is the Final Boss, fought before Zyno**, as `03-CONTENT_DESIGN.md` §5 describes. This keeps Floor 16's placeholder-stub safety valve removed: the MVP needs a real Zyno encounter, not a stub. Because Zyno's fight is genuinely new content (no moveset, stats, arena, or art exist yet) landing on a timeline already extended once for the 3-weapon system, the MUST SHIP entry below takes the cheapest version that still counts as real — reuse an existing Mini-Boss's moveset/arena, palette-swapped with new dialogue (the recontextualization technique already budgeted for Elites, ART_DIRECTION §4 / NARRATIVE §4a) — rather than a bespoke moveset. A fully custom Zyno fight is a genuine additional-timeline conversation, not something the 45-day plan absorbs for free.
 
 ## MUST SHIP
 
@@ -16,7 +16,7 @@ Non-negotiable. The MVP is not the MVP without these.
 - [ ] Ultimate Gauge system (fill-on-hit, drain-on-use, no cooldown)
 - [ ] Attack State Machine (Windup/Active/Recovery) + Dash-Attack Cancel
 - [ ] Dig-Dash with i-frames
-- [ ] Biome 1 (Upper Caves) fully playable: all 6 Combat Rooms (incl. 1 Wave Room minimum), Mini-Boss with weapon-check — the Mini-Boss is **the father**
+- [ ] Biome 1 (Upper Caves) fully playable: all 6 Combat Rooms (incl. 1 Wave Room minimum), Mini-Boss (The Collapsed King) with weapon-check
 - [ ] Rising Hazard system, at least the Upper Caves variant (rockfall + cracked tiles)
 - [ ] Weighted-draw Upgrade system with the shared upgrade pool (can ship with a reduced subset — see CUT IF NECESSARY)
 - [ ] Curse system (4th slot, at least 4–5 of the 8 curses)
@@ -25,19 +25,19 @@ Non-negotiable. The MVP is not the MVP without these.
 - [ ] Shard run-end calculation (Levels Gained + Depth Reached) — no in-level currency pickups
 - [ ] 1 Evolution Tier per weapon (3 total), mutually-exclusive kit-replacement choices at a level-5 milestone
 - [ ] 1 Trapped Soul type (The Warden's Soul) + 1 Trapped Soul room in Biome 1
-- [ ] Narrative identity pass on existing Biome 1 content: father as Mini-Boss, minimal Whisper Layer lines, Refusal State on the father fight only
+- [ ] Narrative identity pass on existing Biome 1 content: village framing on the existing enemy roster, minimal Whisper Layer lines, Refusal State on the father fight (Floor 16) only
 - [ ] Memory Fragment pickup type + Hub Codex UI stub (small Biome-1 fragment set)
 - [ ] Full Hub loop: weapon select, Descend, Death/Victory screen, run-end Shard award, return to Hub
 - [ ] At least a minimal Hub Stat System (2–3 Core Stats purchasable) proving the meta-progression loop works end to end
-- [ ] **Floor 16 — undecided, blocked on the conflict flagged above.** The session changelog keeps Zyno out of the MVP entirely and moves the father to Biome 1, which leaves Floor 16 without an identity. Until that is settled, treat the old placeholder "win condition" room as the working assumption for closing the loop, and do not schedule a Zyno fight.
+- [ ] **Floor 16 Final Boss Sequence — no placeholder stub.** The Depth Warden/father fight can ship as a stub or a full fight (see SHOULD SHIP below), but **a real Zyno encounter must be reachable and beatable after him** — minimum version: an existing Mini-Boss moveset/arena, palette-swapped, with new Zyno dialogue and a distinct name/identity. This is the one item on this list that is genuinely new scope; see the flag above.
 
 ## SHOULD SHIP
 
 Strongly desired, real quality-of-experience impact, but the game is still recognizably "Deeper" without them at MVP time.
 
 - [ ] Biomes 2 & 3 (Flooded Tunnels, Molten Depths) fully playable
-- [ ] Full multi-phase Floor 16 boss fight, whatever its final identity turns out to be (the encounter design is unchanged from the original Depth Warden; only *who it is* is contested)
-- [ ] A physical Zyno encounter of any kind — moved out of MUST SHIP by the session changelog, which keeps him to the Whisper Layer for the MVP
+- [ ] Full Depth Warden/father fight with all 3 phases (the fight itself is unchanged from the original Final Boss design — just reidentified; it's SHOULD SHIP the same way it always was, independent of the Zyno requirement above)
+- [ ] A bespoke Zyno moveset/arena, replacing the reused-Mini-Boss MVP version above
 - [ ] Full weapon-specific upgrade sub-pools (all 45 entries across 3 weapons)
 - [ ] All 8 Curses
 - [ ] Alt Ultimates (all 3 weapons)
@@ -66,8 +66,8 @@ A single unbroken playthrough must be possible:
 1. Launch → Main Menu → Hub
 2. Select a weapon → Descend
 3. Clear Biome 1 (floors 1–5) using core loop, leveling up and encountering the Upgrade/Curse screen on each level-up
-4. Defeat Mini-Boss 1 — the father
-5. Reach Floor 16 (full 3-biome run if Biomes 2/3 shipped, or a Biome 1-only run to Floor 16 if not) and beat whatever the Floor 16 encounter resolves to — see the contested-identity flag at the top of this file
+4. Defeat Mini-Boss 1 (The Collapsed King)
+5. Reach Floor 16 (full 3-biome run if Biomes 2/3 shipped, or a Biome 1-only run to Floor 16 if not) and beat the Floor 16 sequence — the Depth Warden/father (stub or full, per SHOULD SHIP) then Zyno (minimum: reused-content version, per MUST SHIP)
 6. Win or die → see Death/Victory screen showing depth reached and Shards earned
 7. Return to Hub with Shards, spend on at least one Core Stat, redescend
 

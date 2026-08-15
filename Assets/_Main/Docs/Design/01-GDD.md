@@ -14,13 +14,13 @@
 
 **Protagonist:** A girl manipulated by **Zyno**, who has convinced her that her own village are monstrous enemies. She descends to hunt them down, unaware. Her real motive — surfaced only gradually — is that Zyno used her desire to protect two children (the last descendants of an unspecified elite bloodline) to turn her against her own people.
 
-**Biome 1 Boss:** The girl's father. Framed and fought as a standard Mini-Boss on a first playthrough — no special telegraphing that breaks the "he's a monster" illusion during MVP.
+**Floor 16 — two fights, in this order:** **The Depth Warden is her father**, fought first, using the boss design already budgeted (multi-phase, all 3 biome hazard themes, weapon-check moment) — framed as an ordinary boss on a first playthrough, with no telegraphing that breaks the "he's a monster" illusion. Beating him does not end the floor: **Zyno is fought immediately after, as the true Final Boss.** Biome 1's Mini-Boss remains **The Collapsed King** (CONTENT_DESIGN §5).
 
-**Antagonist:** Zyno — present throughout the run via the Whisper Layer (see Core Systems), never appears physically in the MVP.
+**Antagonist:** Zyno — present throughout the descent via the Whisper Layer (see Core Systems), then fought in person on Floor 16 after the father. His MVP fight reuses an existing Mini-Boss moveset/arena, palette-swapped with his own dialogue and identity; a bespoke moveset is SHOULD SHIP (CONTENT_DESIGN §5, 08-MVP.md).
 
 **Visual note:** Biome 1 art stays mine-themed as already built/planned — the narrative reframe is a writing/data layer on top of existing art, not an art change, for MVP. Biomes 2–3 narrative framing is an open item, not required for MVP.
 
-> ⚠️ **CONFLICT — needs the owner's call.** The two designer passes already in these docs put the father on **Floor 16** as The Depth Warden and make **Zyno** the true Final Boss and a MUST SHIP item. The session changelog above puts the father in **Biome 1 as a Mini-Boss** and says Zyno never appears physically in the MVP. The owner directed the changelog to take precedence, so it is written as stated — but the Floor 16 / Zyno statements in §Game Flow below, `03-CONTENT_DESIGN.md`, `04-BALANCE.md §6`, `08-MVP.md` and `10-NARRATIVE.md` have **not** been rewritten, because deciding what Floor 16 *becomes* if the father is fought on Floor 5 is a design decision, not an editing one. See `Docs/00-DESIGN_CHANGE_BRIEF.md` §11.
+> ✅ **RESOLVED (owner, 2026-08-15).** The session changelog had moved the father to Biome 1 as a Mini-Boss and kept Zyno out of the MVP entirely. The owner reversed that: **the father is the Final Boss, fought before Zyno**, exactly as `03-CONTENT_DESIGN.md` §5 already describes. Floor 16 therefore has its identity back and Zyno stays MUST SHIP. Everything else from the changelog (XP/leveling, 3–5 rooms, run-end Shards, Evolutions, Trapped Souls, the narrative systems below) is unaffected. See `Docs/00-DESIGN_CHANGE_BRIEF.md` §11.
 
 ## Core Gameplay Loop
 

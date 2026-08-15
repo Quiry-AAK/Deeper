@@ -372,6 +372,6 @@ Per-enemy XP drop values are unresolved for the same reason: the two numbers onl
 - XP curve and per-enemy XP values (§16) — the single largest unresolved number set in this doc
 - Trapped Soul numeric values (§17 gives behaviour only — no HP, taunt radius, duration or slot count yet)
 - Shard multipliers in §14 — placeholder, revisit once a run actually takes 30–60 min
-- **§6's boss table still lists The Depth Warden as the Floor 16 Final Boss and The Collapsed King as Biome 1's** — both now contested by the session changelog's "the father is Biome 1's Mini-Boss". Not edited here; see `00-DESIGN_CHANGE_BRIEF.md` §11
+- **Zyno has no stat row of his own** (§6 points at "an existing Mini-Boss's HP/phases, specific choice TBD"). Which Mini-Boss he reuses is the next decision — it sets his HP, phase count and arena in one go. The Floor 16 structure itself is settled: father first, Zyno after (owner, 2026-08-15)
 - **§7's hazard timer contradicts §8's room count:** 90s to clear a floor vs 3–5 rooms at 30–60s each
 - Playtesting pass on all values above — first-pass numbers only, expect significant movement once the core loop is actually playable

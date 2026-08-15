@@ -70,8 +70,8 @@ Day-by-day build plan. Original scope was a 30-day MVP; the plan below reflects 
 - Shard run-end-only calculation
 - 1 Evolution Tier per weapon (3 total)
 - 1 Trapped Soul type + 1 Trapped Soul room (Biome 1)
-- Narrative identity data pass: village/father/Zyno framing on existing Biome 1 content (text/data only, no new art)
-- Minimal Whisper Layer line set (Biome 1 + father fight)
+- Narrative identity data pass: village/Zyno framing on existing Biome 1 content (text/data only, no new art)
+- Minimal Whisper Layer line set (Biome 1 + the Floor 16 father fight)
 - Memory Fragment pickup + Codex UI stub
 - Refusal State — father fight only
 
@@ -86,7 +86,7 @@ Day-by-day build plan. Original scope was a 30-day MVP; the plan below reflects 
 
 **Phases above are now stale in three places** and will be corrected by the re-sequencing pass, not silently here: Phase 3 Days 19–20/23–24 still load and author Reward Rooms, Phase 4 Days 27–32 still describes a floor-gated upgrade draw, and Phase 6 Day 43 still says "Glimmer→Shard conversion" for a currency that no longer drops.
 
-⚠️ **Day 41 is also contested:** it schedules The Depth Warden as the Floor 16 Final Boss, while the pass before this one made the Depth Warden *the father* with Zyno fought after, and the session changelog moves the father to Biome 1. That is an unresolved design question, not a scheduling one — see `00-DESIGN_CHANGE_BRIEF.md` §11.
+⚠️ **Day 41 is under-scoped.** It schedules one Final Boss, but Floor 16 is **two fights** — the Depth Warden (her father) and then Zyno, who is MUST SHIP (owner, 2026-08-15; `03-CONTENT_DESIGN.md` §5, `08-MVP.md`). Even at the cheap MVP version (an existing Mini-Boss reskinned with new dialogue), Zyno needs his own slot; a bespoke fight needs more than that. This is a scheduling gap for the re-sequencing pass, not a design question.
 
 ---
 

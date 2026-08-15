@@ -19,7 +19,7 @@ Room layout philosophy and per-biome pool detail. Builds on the room counts defi
 | Combat Room | 6 | Unchanged — 1–2 flagged `IsWaveRoom` (CORE_SYSTEMS §8). Now drawn 3–5 per floor via reshuffling bag (repeats within a run are expected). Each needs at least 2 viable player positioning zones so Greatsword's whiff-punish window and Bow's kiting space both have room to exist — a room that's just one open box favors Katana by default, which isn't the goal. |
 | Secret Vault Room | 1 (reused across biomes) | Unchanged. Locked door, key-gated (CORE_SYSTEMS §8). Same base layout reused with biome-specific tile dressing to save art budget — the room's function (large XP payout or guaranteed Legendary offer) matters more than layout novelty here. |
 | **Trapped Soul Room** *(new)* | 1 (MVP, Biome 1 only) | Small footprint, reuses Secret-Vault-style layout approach. Contains one bound soul interactable (CORE_SYSTEMS §14). |
-| Mini-Boss Room | 1 (unique per biome) | Unchanged. Large open arena, must accommodate the boss's full attack radius plus room for the player to kite. Includes the biome's hazard-behavior layer active during the fight (e.g., Molten Sentinel's geysers erupt mid-fight in its own room). Biome 1's Mini-Boss is now **the father** — no arena changes required, framing/dialogue only. |
+| Mini-Boss Room | 1 (unique per biome) | Unchanged. Large open arena, must accommodate the boss's full attack radius plus room for the player to kite. Includes the biome's hazard-behavior layer active during the fight (e.g., Molten Sentinel's geysers erupt mid-fight in its own room). Biome 1's Mini-Boss stays **The Collapsed King**. |
 
 **Reward Room row removed entirely** — function no longer exists (Shards are run-end only, not floor pickups).
 
