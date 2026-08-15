@@ -1,8 +1,13 @@
 # DESIGN CHANGE BRIEF — for the designer
 
 **Purpose:** everything decided outside the design docs that now contradicts them, so the design docs
-can be brought back into line. Nothing in `Design/01-GDD.md` … `09-DESIGN_RULES.md` has been edited —
-per Design Rules 11/12 these were flagged, not silently written in.
+can be brought back into line. Everything in §1–§10 below was flagged rather than written into
+`Design/`, per Design Rules 11/12.
+
+**One exception, 2026-08-14:** the owner directed a single pass in which the designer's own session
+changelog was applied **directly** to `Design/01`, `02`, `04`, `05`, `06`, `07`, `08` and `10`,
+because the designer could not reach the repository. That pass is recorded in **§11**, including the
+places where applying it left other documents stale. It does **not** resolve any item in §1–§10.
 
 Each item is tagged:
 
@@ -17,8 +22,9 @@ hole), **§3/§5/§6** (the premise, the Final Boss and what the game is after t
 coordinated decision, not three), and **§7g** (a flat gauge fill has deleted the per-weapon pacing
 difference and left an upgrade with no job).
 
-**Last refreshed** after the Biome 1 enemy roster and staged combat pass. §7g–§7n and §10 were added
-in that refresh; §7b and §7c were **corrected** — they previously described a 3-hit chain and a gauge
+**Last refreshed** 2026-08-14, when the designer's session changelog was applied to `Design/` (§11).
+The refresh before that followed the Biome 1 enemy roster and staged combat pass: §7g–§7n and §10 were
+added then, and §7b and §7c were **corrected** — they previously described a 3-hit chain and a gauge
 matching BALANCE §4, and both statements were wrong.
 
 ---
@@ -309,6 +315,10 @@ Neither was caused by implementation — they are pre-existing and worth fixing 
 Per **Design Rule 14** these are one coordinated reopen, not eight independent edits — §3 and §5 in
 particular cannot be resolved in one document alone.
 
+**None of the rows above were touched by the 2026-08-14 pass (§11).** That pass applied the
+designer's own changelog; every row here is still outstanding, and `03-CONTENT_DESIGN.md`'s row grew
+— see §11's "left stale" list.
+
 ---
 
 ## 10. Locked design that is still unbuilt — context for the conversation
@@ -329,3 +339,100 @@ they cost.
   §UI lists, only the Ultimate Gauge exists.
 - **Nothing above Milestone 1 exists** — no rooms, no floors, no Hazard Front, no upgrades or curses,
   no Hub, no meta-progression, no mini-boss or final boss. Everything runs in `TestScene`.
+
+---
+
+## 11. APPLIED — the designer's session changelog was written into `Design/` (2026-08-14)
+
+**Owner-directed, one-off.** The designer could not reach the repository, so their session changelog
+was applied to the locked docs from this side instead of being flagged here. This is the only pass in
+which `Design/` was edited from engineering. It resolves none of §1–§10 — in particular **§7h is still
+the live gameplay hole.**
+
+**Applied on top of the designer's own three pushed passes** (`fa89f2f`, `d46c84b`, `881a589`), which
+landed while this was being written. Those passes stay intact except where the changelog contradicts
+them; the owner's instruction was that **the changelog wins every conflict.** The three collisions are
+listed under "Where the changelog overrode a pushed decision" below.
+
+### What was applied
+
+| Document | Change |
+|---|---|
+| `01-GDD.md` | New pitch; session length 15–25 → **30–60 min**; new **§Narrative Premise** (Zyno, the village, father as Biome 1 Boss, art unaffected) with the Floor 16 conflict flagged in place; Core Loop rewritten around XP and level-up; Shards note under Progression |
+| `02-CORE_SYSTEMS.md` | §8 rewritten (3–5 rooms via **reshuffling bag**, **Reward Room removed**, Trapped Soul added); new **§12 XP & Leveling**, **§13 Evolution Tiers**, **§14 Trapped Souls**, **§15 Narrative Systems** (which absorbs the previous pass's Narrative & Dialogue section as a subsection) + the Post-MVP block |
+| `04-BALANCE.md` | Currency upgrades → **Quick Study / Insight Magnet** (Lucky Find deleted); Greed's Toll → XP; §14 is now a **run-end** award `(LevelsGained × 15) + (DepthReached × 10)`; Glimmer Gain → **XP Gain**; Head Start → **Quick Start**; rooms/floor 3–5; new **§16 XP Curve (open)**, **§17 Trapped Souls** |
+| `05-ART_DIRECTION.md` | Two Open Items (Flicker Recognition Post-MVP, Biome 1 stays mine-themed); HUD currency counter → XP bar; §0's narrative cross-ref repointed §13 → §15 |
+| `06-LEVEL_DESIGN.md` | Room pool table rebuilt (**Reward Room row gone**, **Trapped Soul Room added**, Biome 1 Mini-Boss is the father); rooms/floor 3–5 |
+| `07-IMPLEMENTATION_PLAN.md` | **Scope Addendum** section — what moved into MVP and what is explicitly Post-MVP. Phases deliberately **not** renumbered |
+| `08-MVP.md` | 9 new MUST SHIP items; the narrative "no tier" flag closed; Zyno MUST SHIP marked superseded; Gambler's Edge cut-line retired; 7 new Post-MVP items |
+| `10-NARRATIVE.md` | Status note + a new §7 item 5 recording the Floor 16 contradiction |
+
+### Where the changelog overrode a pushed decision
+
+1. **The father moves from Floor 16 to Biome 1.** Pass 2 decided *"The Depth Warden IS her father,"*
+   fought on Floor 16. The changelog makes him **Biome 1's Mini-Boss, framed as an ordinary boss on a
+   first playthrough.** Applied as the changelog states — which leaves **Floor 16 with no identity**,
+   because the changelog never says what replaces him. Flagged in GDD §Narrative Premise, BALANCE §6's
+   open items, MVP, the plan's Day 41, and NARRATIVE §7.5. **This is the first thing to settle.**
+2. **Zyno drops out of MUST SHIP.** Pass 3 decided Zyno is MUST SHIP and removed Floor 16's
+   placeholder-stub valve. The changelog says he *"never appears physically in the MVP"* and is
+   carried entirely by the Whisper Layer. Applied as the changelog states; pass 3's costing of a
+   reused-Mini-Boss Zyno is preserved in 08-MVP.md in case he goes back in.
+3. **The Glimmer rename is moot for the run currency.** Pass 3 renamed Ore → **Glimmer** (run),
+   Ore Shards → **Shards** (meta), Miner's Traits → **Marks**. The changelog then **deletes the run
+   currency outright** in favour of XP. So: **Shards and Marks survive and are used throughout**;
+   Glimmer does not exist; and pass 3's mining-flavored upgrade renames are superseded where those
+   upgrades now scale XP — Keen Eye → **Quick Study**, Glimmer Magnet → **Insight Magnet**, Lucky Find
+   → **deleted** (no chests exist), Head Start → **Quick Start**. Sixth Sense keeps its new name.
+   *Note the changelog itself still says "Ore Shards" and "Ore Gain" — pre-rename vocabulary, applied
+   under the newer names rather than reverting a decision the changelog wasn't arguing with.*
+
+### Three places the changelog could not be applied literally
+
+1. **Section numbers collided.** `CORE_SYSTEMS §12` was already **Mini-Boss Weapon Rewards**. The new
+   sections took §12–15 as the changelog specifies, and Mini-Boss Weapon Rewards moved to **§16**.
+   Both external references to the old number were updated (`BALANCE` Open Items, the engineering
+   plan's Open Engineering Questions). If the designer would rather keep §12 where it was, the new
+   sections shift to §13–16 and four cross-references move with them.
+2. **Sentences elsewhere in the same documents would have contradicted the change.** These were
+   updated as mechanical consequences, not new design, and each is a one-line revert if unwanted:
+   GDD's Resource Systems, Rewards, Randomization, Upgrades, Curses example, HUD line, Progression
+   list, Hub Core Stat name and the currency-pickup SFX; CORE_SYSTEMS §9's floor-gated draw, §10's
+   Glimmer conversion and Hub stat name; ART_DIRECTION §5's HUD "Glimmer counter" and §0's narrative
+   cross-reference; LEVEL_DESIGN §1, §6 and its Open Items; MVP's Biome 1 room list, Hub-loop line and
+   Definition of Done step 3.
+   The **Whisper Layer has no visual specification** — GDD §UI now lists a line area for it and
+   ART_DIRECTION §5 does not describe one, because inventing that is design, not translation.
+3. **"Large Glimmer payout" had nowhere to go.** The Secret Vault's reward is described that way in
+   GDD, CORE_SYSTEMS §8 and LEVEL_DESIGN §2, and the changelog deletes the in-level currency without
+   saying what replaces it. All three now read **"large XP payout"** — the most literal translation,
+   but it is a guess, and "guaranteed Legendary offer" may be the better answer now that XP is a
+   pacing resource rather than a currency.
+
+### Left stale on purpose — needs the designer
+
+- **`03-CONTENT_DESIGN.md` was not in the changelog at all**, and is now the most out-of-date document
+  in the set: its currency upgrade category still lists **Keen Eye, Lucky Find and Glimmer Magnet**;
+  "That's 24 shared entries" is now **23**; Greed's Toll still reads in Glimmer; §6's room pool still
+  has **2 Reward Rooms**; §7 still has the **Glimmer Gain** Core Stat and **Head Start**; §5 still
+  names **The Collapsed King** as Biome 1's Mini-Boss where the changelog puts the father; and its
+  Floor 16 entry still carries the Depth-Warden-is-the-father plus Zyno structure the changelog
+  overrides. It is the one design doc this pass did not touch.
+- **`08-MVP.md`'s cut valve** still says "reduce the shared pool from 24" — the pool is 23 now, and
+  the line is annotated rather than renumbered.
+- **"Per floor" no longer means what it did.** Offers are per *level*, but several effects are still
+  scoped per floor: the Second Curse Slot and CONTENT_DESIGN §3's "only one Curse per floor",
+  Warm-Up ("gauge starts each floor at 20%"), Nerves of Steel ("first hit each floor negated") and
+  Sixth Sense ("one slot per offer guaranteed Rare+", which also interacts with the new mixed-tier
+  single draw). Each needs re-scoping to level, floor or offer explicitly.
+- **The hazard timer and the new room count now contradict each other.** BALANCE §7 gives Upper Caves
+  **90s to clear a full floor's rooms**, and §8 budgets **30–60s per Combat Room**. At 3–5 rooms a
+  floor that is 90–300s of combat against a 90s front — the hazard is unbeatable at the top of the
+  range before any Trapped Soul or Secret Vault detour is taken. Either the timer scales with the
+  drawn room count or §7's numbers need a full re-pass.
+- **Whether the Evolution offer also shows a Curse** is undefined (CORE_SYSTEMS §13 says the normal
+  offer is "replaced").
+- **Floor 16 has no identity.** With the father moved to Biome 1 and Zyno out of the MVP, nothing
+  states who or what the Final Boss is. `03-CONTENT_DESIGN.md`, `04-BALANCE.md §6`, `10-NARRATIVE.md`
+  and the plan's Day 41 all still describe the superseded structure. **This is the single decision
+  that unblocks the most documents.**

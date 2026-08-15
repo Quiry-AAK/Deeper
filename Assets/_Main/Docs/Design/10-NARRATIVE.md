@@ -5,6 +5,15 @@ sections marked *Proposed* are suggestions answering the owner's open question a
 content and are **not** approved design. Everything in this file postdates 01-GDD.md and contradicts
 parts of it — see §7 before treating any of it as settled.
 
+> ⚠️ **The session changelog contradicts §1's Floor 16 decision.** It makes the father **Biome 1's
+> Mini-Boss** and says Zyno **never appears physically in the MVP** — where §1 below puts both on
+> Floor 16. The owner directed the changelog to take precedence, so `01-GDD.md`, `02-CORE_SYSTEMS.md`,
+> `04-BALANCE.md`, `06-LEVEL_DESIGN.md`, `07-IMPLEMENTATION_PLAN.md` and `08-MVP.md` now carry the
+> father-as-Biome-1-Mini-Boss framing plus the Whisper Layer / Memory Fragments / Refusal State
+> systems. **This file has not been rewritten to match** — where the story goes if the father is
+> fought on Floor 5 is a writing decision, not an editing one. See §7 item 5 and
+> `Docs/00-DESIGN_CHANGE_BRIEF.md` §11.
+
 ---
 
 ## 1. Premise
@@ -128,8 +137,7 @@ else?) is now the open thread for "why descend again" — see §4's note.
 
 ## 7. Conflicts with locked design
 
-Per Design Rules 11/12/14, these are flagged rather than silently resolved. **01-GDD.md has not been
-amended.**
+Per Design Rules 11/12/14, these are flagged rather than silently resolved.
 
 1. **The premise contradicts the GDD pitch — RESOLVED.** 01-GDD.md §Pitch has been rewritten to match
    this file's premise (woman, Zyno's manipulation, her father) instead of "a lone miner."
@@ -139,8 +147,17 @@ amended.**
 3. **Final Boss identity — RESOLVED.** 03-CONTENT_DESIGN.md now names The Depth Warden as her father,
    fought first on Floor 16, followed immediately by Zyno as the true Final Boss (new content, not yet
    built — see that doc's scope flag).
-4. **Scope.** Dialogue, story state, recontextualised enemy sets and a second final encounter are
-   none of them in the MVP. 08-MVP.md already identifies content authoring as the schedule risk.
+4. **Scope — PARTIALLY RESOLVED.** The session changelog gives the narrative layer an MVP subset
+   (minimal Whisper Layer, Memory Fragment pickup + Codex stub, Refusal State on the father fight
+   only) and puts everything else in 08-MVP.md's Explicitly Post-MVP list. Recontextualised enemy
+   sets and any second final encounter remain out.
+5. **NEW, and the biggest one — this file's Floor 16 arc contradicts the session changelog.** §1 above
+   puts the father *and* Zyno on Floor 16; the changelog puts the father in **Biome 1** as a Mini-Boss
+   and keeps Zyno out of the MVP entirely, present only through the Whisper Layer. The owner ruled the
+   changelog takes precedence, so every other doc now reads that way — which leaves **Floor 16 with no
+   stated identity at all**. Either the run-1 arc compresses into Biome 1, or the father appears twice,
+   or Floor 16 belongs to someone else. That is a story call, left open here deliberately. Items 3 and
+   4 above were written against the superseded structure and should be re-read in that light.
 
 Resolving these properly is a Rule 14 reopen: **01-GDD.md, 02-CORE_SYSTEMS.md, 03-CONTENT_DESIGN.md,
 05-ART_DIRECTION.md and 08-MVP.md need updating together**, not one at a time.

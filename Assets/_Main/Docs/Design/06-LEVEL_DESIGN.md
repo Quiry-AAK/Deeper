@@ -6,9 +6,9 @@ Room layout philosophy and per-biome pool detail. Builds on the room counts defi
 
 ## 1. Design Philosophy
 
-- **Linear, no branching.** Every floor is a straight sequence of 1–3 rooms. This is a deliberate scope-control decision (per DESIGN_RULES.md) — branching paths would require pathing logic, minimap work, and exponentially more layout variations for the same dev budget.
-- **Hand-built, not procedural.** Rooms are authored layouts pulled from a per-biome pool via deterministic shuffle (same seed = same room order for a given run), not live-generated. This keeps every room hand-tuned for the Rising Hazard pacing and avoids the QA burden of procgen edge cases.
-- **Every room must justify its combat or reward role.** No purely transitional/empty rooms — each room pull is either a Combat Room, Reward Room, Secret Vault, or Mini-Boss Room (per CONTENT_DESIGN §6).
+- **Linear, no branching.** Every floor is a straight sequence of 3–5 rooms. This is a deliberate scope-control decision (per DESIGN_RULES.md) — branching paths would require pathing logic, minimap work, and exponentially more layout variations for the same dev budget.
+- **Hand-built, not procedural.** Rooms are authored layouts pulled from a per-biome pool via a reshuffling bag (CORE_SYSTEMS §8), not live-generated. This keeps every room hand-tuned for the Rising Hazard pacing and avoids the QA burden of procgen edge cases. With 3–5 rooms per floor, layouts repeat within a run by design.
+- **Every room must justify its combat or reward role.** No purely transitional/empty rooms — each room pull is either a Combat Room, Secret Vault, Trapped Soul Room, or Mini-Boss Room.
 
 ---
 
@@ -16,10 +16,12 @@ Room layout philosophy and per-biome pool detail. Builds on the room counts defi
 
 | Room Type | Count | Layout Notes |
 |---|---|---|
-| Combat Room | 6 | 1–2 flagged `IsWaveRoom` (CORE_SYSTEMS §8). Each needs at least 2 viable player positioning zones so Greatsword's whiff-punish window and Bow's kiting space both have room to exist — a room that's just one open box favors Katana by default, which isn't the goal. |
-| Reward Room | 2 | No combat. Contains Glimmer and/or an upgrade-adjacent prop. Small footprint — these are pacing breathers between Combat Rooms, not exploration challenges. |
-| Secret Vault Room | 1 (reused across biomes) | Locked door, key-gated (CORE_SYSTEMS §8). Same base layout reused with biome-specific tile dressing to save art budget — the room's function (large Glimmer payout or guaranteed Legendary offer) matters more than layout novelty here. |
-| Mini-Boss Room | 1 (unique per biome) | Large open arena, must accommodate the boss's full attack radius plus room for the player to kite. Includes the biome's hazard-behavior layer active during the fight (e.g., Molten Sentinel's geysers erupt mid-fight in its own room). |
+| Combat Room | 6 | Unchanged — 1–2 flagged `IsWaveRoom` (CORE_SYSTEMS §8). Now drawn 3–5 per floor via reshuffling bag (repeats within a run are expected). Each needs at least 2 viable player positioning zones so Greatsword's whiff-punish window and Bow's kiting space both have room to exist — a room that's just one open box favors Katana by default, which isn't the goal. |
+| Secret Vault Room | 1 (reused across biomes) | Unchanged. Locked door, key-gated (CORE_SYSTEMS §8). Same base layout reused with biome-specific tile dressing to save art budget — the room's function (large XP payout or guaranteed Legendary offer) matters more than layout novelty here. |
+| **Trapped Soul Room** *(new)* | 1 (MVP, Biome 1 only) | Small footprint, reuses Secret-Vault-style layout approach. Contains one bound soul interactable (CORE_SYSTEMS §14). |
+| Mini-Boss Room | 1 (unique per biome) | Unchanged. Large open arena, must accommodate the boss's full attack radius plus room for the player to kite. Includes the biome's hazard-behavior layer active during the fight (e.g., Molten Sentinel's geysers erupt mid-fight in its own room). Biome 1's Mini-Boss is now **the father** — no arena changes required, framing/dialogue only. |
+
+**Reward Room row removed entirely** — function no longer exists (Shards are run-end only, not floor pickups).
 
 ---
 
@@ -53,19 +55,19 @@ Room layout philosophy and per-biome pool detail. Builds on the room counts defi
 |---|---|
 | Combat Room clear time | 30–60s |
 | Wave Room clear time | 60–100s |
-| Rooms per floor | 1–3 |
+| Rooms per floor | 3–5 |
 | Floor time vs. Hazard Timer | Comfortable margin at baseline play; Wave Rooms + Secret Floor detours are the actual source of time pressure, not base room count |
 
 ---
 
 ## 6. Mini-Boss & Final Boss Arenas
 
-- Mini-Boss arenas are single large rooms, no secondary combat rooms feeding into them — the floor structure is Combat/Reward rooms → Mini-Boss room, full stop.
+- Mini-Boss arenas are single large rooms, no secondary combat rooms feeding into them — the floor structure is Combat rooms (plus any Secret Vault / Trapped Soul detour) → Mini-Boss room, full stop.
 - The Final Boss arena (Floor 16) is the only room in the game that changes its own geometry mid-fight — per GDD, it "incorporates all 3 biome hazard types in sequence as the arena degrades." This needs its own dedicated layout pass, not reused geometry, given it's a one-time unique space.
 
 ---
 
 ## Open Items for IMPLEMENTATION_PLAN.md
 
-- Exact tile-by-tile layouts for all 18 Combat Rooms (6 × 3 biomes), 6 Reward Rooms, 3 Mini-Boss Rooms, 1 Secret Vault, and the Final Boss Arena — this is the single largest content-authoring line item in the whole project and should be sequenced early given how much downstream testing depends on it
+- Exact tile-by-tile layouts for all 18 Combat Rooms (6 × 3 biomes), 1 Trapped Soul Room (Biome 1, MVP), 3 Mini-Boss Rooms, 1 Secret Vault, and the Final Boss Arena — this is the single largest content-authoring line item in the whole project and should be sequenced early given how much downstream testing depends on it. (Reward Rooms are gone; the 3–5 rooms/floor target now leans harder on repeating the 6 Combat layouts.)
 - Whether Secret Vault dressing swaps are a simple tileset palette-swap or need biome-unique prop additions

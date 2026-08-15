@@ -123,8 +123,8 @@ One underlying timer-driven system, reskinned per biome (GDD §Biome Identity).
 
 ## 8. Room & Wave System
 
-- Each floor pulls 1–3 rooms from a per-biome room pool (deterministic shuffle per run seed, not live procgen)
-- Room types: Combat, Reward, Secret (locked, key-gated), Mini-Boss (every 5th floor), Final Boss (floor 16)
+- Each floor pulls **3–5 rooms** from a per-biome room pool via a **reshuffling bag**: the pool shuffles, is drawn through without immediate repeats, and reshuffles once exhausted. Floors will revisit Combat Room layouts within a single run — by design, this is what makes 30–60 min runs affordable without tripling room-authoring content.
+- Room types: Combat, Secret (locked, key-gated), Trapped Soul (new — see §14), Mini-Boss (every 5th floor), Final Boss (floor 16). **Reward Room is removed** — its function (currency payout) no longer exists now that Shards are run-end only.
 - **Room locking:** Combat Rooms lock entry/exit doors until all spawned enemies are defeated (existing logic, unchanged)
 
 **Wave Rooms (variant flag on Combat Room prefabs, not a new room type):**
@@ -136,15 +136,16 @@ One underlying timer-driven system, reskinned per biome (GDD §Biome Identity).
 
 **Secret Floors:**
 - A locked door prefab requires a `SecretKey` flag on the player's inventory, granted by defeating a rare elite spawn earlier in that biome
-- Leads to a Vault Room (large Glimmer payout or guaranteed Legendary-tier upgrade offer)
+- Leads to a Vault Room (large XP payout or guaranteed Legendary-tier upgrade offer)
 - No separate hazard override — entering costs real time against the same biome hazard timer, which is the entire risk/reward tension (no new system required)
 
 ---
 
 ## 9. Upgrade & Curse System
 
-- End of each floor: draw 3 upgrade offers via weighted random draw from a pool = shared pool (HP, Glimmer, Speed, Dash) + weapon-specific sub-pool (Heavy Strike mods, Ultimate mods, Ultimate Gauge mods) matching the equipped weapon
+- On each level-up (§12): draw 3 upgrade offers in **one weighted draw across the combined pool** = shared pool (HP, XP, Speed, Dash) + weapon-specific sub-pool (Heavy Strike mods, Ultimate mods, Ultimate Gauge mods) matching the equipped weapon. Not floor-gated and not tier-gated — Common/Rare/Epic can appear in the same offer
 - A 4th slot is always populated with a **Curse** — drawn separately from its own small Curse pool, always visible, never mandatory
+- Every 5th level the whole offer is replaced by an **Evolution** offer instead (§13)
 - Weighting can vary by depth/biome (e.g., certain upgrade tags weighted higher in later biomes) — same weighted-draw function, just a different weight table per biome, no new system
 - Legendary-tier upgrades (Relics, §10) use the same draw pipeline but are excluded from normal weighted draws — only appear via Mini-Boss guaranteed drop, Secret Floor vault, or Relic Vault guarantee
 
@@ -152,8 +153,8 @@ One underlying timer-driven system, reskinned per biome (GDD §Biome Identity).
 
 ## 10. Meta-Progression Systems
 
-- **Glimmer → Shards:** conversion happens once, at run end (win or death), formula based on Glimmer collected + depth reached (formula in BALANCE.md). No in-run shop — Glimmer has zero utility until the run ends.
-- **Hub Stat System:** two tiers, both purchased with Shards, no dependency tree (Rule: bounded, not a skill tree). **Core Stats** are rank-based (Max HP, Base Damage, Move Speed, Ultimate Gauge Gain, Glimmer Gain, Dash Cooldown). **Marks** are unique, mostly single-purchase named effects (Hades Mirror of Night-style — e.g., Death Defiance, Boiling Blood, Warm-Up) that create build-defining decisions rather than flat number lines. Plus two flat non-stat unlocks (extra Curse slot, Relic Cache) that sit outside both tiers. Full table in CONTENT_DESIGN.md §7.
+- **Shards:** awarded once, at run end (win or death), computed from **Levels Gained + Depth Reached** (formula in BALANCE §14). There is no in-level currency pickup and no in-run shop — the run's own resource is XP (§12), which is spent on nothing and only drives leveling. (This supersedes the Glimmer run currency: the rename survived one pass and the resource itself was then cut.)
+- **Hub Stat System:** two tiers, both purchased with Shards, no dependency tree (Rule: bounded, not a skill tree). **Core Stats** are rank-based (Max HP, Base Damage, Move Speed, Ultimate Gauge Gain, XP Gain, Dash Cooldown). **Marks** are unique, mostly single-purchase named effects (Hades Mirror of Night-style — e.g., Death Defiance, Boiling Blood, Warm-Up) that create build-defining decisions rather than flat number lines. Plus two flat non-stat unlocks (extra Curse slot, Relic Cache) that sit outside both tiers. Full table in CONTENT_DESIGN.md §7.
 - **Weapon Mastery:** a small per-weapon counter incremented by run-usage (not Shard spend) — e.g., "floors cleared with this weapon equipped" — crossing thresholds unlocks the 3–5 mastery nodes per weapon
 - **Relics:** the Legendary upgrade rarity, one per weapon. First time a given weapon's Relic is offered and taken, it's flagged "discovered" on the save file. Discovered Relics become purchasable from the Relic Vault (Hub) at high Shard cost — purchasing guarantees that Relic appears as an offer once in the player's next run.
 
@@ -165,20 +166,58 @@ Not a separate system — implemented as boss-specific phase logic that reads th
 
 ---
 
-## 12. Mini-Boss Weapon Rewards
+## 12. XP & Leveling
 
-On Mini-Boss defeat, in addition to the normal floor-end upgrade offer, the player receives a temporary "Overcharge" buff scoped to their current weapon, active for the remainder of that biome only (cleared on entering the next biome's Mini-Boss room or floor 1 of the next biome — exact clear trigger TBD in BALANCE.md). Implemented as a timed/scoped buff on the existing upgrade-modifier stack, not a new buff system.
+- Enemies drop XP on death (value per enemy type — see BALANCE.md).
+- XP accumulates toward a level threshold (curve TBD — open item, needs playtesting, not a fixed formula yet).
+- On level-up: game pauses, upgrade panel opens. Offer = 3 cards drawn from the **combined shared + weapon-specific pool in a single weighted draw** (existing rarity weights per biome still apply — see BALANCE §13), plus the always-visible 4th Curse slot.
+- **Every 5th level**, the normal offer is replaced by an **Evolution offer** (see §13).
 
 ---
 
-## 13. Narrative & Dialogue System (new — did not exist in any prior doc)
+## 13. Evolution Tiers
+
+- At level milestones divisible by 5, present 2–3 **Evolution** choices instead of a normal upgrade offer. Evolutions replace a piece of the equipped weapon's kit outright (not a numeric buff) — e.g., Katana's Combo Counter evolving into a different stance system entirely.
+- Evolutions are **mutually exclusive and locked for the run** — picking one closes out its sibling option for that run only (not permanently across runs).
+- **MVP scope: 1 Evolution Tier per weapon** (one 5th-level milestone, 2 choices each). Additional tiers are Post-MVP.
+
+---
+
+## 14. Trapped Souls
+
+- Certain rooms (flagged, reuse Secret-Vault-style footprint) contain a **bound soul** — a spectral figure the player can free via a short interactable, costing real time against the Hazard.
+- Player has **2–3 soul slots per run**. Freeing a soul grants a persistent in-run effect (see BALANCE.md for the 3 soul types). A freed soul can be lost permanently for the run if it dies.
+- **MVP scope: 1 soul type implemented**, 1 Trapped Soul room in Biome 1's pool. Remaining soul types are Post-MVP.
+
+---
+
+## 15. Narrative Systems (MVP subset)
 
 Full story content lives in `10-NARRATIVE.md`; this is the system-level shape.
 
+- **Whisper Layer:** Zyno has a persistent HUD/audio presence — short manipulative lines triggered by specific events (enemy kill, low HP, level-up, boss encounter start). **MVP scope: a minimal line set covering Biome 1 + the father fight only**, not the full script. Escalation/glitching behavior for later biomes is Post-MVP (depends on those biomes existing at all — currently SHOULD SHIP, not MUST SHIP).
+- **Memory Fragments:** Findable, non-stat pickups that trigger a short forced vignette and bank into a Hub **Codex**, viewable regardless of run outcome. **MVP scope: pickup + Codex UI stub with a small number of Biome-1 fragments**; full fragment content is Post-MVP.
+- **Refusal State:** Named encounters can expose a brief window where the player can hold back instead of attacking, triggering an alternate resolution beat instead of standard combat. **MVP scope: the father fight only.** Expanding Refusal State to other named encounters is Post-MVP.
+
+### Story state & dialogue gating (from the earlier narrative pass — still applies)
+
 - **Story state:** a single knowledge flag, `HasSeenTheTruth`, set once when the first run resolves (the manipulation is exposed, the children get out safely). Dialogue is gated on this flag, **never on a run counter** — a player can die on floor 3 of run 4 without ever reaching the father, and a run-count gate would have her react to a man she hasn't yet recognized. This is a hard rule for every future line, not just the launch set.
-- **Delivery:** first-run dialogue is minimal/absent by design — the story is carried by easter eggs the player isn't expected to understand yet. Post-`HasSeenTheTruth` runs add unique lines at specific beats (e.g. reaching the Final Boss).
-- **Not yet built:** dialogue UI and a trigger/line-lookup system. Not in any MVP tier yet — see `08-MVP.md`.
-- ⚠️ **NEEDS DECISION (owner proposal, not approved — `10-NARRATIVE.md` §4):** whether post-story runs recontextualize existing enemies (palette swap + new identity/dialogue, reusing the Elite aura pipeline in ART_DIRECTION §4) rather than adding new content, and whether the Final Boss becomes Zyno (via The Depth Warden slot) on runs 2+. Until this is decided, "what the game is after the story ends" has no answer.
+- **Delivery:** first-run dialogue is minimal by design — the story is carried by the Whisper Layer and by easter eggs the player isn't expected to understand yet. Post-`HasSeenTheTruth` runs add unique lines at specific beats.
+- **Not yet built:** dialogue UI and a trigger/line-lookup system. The Whisper Layer, Codex stub and Refusal State are now MUST SHIP — see `08-MVP.md`.
+- ⚠️ **NEEDS DECISION (owner proposal, not approved — `10-NARRATIVE.md` §4):** whether post-story runs recontextualize existing enemies (palette swap + new identity/dialogue, reusing the Elite pipeline in ART_DIRECTION §4) rather than adding new content. **The related "does the Final Boss become Zyno" question is now in direct conflict** — the session changelog says Zyno never appears physically in the MVP, while the pass before it made him the true Final Boss and MUST SHIP. See `00-DESIGN_CHANGE_BRIEF.md` §11.
+
+### Explicitly flagged Post-MVP (do not start engineering pre-MVP)
+
+- **Flicker Recognition** — enemies periodically flicker to true forms during combat. Blocked on an animation-budget conversation (ART_DIRECTION.md §4 already caps enemy frame budgets due to the 3-weapon cost; this needs its own pass before scoping).
+- **Post-Completion Truth Pass** — game-wide dialogue/bark rewrite unlocked after first story completion (death barks, father fight dialogue, Whisper Layer tone shift). Needs the full Whisper Layer + Refusal State script to exist first, which is itself mostly Post-MVP.
+
+---
+
+## 16. Mini-Boss Weapon Rewards
+
+On Mini-Boss defeat, in addition to the normal level-up upgrade offer, the player receives a temporary "Overcharge" buff scoped to their current weapon, active for the remainder of that biome only (cleared on entering the next biome's Mini-Boss room or floor 1 of the next biome — exact clear trigger TBD in BALANCE.md). Implemented as a timed/scoped buff on the existing upgrade-modifier stack, not a new buff system.
+
+*(Numbered §16, not §12, since §12–15 were added in the XP/Evolution/Souls/Narrative pass. Cross-references in BALANCE.md Open Items and the engineering plan were updated to match.)*
 
 ---
 
@@ -193,3 +232,7 @@ Full story content lives in `10-NARRATIVE.md`; this is the system-level shape.
 - Curse pool contents and weighting
 - Weapon Mastery node effects (3–5 per weapon)
 - Mini-Boss Overcharge effect values and exact clear condition
+- XP level-threshold curve, and XP drop value per enemy type (BALANCE §16 — explicitly unresolved)
+- The 2 Evolution choices per weapon (§13) — content, not just the slot
+- Trapped Soul effect values and how a freed soul is lost (§14, BALANCE §17)
+- Whisper Layer trigger list and line set for Biome 1 + the father fight (§15)

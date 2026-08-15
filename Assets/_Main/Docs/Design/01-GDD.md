@@ -3,24 +3,35 @@
 ## Game Overview
 
 - **Title:** Deeper
-- **Pitch:** A woman descends a collapsing shaft, growing stronger with every reckless floor, racing the rising danger below. She believes she is hunting two children her country is evacuating — manipulated by a villain, **Zyno**, into seeing everyone in her path as an enemy. On Floor 16 she confronts her father — the truth breaks there — then faces Zyno himself as the true final battle. Full story: `10-NARRATIVE.md`.
-- **DECIDED: the mining-vocabulary economy is renamed.** She isn't a miner — mining is now just environmental flavor for the setting, not the game's theme, and can change further later. Run currency **Glimmer** (was "Ore"), permanent currency **Shards** (was "Ore Shards"), the meta-progression trait tier **Marks** (was "Miner's Traits"). Renamed throughout every doc in this pass; a few individual upgrade/trait names that leaned on mining flavor were also renamed (Prospector's Eye → Keen Eye, Lucky Vein → Lucky Find, Ore Magnet → Glimmer Magnet, Old Prospector → Head Start, Miner's Sixth Sense → Sixth Sense) — first-pass names, easy to swap again later.
+- **Pitch:** A manipulated girl descends into a collapsing shaft, cutting down what she's been told are monsters — not knowing they are her own village. She grows stronger with every reckless floor, racing the danger below, and racing a truth she isn't ready to see.
+- **DECIDED: the mining-vocabulary economy is renamed.** She isn't a miner — mining is now just environmental flavor for the setting, not the game's theme, and can change further later. Permanent currency **Shards** (was "Ore Shards"), the meta-progression trait tier **Marks** (was "Miner's Traits"). ~~Run currency **Glimmer** (was "Ore")~~ — **the run currency no longer exists at all**: the session changelog replaced it with **XP**, and Shards are awarded once at run end (see Core Gameplay Loop and BALANCE §14). The mining-flavored upgrade renames from that pass are likewise superseded, since those upgrades now scale XP: Keen Eye → **Quick Study**, Glimmer Magnet → **Insight Magnet**, Lucky Find → **deleted** (no chests), Head Start → **Quick Start**. Sixth Sense keeps its new name.
 - **Genre:** Pixel-art action roguelike (vertical descent)
 - **Platform:** PC (Windows/Mac), built in Unity/C#
-- **Target Session Length:** 15–25 minutes per run
+- **Target Session Length:** 30–60 minutes per run
 - **Target Player Experience:** Tense, forward-momentum action with a satisfying power curve within a run, and a longer-term sense of permanent growth across many runs.
+
+## Narrative Premise
+
+**Protagonist:** A girl manipulated by **Zyno**, who has convinced her that her own village are monstrous enemies. She descends to hunt them down, unaware. Her real motive — surfaced only gradually — is that Zyno used her desire to protect two children (the last descendants of an unspecified elite bloodline) to turn her against her own people.
+
+**Biome 1 Boss:** The girl's father. Framed and fought as a standard Mini-Boss on a first playthrough — no special telegraphing that breaks the "he's a monster" illusion during MVP.
+
+**Antagonist:** Zyno — present throughout the run via the Whisper Layer (see Core Systems), never appears physically in the MVP.
+
+**Visual note:** Biome 1 art stays mine-themed as already built/planned — the narrative reframe is a writing/data layer on top of existing art, not an art change, for MVP. Biomes 2–3 narrative framing is an open item, not required for MVP.
+
+> ⚠️ **CONFLICT — needs the owner's call.** The two designer passes already in these docs put the father on **Floor 16** as The Depth Warden and make **Zyno** the true Final Boss and a MUST SHIP item. The session changelog above puts the father in **Biome 1 as a Mini-Boss** and says Zyno never appears physically in the MVP. The owner directed the changelog to take precedence, so it is written as stated — but the Floor 16 / Zyno statements in §Game Flow below, `03-CONTENT_DESIGN.md`, `04-BALANCE.md §6`, `08-MVP.md` and `10-NARRATIVE.md` have **not** been rewritten, because deciding what Floor 16 *becomes* if the father is fought on Floor 5 is a design decision, not an editing one. See `Docs/00-DESIGN_CHANGE_BRIEF.md` §11.
 
 ## Core Gameplay Loop
 
 1. **Hub:** Player starts in a small surface camp. Spend accumulated Shards on permanent upgrades. Choose starting **Weapon**.
 2. **Descend:** Enter the shaft. Move through a sequence of hand-built rooms per floor.
-3. **Fight:** Clear enemies in combat rooms using the chosen weapon's basic attack, Heavy Strike, Ultimate, and Dig-Dash.
-4. **Collect:** Pick up Glimmer (run currency) and occasional relics from enemies/chests.
-5. **Choose Upgrade:** At the end of each floor, pick 1 of 3 randomized upgrades — or a visible 4th **Curse** option.
-6. **Repeat:** Descend deeper. Every 5th floor ends in a Mini-Boss room. Difficulty and hazard pressure increase with depth.
-7. **Final Boss:** At the bottom of the mine (floor 16), face the Final Boss.
-8. **Win/Die:** Defeat the boss and escape (win), or reach 0 HP / get caught by the rising hazard (die).
-9. **Return to Hub:** Shards collected (a separate persistent currency, not run Glimmer) carry over. Spend on permanent upgrades. Start a new run.
+3. **Fight:** Clear enemies in combat rooms using the chosen weapon's basic attack, Heavy Strike, Ultimate, and Dig-Dash. Enemies drop **XP** on death.
+4. **Level Up:** When XP crosses the level threshold, the game pauses and presents an upgrade offer — 3 randomized upgrades drawn from the full shared + weapon pool in one weighted draw (not floor-gated, not tier-gated — Common/Rare/Epic can appear in the same offer), plus a visible 4th **Curse** option. Every 5th level, this is replaced by an **Evolution** offer instead (see Core Systems).
+5. **Repeat:** Descend deeper. Floors pull **3–5 rooms** from a per-biome pool via reshuffling bag (see Core Systems §8). Every 5th floor ends in a Mini-Boss room. Difficulty and hazard pressure increase with depth.
+6. **Final Boss:** At the bottom of the mine (floor 16), face the Final Boss.
+7. **Win/Die:** Defeat the boss and escape (win), or reach 0 HP / get caught by the rising hazard (die).
+8. **Return to Hub:** Shards earned carry over — computed once at run end from Levels Gained and Depth Reached (BALANCE §14), not collected during the run. Spend on permanent upgrades. Start a new run.
 
 ## Player
 
@@ -39,8 +50,8 @@
 - **Defense:** No blocking. Damage mitigation comes from avoidance (dig-dash i-frames), Hyper Armor (Greatsword only, partial), and HP/armor upgrades.
 - **Dodge/Mobility:** Dig-Dash — short dash in facing direction, grants brief invulnerability frames, can break through cracked walls (used for shortcuts/flanking). **Dash-Attack Cancel:** the recovery frames of any weapon's swing/strike can be canceled early into a dash — no tutorial prompt, a piece of movement tech for players to discover and optimize around.
 - **Resource Systems:**
-  - **Glimmer (run currency):** Collected during a run, converted to Shards at run end based on amount collected and depth reached. No in-run shop.
-  - **Shards (meta currency):** Permanent, earned per run, spent in the Hub.
+  - **XP (run resource):** Dropped by enemies on death, collected during the run. Drives leveling, which is what triggers upgrade offers (see Core Gameplay Loop and CORE_SYSTEMS §12). Not a currency — there is no in-run shop and nothing to spend it on. It replaces the run currency formerly called Ore, then Glimmer.
+  - **Shards (meta currency):** Permanent, spent in the Hub. Awarded **once at run end**, computed from Levels Gained and Depth Reached (BALANCE §14) — there is no in-level pickup object.
 - **Death:** Run ends immediately. Player returns to Hub with earned Shards. No mid-run checkpoints/respawns.
 
 ## Combat
@@ -59,13 +70,14 @@
 ## Roguelike Structure
 
 - **Run Start:** Player exits Hub into Floor 1 of Biome 1 (Upper Caves), with chosen Weapon.
-- **Rooms/Encounters:** Each floor = 1–3 hand-built rooms pulled from a per-biome room pool, connected linearly downward. No branching paths (keeps navigation simple and always-forward).
+- **Rooms/Encounters:** Each floor = 3–5 hand-built rooms pulled from a per-biome room pool via a reshuffling bag, connected linearly downward. No branching paths (keeps navigation simple and always-forward). Layouts will repeat within a run — see CORE_SYSTEMS §8.
   - **Wave Rooms:** A subset of existing Combat Room layouts (capped at 1–2 per biome's pool) are flagged as Wave Rooms. Instead of spawning all enemies at once, enemies spawn in 2–3 triggered batches — the next wave begins when the current one drops to roughly one enemy remaining, not on a pure timer, so players can't stall it out. The room stays locked until the final wave clears, reusing the existing room-lock logic. No new enemy types are introduced for Wave Rooms — only existing per-biome enemies, resequenced.
-- **Secret Floors:** Some floors contain a visible locked door requiring a key dropped by a rare elite enemy encountered earlier in that biome. The door leads to a small bonus vault room (large Glimmer payout or a guaranteed Legendary-tier upgrade) — reachable, but costs time against the rising hazard, creating a risk/clock decision.
-- **Rewards:** Glimmer drops from enemies/chests; upgrade choice at end of each floor; occasional relics (see Progression).
-- **Randomization:** Room order within a biome's pool is shuffled per run (deterministic shuffle, not live procgen). Upgrade offers are randomly drawn (weighted) from the upgrade pool each floor.
-- **Upgrades:** Player picks 1 of 3 offered upgrades at the end of each floor, drawn from a shared pool (HP, Glimmer, Speed, Dash) plus a weapon-specific sub-pool matching the equipped weapon — including Heavy Strike modifiers (extra hits in the chain, full replacement effects), Ultimate effect modifiers, and Ultimate Gauge modifiers (faster gain per hit, gain on taking damage, etc.) (see CONTENT_DESIGN.md for full tables).
-- **Curses:** Alongside the normal 3 upgrade offers, a 4th slot always presents a visible **Curse** — a high-risk, high-reward modifier (e.g., "+40% damage, but take double damage" or "Enemies drop 3x Glimmer, but hazard rises 20% faster"). Optional every time; gives runs a distinct identity for players who want them.
+- **Secret Floors:** Some floors contain a visible locked door requiring a key dropped by a rare elite enemy encountered earlier in that biome. The door leads to a small bonus vault room (large XP payout or a guaranteed Legendary-tier upgrade) — reachable, but costs time against the rising hazard, creating a risk/clock decision.
+- **Trapped Souls:** Some floors contain a bound soul the player can free at the cost of real time against the hazard, granting a persistent in-run effect (CORE_SYSTEMS §14).
+- **Rewards:** XP drops from enemies; upgrade choice on level-up; occasional relics (see Progression).
+- **Randomization:** Room order within a biome's pool is drawn per run via a reshuffling bag (not live procgen). Upgrade offers are randomly drawn (weighted) from the upgrade pool on each level-up.
+- **Upgrades:** On each level-up, the player picks 1 of 3 offered upgrades, drawn in a single weighted draw across the shared pool (HP, XP, Speed, Dash) *plus* the weapon-specific sub-pool matching the equipped weapon — including Heavy Strike modifiers (extra hits in the chain, full replacement effects), Ultimate effect modifiers, and Ultimate Gauge modifiers (faster gain per hit, gain on taking damage, etc.) (see CONTENT_DESIGN.md for full tables). Every 5th level offers an **Evolution** instead (CORE_SYSTEMS §13).
+- **Curses:** Alongside the normal 3 upgrade offers, a 4th slot always presents a visible **Curse** — a high-risk, high-reward modifier (e.g., "+40% damage, but take double damage" or "Enemies drop 3x XP, but hazard rises 20% faster"). Optional every time; gives runs a distinct identity for players who want them.
 - **Difficulty Progression:** Enemy HP/damage scale up per biome tier; rising hazard timer speeds up in later biomes.
 - **Boss:** Mini-boss every 5th floor (end of each biome); Final Boss at floor 16. Bosses include at least one phase or mechanic that meaningfully rewards or punishes specific weapon types (e.g., a breakable shield that Greatsword drops in one hit but Katana needs several, or slow projectiles Bow players can snipe for bonus damage but melee players must dodge). Not a hard gate — just a moment where weapon choice matters at peak tension.
 - **Death:** Immediate run end, return to Hub.
@@ -84,16 +96,20 @@ All three reuse the same underlying Rising Hazard timer system — only presenta
 ## Progression
 
 **Run-based progression (resets every run):**
+- Levels gained this run (XP earned)
 - HP upgrades gained
 - Damage/attack upgrades gained (shared and weapon-specific)
 - Heavy Strike modifiers gained (chain extensions, replacement effects)
 - Ultimate effect and Ultimate Gauge modifiers gained
+- Evolution taken per weapon (every 5th level, CORE_SYSTEMS §13)
+- Trapped Souls freed (CORE_SYSTEMS §14)
 - Curses taken
-- Glimmer collected this run
+
+> **Shards** (the persistent Hub currency) are now awarded **only at run end**, computed from Depth Reached and Levels Gained — there is no in-level currency pickup object. See BALANCE.md for the formula.
 
 **Permanent/meta progression (persists across runs):**
 - Shards (currency)
-- **Hub Stat System:** rank-based Core Stats (Max HP, Base Damage, Move Speed, Ultimate Gauge Gain, Glimmer Gain, Dash Cooldown) plus **Marks** — unique named effects in the style of Hades' Mirror of Night (e.g., Death Defiance, Boiling Blood, Warm-Up) — plus two flat non-stat unlocks (extra Curse slot, Relic Cache). Full table in CONTENT_DESIGN.md.
+- **Hub Stat System:** rank-based Core Stats (Max HP, Base Damage, Move Speed, Ultimate Gauge Gain, XP Gain, Dash Cooldown) plus **Marks** — unique named effects in the style of Hades' Mirror of Night (e.g., Death Defiance, Boiling Blood, Warm-Up) — plus two flat non-stat unlocks (extra Curse slot, Relic Cache). Full table in CONTENT_DESIGN.md.
 - **Weapon Mastery:** a small permanent track (3–5 nodes) per weapon, unlocked by *using* that weapon across runs rather than by spending Shards alone — encourages mastering all three instead of settling on one.
 - **Relics:** the Legendary-tier upgrade rarity, one per weapon, only offered when that weapon is equipped — resolves "relic" as a concrete term rather than undefined flavor text. Once found at least once, a relic becomes purchasable from the **Relic Vault** in the Hub at high Shard cost, guaranteeing it as an offer once per future run.
 
@@ -110,15 +126,15 @@ This remains a **small, bounded** meta-progression tree — not a skill tree, a 
 
 ## UI
 
-- **HUD (in-run):** HP bar, equipped weapon icon, Ultimate Gauge (fill meter, not a cooldown), current floor/depth indicator, hazard proximity meter, Glimmer counter, Wave indicator (e.g. "Wave 2/3") shown only inside Wave Rooms. **DECIDED: no Heavy Strike cooldown icon.** Heavy Strike has no cooldown anywhere in CORE_SYSTEMS or BALANCE — it's gated only by its own 0.3–0.65s Windup/Recovery, and that stays true. The HUD element is dropped for good.
-- **Upgrade Screen:** 3 standard cards (icon, name, short description) plus a 4th, visually distinct Curse card.
+- **HUD (in-run):** HP bar, equipped weapon icon, Ultimate Gauge (fill meter, not a cooldown), current floor/depth indicator, hazard proximity meter, XP bar + current level, Wave indicator (e.g. "Wave 2/3") shown only inside Wave Rooms, and the Whisper Layer line area (CORE_SYSTEMS §15). **DECIDED: no Heavy Strike cooldown icon.** Heavy Strike has no cooldown anywhere in CORE_SYSTEMS or BALANCE — it's gated only by its own 0.3–0.65s Windup/Recovery, and that stays true. The HUD element is dropped for good.
+- **Upgrade Screen:** 3 standard cards (icon, name, short description) plus a 4th, visually distinct Curse card. Opens on level-up (game paused), not at floor end. Every 5th level it is replaced by the Evolution offer — 2–3 mutually exclusive cards (CORE_SYSTEMS §13).
 - **Hub Screen:** Shard total, list of permanent upgrades (purchased/available/locked), Weapon selector, Weapon Mastery progress per weapon, Relic Vault, "Descend" button.
 - **Death/Victory Screen:** Depth reached, Shards earned, run time, weapon used, "Return to Hub" button.
 
 ## Audio
 
 - **Music:** One looping track per biome (3 total) + 1 boss track (reused for all mini-bosses) + 1 final boss track + 1 hub track. 5 tracks total.
-- **SFX (must-have):** Per-weapon basic attack, Heavy Strike, and Ultimate sounds (Katana, Bow, Greatsword), Ultimate Gauge full cue, player hit-taken, player death, enemy hit, enemy death, dig-dash, dash-attack cancel, upgrade pick, curse pick, Glimmer pickup, floor transition, wave trigger, boss intro roar, victory jingle.
+- **SFX (must-have):** Per-weapon basic attack, Heavy Strike, and Ultimate sounds (Katana, Bow, Greatsword), Ultimate Gauge full cue, player hit-taken, player death, enemy hit, enemy death, dig-dash, dash-attack cancel, upgrade pick, curse pick, XP pickup, level-up, floor transition, wave trigger, boss intro roar, victory jingle.
 
 ## Victory
 

@@ -168,7 +168,7 @@ Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension bina
 |---|---|
 | Combat Room clear time | 30–60s |
 | Wave Room clear time (2–3 waves) | 60–100s |
-| Rooms per floor | 1–3 |
+| Rooms per floor | 3–5 |
 | Floor total time budget (vs. Hazard Timer above) | Comfortably under the hazard time at Common-upgrade play; Wave Rooms and Secret Floor detours are what create real time pressure |
 
 ---
@@ -194,9 +194,8 @@ Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension bina
 | Long Dash | Common | +25% Dig-Dash distance |
 | Phase Step | Rare | +0.1s i-frame duration |
 | Blink Strike | Epic | Dig-Dash deals 12 damage to enemies passed through |
-| Keen Eye | Common | +20% Glimmer from enemies |
-| Lucky Find | Common | +30% Glimmer from chests |
-| Glimmer Magnet | Rare | Pull radius 3.0 units |
+| Quick Study | Common | +20% XP from enemies |
+| Insight Magnet | Rare | XP orb pull radius 3.0 units |
 | Frost Touch | Rare | -30% enemy move speed for 1.5s on hit |
 | Venom Edge | Rare | 2 damage/tick DoT, 4 ticks, stacks to 5 |
 | Static Discharge | Epic | 4 damage arc to 1 nearby enemy (range 3.0 units) |
@@ -268,7 +267,7 @@ Hazard-touch = instant death (confirmed, not heavy-damage — keeps tension bina
 | Curse | Values |
 |---|---|
 | Glass Cannon | +40% damage dealt / +100% damage taken |
-| Greed's Toll | +200% Glimmer from enemies / Hazard timer -20% (faster) |
+| Greed's Toll | +200% XP from enemies / Hazard timer -20% (faster) |
 | Reckless Vigor | +50% gauge gain / -25% Ultimate damage |
 | Frail Grip | +1 free Heavy Strike chain hit / Heavy Strike gauge gain = 0 |
 | Blood Debt | Full heal now / Max HP -20% for rest of run |
@@ -300,13 +299,13 @@ Curses are drawn from their own pool (flat, uniform weight) and don't participat
 
 ---
 
-## 14. Glimmer → Shards Conversion
+## 14. Shards — Run-End Award
 
 ```
-Shards = floor(GlimmerCollected × 0.5) + (DepthReached × 10)
+Shards = (LevelsGained × 15) + (DepthReached × 10)
 ```
 
-Example: dying on floor 8 with 200 Glimmer collected → floor(200 × 0.5) + (8 × 10) = 100 + 80 = **180 Shards**.
+Awarded once, at run end (death or victory) — no in-level currency pickups exist. Example: reaching floor 8 at Level 12 → (12 × 15) + (8 × 10) = 180 + 80 = **260 Shards**. *(Multiplier is a first-pass placeholder — needs playtesting against the new 30–60 min run length before being treated as final.)*
 
 ---
 
@@ -320,7 +319,7 @@ Example: dying on floor 8 with 200 Glimmer collected → floor(200 × 0.5) + (8 
 | Base Damage | +2 damage | +10 damage | 120 |
 | Move Speed | +2% | +10% | 130 |
 | Ultimate Gauge Gain | +4% | +20% | 110 |
-| Glimmer Gain | +6% | +30% | 90 |
+| XP Gain | +6% | +30% | 90 |
 | Dash Cooldown | -4% | -20% | 100 |
 
 **Marks:** single-purchase flat cost (Death Defiance has 2 ranks, all others are 1).
@@ -332,7 +331,7 @@ Example: dying on floor 8 with 200 Glimmer collected → floor(200 × 0.5) + (8 
 | Boiling Blood | +1% damage per 5% HP missing | 300 |
 | Warm-Up | Ultimate Gauge starts each floor at 20% | 280 |
 | Nerves of Steel | First hit each floor negated | 320 |
-| Head Start | +50 starting Glimmer | 200 |
+| Quick Start | Start each run at +1 partial level of XP (value TBD) | 200 |
 | Sixth Sense | Post-floor-5: 1 guaranteed Rare+ upgrade per offer | 400 |
 | Steadfast Grip | Curse downsides reduced 15% | 300 |
 | Second Skin | -2 flat damage taken, always active | 250 |
@@ -348,8 +347,31 @@ Example: dying on floor 8 with 200 Glimmer collected → floor(200 × 0.5) + (8 
 
 ---
 
+## 16. XP Curve (open item)
+
+Level thresholds are not yet finalized — needs a first pass tuned against enemy XP-drop values and the new 30–60 min target, then playtest-adjusted. Flag this explicitly as unresolved rather than guessing a curve now.
+
+Per-enemy XP drop values are unresolved for the same reason: the two numbers only make sense tuned together.
+
+---
+
+## 17. Trapped Souls — Values (MVP: implement first row only)
+
+| Soul | Effect |
+|---|---|
+| The Warden's Soul (MVP) | Slow-moving guardian, tanks hits, taunts nearby enemies |
+| The Thief's Soul (Post-MVP) | Periodically steals a buff from a nearby enemy, grants it to player briefly |
+| The Wailing Soul (Post-MVP) | Passive aura, weakens nearby enemy damage, increases local Hazard speed |
+
+---
+
 ## Open Items Remaining
 
 - Weapon Mastery node effects (3–5 per weapon) — deferred, needs its own design pass since it's usage-gated rather than numeric-only
-- Mini-Boss "Overcharge" buff exact values — deferred pending CORE_SYSTEMS §12 clear-trigger decision
+- Mini-Boss "Overcharge" buff exact values — deferred pending CORE_SYSTEMS §16 clear-trigger decision
+- XP curve and per-enemy XP values (§16) — the single largest unresolved number set in this doc
+- Trapped Soul numeric values (§17 gives behaviour only — no HP, taunt radius, duration or slot count yet)
+- Shard multipliers in §14 — placeholder, revisit once a run actually takes 30–60 min
+- **§6's boss table still lists The Depth Warden as the Floor 16 Final Boss and The Collapsed King as Biome 1's** — both now contested by the session changelog's "the father is Biome 1's Mini-Boss". Not edited here; see `00-DESIGN_CHANGE_BRIEF.md` §11
+- **§7's hazard timer contradicts §8's room count:** 90s to clear a floor vs 3–5 rooms at 30–60s each
 - Playtesting pass on all values above — first-pass numbers only, expect significant movement once the core loop is actually playable

@@ -60,6 +60,36 @@ Day-by-day build plan. Original scope was a 30-day MVP; the plan below reflects 
 
 ---
 
+## Scope Addendum — Session Changes
+
+*(Inserted without renumbering the Phases above — full day-by-day re-sequencing against this split is a follow-up task, not included here.)*
+
+**Added to MVP (MUST/SHOULD, see updated 08-MVP.md):**
+- XP/Leveling system replacing floor-gated currency upgrades
+- Room reshuffle-bag logic (3–5 rooms/floor)
+- Shard run-end-only calculation
+- 1 Evolution Tier per weapon (3 total)
+- 1 Trapped Soul type + 1 Trapped Soul room (Biome 1)
+- Narrative identity data pass: village/father/Zyno framing on existing Biome 1 content (text/data only, no new art)
+- Minimal Whisper Layer line set (Biome 1 + father fight)
+- Memory Fragment pickup + Codex UI stub
+- Refusal State — father fight only
+
+**Explicitly Post-MVP (do not schedule inside the 45-day window):**
+- Remaining Evolution Tiers (levels 10, 15, 20+)
+- Remaining Trapped Soul types (Thief's Soul, Wailing Soul)
+- Full Whisper Layer script across all biomes
+- Full Memory Fragment content
+- Refusal State expanded beyond the father fight
+- Flicker Recognition (blocked on animation-budget review)
+- Post-Completion Truth Pass (blocked on full Whisper Layer/Refusal State existing first)
+
+**Phases above are now stale in three places** and will be corrected by the re-sequencing pass, not silently here: Phase 3 Days 19–20/23–24 still load and author Reward Rooms, Phase 4 Days 27–32 still describes a floor-gated upgrade draw, and Phase 6 Day 43 still says "Glimmer→Shard conversion" for a currency that no longer drops.
+
+⚠️ **Day 41 is also contested:** it schedules The Depth Warden as the Floor 16 Final Boss, while the pass before this one made the Depth Warden *the father* with Zyno fought after, and the session changelog moves the father to Biome 1. That is an unresolved design question, not a scheduling one — see `00-DESIGN_CHANGE_BRIEF.md` §11.
+
+---
+
 ## Sequencing Notes
 
 - **Weapon generalization (Phase 2) is deliberately not Day 1.** Building one weapon fully first, then abstracting, avoids designing an interface for 3 unknowns simultaneously — a common source of over-engineered abstractions that don't fit any of the 3 concrete cases well.

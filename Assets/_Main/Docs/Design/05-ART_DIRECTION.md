@@ -8,7 +8,7 @@ Visual style, animation budget, and asset scope for every system defined in the 
 
 A single, fixed character — no body/gender selection. A woman, cloaked, in light armour. Name TBD (`10-NARRATIVE.md` §5). Cosmetic armor/helmets are planned post-launch (no stats, no slots) and need an art budget line whenever they're scheduled.
 
-**New, unbudgeted scope from the narrative system (§13 in CORE_SYSTEMS.md):** dialogue UI, and likely character portraits for her, Zyno, and the father. Nothing below this line covers narrative presentation — §5 (UI Style) below covers HUD, Upgrade, and Hub screens only.
+**New, unbudgeted scope from the narrative system (§15 in CORE_SYSTEMS.md):** dialogue UI, the Whisper Layer's on-screen line treatment, the Memory Fragment vignette and Codex screen, and likely character portraits for her, Zyno, and the father. Nothing below this line covers narrative presentation — §5 (UI Style) below covers HUD, Upgrade, and Hub screens only.
 
 ---
 
@@ -80,7 +80,7 @@ Mini-Bosses and the Final Boss get an expanded budget (their own animation set, 
 
 ## 5. UI Style
 
-- **HUD:** minimal, corner-anchored — HP bar top-left, Ultimate Gauge and weapon icon bottom-center (mirrors the "resource, not cooldown" framing — the gauge should visually read as filling, not counting down), Glimmer counter top-right, hazard proximity meter as a subtle screen-edge vignette rather than a numeric readout (keeps tension environmental, not spreadsheet-y).
+- **HUD:** minimal, corner-anchored — HP bar top-left, Ultimate Gauge and weapon icon bottom-center (mirrors the "resource, not cooldown" framing — the gauge should visually read as filling, not counting down), XP bar + level readout top-right, hazard proximity meter as a subtle screen-edge vignette rather than a numeric readout (keeps tension environmental, not spreadsheet-y).
 - **Upgrade Screen:** 3 cards in shared/weapon-pool color coding (Common = white/gray border, Rare = blue, Epic = purple, Legendary/Relic = gold), 4th Curse card visually distinct with a red/black treatment so it's never confused with a normal offer.
 - **Hub Screen:** Core Stats and Marks visually separated into two distinct panels (per CONTENT_DESIGN §7) rather than one long list, so the "these are different kinds of upgrades" distinction is legible at a glance.
 
@@ -98,6 +98,8 @@ Mini-Bosses and the Final Boss get an expanded budget (their own animation set, 
 
 ## Open Items for LEVEL_DESIGN.md / IMPLEMENTATION_PLAN.md
 
+- **Flicker Recognition** (narrative mechanic, see CORE_SYSTEMS §15 Post-MVP list) will require an alternate "true form" visual per affected enemy if greenlit — this competes directly with the enemy animation budget already flagged as expensive due to the 3-weapon cost (§4). Do not scope this until a dedicated review happens; it is explicitly Post-MVP.
+- Biome 1 art direction is confirmed to stay mine-themed for MVP regardless of the narrative reframe — no new art requirement from the story change itself.
 - Tileset count per biome (depends on room count from LEVEL_DESIGN.md)
 - Mini-Boss/Final Boss unique animation budgets (needs moveset design first)
 - Whether Wave Room enemy density needs a "screen clarity" pass (more enemies on screen at once than base Combat Rooms)
