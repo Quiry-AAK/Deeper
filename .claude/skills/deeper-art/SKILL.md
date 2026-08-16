@@ -82,6 +82,29 @@ Write down, and check against the design docs, before touching a tool:
 3. Run the acceptance checklist below.
 4. Only after it passes, generate the rest of the set.
 
+#### For an animation clip: seed the pose, don't describe it
+
+`animate_character` in `v3` mode takes `custom_start_frame_url` (one direction per call). **Use it.**
+Prose describing a pose is the least reliable input this tool takes:
+
+- "holding the katana raised high overhead in both hands" produced four frames of her standing with
+  no sword visible at all.
+- "one fast low horizontal katana slash" came back with an orange glowing blade, in a game whose
+  every other slash is a thin silver line with a white crescent arc.
+
+Seeded from an actual frame of a shipped clip — the raised-blade frame of the Heavy Cleave, the last
+frame of the Dash — both came back correct on the first generation. The description then only has to
+say what *changes*, which is what these models are good at.
+
+It buys continuity for free: a Dash Attack seeded from the dash's last frame visually continues out
+of the dash, because it literally starts on that pose. And with `keep_first_frame: true` the seed
+becomes frame 0 of the clip, so the animation begins on a pose the rig already draws correctly.
+
+Frame URLs come from `get_character` (one animation id per direction). Do one direction, check it,
+then append the other four to the same group with `animation_group_id` — and pass `animation_name`
+again, since it is not inherited. Roughly 1 generation per direction at this character size, so a
+5-direction clip is ~5; `pro` mode is 20–40 **per direction** and needs the user's sign-off.
+
 ### Phase 3 — Acceptance checklist
 
 Reject and regenerate if any of these fail:
