@@ -68,3 +68,9 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Play-mode verification screenshots. Written by the Unity MCP camera captures
+# during a verification pass and referenced from the engineering plan while that
+# pass is being reviewed; throwaway afterwards. Untracked, they were one careless
+# `git add -A` away from landing in the repo on every commit.
+/[Cc]aptures/

@@ -9,13 +9,29 @@ using UnityEngine.InputSystem;
 
 namespace Deeper.Combat
 {
-    /// <summary>The phases every weapon action runs through (CORE_SYSTEMS §1).</summary>
+    /// <summary>
+    /// The phases every weapon action runs through (CORE_SYSTEMS §1), plus
+    /// <see cref="Charging"/>. Values are stable — do not renumber.
+    /// </summary>
     public enum AttackPhase
     {
         Idle = 0,
         Windup = 1,
         Active = 2,
         Recovery = 3,
+
+        /// <summary>
+        /// Holding a chargeable Heavy Strike (owner-directed). Sits BEFORE Windup, not inside it:
+        /// CORE_SYSTEMS §5b describes the Bow's Charge Shot as "holding extends the Windup phase",
+        /// and this is the same idea — the hold is the anticipation, so the Windup that follows a
+        /// release shortens as the charge fills instead of being paid for twice.
+        ///
+        /// It is the one attack phase the player can still aim and dash out of
+        /// (<see cref="IsCommitted"/>). She does not walk through it — a charge roots her
+        /// (owner, 2026-08-16) — so aiming and the Dig-Dash are the whole of what a hold leaves
+        /// her.
+        /// </summary>
+        Charging = 4,
     }
 
     /// <summary>
@@ -34,8 +50,15 @@ namespace Deeper.Combat
     /// phase opening, because nothing existed to hit; that made every whiff stutter the screen and
     /// fill the gauge.
     ///
-    /// <see cref="CanCancel"/> still exposes the Dash-Attack Cancel window ahead of the Dig-Dash
-    /// existing.
+    /// <see cref="CanCancel"/> exposes the Dash-Attack Cancel window.
+    ///
+    /// Two owner-directed moves sit on top of that shape, both recorded in the change brief:
+    /// **Dash Attack**, a fourth <see cref="AttackAction"/> that an LClick becomes inside the
+    /// Dig-Dash's follow-up window, and the **Heavy Strike charge**, a
+    /// <see cref="AttackPhase.Charging"/> hold in front of the Windup that scales the swing's
+    /// damage, reach and impact with how long the button was held. Whether a weapon charges at all
+    /// is <see cref="ChargeSpec"/> data on the weapon, so this class still never branches on
+    /// weapon type.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class AttackStateMachine : MonoBehaviour
@@ -57,6 +80,11 @@ namespace Deeper.Combat
         [SerializeField] private float heavyLunge = 1.15f;
         [SerializeField] private float ultimateLunge = 0.9f;
 
+        [Tooltip("Longest of the four. The Dash Attack's whole identity is closing distance — she " +
+                 "is already moving when it starts, and a short step here would read as the dash " +
+                 "stopping dead before the swing.")]
+        [SerializeField] private float dashAttackLunge = 1.4f;
+
         [Tooltip("Fraction of the action spent moving. Front-loaded so the lunge snaps during " +
                  "Windup/Active and has settled before Recovery ends.")]
         [SerializeField, Range(0.1f, 1f)] private float lungeFraction = 0.45f;
@@ -74,6 +102,24 @@ namespace Deeper.Combat
 
         [Tooltip("Seconds into Recovery during which pressing again continues the chain.")]
         [SerializeField] private float chainWindow = 0.25f;
+
+        [Header("Charge — Heavy Strike (owner-directed)")]
+        [Tooltip("Fraction of her normal walk speed while charging. **0 — she is rooted** " +
+                 "(owner, 2026-08-16). This was 0.45 on the reasoning that rooting her inside a " +
+                 "locked room makes holding the button a punishment; the owner overruled it, so a " +
+                 "charge now costs position and the Dig-Dash is the way out of one. She still aims " +
+                 "through it, and she decelerates to a stop rather than snapping.")]
+        [SerializeField, Range(0f, 1f)] private float chargeMoveScale;
+
+        [Tooltip("Charge fraction at which the release plays the unique HeavyCharged clip instead " +
+                 "of the ordinary HeavyStrike one. Below it, a barely-held Heavy should look " +
+                 "exactly like a tapped one, because that is what it is.")]
+        [SerializeField, Range(0f, 1f)] private float chargedClipThreshold = 0.6f;
+
+        [Tooltip("Lunge, hitstop and camera shake multiplier at full charge. One number for all " +
+                 "three on purpose — they are the same sensation, and letting them drift apart is " +
+                 "how a heavy hit starts feeling loud instead of heavy.")]
+        [SerializeField] private float chargedImpactScale = 1.6f;
 
         [Header("Animation")]
         [Tooltip("Pin the strike frame to the Active window instead of spreading frames evenly " +
@@ -96,6 +142,11 @@ namespace Deeper.Combat
         [SerializeField] private UltimateBuff ultimateBuff;
         [SerializeField] private PlayerStats stats;
 
+        [Tooltip("Read to decide whether a Basic Attack press comes out as the Dash Attack. The " +
+                 "reference runs both ways — DigDash reads this class for the Dash-Attack Cancel " +
+                 "— which is fine for two serialized fields and keeps both rules where they belong.")]
+        [SerializeField] private DigDash dash;
+
         [Tooltip("The rig drawing the character. Read for real clip lengths and strike frames — " +
                  "guessing them puts the damage window on the wrong frame of the swing.")]
         [SerializeField] private CharacterLayerView characterView;
@@ -105,12 +156,14 @@ namespace Deeper.Combat
         [SerializeField] private float basicHitStop = 0.045f;
         [SerializeField] private float heavyHitStop = 0.085f;
         [SerializeField] private float ultimateHitStop = 0.11f;
+        [SerializeField] private float dashAttackHitStop = 0.06f;
 
         [Tooltip("Camera shake per action, in world units. Kept small — shake should punctuate a " +
                  "hit, not obscure the fight.")]
         [SerializeField] private float basicShake = 0.045f;
         [SerializeField] private float heavyShake = 0.11f;
         [SerializeField] private float ultimateShake = 0.16f;
+        [SerializeField] private float dashAttackShake = 0.07f;
 
         private CameraRig _cameraRig;
 
@@ -126,6 +179,7 @@ namespace Deeper.Combat
         private bool _activeOpened;
         private bool _connectedThisHit;
         private Vector2 _lungeDirection;
+        private float _chargeHeld;
 
         /// <summary>
         /// Velocity the player should be moving at right now because of the attack, in world
@@ -136,13 +190,14 @@ namespace Deeper.Combat
         {
             get
             {
-                if (Phase == AttackPhase.Idle) return Vector2.zero;
+                // IsCommitted, not IsAttacking: while Charging _elapsed is still zero, so the
+                // ease-out below would report peak lunge speed for the whole hold.
+                if (!IsCommitted) return Vector2.zero;
 
                 float window = _timing.Total * lungeFraction;
                 if (window <= 0f || _elapsed >= window) return Vector2.zero;
 
-                float distance = _action == AttackAction.Basic ? basicLunge
-                    : _action == AttackAction.Heavy ? heavyLunge : ultimateLunge;
+                float distance = LungeFor(_action) * ChargedImpact;
 
                 // Ease-out: fast off the mark, decaying to nothing. A flat velocity reads as a
                 // slide; the decay is what makes it feel like a step.
@@ -161,6 +216,48 @@ namespace Deeper.Combat
         public AttackPhase Phase { get; private set; }
 
         public bool IsAttacking { get { return Phase != AttackPhase.Idle; } }
+
+        /// <summary>
+        /// True once the action is committed — Windup, Active or Recovery — and false while
+        /// Charging.
+        ///
+        /// This is the property movement and aim should read, not <see cref="IsAttacking"/>.
+        /// Charging is an attack in progress but not a commitment: the player is still choosing
+        /// where it goes, so <c>PlayerAim</c> keeps turning her to the cursor and the Dig-Dash can
+        /// still cancel out of it.
+        ///
+        /// **She no longer walks during a charge** (owner, 2026-08-16) — but that is
+        /// <see cref="chargeMoveScale"/> set to 0, not a change here. Folding Charging into this
+        /// property would also freeze her aim, make the charge undashable, and hand movement to
+        /// <see cref="LungeVelocity"/>, which reports peak lunge speed while <c>_elapsed</c> is
+        /// zero. Rooting her is a speed of zero, not a commitment.
+        /// </summary>
+        public bool IsCommitted
+        {
+            get { return Phase != AttackPhase.Idle && Phase != AttackPhase.Charging; }
+        }
+
+        /// <summary>How full the current Heavy Strike charge is, 0–1. Zero for every other action.</summary>
+        public float Charge { get; private set; }
+
+        /// <summary>Multiplier <c>PlayerController</c> applies to her walk speed. Slowed while charging.</summary>
+        public float MoveSpeedScale
+        {
+            get { return Phase == AttackPhase.Charging ? chargeMoveScale : 1f; }
+        }
+
+        /// <summary>
+        /// How much harder a charged hit lands, 1 when uncharged. Applied to the lunge, the
+        /// hitstop and the camera shake so all three grow together.
+        /// </summary>
+        private float ChargedImpact
+        {
+            get
+            {
+                if (_action != AttackAction.Heavy || Charge <= 0f) return 1f;
+                return Mathf.Lerp(1f, chargedImpactScale, Charge);
+            }
+        }
 
         /// <summary>Zero-based index of the current hit within its chain.</summary>
         public int ChainIndex { get { return _chainIndex; } }
@@ -181,11 +278,49 @@ namespace Deeper.Combat
             return 1;
         }
 
+        /// <summary>
+        /// The button that continues this action's chain. The Dash Attack answers to the Basic
+        /// button, not its own — it has no key of its own, and returning the Ultimate's action
+        /// here (which the old two-step ternary did) would have let R buffer a chain into it.
+        /// </summary>
         private InputAction ActionFor(AttackAction action)
         {
-            if (action == AttackAction.Basic) return _basic;
             if (action == AttackAction.Heavy) return _heavy;
-            return _ultimate;
+            if (action == AttackAction.Ultimate) return _ultimate;
+            return _basic;
+        }
+
+        private float LungeFor(AttackAction action)
+        {
+            switch (action)
+            {
+                case AttackAction.Basic: return basicLunge;
+                case AttackAction.Heavy: return heavyLunge;
+                case AttackAction.DashAttack: return dashAttackLunge;
+                default: return ultimateLunge;
+            }
+        }
+
+        private float HitStopFor(AttackAction action)
+        {
+            switch (action)
+            {
+                case AttackAction.Basic: return basicHitStop;
+                case AttackAction.Heavy: return heavyHitStop;
+                case AttackAction.DashAttack: return dashAttackHitStop;
+                default: return ultimateHitStop;
+            }
+        }
+
+        private float ShakeFor(AttackAction action)
+        {
+            switch (action)
+            {
+                case AttackAction.Basic: return basicShake;
+                case AttackAction.Heavy: return heavyShake;
+                case AttackAction.DashAttack: return dashAttackShake;
+                default: return ultimateShake;
+            }
         }
 
         private void Awake()
@@ -199,6 +334,7 @@ namespace Deeper.Combat
             ultimateBuff = RigRefs.Find(this, ultimateBuff);
             stats = RigRefs.Find(this, stats);
             characterView = RigRefs.Find(this, characterView);
+            dash = RigRefs.Find(this, dash);
 
             if (inputActions == null)
             {
@@ -257,7 +393,16 @@ namespace Deeper.Combat
             {
                 if (Pressed(_ultimate)) Begin(AttackAction.Ultimate);
                 else if (Pressed(_heavy)) Begin(AttackAction.Heavy);
-                else if (Pressed(_basic)) Begin(AttackAction.Basic);
+                else if (Pressed(_basic)) Begin(BasicOrDashAttack());
+                return;
+            }
+
+            // Charging runs on its own clock and does not advance the action. Everything below
+            // this line assumes _elapsed is walking through Windup/Active/Recovery, which it is
+            // not while the button is still down.
+            if (Phase == AttackPhase.Charging)
+            {
+                AdvanceCharge();
                 return;
             }
 
@@ -298,6 +443,24 @@ namespace Deeper.Combat
             return action != null && action.WasPressedThisFrame();
         }
 
+        private static bool Held(InputAction action)
+        {
+            return action != null && action.IsPressed();
+        }
+
+        /// <summary>
+        /// Which move an LClick press becomes. Inside the Dig-Dash's follow-up window it is the
+        /// Dash Attack; otherwise the ordinary Basic. The player never presses a different key —
+        /// GDD §Controls has no spare one, and asking for a chord would make an approach move into
+        /// a dexterity test.
+        /// </summary>
+        private AttackAction BasicOrDashAttack()
+        {
+            return dash != null && dash.InDashAttackWindow
+                ? AttackAction.DashAttack
+                : AttackAction.Basic;
+        }
+
         private bool CanChain()
         {
             return _chainIndex + 1 < ChainLengthFor(_action);
@@ -328,20 +491,10 @@ namespace Deeper.Combat
             if (gauge != null) gauge.OnHitLanded(action);
             if (combo != null && action != AttackAction.Ultimate) combo.OnHitLanded();
 
-            if (hitStop != null)
-            {
-                float freeze = action == AttackAction.Basic ? basicHitStop
-                    : action == AttackAction.Heavy ? heavyHitStop : ultimateHitStop;
-                hitStop.Freeze(freeze);
-            }
+            if (hitStop != null) hitStop.Freeze(HitStopFor(action) * ChargedImpact);
 
             if (_cameraRig == null) _cameraRig = FindFirstObjectByType<CameraRig>();
-            if (_cameraRig != null)
-            {
-                float shake = action == AttackAction.Basic ? basicShake
-                    : action == AttackAction.Heavy ? heavyShake : ultimateShake;
-                _cameraRig.Shake(shake);
-            }
+            if (_cameraRig != null) _cameraRig.Shake(ShakeFor(action) * ChargedImpact);
         }
 
         /// <summary>
@@ -384,9 +537,103 @@ namespace Deeper.Combat
 
             _chainIndex = 0;
             _chainQueued = false;
+            Charge = 0f;
+
+            // The window is spent on the press, not on the hit. Left open, a Dash Attack's own
+            // recovery still sits inside it, so the follow-up press would come out as a second
+            // Dash Attack instead of continuing the Basic chain.
+            if (action == AttackAction.DashAttack && dash != null) dash.ConsumeDashAttackWindow();
+
+            if (action == AttackAction.Heavy && weapon.HeavyCharge.Enabled && Held(_heavy))
+            {
+                BeginCharge();
+                return true;
+            }
+
             StartHit();
             return true;
         }
+
+        /// <summary>The charge spec of whatever the run is carrying. Disabled when there is no weapon.</summary>
+        private ChargeSpec WeaponCharge
+        {
+            get
+            {
+                WeaponDefinition weapon = loadout != null ? loadout.Weapon : null;
+                return weapon != null ? weapon.HeavyCharge : default(ChargeSpec);
+            }
+        }
+
+        private void BeginCharge()
+        {
+            Phase = AttackPhase.Charging;
+            _elapsed = 0f;
+            _chargeHeld = 0f;
+            Charge = 0f;
+            _activeOpened = false;
+            _connectedThisHit = false;
+
+            if (characterAnimator == null) return;
+
+            int frames = characterView != null && characterView.BodyAnimation != null
+                ? characterView.BodyAnimation.FrameCount(CharacterState.HeavyCharge, characterAnimator.Facing)
+                : 0;
+
+            // No charge art: hold the first frame of the Heavy clip instead of playing nothing.
+            // A charge that draws her standing idle gives the player no reason to believe the
+            // button is doing anything.
+            if (frames <= 0)
+            {
+                characterAnimator.PlayLoop(CharacterState.HeavyStrike, ChargeCycle, 1);
+                return;
+            }
+
+            characterAnimator.PlayLoop(CharacterState.HeavyCharge, ChargeCycle, frames);
+        }
+
+        private void AdvanceCharge()
+        {
+            ChargeSpec spec = WeaponCharge;
+
+            _chargeHeld += Time.deltaTime;
+            Charge = spec.MaxHoldTime > 0f ? Mathf.Clamp01(_chargeHeld / spec.MaxHoldTime) : 1f;
+
+            // Held at full rather than auto-fired. The release is the player's timing decision —
+            // firing it for them would take the one thing a charge is actually for.
+            if (Held(_heavy)) return;
+
+            ReleaseCharge();
+        }
+
+        /// <summary>
+        /// Fires the charged Heavy. The hold has already served as the anticipation, so the
+        /// authored Windup collapses toward <see cref="ChargeSpec.ReleaseWindup"/> as the charge
+        /// fills — at zero charge the action is BALANCE §2's Heavy Strike untouched, and at full
+        /// charge the blade is already up and comes down immediately.
+        /// </summary>
+        private void ReleaseCharge()
+        {
+            WeaponDefinition weapon = loadout != null ? loadout.Weapon : null;
+            if (weapon == null)
+            {
+                Stop();
+                return;
+            }
+
+            ChargeSpec spec = weapon.HeavyCharge;
+
+            _timing = Scaled(weapon.GetAttackTiming(AttackAction.Heavy));
+            _timing.Windup = Mathf.Lerp(_timing.Windup, spec.ReleaseWindup, Charge);
+            _timing.Damage *= Mathf.Lerp(1f, spec.DamageMultiplier, Charge);
+
+            StartHit();
+        }
+
+        /// <summary>
+        /// Seconds for one pass of the charge loop. Not serialized: it is a breathing rate, not a
+        /// tuning knob — the clip only has to look alive while the player holds it.
+        /// </summary>
+        private const float ChargeCycle = 0.5f;
 
         /// <summary>
         /// Applies the player's attack speed to a weapon's authored timing.
@@ -432,6 +679,13 @@ namespace Deeper.Combat
             // Chain index picks the clip: the Basic chain is three distinct animations.
             CharacterState state = AttackTiming.StateFor(_action, _chainIndex);
 
+            // A Heavy held past the threshold releases into its own bigger swing. Below it, a
+            // barely-held Heavy must look exactly like a tapped one — it is one.
+            if (_action == AttackAction.Heavy && Charge >= chargedClipThreshold)
+            {
+                state = CharacterState.HeavyCharged;
+            }
+
             // Frame count MUST come from the set that actually draws her. The weapon's set has no
             // attack clips (the sword is baked into the body art), and a hardcoded guess that
             // overshoots makes the clip wrap and restart partway through the action — it reads as
@@ -442,10 +696,11 @@ namespace Deeper.Combat
             {
                 frames = characterView.BodyAnimation.FrameCount(state, characterAnimator.Facing);
 
-                // A chain state with no art falls back to the base Basic clip, so match its length.
-                if (frames <= 0 && (state == CharacterState.BasicAttack2 || state == CharacterState.BasicAttack3))
+                // A state with no art authored yet falls back to its older sibling, so match the
+                // length of whatever is actually going to be drawn.
+                if (frames <= 0)
                 {
-                    artState = CharacterState.BasicAttack;
+                    artState = state.FallbackArt();
                     frames = characterView.BodyAnimation.FrameCount(artState, characterAnimator.Facing);
                 }
             }
@@ -485,6 +740,8 @@ namespace Deeper.Combat
             _chainQueued = false;
             _activeOpened = false;
             _connectedThisHit = false;
+            _chargeHeld = 0f;
+            Charge = 0f;
             if (characterAnimator != null) characterAnimator.CancelAction();
             Finished?.Invoke();
         }

@@ -65,6 +65,10 @@ namespace Deeper.Player
         [SerializeField] private CharacterAnimator characterAnimator;
         [SerializeField] private AttackStateMachine attacks;
 
+        [Tooltip("Facing is frozen while this is dashing — the dash locks its travel direction at " +
+                 "launch, so the cursor must not keep turning her mid-dash.")]
+        [SerializeField] private DigDash dash;
+
         [Tooltip("Freeze facing for the whole swing. A committed attack should land where it was " +
                  "aimed — letting the cursor steer her mid-swing means the animation, the lunge " +
                  "and the hitbox all pull apart from each other.")]
@@ -116,6 +120,7 @@ namespace Deeper.Player
         {
             characterAnimator = RigRefs.Find(this, characterAnimator);
             attacks = RigRefs.Find(this, attacks);
+            dash = RigRefs.Find(this, dash);
             _camera = UnityEngine.Camera.main;
 
             if (inputActions == null)
@@ -219,7 +224,16 @@ namespace Deeper.Player
             // Facing is frozen for the duration of a swing. Everything about an attack is decided
             // at its first frame — the clip's direction, the lunge vector, and later the hitbox —
             // so letting the cursor keep turning her mid-swing desynchronises all three.
-            if (lockFacingDuringAttack && attacks != null && attacks.IsAttacking) return;
+            //
+            // IsCommitted, not IsAttacking: a Heavy Strike charge decides none of those until it
+            // is released, and aiming the charged swing while holding it is the entire reason to
+            // hold. The freeze starts at the release.
+            if (lockFacingDuringAttack && attacks != null && attacks.IsCommitted) return;
+
+            // Frozen during a dash for the same reason, and it matters more here: the dash locks
+            // its travel direction at launch, so a cursor that kept turning her would draw her
+            // facing one way while she slides another.
+            if (dash != null && dash.IsDashing) return;
 
             UpdateFacing(_aim);
 

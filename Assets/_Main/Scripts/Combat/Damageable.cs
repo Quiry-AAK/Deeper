@@ -136,6 +136,35 @@ namespace Deeper.Combat
             Refill();
         }
 
+        /// <summary>True while nothing can land. Read by the test overlay and by anything that wants
+        /// to draw an i-frame tell.</summary>
+        public bool IsInvulnerable { get { return Time.unscaledTime < _invulnerableUntil; } }
+
+        /// <summary>
+        /// Makes this untouchable for <paramref name="seconds"/>. The Dig-Dash's i-frames come
+        /// through here (BALANCE §1, 0.25s).
+        ///
+        /// Deliberately reuses the same clock as <see cref="invulnerabilityAfterHit"/> rather than
+        /// adding a second one. <see cref="TakeDamage"/> is the single entry point every damage
+        /// source already funnels through — <c>ContactDamage</c>, <c>OverheadSlam</c>,
+        /// <c>LungeAttack</c>, <c>ThrownRock</c> — so one clock covers all of them with no change to
+        /// any of them, where a dash-owned flag would need each source to ask the dash first.
+        ///
+        /// **Extends, never shortens.** A plain assignment would let a 0.25s dash cut short the
+        /// player's 0.6s post-hit window, so dashing immediately after being hit would *remove*
+        /// immunity she already had. That reads as the dash being punished.
+        ///
+        /// Consequence worth knowing: the two windows are semantically different but share one
+        /// timestamp, so a dash taken during a post-hit window inherits the longer of the two.
+        /// </summary>
+        public void GrantInvulnerability(float seconds)
+        {
+            if (seconds <= 0f) return;
+
+            // Unscaled, like the post-hit window above and every other timer in the feel layer.
+            _invulnerableUntil = Mathf.Max(_invulnerableUntil, Time.unscaledTime + seconds);
+        }
+
         /// <summary>Restores to full and clears any active immunity. The training dummy respawns through this.</summary>
         [ContextMenu("Refill")]
         public void Refill()

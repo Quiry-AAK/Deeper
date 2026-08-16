@@ -103,6 +103,10 @@ namespace Deeper.Combat
             for (int i = 0; i < fillRates.Length; i++)
             {
                 if (fillRates[i].Weapon != weapon.WeaponType) continue;
+
+                // The Dash Attack falls in with Basic rather than getting a rate of its own.
+                // BALANCE §4's table has two columns; inventing a third for a move that doc has
+                // never heard of would be a design decision made in a lookup.
                 gain = action == AttackAction.Heavy ? fillRates[i].Heavy : fillRates[i].Basic;
                 break;
             }

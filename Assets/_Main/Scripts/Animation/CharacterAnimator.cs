@@ -30,6 +30,11 @@ namespace Deeper.Animation
         private float _actionDuration;
         private int _actionFrames;
 
+        // A looping action clip runs until something ends it, instead of handing the pose back
+        // when its duration is up. Only the Heavy Strike charge hold uses this: its length is
+        // "however long the player holds the button", which no timer here can know.
+        private bool _actionLooping;
+
         // Phase-aligned playback. When set, the clip's frames are distributed by meaning
         // (windup poses / the strike / the follow-through) rather than spread evenly.
         private bool _phaseAligned;
@@ -167,6 +172,7 @@ namespace Deeper.Animation
             _actionFrames = frameCount;
             _actionElapsed = 0f;
             _phaseAligned = false;
+            _actionLooping = false;
 
             State = state;
             Frame = 0;
@@ -201,6 +207,22 @@ namespace Deeper.Animation
             _phaseWindup = windup;
             _phaseActive = active;
             _strikeFrame = Mathf.Clamp(strikeFrame, 0, frameCount - 1);
+        }
+
+        /// <summary>
+        /// Plays an action clip that repeats until something else ends it — <see cref="PlayAction"/>,
+        /// <see cref="CancelAction"/>, or the object being disabled.
+        ///
+        /// This exists for exactly one thing: the Heavy Strike charge hold. Every other action clip
+        /// has a length the state machine knows in advance, so it can hand the pose back on a timer.
+        /// A charge lasts as long as the player holds the button, and a one-shot clip would either
+        /// freeze on its last frame or drop back to Idle with the sword still visually raised.
+        /// </summary>
+        /// <param name="cycleDuration">Seconds for one pass through the clip.</param>
+        public void PlayLoop(CharacterState state, float cycleDuration, int frameCount)
+        {
+            PlayAction(state, cycleDuration, frameCount);
+            _actionLooping = true;
         }
 
         /// <summary>Spreads <paramref name="count"/> frames across a phase, clamped to its last.</summary>
@@ -257,6 +279,7 @@ namespace Deeper.Animation
             _actionDuration = 0f;
             _actionFrames = 0;
             _actionElapsed = 0f;
+            _actionLooping = false;
             State = CharacterState.Idle;
             Frame = 0;
             PoseChanged?.Invoke();
@@ -290,7 +313,14 @@ namespace Deeper.Animation
             {
                 _actionElapsed += Time.deltaTime;
 
-                if (_actionElapsed >= _actionDuration)
+                // Wrap rather than end. Subtracting one cycle instead of zeroing keeps the loop
+                // phase-continuous, so a long hold doesn't stutter once per pass.
+                if (_actionLooping && _actionElapsed >= _actionDuration)
+                {
+                    _actionElapsed -= _actionDuration;
+                }
+
+                if (!_actionLooping && _actionElapsed >= _actionDuration)
                 {
                     // Fall back to Idle; the next SetMotion call corrects it to Move if needed.
                     _actionDuration = 0f;

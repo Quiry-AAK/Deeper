@@ -116,13 +116,16 @@ namespace Deeper.Character
         }
 
         /// <summary>
-        /// Resolves the body sprite, falling back to <see cref="CharacterState.BasicAttack"/> when
-        /// a chain state has no art yet.
+        /// Resolves the body sprite, standing an older sibling clip in when this state has no art
+        /// yet (<see cref="CharacterStateExtensions.FallbackArt"/>).
         ///
-        /// The Basic chain's 2nd and 3rd hits are separate states so they can be separate
-        /// animations, but the art arrives one clip at a time. Without this the character would
-        /// simply vanish for those hits — a blank sprite is far worse than a repeated one. The
-        /// fallback disappears on its own the moment real art is bound.
+        /// States arrive before their animations do — the Basic chain's later hits, the Dash
+        /// Attack and the Heavy Strike charge all shipped as working code first. Without this the
+        /// character simply vanishes for those frames, and a blank sprite is far worse than a
+        /// repeated one. Each fallback disappears on its own the moment real art is bound.
+        ///
+        /// The map itself lives on <see cref="CharacterState"/> because the Attack State Machine
+        /// reads the same answer to size the clip — see the note there.
         /// </summary>
         private Sprite ResolveBody(CharacterState state, Facing facing, int frame)
         {
@@ -131,12 +134,8 @@ namespace Deeper.Character
             Sprite sprite = bodyAnimation.Resolve(state, facing, frame);
             if (sprite != null) return sprite;
 
-            if (state == CharacterState.BasicAttack2 || state == CharacterState.BasicAttack3)
-            {
-                return bodyAnimation.Resolve(CharacterState.BasicAttack, facing, frame);
-            }
-
-            return null;
+            CharacterState fallback = state.FallbackArt();
+            return fallback != state ? bodyAnimation.Resolve(fallback, facing, frame) : null;
         }
     }
 }

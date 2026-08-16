@@ -35,6 +35,10 @@ namespace Deeper.Player
                  "made a fast weapon feel weightless.")]
         [SerializeField] private AttackStateMachine attacks;
 
+        [Tooltip("The Dig-Dash owns movement while it runs, the same way an attack does — it " +
+                 "publishes a velocity and this controller applies it.")]
+        [SerializeField] private DigDash dash;
+
         [Header("Feel — momentum")]
         [Tooltip("Seconds to reach full speed from a standstill. Owner-directed: the GDD specified " +
                  "no acceleration curve, but flat velocity reads robotic. Kept short so the " +
@@ -90,6 +94,7 @@ namespace Deeper.Player
             stats = RigRefs.Find(this, stats);
             characterAnimator = RigRefs.Find(this, characterAnimator);
             attacks = RigRefs.Find(this, attacks);
+            dash = RigRefs.Find(this, dash);
 
             if (inputActions == null)
             {
@@ -131,7 +136,12 @@ namespace Deeper.Player
             // diagonal on the keyboard isn't faster than a cardinal.
             _input = Vector2.ClampMagnitude(raw, 1f);
 
-            if (characterAnimator != null) characterAnimator.SetMotion(_input);
+            // Skipped while dashing. PlayAction already stops SetMotion overwriting the *state*,
+            // but SetMotion also updates facing and playback direction — and the dash locked its
+            // direction at launch, so letting movement input keep steering the facing would draw
+            // her turning while she travels in a straight line.
+            bool dashing = dash != null && dash.IsDashing;
+            if (characterAnimator != null && !dashing) characterAnimator.SetMotion(_input);
         }
 
         private void FixedUpdate()
@@ -151,9 +161,30 @@ namespace Deeper.Player
                 return;
             }
 
-            // While attacking the swing owns movement: the lunge carries the character forward and
-            // decays to zero, so late in an attack she coasts to a stop rather than snapping still.
-            if (attacks != null && attacks.IsAttacking)
+            // The dash sits below knockback and above the attack lunge, and both halves of that are
+            // forced. Below knockback, because a dash that shrugged off a Brute slam would be
+            // i-frames *plus* immunity to displacement, which no design doc grants. Above the
+            // lunge, because CORE_SYSTEMS §2 requires the dash to cancel an attack in Recovery —
+            // if the lunge branch ran first it would still own velocity on the frame the dash
+            // starts, and the cancel would look like it did nothing.
+            if (dash != null && dash.IsDashing)
+            {
+                _velocity = dash.DashVelocity;
+                _velocitySmoothing = Vector2.zero;
+                _body.linearVelocity = _velocity;
+                return;
+            }
+
+            // Once an attack is COMMITTED the swing owns movement: the lunge carries the character
+            // forward and decays to zero, so late in an attack she coasts to a stop rather than
+            // snapping still.
+            //
+            // IsCommitted rather than IsAttacking, and that is still right even though a charge now
+            // roots her (owner, 2026-08-16): the rooting is done by chargeMoveScale = 0 further
+            // down, NOT by treating Charging as committed. Taking this branch while Charging would
+            // hand movement to LungeVelocity, whose ease-out reads _elapsed — still zero during a
+            // hold — and so reports peak lunge speed for the entire charge.
+            if (attacks != null && attacks.IsCommitted)
             {
                 _velocity = attacks.LungeVelocity;
                 _velocitySmoothing = Vector2.zero;
@@ -162,6 +193,8 @@ namespace Deeper.Player
             }
 
             float speed = stats != null ? stats.MoveSpeed : 0f;
+            if (attacks != null) speed *= attacks.MoveSpeedScale;
+
             Vector2 target = _input * speed;
 
             // Ramping in and out rather than snapping is most of what separates "crisp" from

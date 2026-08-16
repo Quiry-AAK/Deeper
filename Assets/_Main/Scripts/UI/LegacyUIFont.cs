@@ -4,10 +4,17 @@ using UnityEngine.UI;
 namespace Deeper.UI
 {
     /// <summary>
-    /// Supplies Unity's built-in font to legacy <see cref="Text"/> components that were created
-    /// without one. TextMeshPro's essential resources are not imported into this project, so the
-    /// dev-facing UI uses the built-in font instead of pulling ~2 MB of assets into the repo.
-    /// Replace this whole approach when the real UI art pass happens (ART_DIRECTION §5).
+    /// Last-resort font for legacy <see cref="Text"/> components that were created without one.
+    ///
+    /// **This is the safety net, not the HUD's font.** The shipped HUD uses the generated bitmap
+    /// face in <c>Art/UI/HUD_Font.fontsettings</c>, which <c>BuildRunHUD</c> assigns to every label
+    /// as it builds them, so on those labels this is a no-op. It stays because a <see cref="Text"/>
+    /// with no font at all draws nothing, and a component dropped on by hand should still be
+    /// readable. The built-in face is anti-aliased and will look wrong beside the rest of the HUD —
+    /// that is the intended signal that something was not built through the tool.
+    ///
+    /// TextMeshPro's essential resources are not imported in this project, which is why any of this
+    /// is legacy <c>UnityEngine.UI</c> at all.
     /// </summary>
     internal static class LegacyUIFont
     {

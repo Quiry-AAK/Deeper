@@ -13,12 +13,57 @@ namespace Deeper.Character
         Greatsword = 2,
     }
 
-    /// <summary>The three actions every weapon exposes (CORE_SYSTEMS §1).</summary>
+    /// <summary>
+    /// The weapon actions. CORE_SYSTEMS §1 names the first three; <see cref="DashAttack"/> is
+    /// owner-directed and recorded in the change brief.
+    ///
+    /// Values are stable — do not renumber. Anything switching on this must handle all four:
+    /// the old two-step ternaries (<c>Basic ? a : Heavy ? b : ultimate</c>) silently gave a
+    /// Dash Attack the Ultimate's numbers, which is why every one of them is now a switch.
+    /// </summary>
     public enum AttackAction
     {
         Basic = 0,
         Heavy = 1,
         Ultimate = 2,
+
+        /// <summary>
+        /// The strike that comes out of a Dig-Dash. Triggered by the Basic Attack button inside
+        /// <c>DigDash.InDashAttackWindow</c>, so it costs the player no extra key.
+        /// </summary>
+        DashAttack = 3,
+    }
+
+    /// <summary>
+    /// Whether and how a weapon's Heavy Strike charges when the button is held (owner-directed).
+    ///
+    /// **Weapon data, not a global rule**, and deliberately so: GDD §Player makes "hold to charge"
+    /// the *Bow's* signature trait, on its Basic Attack. Putting the switch here means the Katana
+    /// can charge its Heavy without the Bow losing what makes it different, and a weapon that
+    /// should not charge simply leaves <see cref="Enabled"/> off.
+    ///
+    /// All values are PLACEHOLDERS — BALANCE §2's timing table has no charge row.
+    /// </summary>
+    [Serializable]
+    public struct ChargeSpec
+    {
+        [Tooltip("Off = holding the button does nothing and the Heavy behaves exactly as BALANCE §2 authored it.")]
+        public bool Enabled;
+
+        [Tooltip("Seconds of holding to reach full charge.")]
+        public float MaxHoldTime;
+
+        [Tooltip("Damage multiplier at full charge. 2 = double.")]
+        public float DamageMultiplier;
+
+        [Tooltip("Hitbox radius multiplier at full charge — a bigger swing, not just a harder one.")]
+        public float RadiusMultiplier;
+
+        [Tooltip("Windup at full charge, in seconds. The action's authored Windup lerps toward " +
+                 "this as the charge fills: the hold IS the wind-up (CORE_SYSTEMS §5b models " +
+                 "Charge Shot the same way), so a full charge comes out fast instead of making " +
+                 "the player pay for the anticipation twice.")]
+        public float ReleaseWindup;
     }
 
     /// <summary>
@@ -60,6 +105,7 @@ namespace Deeper.Character
                     if (chainIndex <= 0) return CharacterState.BasicAttack;
                     return chainIndex == 1 ? CharacterState.BasicAttack2 : CharacterState.BasicAttack3;
                 case AttackAction.Heavy: return CharacterState.HeavyStrike;
+                case AttackAction.DashAttack: return CharacterState.DashAttack;
                 default: return CharacterState.Ultimate;
             }
         }
@@ -136,6 +182,18 @@ namespace Deeper.Character
         [Tooltip("BALANCE §2 gives no Windup/Active/Recovery row for Ultimates — these are placeholders pending a design answer.")]
         [SerializeField] private AttackTiming ultimate = new AttackTiming { Windup = 0.25f, Active = 0.40f, Recovery = 0.45f, Damage = 40f };
 
+        [Tooltip("The Dig-Dash follow-up (owner-directed). BALANCE §2 has no row for it — these " +
+                 "are INVENTED. Faster and shorter than the Basic it replaces, and worth a little " +
+                 "more, because the player paid the dash's cooldown to get it.")]
+        [SerializeField] private AttackTiming dashAttack = new AttackTiming { Windup = 0.06f, Active = 0.10f, Recovery = 0.20f, Damage = 12f };
+
+        [Header("Heavy Strike charge — owner-directed, no BALANCE row")]
+        [SerializeField] private ChargeSpec heavyCharge = new ChargeSpec
+        {
+            Enabled = true, MaxHoldTime = 0.9f, DamageMultiplier = 2.2f,
+            RadiusMultiplier = 1.35f, ReleaseWindup = 0.07f,
+        };
+
         [Header("Ultimate shape")]
         [Tooltip("Whether this weapon's Ultimate deals damage or grants a buff. The Katana's is " +
                  "a Buff (owner-directed); CORE_SYSTEMS §4 and BALANCE §2 still describe an attack.")]
@@ -175,6 +233,9 @@ namespace Deeper.Character
         /// <summary>The buff payload. Meaningless unless <see cref="UltimateShape"/> is Buff.</summary>
         public UltimateBuffSpec UltimateBuff => ultimateBuff;
 
+        /// <summary>Whether and how this weapon's Heavy Strike charges on a held button.</summary>
+        public ChargeSpec HeavyCharge => heavyCharge;
+
         /// <summary>
         /// Phase timings for one action. This is the seam <c>IWeapon.GetAttackTiming()</c> will
         /// sit on when the interface is generalized in Milestone 2.
@@ -185,6 +246,7 @@ namespace Deeper.Character
             {
                 case AttackAction.Basic: return basic;
                 case AttackAction.Heavy: return heavy;
+                case AttackAction.DashAttack: return dashAttack;
                 default: return ultimate;
             }
         }

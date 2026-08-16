@@ -15,9 +15,40 @@ MonoBehaviour:
   id: Weapon_Bow
   displayName: Bow
   description: 'Ranged. Signature: Charge Shot.'
-  slot: 4
-  icon: {fileID: 21300000, guid: 386fc7e868efd14478f380993ef90b82, type: 3}
+  weaponType: 1
+  icon: {fileID: 21300000, guid: da7149e579c29964387f373a2eaa1767, type: 3}
   animationSet: {fileID: 11400000, guid: ba43cd761f63710478276b0210eb0499, type: 2}
   bodyLayer: {fileID: 21300000, guid: c4e97771c54331946897e52bfbe6dccd, type: 3}
+  basic:
+    Windup: 0.1
+    Active: 0.08
+    Recovery: 0.18
+    Damage: 8
+  heavy:
+    Windup: 0.3
+    Active: 0.12
+    Recovery: 0.35
+    Damage: 20
+  ultimate:
+    Windup: 0.25
+    Active: 0.4
+    Recovery: 0.45
+    Damage: 40
+  dashAttack:
+    Windup: 0.06
+    Active: 0.1
+    Recovery: 0.2
+    Damage: 12
+  heavyCharge:
+    Enabled: 1
+    MaxHoldTime: 0.9
+    DamageMultiplier: 2.2
+    RadiusMultiplier: 1.35
+    ReleaseWindup: 0.07
+  ultimateKind: 0
+  ultimateBuff:
+    Duration: 8
+    DamageBonus: 0.5
+    AttackSpeedBonus: 0.4
+    MoveSpeedBonus: 0.15
   modifiers: []
-  weaponType: 1

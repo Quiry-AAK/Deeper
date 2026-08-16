@@ -15,15 +15,20 @@ Each item is tagged:
 - **PROPOSED** — suggested by engineering, **not approved**. Needs a decision before it is written anywhere.
 - **CONFLICT** — two locked statements now disagree. Needs resolving, not just recording.
 
-**Where to start.** Most of this page is documentation catching up with decisions already made. Three
+**Where to start.** Most of this page is documentation catching up with decisions already made. Four
 items are not, and are worth taking first because they change how the game plays rather than how it is
 written down: **§7h** (the Ultimate destroys the Combo Counter and returns nothing — a live gameplay
 hole), **§3/§5/§6** (the premise, the Final Boss and what the game is after the story ends — one
-coordinated decision, not three), and **§7g** (a flat gauge fill has deleted the per-weapon pacing
-difference and left an upgrade with no job).
+coordinated decision, not three), **§7g** (a flat gauge fill has deleted the per-weapon pacing
+difference and left an upgrade with no job), and **§13.1–13.2** (two room-authoring rules discovered
+by building the first Combat Room, which constrain the other 17 layouts and are written in no design
+doc — take these before the next room is drawn, not after).
 
-**Last refreshed** 2026-08-15, when the Rising Hazard was cut (§12). Before that, 2026-08-14, when the
-designer's session changelog was applied to `Design/` (§11).
+**Last refreshed** 2026-08-15, when the Dig-Dash, enemy spawn telegraphs and the first real environment
+art landed (§14) — notable for how *little* had to be invented, since BALANCE §1–2 and ART_DIRECTION §3
+already specified the dash almost completely. Before that, the same day, the first Combat Room (§13) and
+the Rising Hazard cut (§12). Before that, 2026-08-14, when the designer's session changelog was applied
+to `Design/` (§11).
 The refresh before that followed the Biome 1 enemy roster and staged combat pass: §7g–§7n and §10 were
 added then, and §7b and §7c were **corrected** — they previously described a 3-hit chain and a gauge
 matching BALANCE §4, and both statements were wrong.
@@ -481,3 +486,712 @@ flood-zone data every Flooded Tunnels room needed, scorched-ground volumes, the 
 With no clock, a floor is 3–5 rooms at 30–60s each — 90–300s — across 16 floors, so **24–80 minutes of
 pure combat** against a stated 30–60 minute session target, before detours. The hazard used to be what
 capped this. Worth checking early, because it argues for fewer rooms per floor, not more.
+
+---
+
+## 13. The first Combat Room is built — and most of its specifics were invented (2026-08-15)
+
+**Owner-directed.** The first room type is built and playable in `TestScene`:
+`Prefabs/Rooms/CombatRoom_UpperCaves_01.prefab`, driven by `Scripts/Rooms/` (`CombatRoom`,
+`WaveSpawner`, `RoomDoor`, `RoomEntry`).
+
+**The docs specify a Combat Room's *intent* precisely and its *geometry* not at all.** CORE_SYSTEMS §8
+gives the whole rule as one line — "Combat Rooms lock entry/exit doors until all spawned enemies are
+defeated" — and LEVEL_DESIGN §2–4 adds positioning-zone and spawn-placement intent. Between them they
+never state a room's dimensions, how a room is *entered*, what a door is or does, how many enemies a
+room holds, or what it is composed of. All of that had to be decided to build one, and none of it
+belongs in `Design/` until you have ruled on it.
+
+### Owner's decisions this session
+
+| | Ruling |
+|---|---|
+| Room lock | **Trigger on entry** — Armed → she crosses the room's half-way line → both doors shut and the wave spawns → Fighting → last enemy dies → Cleared |
+| The fight | **One wave of six**: 3× Cave Crawler + 2× Rock Slinger + 1× Tunnel Brute = **150 enemy HP** |
+| Cracked tiles | **Deferred.** The layout reserves a 2×2 zone; the micro-system is not built |
+| Door art | Flat-colour placeholder, not routed through the `deeper-art` skill |
+
+### Invented numbers — no design doc specifies any of these
+
+All are serialized with `[Tooltip]`s saying so, retunable without a recompile (Design Rule 8).
+
+| | Value |
+|---|---|
+| Room footprint | 28×16, 1-tile wall ring (inherited from the existing test room, which is engineering precedent, not design) |
+| Door gaps | 2 tiles tall × 1 wide, at `y = 7,8` on both side walls |
+| Door sprite | 32×64, 32 PPU; doors open and close **instantly**, no tween |
+| Entry volume | 2×14, spanning `x = 13–14` over the room's full interior height |
+| Enemy composition | 3 Crawler + 2 Slinger + 1 Brute |
+| `nextWaveAtRemaining` | **1** — §8 says "~1 remaining"; the exact 1 is engineering's |
+| Inter-group spawn stagger | **0 s** — a whole wave appears on one frame |
+| Player walk-in position | `(4.5, 8.5)`, 8.5 units west of the lock line ≈ 1.7 s of approach |
+| Six spawn points | `(8.5,12.5) (8.5,3.5) (19.5,8.5) (22.5,13.5) (22.5,2.5) (2.5,8.5)` |
+| Six interior posts | tiles `(7,6) (7,10) (20,4) (20,11) (23,6) (23,10)` |
+| Cracked-tile reserve | 2×2 at tiles `(17–18, 11–12)` |
+
+**BALANCE §8's 30–60 s clear target is still unverified.** Six enemies at 150 HP against the Katana is
+an estimate; whether it actually plays at 30–60 s needs a human at a focused Game view.
+
+### Divergences that are design decisions, not just numbers — these need confirming or overruling
+
+1. **Spawn points are not at the room edges, and cannot be.** LEVEL_DESIGN §4 asks for "spawn points
+   at room edges, out of the player's immediate melee range at trigger time". Enemy aggro radii are
+   **10** (Cave Crawler) and **12** (Slinger, Brute), and `EnemyTarget.Acquired` gates *all* movement
+   and attacking — so in a 28-wide room a spawn on the literal far wall is 15–23 units from the lock
+   line and **stands completely still until the player walks to it.** The six points instead sit
+   6.0–11.2 units from the lock line, each inside the aggro radius of the enemy assigned to it. §4's
+   intent (a beat to react, out of melee range) is preserved; its letter is not. Either the rule needs
+   rewording, or aggro radii need to scale with room size.
+
+   > **Superseded 2026-08-16 by a third option the owner chose — see §19.2.** Neither the rule nor the
+   > radii changed. `WaveSpawner` now picks, per spawn, the authored marker **farthest from the player
+   > that is still inside that enemy's aggro radius**, so markers can be authored at the edges as §4
+   > asks without any of them becoming a dead drop. §4's letter is now *partly* satisfied — the
+   > markers may sit at the edges; whether one is used still depends on where she is standing. The
+   > hand-tuned inward placement described above is no longer required of a layout, and room 01's
+   > markers are now chosen dynamically rather than by their authored order.
+2. **Interior cover must be isolated convex posts, because there is no pathfinding.** `EnemyChase` is
+   straight-line steering with a stop/retreat band. Any concave pocket or narrow slot is a permanent
+   enemy trap, and a trapped enemy means a room that never unlocks. This is a hard constraint on every
+   one of the 18 Combat Room layouts still to be authored, and it is not written anywhere in
+   LEVEL_DESIGN — it should be, before the other 17 are drawn.
+3. **`IsWaveRoom` is derived, not a stored flag.** §8 names it `IsWaveRoom = true`. It is implemented
+   as `WaveCount > 1`, because a bool sitting beside the wave array is a second source of truth that
+   can contradict it. Flagging a room is authoring a second wave. Same feature, no boolean to keep in
+   sync.
+4. **The room unlocks on the killing blow, not when the bodies are gone.** `EnemyDeath` holds a corpse
+   0.45 s for its death animation, so for about half a second the doors are open with enemies still
+   visibly falling over. This is deliberate — the alternative is a half-second of standing at an open
+   door that has not opened yet — but it will look like a bug to anyone who has not been told.
+5. **The entry volume listens on trigger-*stay* as well as trigger-enter**, so re-arming the room while
+   the player is standing on the line restarts the fight rather than leaving the room armed forever.
+6. **Enemies spawned by the test harness (F6–F9) are never counted by the room.** Killing them does not
+   unlock the doors. Correct — they are not the room's encounter — but worth knowing while testing.
+7. **The room ships short of LEVEL_DESIGN §3 in two ways.** It has **no cracked tiles** (§3 wants 2–4
+   per Upper Caves Combat Room; the micro-system does not exist) and **no breakable-wall Dig-Dash
+   shortcut** (§3 wants at least one per biome; Dig-Dash does not exist). The layout reserves space for
+   the first. Neither is a divergence so much as an outstanding dependency, but the room is not §3-
+   compliant until both land.
+
+### One engineering note with a design consequence
+
+A new physics layer, **8 `RoomTrigger`**, was added for the entry volume. On the Default layer the
+volume would have silently destroyed every Rock Slinger projectile crossing the middle of the room —
+`ThrownRock` despawns on entering anything in its blocking mask, and Default is that mask. Demonstrated
+both ways before shipping. It matters to design only in that **any future room-scoped trigger volume
+(Trapped Soul interactables, Secret Vault doors, geyser warning zones) must use this layer, not
+Default.**
+
+### Still outstanding from §10, and now louder
+
+The room can kill the player and there is still **no player death or run-end** — she sits at 0 HP
+inside a locked room with no way out, because the doors only open when the enemies are dead. That was
+survivable in an open sandbox; a room that locks makes it a dead end in the literal sense.
+
+---
+
+## 14. Dig-Dash, spawn VFX and the first real environment art (2026-08-15)
+
+**Owner-directed.** The Dig-Dash is built, enemies now telegraph before they arrive, and the first
+non-placeholder environment art exists. This closes the largest locked-but-unbuilt mechanic in the
+project: BALANCE's preamble says mitigation is *"exclusively Dig-Dash i-frames, Hyper Armor, Iron Skin
+and Second Skin"*, and until now none of those existed — the Combat Room locked the player in with six
+enemies and gave her no dodge.
+
+It also unblocks content that was previously unauthorable: **five of 23 shared upgrades** (Momentum,
+Quickstep, Long Dash, Phase Step, Blink Strike) and **one of six Hub Core Stats** (Dash Cooldown) are
+dash-gated.
+
+### What matched the locked design exactly
+
+Pleasingly little had to be invented. BALANCE §1's **1.2 s cooldown** and **3.0 unit distance** were
+already the serialized bases on `PlayerStats`, and are now read every dash rather than sitting unused.
+BALANCE §1's **0.25 s i-frames** and BALANCE §2's **"available for the full Recovery phase"** cancel
+window are both implemented as written. GDD §Controls' **LShift** is the bind. ART_DIRECTION §3's
+**4-frame, shared-across-weapons** Dig-Dash budget is exactly what was generated.
+
+### Invented — no design doc specifies these
+
+| | Value |
+|---|---|
+| Dash **duration** | **0.18 s** — BALANCE §1 gives a distance and a cooldown but never a duration |
+| Velocity curve | ease-out `2·d/t·(1−t)`, matching the attack lunge and the Brute's knockback |
+| Gamepad bind | `<Gamepad>/rightShoulder` — a stick-click dodge is unusable |
+| Trail afterimages | 5 images, 0.22 s fade, 0.45 start alpha, cool grey-violet tint |
+| Spawn telegraph delay | **0.5 s**, and its ground-decal sorting (Default layer, above the tilemaps) |
+
+### Divergences that need confirming or overruling
+
+1. **The dash and the post-hit hit-stun share one immunity clock.** `Damageable` gained
+   `GrantInvulnerability(float)`, which **extends but never shortens** `_invulnerableUntil`. One clock
+   means every damage source is covered for free — `ContactDamage`, `OverheadSlam`, `LungeAttack`,
+   `ThrownRock` all funnel through the single `TakeDamage` entry point, and none of them changed. The
+   consequence: the windows are semantically different (0.6 s post-hit vs 0.25 s dash) but share one
+   timestamp, so **a dash taken during a post-hit window inherits the longer one.** The alternative —
+   a dash-owned flag — would require every damage source to ask the dash first.
+2. **Phase Step has nowhere to live.** BALANCE §9 prices it at *"+0.1 s i-frame duration"*, but there
+   is no `StatType` for i-frames and `DashCooldown`/`DashDistance` both have one. It ships as a
+   serialized field on the dash component; when that upgrade is authored it needs either an appended
+   `DashIFrames` stat or a direct write. Flagged rather than scaffolded.
+3. **An enemy spawn telegraph is new scope and uses the reserved accent.** ART_DIRECTION §6's MVP VFX
+   list is hit-flash, gauge pulse, environmental telegraphs, Dig-Dash trail and the upgrade/curse
+   flashes — **there is no spawn effect on it.** And per the owner's ruling it uses §2's reserved
+   orange-red, on the reading that "an enemy is about to exist here" is the same class of information
+   as an enemy attack tell. That widens what §2's reservation covers. Both are designer calls.
+4. **The wave now takes 0.5 s to arrive.** The doors shut, the marks play, then the enemies appear.
+   This changes encounter timing against BALANCE §8's 30–60 s target by half a second per wave.
+
+### Housekeeping done in the same pass
+
+- `Sprint` (Unity template leftover, on LShift, read by no code) was **renamed to `Dash`**, keeping
+  its binding and GUID.
+- The dead template actions **`Jump`, `Crouch`, `Previous`, `Next` were deleted** — nothing read any
+  of them, and the Player map is shipped content that the rebinding UI will read from.
+- **A real pre-existing bug fixed:** `<Gamepad>/buttonNorth` was bound to *both* `Interact` and
+  `HeavyStrike`, so both fired on one press. `Interact` moved to `buttonSouth`. The map now has zero
+  duplicate binding paths.
+- **Doc bug, worth correcting in the designer's own pass:** `AttackStateMachine.cs`,
+  `CharacterPose.cs` and this brief's §7b all cite **"ART_DIRECTION §46"** for the
+  chain-replays-base-animation rule. ART_DIRECTION has §0–§6; the rule is in **§3**.
+
+### The environment-art finding, which is the one worth acting on
+
+`.claude/skills/deeper-art` Phase 0 requires a **style anchor** — one approved canonical asset that
+every later generation references — and it has never been done. It did not matter while all art was
+character art, because `create_character`/`animate_character` anchor to an existing character and hold
+style perfectly: the dash frames came back indistinguishable from the shipped idle, first try.
+
+**The freeform generators have no such anchor, and it shows.** Two environment generations were
+rejected outright before one passed:
+
+- The first tileset returned a **pale cyan-white** wall — which §2 reserves cross-biome as the
+  *Flooded Tunnels hazard accent* — over an orange crosshatch floor, with a uniform dark outline and
+  no upper-left light. A direct violation of the locked readability rule.
+- The spawn-VFX burst ignored `no_background` entirely (all 2304 pixels opaque) and came back navy
+  and purple.
+
+Restating the palette far more explicitly, and raising prompt adherence, fixed the *colour* on the
+second tileset — it is now correctly cool grey with warm olive-brown veins, no blue, no cyan. It did
+not fix the *form*: the floor reads as tidy dungeon cobblestone rather than a mine, and the wall reads
+as a raised kerb rather than rock.
+
+**The recommendation is to do Phase 0 properly before any more environment art** — generate and
+approve one canonical Upper Caves tile, then pass it as the colour/init reference for everything else,
+the way the character tools already do implicitly. ART_DIRECTION also has no tile budget at all
+(§Open Items: *"Tileset count per biome"*), and no lighting section — the fixed upper-left key light
+every asset is drawn to is recorded only in code comments, and one of them cites a §2 that does not
+state it.
+
+---
+
+## 15. The in-run HUD is built, with real art (2026-08-15)
+
+**Owner-directed.** ART_DIRECTION §5's HUD now exists as shipped UI rather than the debug text of the
+test overlay: HP top-left, XP bar + level badge top-right, Ultimate Gauge and weapon icon
+bottom-centre, plus the wave indicator and a depth readout. `UltimateGaugeHUD`'s own doc comment said
+it *"will be replaced wholesale by the real UI art pass (ART_DIRECTION §5)"* — this is that pass, and
+it is kept rather than replaced because it already owns §6's must-have Ultimate full-pulse.
+
+### Every GDD §UI element, and what it is actually driven by
+
+| GDD §UI element | Status |
+|---|---|
+| HP bar | **Real** — `Damageable` |
+| Equipped weapon icon | **Real** — `RunLoadout.Weapon.Icon` |
+| Ultimate Gauge | **Real** — `UltimateGauge`, keeps its full-pulse |
+| XP bar + current level | **Real, but its source is new** — see below |
+| Wave indicator, "only inside Wave Rooms" | **Real** — `CombatRoom.IsWaveRoom`, hidden outside one |
+| Current floor / depth indicator | **No source at all** — the number is authored, not measured |
+| Whisper Layer line area | **Not built.** ART_DIRECTION §5 still describes no visual for it (§11 records this); inventing one is design, not translation |
+| ~~Heavy Strike cooldown icon~~ | Correctly absent — GDD §UI says "DECIDED: no Heavy Strike cooldown icon" |
+
+### Things that needed inventing, or that are new scope
+
+1. **A Dig-Dash pip is on the HUD and is in no design doc.** GDD §UI's list does not include one. It
+   is there because the dash is the player's entire defensive option, its cooldown is a **Hub Core
+   Stat**, and **two run upgrades** modify it — a resource the player is asked to invest in has to be
+   visible. Drawn as a radial cooldown wipe rather than a fourth bar, so it does not read as another
+   filling resource next to the gauge.
+2. **XP now exists as a system, minimally.** CORE_SYSTEMS §12 defines XP and levelling; nothing
+   implemented it, so an XP bar would have been decoration. `PlayerXP` accumulates and levels;
+   `XPReward` on an enemy credits on death. **The level curve is invented** — BALANCE §16 is titled
+   "XP Curve (open)" and gives nothing — and so are the per-enemy values, which §16 also records as
+   unresolved. The level-up **upgrade offer is Milestone 4 and is not built**: `LeveledUp` fires and
+   nothing listens.
+3. **XP is credited directly, not dropped as orbs.** BALANCE §9's "Insight Magnet" prices an *orb
+   pull radius*, so the design clearly intends a physical pickup. Orbs need a spawnable, a magnet and
+   a collection radius; this credits on the killing blow so the bar has a real source now, and it is
+   the half that gets replaced when orbs are built.
+4. **The HP bar is crimson, deliberately not the reserved orange-red.** ART_DIRECTION §2's
+   reservation explicitly covers UI chrome, and a health bar sharing a colour with hazard telegraphs
+   is exactly the confusion the rule prevents. Worth confirming the crimson is far enough away.
+5. **The HUD art is finer-grained than the world art.** The generated pieces are native 448×129-class
+   pixel art; the world is 32×48 sprites at 32 PPU. Drawn 1:1 on a 1920×1080 reference canvas the HUD
+   is crisp and internally consistent, but it does not share a pixel scale with the game it sits over.
+   That is a legitimate style choice and a common one, but it is a choice — and the style guide's
+   "one art pixel = one screen pixel" rule does not settle it either way. **Needs an eyeball pass.**
+6. **`StatType.OreGain` is the XP Gain stat.** The docs renamed Ore → XP (§11) but the enum value and
+   the serialized field were left alone, because renaming a serialized field silently drops its
+   authored value. `PlayerXP` uses it as the XP multiplier. The rename is still owed.
+
+### One thing that only showed up by looking
+
+The generated frames ship with a **filled** stone interior, so a fill drawn under them is invisible and
+a fill drawn over them hides the rivets and leather banding that make the frame worth having. The fix
+was knocking the interior panel out to transparency so the fill reads *through* the frame — which is
+how a framed bar is supposed to work, and which no assertion would ever have caught. Every bar frame
+in `Art/UI/` is hollowed; a future one must be too.
+
+---
+
+## 16. §14 and §15 are now actually running — and what that changed (2026-08-15)
+
+**Owner-directed.** The Dig-Dash pass (§14) and the HUD pass (§15) were both written with the Unity
+connection down: no compile, no prefab wiring, no play mode. Both are now imported, wired and verified
+in the editor. Everything below is what running them changed or exposed; the engineering plan carries
+the bug fixes.
+
+### The one with a design consequence
+
+**BALANCE §1's 3.0-unit dash was not the distance the game moved her.** The dash covered **13.2 units**
+under a normal frame hitch and the overshoot scaled with frame rate — it was a timing defect, not a
+tuning one, and it is fixed (`DigDash` now ticks on the physics clock). It matters here because the
+number in BALANCE was never what the game did, so **the dash has never actually been felt at its
+authored distance.** 3.0 units is now what it travels, and it should be re-judged on that basis before
+anyone retunes it.
+
+### Invented — no design doc specifies these
+
+1. **Per-enemy XP drops: Cave Crawler 4, Rock Slinger 3, Tunnel Brute 12, Deep Warden 20.** §15 left
+   these unset, which would have made an Elite worth the same as a trash mob. They are derived as
+   **`maxHealth / 5`** rather than picked individually, so the rule is inspectable and retunes as one
+   number if BALANCE §16 ever lands. A full six-enemy wave pays 30 XP against a 10 XP first level.
+
+### Confirmations and narrowings of things already recorded
+
+2. **§14's spawn-marker colour divergence stands, and is in the art rather than the tint.**
+   `SpawnBurst.png` already carries ART_DIRECTION §2's reserved orange-red in its own pixels, so
+   `SpawnTelegraph.tint` is set to **white** — multiplying by orange turned the dark ground fissures
+   muddy brown and flattened the glowing core into a red blob. The question for the designer is
+   unchanged: may a *spawn* marker use the reserved hazard accent, which §2 reserves for attack and
+   environmental telegraphs?
+3. **§15.5's pixel-density question now has a picture behind it, and still needs the owner.** Drawn at
+   the 1920×1080 reference the HUD is crisp and 1:1. It only degrades when the window is smaller,
+   where `CanvasScaler` resamples point-filtered art — in the current collapsed Game view it renders
+   at 45% and softens. So: correct at the reference resolution, and the open question is whether the
+   game should letterbox to preserve it or accept the resampling at other sizes.
+4. **The Upper Caves Wang tileset is rejected, not deferred.** §14 shipped it as a candidate. Looked
+   at on its grid, its stone/moss edge runs **cross the 32×32 cell boundaries instead of sitting
+   inside them**, so it is not a valid 16-tile Wang set and a `RuleTile` built from it would seam at
+   every join. Its olive-green also sits outside the cool grey-purple the built rooms use. It stays
+   unreferenced. §14's finding — *do the `deeper-art` Phase 0 anchor pass before any more environment
+   art* — is the thing that prevents the next one.
+
+### New scope, owner-directed: the run's upgrade strip
+
+The HUD now carries a faint column of the upgrades the run is holding, down the left edge under the
+health bar. **GDD §UI lists no such element** — ART_DIRECTION §5 covers the upgrade *offer* screen and
+its rarity colour coding, but nothing in-run. It is here because a roguelike run is defined by its
+picks and the player currently has no way to check what they took. It reuses §5's card colours
+(Common white/grey, Rare blue, Epic purple, Legendary gold) so a tier reads the same in the strip as
+on the card it came from, and it is deliberately drawn faint — it is a reference you consult, not a
+readout you track.
+
+Two consequences the designer should know about:
+
+1. **`RunUpgrades` and `UpgradeDefinition` now exist, but the pool does not.** CORE_SYSTEMS §9's
+   weighted draw, the three-card offer, the Curse slot and the Evolution milestones are all still
+   Milestone 4. What was built is the seam they attach to, so the strip shows something real — the
+   same call `PlayerXP` made for the XP bar.
+2. **Only the Common tier of BALANCE §9's shared pool is expressible today.** Seven entries
+   (Vitality, Iron Skin, Heavy Hands, Fleet Foot, Quickstep, Long Dash, Quick Study) are pure stat
+   changes and are authored at §9's exact values. **Every Rare and Epic in that pool is behavioural**
+   — Thorns reflects damage, Executioner scales by target health, Explosive Finish detonates on a
+   kill — and none of them can be a stat modifier. They need damage-pipeline hooks. Nothing is being
+   asked of the designer here; it is a note that the pool's *content* is gated on engineering work
+   the design already implies (CORE_SYSTEMS §5's `source` decision), not on more authoring.
+
+### Weapon icons were never icons
+
+`WeaponDefinition.icon` and `bodyLayer` pointed at the **same sprite** — a frame of the character's
+weapon paper-doll layer, which draws the weapon in the pose and arm position she holds it in. At HUD
+icon size that reads as a small figure rather than as a weapon. Katana, Bow and Greatsword now have
+standalone item icons. No design doc specified either behaviour; recorded because "the weapon icon"
+in GDD §UI turns out to be a separate art requirement from the weapon's character layer, and the
+other two weapons will need the same split when they are built.
+
+### The player-death hole, now with a cost attached
+
+§13 and the engineering plan both record that `Damageable.Died` has no subscriber on the player. This
+pass is the first time that was watched happening: she reaches 0 HP, **keeps her collider, and gets
+shoved around the room by the enemies still hitting her** — 13 units in a few seconds — with no death
+state, no run end and no way out of a locked room. It is not a new divergence, but it is no longer
+theoretical, and it is the most visible unfinished thing in the build.
+
+---
+
+## 17. Two new player moves and a dash that goes where you point it (owner, 2026-08-16)
+
+Five owner-directed changes this pass. Two are cosmetic and need no design attention (a new dash
+icon; the dash HUD slot reverted from a circle to the square that matches the weapon slot beside
+it). The other three change what the player can do, and all three want a designer's ruling.
+
+### 17a. The Dig-Dash now travels along the movement keys, not the facing
+
+GDD §Player: *"Dig-Dash — short dash in facing direction."* It now dashes along the **movement
+input**, falling back to facing only when no direction is held.
+
+This is not a contradiction of the intent so much as a casualty of a change made after that line was
+written. When the GDD was locked, facing *was* the movement direction. Mouse aim (owner-directed,
+Children-of-Morta style, recorded earlier) moved facing onto the cursor — so "dash in facing
+direction" silently became "dash at the cursor", and holding S to back away from something and
+pressing dash threw her **into** it. Reading the movement keys restores what the original line
+meant.
+
+Consequence a designer should confirm: she can now dash sideways and backwards while still facing
+the cursor, which is a genuinely larger defensive vocabulary than a forward-only dash. BALANCE §1's
+3.0 units and 1.2s cooldown were priced against the smaller one.
+
+### 17b. NEW MOVE — the Dash Attack
+
+**In no design doc.** A Basic Attack pressed during a Dig-Dash, or within 0.35s of it landing,
+comes out as a unique fourth weapon action instead of the ordinary Basic: its own animation, its own
+timing row, a longer lunge, and slightly more damage.
+
+Note the name collision, which is worth fixing in whichever doc adopts this: CORE_SYSTEMS §2's
+**Dash-Attack Cancel** is the opposite move (a dash cancelling an attack's Recovery). Both now
+exist and they are not related.
+
+What this changes at the design level:
+
+- The Dig-Dash stops being purely defensive. GDD §Combat and BALANCE's preamble both frame it as
+  the game's *only* mitigation tool; it is now also an approach, which makes spending it offensively
+  a real decision rather than a mistake.
+- It is a fourth entry in a kit the GDD describes as three actions ("basic attack, Heavy Strike,
+  Ultimate"), and GDD §Player calls the weapon "the single build-defining choice" that "fully
+  determines the player's kit". A fourth action per weapon is a scope increase across all three.
+- **Invented numbers**, none of which BALANCE §2 has a row for: 0.06 windup / 0.10 active / 0.20
+  recovery / 12 damage, a 1.4-unit lunge (the longest of the four), and the 0.35s follow-up window.
+  It fills the Ultimate Gauge at the Basic rate rather than getting a third column in BALANCE §4's
+  table — that felt like a design decision to make in a lookup, so it was not made.
+
+### 17c. NEW MECHANIC — the Heavy Strike charges
+
+**Conflicts with a locked signature trait.** Holding RClick now charges the Heavy Strike; releasing
+scales its damage (×2.2 at full), its hitbox radius (×1.35) and its lunge, hitstop and camera shake
+(×1.6). Full charge is a 0.9s hold.
+
+The conflict is GDD §Player and CORE_SYSTEMS §5b: **"hold to charge" is the Bow's signature trait**,
+on its Basic Attack — *"Signature trait: Charge Shot — hold attack to charge bonus damage/pierce,
+or release early for a fast weak shot."* Giving every weapon a charged Heavy weakens the thing that
+was supposed to make the Bow feel different. This needs a designer's call, and there are at least
+three defensible answers: the Bow's charge stays distinct because it is on a *different button and a
+different action*; or the Bow's trait is re-cast as something else; or charging is Katana-only.
+
+**The code is already built for whichever answer wins.** Chargeability is `ChargeSpec` data on
+`WeaponDefinition`, not a rule in the state machine, so switching it off per weapon is a checkbox on
+an asset. It currently defaults **on for all three**, which is the state that needs confirming or
+overruling.
+
+Things it does *not* break:
+
+- GDD §UI's *"DECIDED: no Heavy Strike cooldown icon. Heavy Strike has no cooldown anywhere"*
+  survives — a charge is a hold, not a cooldown, and nothing was added to the HUD.
+- CORE_SYSTEMS §5b's own model of charging is followed rather than invented: holding *extends the
+  Windup phase*. The authored 0.30s Windup lerps down to 0.07s as the charge fills, so a full charge
+  comes out fast instead of charging up and then winding up. At zero charge the action is BALANCE
+  §2's Heavy Strike untouched, which is what makes a tapped RClick still exactly the documented move.
+
+**Invented numbers**, none in BALANCE: everything in the first paragraph above, plus a 0.45×
+movement speed while charging and a 0.6 charge threshold before the charged animation plays.
+
+One deliberate feel decision worth flagging: **she can still walk and still aim while charging.**
+Rooting her for up to a second inside a room that locks six enemies in with her would make holding
+the button a punishment. It also means a charge is not a commitment, so the Dash-Attack Cancel was
+extended to let a dash break out of one.
+
+### 17d. Three more animation states than ART_DIRECTION §3 budgets
+
+§3's player table lists Idle, Move, Basic, Heavy, Ultimate, Dig-Dash, Hit-taken and Death. This pass
+adds **Dash Attack**, **Heavy Charge** (the held pose) and **Heavy Charged** (the released swing) —
+5 authored directions each, at 5 frames, on the Katana. §3 says exceeding the budget "needs a scope
+conversation per DESIGN_RULES.md", so this is that flag. Priced across all three weapons it is 45
+frames of new weapon-unique animation on top of the 57 §3 already counts.
+
+Two mitigations are already in the code. Every new state falls back to an older sibling clip when a
+weapon has no art for it (Dash Attack → Basic, both charge states → Heavy Strike), which is
+ART_DIRECTION §3's own rule for Heavy chain extensions applied more widely — so the Bow and
+Greatsword can ship these moves with **zero** new frames if the budget conversation goes that way.
+And the charge hold is one looping clip rather than a clip per charge level.
+
+### 17e. Where these need to land
+
+Adding to §9's list of documents that need editing:
+
+- **GDD** — §Player's dash line ("facing direction"), the kit description if the Dash Attack is
+  kept, and the Bow's signature trait if the Heavy charge is kept.
+- **CORE_SYSTEMS** — §1's action list, §2's Dash-Attack Cancel section (the name collision), §5b
+  (charging is no longer Bow-only).
+- **BALANCE** — §2's timing table needs a Dash Attack row and a charge row per weapon; §4's gauge
+  table needs a decision on whether the Dash Attack gets its own fill rate.
+- **ART_DIRECTION** — §3's animation budget, per 17d.
+
+---
+
+## 18. The HUD is restyled as pixel art (owner, 2026-08-16)
+
+**Owner-directed:** *"Look at HUD. It's too simple for pixel game."*
+
+Worth reading together with §15 and §16, because this reverses the *look* of an earlier owner note
+without reversing the decision behind it. When the generated kit was called "too much", the problem
+was **size** — a 448×129 health bar across a fifth of the screen. The fix stripped every frame to a
+four-pixel band of one flat grey, which solved the size and overshot into a wireframe. This pass
+keeps every footprint from that correction and puts the craft back as *material*: a real bevel, an
+inverted bevel around each channel so bars read as cut into the plate, riveted end caps, segment
+ticks on HP, shaded fills, and a bitmap font. Nothing on screen is larger than it was.
+
+Most of this is engineering finish and needs nothing from the designer. Five things do.
+
+### 18a. The HUD has a typeface now, and no doc has ever mentioned typography
+
+`ART_DIRECTION` §5 specifies the HUD's *arrangement* (HP top-left, gauge and weapon bottom-centre,
+XP and level top-right) and §1–§4 budget sprites, animation and tilesets. **Nothing anywhere
+specifies text.** Until now every label used Unity's built-in `LegacyRuntime.ttf` — an anti-aliased
+vector face, which was the loudest remaining "this is not a pixel game" element once the frames were
+fixed.
+
+There is now a shipped 5×7 bitmap face (`Art/UI/HUD_Font.png` + `.fontsettings`, 51 authored glyphs,
+uppercase only with lowercase aliased onto the same cells). Two questions follow:
+
+1. **Does it own the other two screens?** §5 also covers the Upgrade Screen and the Hub Screen, and
+   §0 flags an entire unbudgeted narrative UI (dialogue, the Whisper Layer's line treatment, the
+   Codex). A HUD face that does not extend to those leaves the game with two typographic styles.
+2. **Uppercase-only is a design constraint, not just an art one.** Any narrative text — which is
+   sentence case by nature — cannot use this face as authored.
+
+### 18b. The HP bar has a third colour on it, and it is new feedback
+
+A **chase bar** now sits behind the health fill: it holds where the fill was, waits ~0.35s, then
+drains down to it, so a hit reads as a *block* whose size is the damage taken. No design doc
+describes this; it is here because the fill alone tells you where you are and not what just
+happened.
+
+It is drawn in a muted rose (`0.69, 0.52, 0.54`) — deliberately **not** the orange-red `ART_DIRECTION`
+§2 reserves for Upper Caves danger telegraphs, on the same reasoning §15 recorded for the health
+colour itself. The designer's call: is a damage-feedback element on the HP bar one of the things
+that reservation is protecting, or one of the things it should cover?
+
+### 18c. HP is drawn in 8 segments, and no balance number backs that 8
+
+The health bar carries seven dividers cutting it into eighths. That is a readability choice made in
+the art, but a segmented bar makes an implicit claim — that a segment is a meaningful unit. `BALANCE`
+gives no HP figure that divides into 8 cleanly, and enemy damage values are not priced against
+"one segment". Either the count should follow a real number (max HP, or the biggest single hit in
+the biome) or the segments should be understood as pure decoration. **Currently they are decoration.**
+
+### 18d. Two small readouts changed shape
+
+- **The level badge shows the number alone**, not "LV 7". The hexagon is the thing that says
+  "level" — it is the one shape in the HUD that is neither a bar nor a slot — and at the pixel
+  font's fixed advance "LV 12" runs straight through the badge's walls.
+- **The wave indicator sits on a translucent plaque.** GDD §UI lists the indicator and §5 says
+  *"shown only inside Wave Rooms"*; neither describes a background. It is translucent rather than
+  solid because it sits over the middle of the play area during a fight.
+
+### 18e. §15.5's pixel-density question now has a second layer
+
+§15.5 asked whether the HUD and the world should share a pixel scale (they do not — HUD art is 1:1
+at the 1920×1080 reference, world sprites are 32×48 at 32 PPU). The font adds a third scale: it is
+authored at 5×7 and packed at **2×**, so HUD *text* has a 2px grid where HUD *chrome* has a 1px one.
+This was deliberate — a 7px face is unreadable at 1080p, and packing at 2× makes 14 the font's
+native size so nothing is ever resampled — but it means one HUD now contains two pixel grids, and
+that is a style call rather than an engineering one. It is visible: the letters are chunkier than
+the frames around them.
+
+### 18f. RESOLVED — §15.5's pixel-density question, at least for the HUD's own scaling
+
+§15.5 and §16.3 left this open: *"correct at the reference resolution, and the open question is
+whether the game should letterbox to preserve it or accept the resampling at other sizes."* The
+restyle forced an answer, because the answer turned out not to be a preference.
+
+The owner's first look at the new HUD was **"it's the same UI, what is changed?"** — and that was an
+accurate report. The canvas was on `ScaleWithScreenSize`, which produces a *fractional* factor at any
+window that is not exactly 1920×1080; in the editor's Game view that was **0.45**. At that factor
+every detail in the restyle is smaller than the resampling error. The 1px bevel, the rivets and the
+bars' segment ticks all disappear, and the bitmap font renders `74 / 128` as `r4 / 128` — the 7 loses
+its top stroke. The HUD came out as flat untextured bars, which is precisely the look the pass was
+commissioned to replace.
+
+**So "accept the resampling at other sizes" is not a viable option and is off the table.** The HUD
+canvas is now pinned to whole-number scaling (`PixelPerfectHUDScale`): factor 1 at and just above the
+reference height, 2 at 2160, and never below 1. Letterboxing is no longer required to keep the HUD
+sharp — it is sharp at every window size.
+
+The first attempt at this got the size wrong and the owner caught it — *"you made UI bigger in low
+resolutions"*. Pinning the factor to a whole number while the art was still authored 1:1 forced that
+factor to **1** at every window below 1080, so the health bar spanned a third of a 906px view instead
+of a sixth. **The chrome is now authored at half its on-screen size**, which makes the normal factor
+at 1080p **2**: identical on screen at the design target, half the footprint on a small window, and
+sharp at both. The font moved to 1× packing for the same reason, which incidentally closes the "two
+pixel grids" divergence §18e recorded — chrome and text now share one grid.
+
+Nothing is left open here for the designer. The remaining behaviour is inherent to whole-number
+scaling: between 1080 and 2160 the factor stays at 2, so on a 1440p display the HUD is proportionally
+a little smaller than at 1080p. The world camera is a separate concern and was not touched.
+
+---
+
+## 19. The Upper Caves Wave Room is authored, and spawn placement stopped being hand-tuned (2026-08-16)
+
+**Owner-directed.** `/implement-room-type Wave Room` resolved to a **layout** job, not a new room type:
+CORE_SYSTEMS §8 already calls a Wave Room "a variant flag on Combat Room prefabs, not a new room type",
+and the code already carried it — `WaveSpawner.waves` takes 2–3 batches, `nextWaveAtRemaining` is §8's
+"~1 remaining" threshold driven off `Damageable.Died`, and `CombatRoom.IsWaveRoom` is derived from the
+wave count. The engineering plan recorded that path as verified back in §13. What did not exist was an
+authored Wave Room. It does now: `WaveRoom_UpperCaves_02`, layout **2 of the 6** LEVEL_DESIGN §2 asks
+Upper Caves for, and the **1** flagged room MVP §55 caps the biome at for MVP.
+
+### 19.1 The encounter is invented, but derived rather than guessed
+
+BALANCE §8 gives Wave Rooms **60–100 s** against a standard room's 30–60 s and specifies nothing else —
+no composition, no batch sizes, no per-wave ramp. What was authored:
+
+| Wave | Composition | Total HP |
+|---|---|---|
+| 1 | 4× Cave Crawler | 80 |
+| 2 | 3× Cave Crawler, 2× Rock Slinger | 90 |
+| 3 | 1× Tunnel Brute, 2× Rock Slinger | 90 |
+| | **12 enemies** | **260** |
+
+The 260 is reasoned from room 01 rather than picked: that room is 150 HP against §8's 30–60 s, so 260
+is **1.73×** it, landing at roughly 52–104 s. That is a placeholder in the Design Rule 8 sense and the
+band is only as good as room 01's own untested timing — **whether either room actually clears in its
+target window still needs a human**, and that has now been outstanding since §13.
+
+Peak concurrency is **6** (one straggler plus a five-enemy batch) — deliberately the same density room
+01 already ships, so this does not widen ART_DIRECTION §105's open question about whether Wave Room
+enemy density needs a screen-clarity pass. It does not answer it either.
+
+**No Deep Warden.** §8 says Wave Rooms "only resequence existing per-biome enemies", and the Warden is
+an existing Upper Caves enemy — but it is the **Elite**, and CORE_SYSTEMS §8 ties the Elite to the
+`SecretKey` drop that gates Secret Floors. Putting one in a standard pool room would pre-empt an
+unbuilt system and quietly change what an Elite means. Excluded on that reading; **overrule this if the
+Elite is meant to appear in normal rooms too.**
+
+### 19.2 DECIDED — spawn placement is now chosen at runtime, which partly resolves §13.1
+
+§13.1 recorded that LEVEL_DESIGN §4's "spawn points at room edges" is unimplementable as written,
+because `EnemyTarget.Acquired` gates all movement on a 10–12 aggro radius and an edge spawn in a
+28-wide room simply stands still. It offered two resolutions: reword the rule, or scale the radii with
+room size. **The owner chose a third.** Neither the rule nor the radii moved. Instead `WaveSpawner`
+now picks, for each individual spawn, the authored marker **farthest from the player that is still
+inside that enemy's own aggro radius**, falling back to the old cycling order if nothing is in range.
+
+This matters far more in a Wave Room than a Combat Room, and that is why it surfaced now: waves 2 and 3
+arrive while the player is already mobile somewhere in a 32-wide room, so a fixed marker order that was
+tuned for someone standing on the lock line is wrong for two of the three batches.
+
+What this changes for design:
+
+- **Markers can now be authored at the room edges**, as §4 asks. The Wave Room has ten, spread to all
+  four corners. §4's *letter* is now satisfiable; whether a given edge marker is *used* depends on
+  where she is standing, which §4 does not describe either way.
+- **The rule §13.1 asked for is no longer needed as a layout constraint.** The replacement constraint
+  is weaker and geometric: *every floor tile should have at least one marker within 10 units*, so the
+  fallback never fires. Verified for this room — worst tile is 7.21 units from its nearest marker.
+- **Room 01's behaviour changed underneath it.** Its six markers are no longer consumed in authored
+  order. Its original pass asserted "6 spawned, one per marker"; that is now "6 spawned, each inside
+  its own aggro radius", and when she springs the room from an unusual position two enemies can share a
+  marker. Re-verified end to end; the room still locks, counts and unlocks identically.
+- **§13.2 is untouched and still binding** — no pathfinding, so interior cover must be isolated convex
+  posts. The new layout honours it: nine single-tile posts, minimum 4 tiles of clearance.
+
+### 19.3 Numbers with no design source, invented here
+
+| Thing | Value | Why |
+|---|---|---|
+| Room footprint | **32×18** (room 01 is 28×16) | LEVEL_DESIGN §4 says a Wave Room "needs larger open space"; it gives no size |
+| Interior posts | **9** — 2 west, 7 east | §2 wants "at least 2 viable positioning zones"; built as a *character* difference (open west hall for Bow kiting and Greatsword whiff-punish, east pillar field for cover) rather than just more floor |
+| Spawn markers | **10** | Enough that wave 1's four arrivals each get a distinct tile from the lock line — measured, not assumed: 5 markers are in range there at radius 10 |
+| Cracked-tile reserve | 2×2 at tiles (21–22, 10–11) | Same reservation room 01 makes; the micro-system still does not exist |
+| Door gaps | 2 tiles, west and east | Matches room 01 and LEVEL_DESIGN §1's linear left-to-right floors |
+
+### 19.4 The same two §3 gaps room 01 has
+
+No cracked tiles and no breakable-wall Dig-Dash shortcut, so this room is **not LEVEL_DESIGN §3
+compliant** either. §3 wants 2–4 cracked tiles per Upper Caves Combat Room and at least one breakable
+wall per biome. The cracked micro-system is still unbuilt; the breakable wall now *could* be built,
+since Dig-Dash exists as of §14, and no room has one.
+
+### 19.5 Not a design matter, but it removes a blocker the designer was told about
+
+§13 closed by noting `F12` was the last free function key. The sandbox now has a **test config HUD** —
+a toggled clickable panel holding every cheat and a room selector — so further harness work costs a
+button rather than a key. The room selector is explicitly **not** the floor loader: nothing sequences
+rooms, nothing draws from a bag, and `CombatRoom.Cleared` is still the untouched hook for that.
+
+### Still outstanding, and now louder again
+
+**There is still no player death or run-end.** §13 flagged this as a dead end in the literal sense for a
+room that locks you in. A three-wave room lengthens the exposure: she is now locked in for 12 enemies
+across three batches rather than 6 in one, with no death state and no way out at 0 HP.
+
+---
+
+## 20. DECIDED — charging a Heavy Strike now roots her (owner, 2026-08-16)
+
+**Owner-directed, and it reverses §17's reasoning rather than filling a gap.** When the chargeable
+Heavy Strike shipped, engineering chose to let her keep walking at **0.45×** through the hold, and
+wrote the argument into the code: *"rooting her for up to a second in a room that locks six enemies in
+with her turns a charged swing into a punishment."* The owner has overruled that. **A charge now costs
+position.** `chargeMoveScale` is **0**.
+
+No design doc specifies either behaviour. BALANCE and CORE_SYSTEMS do not describe a charged Heavy at
+all — the whole mechanic is §17's owner-directed addition — so this is not a divergence from locked
+design, it is a revision of an engineering decision that was recorded as one. Nothing in `Design/`
+needs to change; the Rule 14 pass that eventually writes up the charge should write up **this**
+version of it.
+
+### What actually changed
+
+One serialized number. `AttackStateMachine.MoveSpeedScale` already returned `chargeMoveScale` during
+`AttackPhase.Charging`, and `PlayerController` already multiplied her walk speed by it, so rooting her
+needed no new code — which is the payoff of that number having been a tunable rather than a constant.
+
+### What deliberately did NOT change, and why it matters to the feel
+
+- **She still aims through the charge.** `PlayerAim` reads `IsCommitted`, which stays false while
+  Charging, so the cursor keeps turning her. Aiming a charged swing while holding it is the reason to
+  hold it, and the owner asked for *movement*, not aim. **Say so if the intent was to freeze facing
+  too** — that is a second decision, not part of this one.
+- **She can still Dig-Dash out of a charge**, and this matters more now than it did: the dash is the
+  only way to leave the spot she is committed to. `DigDash.TryDash` cancels the charge outright.
+- **`Charging` is still not `IsCommitted`.** The rooting is a *speed of zero*, not a commitment.
+  Folding Charging into `IsCommitted` would have looked equivalent and been three bugs at once: it
+  freezes her aim, makes the charge undashable, and hands movement to `LungeVelocity`, whose ease-out
+  reads an `_elapsed` that is still zero during a hold and therefore reports **peak lunge speed for
+  the entire charge**.
+- **She decelerates into the root** rather than snapping still, because the controller smooths toward
+  the new target of zero over `decelerationTime`.
+
+### Verified in play mode
+
+Driven through the real input path with a virtual gamepad (`Move` = leftStick, `HeavyStrike` =
+buttonNorth), not by poking fields:
+
+| Case | Result |
+|---|---|
+| Stick held, no charge | walked **52 units**, velocity **5.00** |
+| Stick held, charging | displacement **0.0001 units**, velocity **0.0000**, `MoveSpeedScale` 0 |
+| During the charge | `IsCommitted` false (aim live, dash legal), `LungeVelocity` zero |
+| On release | swing fires, phase returns to Idle, lunge still carries her **1.92 units** |
+
+### The open question this reopens
+
+§17 recorded that charging takes the Bow's locked signature trait (CONTENT_DESIGN gives the Bow the
+charged shot). A rooted charge sharpens that: a rooted charged shot is much closer to the Bow's
+intended identity than a mobile one was, so the Katana now overlaps it harder. Still unresolved, still
+a designer call.
+
+**And the standing one:** whether a rooted second inside a locked room is survivable cannot be
+answered until there is a reason to fear dying in one — there is still **no player death or run-end**.

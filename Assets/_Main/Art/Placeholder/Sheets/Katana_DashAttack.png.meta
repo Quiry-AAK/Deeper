@@ -1,0 +1,888 @@
+fileFormatVersion: 2
+guid: d20511decbfd97444adec4b7e61595eb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2024918540564761360
+    second: Katana_DashAttack_0
+  - first:
+      213: 4898116043567167215
+    second: Katana_DashAttack_1
+  - first:
+      213: -2577009186314139592
+    second: Katana_DashAttack_2
+  - first:
+      213: -2460254405801336786
+    second: Katana_DashAttack_3
+  - first:
+      213: 8202269505527729841
+    second: Katana_DashAttack_4
+  - first:
+      213: 3639096769394126197
+    second: Katana_DashAttack_5
+  - first:
+      213: -4844121120306225403
+    second: Katana_DashAttack_6
+  - first:
+      213: 114936511709725267
+    second: Katana_DashAttack_7
+  - first:
+      213: 5687064653749242423
+    second: Katana_DashAttack_8
+  - first:
+      213: 5817026734663545292
+    second: Katana_DashAttack_9
+  - first:
+      213: 5125861619055457608
+    second: Katana_DashAttack_10
+  - first:
+      213: 8296357731849840032
+    second: Katana_DashAttack_11
+  - first:
+      213: -5538818342797508327
+    second: Katana_DashAttack_12
+  - first:
+      213: 170785067460256224
+    second: Katana_DashAttack_13
+  - first:
+      213: -8718670436356349480
+    second: Katana_DashAttack_14
+  - first:
+      213: -1289639554028203748
+    second: Katana_DashAttack_15
+  - first:
+      213: 6824943793376022212
+    second: Katana_DashAttack_16
+  - first:
+      213: 1244029619699872726
+    second: Katana_DashAttack_17
+  - first:
+      213: 3950090032313707633
+    second: Katana_DashAttack_18
+  - first:
+      213: -1223340489698438703
+    second: Katana_DashAttack_19
+  - first:
+      213: -5557609167153260668
+    second: Katana_DashAttack_20
+  - first:
+      213: 4569670889372092712
+    second: Katana_DashAttack_21
+  - first:
+      213: -4035186210597895100
+    second: Katana_DashAttack_22
+  - first:
+      213: -8047907579373911282
+    second: Katana_DashAttack_23
+  - first:
+      213: -3115146724421103003
+    second: Katana_DashAttack_24
+  - first:
+      213: 8505266208901813915
+    second: Katana_DashAttack_25
+  - first:
+      213: 4828053254171037525
+    second: Katana_DashAttack_26
+  - first:
+      213: 8421407009207234609
+    second: Katana_DashAttack_0_0
+  - first:
+      213: 7675725418262716724
+    second: Katana_DashAttack_0_1
+  - first:
+      213: 2780131162481675283
+    second: Katana_DashAttack_0_2
+  - first:
+      213: 3055309837696287189
+    second: Katana_DashAttack_0_3
+  - first:
+      213: -2742424467533996865
+    second: Katana_DashAttack_0_4
+  - first:
+      213: -5591958974546044225
+    second: Katana_DashAttack_1_0
+  - first:
+      213: 8247912985859782283
+    second: Katana_DashAttack_1_1
+  - first:
+      213: 5376044344087741778
+    second: Katana_DashAttack_1_2
+  - first:
+      213: 4651283201620454863
+    second: Katana_DashAttack_1_3
+  - first:
+      213: -7268621225958930290
+    second: Katana_DashAttack_1_4
+  - first:
+      213: -3477767199247043385
+    second: Katana_DashAttack_2_0
+  - first:
+      213: -7174254048458641495
+    second: Katana_DashAttack_2_1
+  - first:
+      213: 878013599131042112
+    second: Katana_DashAttack_2_2
+  - first:
+      213: 5604545873576384665
+    second: Katana_DashAttack_2_3
+  - first:
+      213: 116806136876127405
+    second: Katana_DashAttack_2_4
+  - first:
+      213: -1694367283321119341
+    second: Katana_DashAttack_3_0
+  - first:
+      213: 4224907714483669114
+    second: Katana_DashAttack_3_1
+  - first:
+      213: -7426646241512159147
+    second: Katana_DashAttack_3_2
+  - first:
+      213: -3883312701318488568
+    second: Katana_DashAttack_3_3
+  - first:
+      213: 3514576939998143968
+    second: Katana_DashAttack_3_4
+  - first:
+      213: -2704403963740405743
+    second: Katana_DashAttack_4_0
+  - first:
+      213: 7216996349190968012
+    second: Katana_DashAttack_4_1
+  - first:
+      213: -7980009124180963274
+    second: Katana_DashAttack_4_2
+  - first:
+      213: -2213541493331714902
+    second: Katana_DashAttack_4_3
+  - first:
+      213: -1102300355642004429
+    second: Katana_DashAttack_4_4
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Katana_DashAttack_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 392
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13038cc6e09ded470800000000000000
+      internalID: 8421407009207234609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_0_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 392
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4316cf4a997a58a60800000000000000
+      internalID: 7675725418262716724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_0_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 392
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31cc6b00092059620800000000000000
+      internalID: 2780131162481675283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_0_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 392
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d1c4a21c14a66a20800000000000000
+      internalID: 3055309837696287189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_0_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 392
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbcdb4d0a73f0f9d0800000000000000
+      internalID: -2742424467533996865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 294
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fba10aba0fe5562b0800000000000000
+      internalID: -5591958974546044225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_1_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 294
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b86f08c4929767270800000000000000
+      internalID: 8247912985859782283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_1_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 294
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2550912f8db8b9a40800000000000000
+      internalID: 5376044344087741778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_1_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 294
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcd2456ad6dac8040800000000000000
+      internalID: 4651283201620454863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_1_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 294
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e888adb718ba02b90800000000000000
+      internalID: -7268621225958930290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 196
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c4ff55882d7cbfc0800000000000000
+      internalID: -3477767199247043385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_2_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 196
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9afe63924fdef6c90800000000000000
+      internalID: -7174254048458641495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_2_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 196
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0410b2c67b45f2c00800000000000000
+      internalID: 878013599131042112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_2_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 196
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 998d6e127c857cd40800000000000000
+      internalID: 5604545873576384665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_2_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 196
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da45618009afe9100800000000000000
+      internalID: 116806136876127405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 98
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39dd996dee56c78e0800000000000000
+      internalID: -1694367283321119341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_3_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 98
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a784b9a8e23e1aa30800000000000000
+      internalID: 4224907714483669114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_3_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 98
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5588d2667904fe890800000000000000
+      internalID: -7426646241512159147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_3_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 98
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80e162e3ca3bb1ac0800000000000000
+      internalID: -3883312701318488568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_3_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 98
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e56e5c1b1946c030800000000000000
+      internalID: 3514576939998143968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 110481c6ce6087ad0800000000000000
+      internalID: -2704403963740405743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_4_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc291da31fbe72460800000000000000
+      internalID: 7216996349190968012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_4_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63051d04bff414190800000000000000
+      internalID: -7980009124180963274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_4_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 0
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aac106a5dbbe741e0800000000000000
+      internalID: -2213541493331714902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_DashAttack_4_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33ceb22baa7d3b0f0800000000000000
+      internalID: -1102300355642004429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Katana_DashAttack_0: -2024918540564761360
+      Katana_DashAttack_0_0: 8421407009207234609
+      Katana_DashAttack_0_1: 7675725418262716724
+      Katana_DashAttack_0_2: 2780131162481675283
+      Katana_DashAttack_0_3: 3055309837696287189
+      Katana_DashAttack_0_4: -2742424467533996865
+      Katana_DashAttack_1: 4898116043567167215
+      Katana_DashAttack_10: 5125861619055457608
+      Katana_DashAttack_11: 8296357731849840032
+      Katana_DashAttack_12: -5538818342797508327
+      Katana_DashAttack_13: 170785067460256224
+      Katana_DashAttack_14: -8718670436356349480
+      Katana_DashAttack_15: -1289639554028203748
+      Katana_DashAttack_16: 6824943793376022212
+      Katana_DashAttack_17: 1244029619699872726
+      Katana_DashAttack_18: 3950090032313707633
+      Katana_DashAttack_19: -1223340489698438703
+      Katana_DashAttack_1_0: -5591958974546044225
+      Katana_DashAttack_1_1: 8247912985859782283
+      Katana_DashAttack_1_2: 5376044344087741778
+      Katana_DashAttack_1_3: 4651283201620454863
+      Katana_DashAttack_1_4: -7268621225958930290
+      Katana_DashAttack_2: -2577009186314139592
+      Katana_DashAttack_20: -5557609167153260668
+      Katana_DashAttack_21: 4569670889372092712
+      Katana_DashAttack_22: -4035186210597895100
+      Katana_DashAttack_23: -8047907579373911282
+      Katana_DashAttack_24: -3115146724421103003
+      Katana_DashAttack_25: 8505266208901813915
+      Katana_DashAttack_26: 4828053254171037525
+      Katana_DashAttack_2_0: -3477767199247043385
+      Katana_DashAttack_2_1: -7174254048458641495
+      Katana_DashAttack_2_2: 878013599131042112
+      Katana_DashAttack_2_3: 5604545873576384665
+      Katana_DashAttack_2_4: 116806136876127405
+      Katana_DashAttack_3: -2460254405801336786
+      Katana_DashAttack_3_0: -1694367283321119341
+      Katana_DashAttack_3_1: 4224907714483669114
+      Katana_DashAttack_3_2: -7426646241512159147
+      Katana_DashAttack_3_3: -3883312701318488568
+      Katana_DashAttack_3_4: 3514576939998143968
+      Katana_DashAttack_4: 8202269505527729841
+      Katana_DashAttack_4_0: -2704403963740405743
+      Katana_DashAttack_4_1: 7216996349190968012
+      Katana_DashAttack_4_2: -7980009124180963274
+      Katana_DashAttack_4_3: -2213541493331714902
+      Katana_DashAttack_4_4: -1102300355642004429
+      Katana_DashAttack_5: 3639096769394126197
+      Katana_DashAttack_6: -4844121120306225403
+      Katana_DashAttack_7: 114936511709725267
+      Katana_DashAttack_8: 5687064653749242423
+      Katana_DashAttack_9: 5817026734663545292
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

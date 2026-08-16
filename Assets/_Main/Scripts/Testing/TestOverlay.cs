@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Deeper.Combat;
+using Deeper.Player;
 using Deeper.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -36,10 +37,21 @@ namespace Deeper.Testing
         [SerializeField] private TestControls controls;
         [SerializeField] private TestSpawner[] spawners;
 
+        [Tooltip("Supplies both the room's legend line and its status line. Its own field rather " +
+                 "than a shared interface: one extra source does not earn an abstraction, and " +
+                 "replacing the two typed slots above with an untyped list would make the wiring " +
+                 "harder to read in exchange for nothing.")]
+        [SerializeField] private TestRoomControls roomControls;
+
         [Header("Sources — status")]
         [SerializeField] private Damageable playerHealth;
         [SerializeField] private UltimateGauge gauge;
         [SerializeField] private ComboCounter combo;
+
+        [Tooltip("Whether the dash is off cooldown, and whether her i-frames are up, are both " +
+                 "completely invisible otherwise — which makes 'did the dodge work' unanswerable " +
+                 "at the exact moment it matters most.")]
+        [SerializeField] private DigDash dash;
 
         [Header("Keys")]
         [SerializeField] private Key toggleKey = Key.F10;
@@ -56,6 +68,7 @@ namespace Deeper.Testing
         {
             if (controls == null) controls = FindFirstObjectByType<TestControls>();
             if (spawners == null || spawners.Length == 0) spawners = FindObjectsByType<TestSpawner>(FindObjectsSortMode.None);
+            if (roomControls == null) roomControls = FindFirstObjectByType<TestRoomControls>();
 
             // Found by tag like TestControls does, for the same reason: FindFirstObjectByType
             // <Damageable> would happily return a training dummy.
@@ -65,6 +78,7 @@ namespace Deeper.Testing
                 if (playerHealth == null) playerHealth = player.GetComponentInChildren<Damageable>(true);
                 if (gauge == null) gauge = player.GetComponentInChildren<UltimateGauge>(true);
                 if (combo == null) combo = player.GetComponentInChildren<ComboCounter>(true);
+                if (dash == null) dash = player.GetComponentInChildren<DigDash>(true);
             }
 
             LegacyUIFont.EnsureFont(legendLabel);
@@ -74,6 +88,19 @@ namespace Deeper.Testing
         private void Start()
         {
             BuildLegend();
+        }
+
+        /// <summary>
+        /// Shows or hides just the key legend, leaving the status line alone.
+        ///
+        /// <see cref="TestConfigHUD"/> hides it while its menu is open, because that menu lists the
+        /// same cheats as clickable buttons — two copies of the same list, one drawn over the other,
+        /// is worse than either alone. The status line stays: it is the thing you are reading while
+        /// you click.
+        /// </summary>
+        public void SetLegendVisible(bool visible)
+        {
+            if (legendLabel != null) legendLabel.gameObject.SetActive(visible);
         }
 
         private void Update()
@@ -98,6 +125,10 @@ namespace Deeper.Testing
 
             List<string> lines = new List<string> { "— TEST SCENE —" };
             if (controls != null) lines.AddRange(controls.Legend);
+
+            // Between the player cheats and the spawners, so the legend reads in the order a
+            // session uses it: fix yourself up, restart the room, then add loose enemies to it.
+            if (roomControls != null) lines.AddRange(roomControls.Legend);
 
             for (int i = 0; i < spawners.Length; i++)
             {
@@ -130,6 +161,29 @@ namespace Deeper.Testing
             {
                 if (_status.Length > 0) _status.Append("   ");
                 _status.Append("COMBO x").Append(combo.Stacks);
+            }
+
+            if (dash != null)
+            {
+                if (_status.Length > 0) _status.Append("   ");
+                _status.Append("DASH ");
+
+                // Three states, because they answer three different questions: is she dodging
+                // right now, is she still untouchable, and can she go again.
+                if (dash.IsDashing) _status.Append("GO");
+                else if (playerHealth != null && playerHealth.IsInvulnerable) _status.Append("i-FRAME");
+                else if (dash.IsReady) _status.Append("ready");
+                else _status.Append(Mathf.RoundToInt(dash.CooldownNormalized * 100f)).Append('%');
+            }
+
+            // The room's own count, kept separate from the spawner counts below on purpose: the
+            // room only ever counts what IT spawned, so an F6 crawler walking around inside it
+            // shows up in "Crawlers" and never in "LEFT". That is correct — those kills do not
+            // unlock the doors — and reading both lines is how you see it.
+            if (roomControls != null)
+            {
+                if (_status.Length > 0) _status.Append("   ");
+                _status.Append(roomControls.Status);
             }
 
             for (int i = 0; i < spawners.Length; i++)

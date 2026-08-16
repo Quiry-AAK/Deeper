@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 619387971176684652}
   - component: {fileID: 3106793609035167667}
   - component: {fileID: 8951479969346578893}
+  - component: {fileID: 769586271609443058}
   m_Layer: 7
   m_Name: RockSlinger
   m_TagString: Untagged
@@ -178,6 +179,20 @@ MonoBehaviour:
   step: 0.1
   priority: 0
   group: {fileID: 3106793609035167667}
+--- !u!114 &769586271609443058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3108594333805042624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cbf316bda210334489e990fdbd0b386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xp: 3
+  health: {fileID: 3219405124709043478}
 --- !u!1 &3302580913930725105
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +409,7 @@ MonoBehaviour:
   projectile: {fileID: 7742974901220989045, guid: df37cbb2776ec724d9729367426c8cbf, type: 3}
   projectileSpeed: 4.5
   spawnOffset: 0.5
-  spawnHeight: 0.85
+  pooledRocks: 2
   enemy: {fileID: 3635316391341096533}
   attack: {fileID: 1785463669490030362}
 --- !u!114 &129502253052247032

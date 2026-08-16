@@ -1,0 +1,880 @@
+fileFormatVersion: 2
+guid: e6acb6017d8b56642a9dddc30dfd6f6d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 965250126237215107
+    second: Katana_HeavyCharge_0
+  - first:
+      213: -5530545184161901410
+    second: Katana_HeavyCharge_1
+  - first:
+      213: -1361747199515173067
+    second: Katana_HeavyCharge_2
+  - first:
+      213: -4996766610277964020
+    second: Katana_HeavyCharge_3
+  - first:
+      213: -8936665242664367956
+    second: Katana_HeavyCharge_4
+  - first:
+      213: 1562655321962098979
+    second: Katana_HeavyCharge_5
+  - first:
+      213: -6137786084357261855
+    second: Katana_HeavyCharge_6
+  - first:
+      213: -5848319117785210271
+    second: Katana_HeavyCharge_7
+  - first:
+      213: 8263387269174752173
+    second: Katana_HeavyCharge_8
+  - first:
+      213: -6216990243280784637
+    second: Katana_HeavyCharge_9
+  - first:
+      213: -956077870042764822
+    second: Katana_HeavyCharge_10
+  - first:
+      213: -5224297891778934215
+    second: Katana_HeavyCharge_11
+  - first:
+      213: 1641268094329096428
+    second: Katana_HeavyCharge_12
+  - first:
+      213: 3367879587722599762
+    second: Katana_HeavyCharge_13
+  - first:
+      213: 5392385853683473418
+    second: Katana_HeavyCharge_14
+  - first:
+      213: 3253538393255076269
+    second: Katana_HeavyCharge_15
+  - first:
+      213: -3717609959569707481
+    second: Katana_HeavyCharge_16
+  - first:
+      213: 7842624616815515404
+    second: Katana_HeavyCharge_17
+  - first:
+      213: 3873561279003777341
+    second: Katana_HeavyCharge_18
+  - first:
+      213: -8722061169364839818
+    second: Katana_HeavyCharge_19
+  - first:
+      213: 2852459704160849089
+    second: Katana_HeavyCharge_20
+  - first:
+      213: 5798008594983953750
+    second: Katana_HeavyCharge_21
+  - first:
+      213: 7829011264430724338
+    second: Katana_HeavyCharge_22
+  - first:
+      213: -8026994617548241058
+    second: Katana_HeavyCharge_23
+  - first:
+      213: 412113243899730628
+    second: Katana_HeavyCharge_24
+  - first:
+      213: -1018251205837179174
+    second: Katana_HeavyCharge_0_0
+  - first:
+      213: -7036871491216530812
+    second: Katana_HeavyCharge_0_1
+  - first:
+      213: -7678882579425562776
+    second: Katana_HeavyCharge_0_2
+  - first:
+      213: 1860919966066834131
+    second: Katana_HeavyCharge_0_3
+  - first:
+      213: -4715173895858184261
+    second: Katana_HeavyCharge_0_4
+  - first:
+      213: -51640559464692331
+    second: Katana_HeavyCharge_1_0
+  - first:
+      213: -5518333137638938497
+    second: Katana_HeavyCharge_1_1
+  - first:
+      213: 5227802771389745260
+    second: Katana_HeavyCharge_1_2
+  - first:
+      213: 8150137253820069617
+    second: Katana_HeavyCharge_1_3
+  - first:
+      213: -873357272464337145
+    second: Katana_HeavyCharge_1_4
+  - first:
+      213: -8193012443551490420
+    second: Katana_HeavyCharge_2_0
+  - first:
+      213: -9123299817613163551
+    second: Katana_HeavyCharge_2_1
+  - first:
+      213: 6929137586917151825
+    second: Katana_HeavyCharge_2_2
+  - first:
+      213: -3363457602511635046
+    second: Katana_HeavyCharge_2_3
+  - first:
+      213: -9095648093310347977
+    second: Katana_HeavyCharge_2_4
+  - first:
+      213: -4448868035259945527
+    second: Katana_HeavyCharge_3_0
+  - first:
+      213: -5745769817384250907
+    second: Katana_HeavyCharge_3_1
+  - first:
+      213: -3362491987031710243
+    second: Katana_HeavyCharge_3_2
+  - first:
+      213: -6367200504620407999
+    second: Katana_HeavyCharge_3_3
+  - first:
+      213: 8566568193909969397
+    second: Katana_HeavyCharge_3_4
+  - first:
+      213: 7157096475549901308
+    second: Katana_HeavyCharge_4_0
+  - first:
+      213: -7108111449643521954
+    second: Katana_HeavyCharge_4_1
+  - first:
+      213: 5521671752152177509
+    second: Katana_HeavyCharge_4_2
+  - first:
+      213: -3915791875033236186
+    second: Katana_HeavyCharge_4_3
+  - first:
+      213: -4082159762034565158
+    second: Katana_HeavyCharge_4_4
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 392
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad636f75ce17ed1f0800000000000000
+      internalID: -1018251205837179174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_0_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 392
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48227f369a2085e90800000000000000
+      internalID: -7036871491216530812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_0_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 392
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86f676d7af02f6590800000000000000
+      internalID: -7678882579425562776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_0_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 392
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3da78dc79d053d910800000000000000
+      internalID: 1860919966066834131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_0_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 392
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbf9d23e256509eb0800000000000000
+      internalID: -4715173895858184261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 294
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 595ca1d4f29884ff0800000000000000
+      internalID: -51640559464692331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_1_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 294
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f78a3caaf31fa63b0800000000000000
+      internalID: -5518333137638938497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_1_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 294
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c680d782ce2ec8840800000000000000
+      internalID: 5227802771389745260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_1_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 294
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f67f9ca6aa1b1170800000000000000
+      internalID: 8150137253820069617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_1_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 294
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70752cc103631e3f0800000000000000
+      internalID: -873357272464337145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 196
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8e12cd47929c4e80800000000000000
+      internalID: -8193012443551490420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_2_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 196
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e308c73727836180800000000000000
+      internalID: -9123299817613163551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_2_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 196
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15411045ced392060800000000000000
+      internalID: 6929137586917151825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_2_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 196
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9df43181299251d0800000000000000
+      internalID: -3363457602511635046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_2_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 196
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 735174cff34c5c180800000000000000
+      internalID: -9095648093310347977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 98
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cdadb1d7127242c0800000000000000
+      internalID: -4448868035259945527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_3_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 98
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e196a12bcce240b0800000000000000
+      internalID: -5745769817384250907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_3_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 98
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd5a0e06a570651d0800000000000000
+      internalID: -3362491987031710243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_3_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 98
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 143a96c30e823a7a0800000000000000
+      internalID: -6367200504620407999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_3_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 98
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f1d92e726092e670800000000000000
+      internalID: 8566568193909969397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf12a58135d135360800000000000000
+      internalID: 7157096475549901308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_4_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e586c140c4aea5d90800000000000000
+      internalID: -7108111449643521954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_4_2
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56bd659143be0ac40800000000000000
+      internalID: 5521671752152177509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_4_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 0
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62d7842590058a9c0800000000000000
+      internalID: -3915791875033236186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana_HeavyCharge_4_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adf598b13514957c0800000000000000
+      internalID: -4082159762034565158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Katana_HeavyCharge_0: 965250126237215107
+      Katana_HeavyCharge_0_0: -1018251205837179174
+      Katana_HeavyCharge_0_1: -7036871491216530812
+      Katana_HeavyCharge_0_2: -7678882579425562776
+      Katana_HeavyCharge_0_3: 1860919966066834131
+      Katana_HeavyCharge_0_4: -4715173895858184261
+      Katana_HeavyCharge_1: -5530545184161901410
+      Katana_HeavyCharge_10: -956077870042764822
+      Katana_HeavyCharge_11: -5224297891778934215
+      Katana_HeavyCharge_12: 1641268094329096428
+      Katana_HeavyCharge_13: 3367879587722599762
+      Katana_HeavyCharge_14: 5392385853683473418
+      Katana_HeavyCharge_15: 3253538393255076269
+      Katana_HeavyCharge_16: -3717609959569707481
+      Katana_HeavyCharge_17: 7842624616815515404
+      Katana_HeavyCharge_18: 3873561279003777341
+      Katana_HeavyCharge_19: -8722061169364839818
+      Katana_HeavyCharge_1_0: -51640559464692331
+      Katana_HeavyCharge_1_1: -5518333137638938497
+      Katana_HeavyCharge_1_2: 5227802771389745260
+      Katana_HeavyCharge_1_3: 8150137253820069617
+      Katana_HeavyCharge_1_4: -873357272464337145
+      Katana_HeavyCharge_2: -1361747199515173067
+      Katana_HeavyCharge_20: 2852459704160849089
+      Katana_HeavyCharge_21: 5798008594983953750
+      Katana_HeavyCharge_22: 7829011264430724338
+      Katana_HeavyCharge_23: -8026994617548241058
+      Katana_HeavyCharge_24: 412113243899730628
+      Katana_HeavyCharge_2_0: -8193012443551490420
+      Katana_HeavyCharge_2_1: -9123299817613163551
+      Katana_HeavyCharge_2_2: 6929137586917151825
+      Katana_HeavyCharge_2_3: -3363457602511635046
+      Katana_HeavyCharge_2_4: -9095648093310347977
+      Katana_HeavyCharge_3: -4996766610277964020
+      Katana_HeavyCharge_3_0: -4448868035259945527
+      Katana_HeavyCharge_3_1: -5745769817384250907
+      Katana_HeavyCharge_3_2: -3362491987031710243
+      Katana_HeavyCharge_3_3: -6367200504620407999
+      Katana_HeavyCharge_3_4: 8566568193909969397
+      Katana_HeavyCharge_4: -8936665242664367956
+      Katana_HeavyCharge_4_0: 7157096475549901308
+      Katana_HeavyCharge_4_1: -7108111449643521954
+      Katana_HeavyCharge_4_2: 5521671752152177509
+      Katana_HeavyCharge_4_3: -3915791875033236186
+      Katana_HeavyCharge_4_4: -4082159762034565158
+      Katana_HeavyCharge_5: 1562655321962098979
+      Katana_HeavyCharge_6: -6137786084357261855
+      Katana_HeavyCharge_7: -5848319117785210271
+      Katana_HeavyCharge_8: 8263387269174752173
+      Katana_HeavyCharge_9: -6216990243280784637
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

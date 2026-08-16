@@ -552,6 +552,9 @@ GameObject:
   - component: {fileID: 4426977788233573791}
   - component: {fileID: 7878409281461328667}
   - component: {fileID: 2738657100189783181}
+  - component: {fileID: 6090768121469482472}
+  - component: {fileID: 2493441197818115496}
+  - component: {fileID: 8633356475378583051}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -708,6 +711,7 @@ MonoBehaviour:
   stats: {fileID: 97889303765141421}
   characterAnimator: {fileID: 7484334290477906262}
   attacks: {fileID: 583062662773932149}
+  dash: {fileID: 6090768121469482472}
   accelerationTime: 0.055
   decelerationTime: 0.085
 --- !u!210 &7878409281461328667
@@ -737,6 +741,59 @@ MonoBehaviour:
   step: 0.1
   priority: 1
   group: {fileID: 7878409281461328667}
+--- !u!114 &6090768121469482472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639117733824412900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40b89b4ce65a404a816ef69d2102ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  actionMapName: Player
+  dashActionName: Dash
+  moveActionName: Move
+  duration: 0.18
+  iFrameDuration: 0.25
+  dashAttackWindow: 0.35
+  stats: {fileID: 97889303765141421}
+  health: {fileID: 8823401556770021001}
+  characterAnimator: {fileID: 7484334290477906262}
+  attacks: {fileID: 583062662773932149}
+  trail: {fileID: 7109785815916652623}
+--- !u!114 &2493441197818115496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639117733824412900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 363b94274c4a83244999f05ea3453294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseXPToLevel: 10
+  curveExponent: 1.35
+  stats: {fileID: 97889303765141421}
+--- !u!114 &8633356475378583051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639117733824412900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62982324536450443a474ce794d5a75a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 97889303765141421}
+  startingUpgrades: []
 --- !u!1 &5423439582410285793
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,6 +807,7 @@ GameObject:
   - component: {fileID: 7047324702973040065}
   - component: {fileID: 8470084761843576397}
   - component: {fileID: 8823401556770021003}
+  - component: {fileID: 7109785815916652623}
   m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
@@ -854,6 +912,23 @@ MonoBehaviour:
   - {fileID: 6350648441096307893}
   flashColor: {r: 1, g: 0.42, b: 0.42, a: 1}
   duration: 0.09
+--- !u!114 &7109785815916652623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5423439582410285793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4459cf3a35ad04641a051d6cdecdcc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageCount: 5
+  fade: 0.22
+  startAlpha: 0.45
+  tint: {r: 0.72, g: 0.7, b: 0.92, a: 1}
+  bodyRenderer: {fileID: 6350648441096307893}
 --- !u!1 &6612449082310355001
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,10 +987,14 @@ MonoBehaviour:
   basicLunge: 0.75
   heavyLunge: 1.15
   ultimateLunge: 0.9
+  dashAttackLunge: 1.4
   lungeFraction: 0.45
   basicChainLength: 2
   heavyChainLength: 1
   chainWindow: 0.25
+  chargeMoveScale: 0
+  chargedClipThreshold: 0.6
+  chargedImpactScale: 1.6
   alignFramesToPhases: 1
   loadout: {fileID: 6329737459028979654}
   characterAnimator: {fileID: 7484334290477906262}
@@ -925,13 +1004,16 @@ MonoBehaviour:
   hitStop: {fileID: 2734842561340543144}
   ultimateBuff: {fileID: 3036214684033169724}
   stats: {fileID: 97889303765141421}
+  dash: {fileID: 6090768121469482472}
   characterView: {fileID: 7047324702973040065}
   basicHitStop: 0.045
   heavyHitStop: 0.085
   ultimateHitStop: 0.11
+  dashAttackHitStop: 0.06
   basicShake: 0.045
   heavyShake: 0.11
   ultimateShake: 0.16
+  dashAttackShake: 0.07
 --- !u!114 &8823401556770021002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -949,6 +1031,7 @@ MonoBehaviour:
   basicRadius: 0.8
   heavyRadius: 1
   ultimateRadius: 1.3
+  dashAttackRadius: 0.8
   targetLayers:
     serializedVersion: 2
     m_Bits: 128
@@ -977,9 +1060,11 @@ MonoBehaviour:
   basicScale: 0.5
   heavyScale: 0.85
   ultimateScale: 1.05
+  dashAttackScale: 0.62
   basicLifetime: 0.1
   heavyLifetime: 0.16
   ultimateLifetime: 0.22
+  dashAttackLifetime: 0.12
   popFrom: 0.55
   popFraction: 0.35
   randomRotation: 1
@@ -1119,6 +1204,7 @@ MonoBehaviour:
   useMouseAim: 1
   characterAnimator: {fileID: 7484334290477906262}
   attacks: {fileID: 583062662773932149}
+  dash: {fileID: 6090768121469482472}
   lockFacingDuringAttack: 1
 --- !u!1 &8050993827766410118
 GameObject:

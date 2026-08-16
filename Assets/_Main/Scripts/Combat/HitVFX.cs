@@ -41,6 +41,7 @@ namespace Deeper.Combat
         [SerializeField] private float basicScale = 0.5f;
         [SerializeField] private float heavyScale = 0.85f;
         [SerializeField] private float ultimateScale = 1.05f;
+        [SerializeField] private float dashAttackScale = 0.62f;
 
         [Header("Duration per action — heavier hits linger")]
         [Tooltip("Seconds the flash stays up for a Basic Attack. Short: a flash should punctuate, " +
@@ -48,6 +49,7 @@ namespace Deeper.Combat
         [SerializeField] private float basicLifetime = 0.10f;
         [SerializeField] private float heavyLifetime = 0.16f;
         [SerializeField] private float ultimateLifetime = 0.22f;
+        [SerializeField] private float dashAttackLifetime = 0.12f;
 
         [Header("Feel")]
         [Tooltip("Scale the burst starts at, as a fraction of full. Popping open from small is what " +
@@ -121,15 +123,34 @@ namespace Deeper.Combat
             if (_container != null) Destroy(_container.gameObject);
         }
 
+        private float ScaleFor(AttackAction action)
+        {
+            switch (action)
+            {
+                case AttackAction.Basic: return basicScale;
+                case AttackAction.Heavy: return heavyScale;
+                case AttackAction.DashAttack: return dashAttackScale;
+                default: return ultimateScale;
+            }
+        }
+
+        private float LifetimeFor(AttackAction action)
+        {
+            switch (action)
+            {
+                case AttackAction.Basic: return basicLifetime;
+                case AttackAction.Heavy: return heavyLifetime;
+                case AttackAction.DashAttack: return dashAttackLifetime;
+                default: return ultimateLifetime;
+            }
+        }
+
         private void HandleLanded(AttackAction action, Damageable target, float amount)
         {
             if (burst == null || target == null) return;
 
-            float scale = action == AttackAction.Basic ? basicScale
-                : action == AttackAction.Heavy ? heavyScale : ultimateScale;
-
-            float lifetime = action == AttackAction.Basic ? basicLifetime
-                : action == AttackAction.Heavy ? heavyLifetime : ultimateLifetime;
+            float scale = ScaleFor(action);
+            float lifetime = LifetimeFor(action);
 
             if (lifetime <= 0f) return;
 

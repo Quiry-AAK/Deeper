@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Katana
   description: 'Fast light melee. Signature: Combo Counter.'
   weaponType: 0
-  icon: {fileID: 21300000, guid: 747e57606d24d71499e12e149e6c5bab, type: 3}
+  icon: {fileID: 21300000, guid: 825d6f604ec56f6438bd6fa63769c2b5, type: 3}
   animationSet: {fileID: 11400000, guid: 4553b9fd7d7e18d49aed77453dff35db, type: 2}
   bodyLayer: {fileID: 21300000, guid: 90344f32c690bf648b035e5ff5306578, type: 3}
   basic:
@@ -34,6 +34,17 @@ MonoBehaviour:
     Active: 0.4
     Recovery: 0.45
     Damage: 40
+  dashAttack:
+    Windup: 0.06
+    Active: 0.1
+    Recovery: 0.2
+    Damage: 12
+  heavyCharge:
+    Enabled: 1
+    MaxHoldTime: 0.9
+    DamageMultiplier: 2.2
+    RadiusMultiplier: 1.35
+    ReleaseWindup: 0.07
   ultimateKind: 1
   ultimateBuff:
     Duration: 8

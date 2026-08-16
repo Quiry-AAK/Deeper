@@ -36,6 +36,10 @@ namespace Deeper.Combat
         [SerializeField] private float heavyRadius = 1f;
         [SerializeField] private float ultimateRadius = 1.3f;
 
+        [Tooltip("The Dash Attack's reach. Matches the Basic it replaces — the move's advantage is " +
+                 "the distance the dash already covered, not a bigger blade.")]
+        [SerializeField] private float dashAttackRadius = 0.8f;
+
         [Header("Targets")]
         [Tooltip("Layers a swing can hit. Enemy only — leaving Default in would make every swing " +
                  "connect with the walls.")]
@@ -99,6 +103,35 @@ namespace Deeper.Combat
             _open = false;
         }
 
+        private float RadiusFor(AttackAction action)
+        {
+            switch (action)
+            {
+                case AttackAction.Basic: return basicRadius;
+                case AttackAction.Heavy: return heavyRadius;
+                case AttackAction.DashAttack: return dashAttackRadius;
+                default: return ultimateRadius;
+            }
+        }
+
+        /// <summary>
+        /// How much wider a charged Heavy swings. 1 for everything else.
+        ///
+        /// A charge that only multiplied damage would be invisible — the player has no way to see
+        /// that the same swing hit harder. Growing the volume with the charge is what makes a full
+        /// hold catch the second enemy the tap would have missed, which is a thing you can watch
+        /// happen.
+        /// </summary>
+        private float ChargeRadiusScale(WeaponDefinition weapon, AttackAction action)
+        {
+            if (action != AttackAction.Heavy || weapon == null || attacks == null) return 1f;
+
+            ChargeSpec spec = weapon.HeavyCharge;
+            if (!spec.Enabled) return 1f;
+
+            return Mathf.Lerp(1f, spec.RadiusMultiplier, attacks.Charge);
+        }
+
         private void HandleActivePhase(AttackAction action, AttackTiming timing)
         {
             WeaponDefinition weapon = loadout != null ? loadout.Weapon : null;
@@ -112,8 +145,7 @@ namespace Deeper.Combat
             }
 
             _action = action;
-            _radius = action == AttackAction.Basic ? basicRadius
-                : action == AttackAction.Heavy ? heavyRadius : ultimateRadius;
+            _radius = RadiusFor(action) * ChargeRadiusScale(weapon, action);
             _remaining = Mathf.Max(0f, timing.Active);
             _open = true;
             _connected = false;

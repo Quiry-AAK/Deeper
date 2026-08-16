@@ -253,6 +253,7 @@ GameObject:
   - component: {fileID: 8826836752937790453}
   - component: {fileID: 7341345674088537133}
   - component: {fileID: 1644749457300431942}
+  - component: {fileID: 4710337557988620385}
   m_Layer: 7
   m_Name: CaveCrawler
   m_TagString: Untagged
@@ -431,3 +432,17 @@ MonoBehaviour:
   step: 0.1
   priority: 0
   group: {fileID: 7341345674088537133}
+--- !u!114 &4710337557988620385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7322365523371322953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cbf316bda210334489e990fdbd0b386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xp: 4
+  health: {fileID: 3346522205155475302}

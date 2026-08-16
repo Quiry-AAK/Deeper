@@ -708,6 +708,662 @@ after every landed hit, so it would snap back on the next connect and read as br
 
 ---
 
+## In-run HUD — owner-directed
+
+**Status:** ✅ Built, wired and verified in play mode. It was written blind (no Unity connection) and
+integrated in a later pass; that pass found two defects in it, both below. Divergences in
+`Docs/00-DESIGN_CHANGE_BRIEF.md` §15 and §16.
+
+ART_DIRECTION §5's HUD, with real generated art: HP top-left, XP + level badge top-right, Ultimate
+Gauge and weapon icon bottom-centre, plus the wave indicator and a depth readout.
+
+**Built:**
+- [x] `Scripts/UI/StatBar.cs` — reusable framed bar (socket, fill, frame, label). Pure view.
+- [x] `Scripts/UI/HealthBarHUD.cs`, `ExperienceBarHUD.cs`, `DashHUD.cs`, `WeaponIconHUD.cs`,
+      `WaveIndicatorHUD.cs`, `DepthIndicatorHUD.cs` — one element, one class.
+- [x] `Scripts/Player/PlayerXP.cs` + `Scripts/Enemies/XPReward.cs` — a minimal XP source, so the bar
+      is real rather than decorative. The level-up **offer** is Milestone 4 and is not built.
+- [x] `Scripts/Editor/BuildRunHUD.cs` — builds and wires the entire canvas from one menu item.
+- [x] `Art/UI/` — six pieces sliced from one generated kit: `HUD_BarLarge`, `HUD_BarMedium`,
+      `HUD_BarThin`, `HUD_IconFrame`, `HUD_DashPip`, `HUD_LevelBadge`.
+
+### The layout is a committed tool, not dragged rects
+
+Same reasoning as `RoomLayout`: a HUD assembled by dragging is a layout nobody can reproduce, review
+or diff, and every retune means finding the same six anchors again. `BuildRunHUD` holds the reference
+resolution, margins, insets and anchoring, is idempotent, and rebuilds the whole thing on one click.
+
+### Three ordering bugs caught before they shipped
+
+All three are UGUI sibling-order traps, and none would have thrown:
+
+1. **`Text` and `Image` cannot share a GameObject** — both derive from `Graphic` and they fight over
+   the same canvas renderer, so one silently does not draw. Every label is its own child.
+2. **The wave indicator hid the object its own `Update` runs on.** A component that polls to decide
+   whether to show itself cannot live on the thing it hides — it would never come back. Split into an
+   always-active host and a toggled panel.
+3. **`StatBar` and `UltimateGaugeHUD` would both have written the same `fillAmount`.** The Ultimate
+   keeps its own driver (it owns ART_DIRECTION §6's must-have full-pulse) and gets the bar *visuals*
+   without a `StatBar`.
+
+### And one that only a picture caught
+
+The generated frames ship with a **filled** interior: a fill under them is invisible, a fill over them
+hides the rivets and leather banding. Rendering the layout to a PNG from `BuildRunHUD`'s own constants
+is what showed it — Unity was down, so that mock was the only way to look at it at all. Fixed by
+flood-filling each bar frame's interior to transparency so the fill reads *through* the frame.
+**Any future bar frame must be hollowed the same way.**
+
+### Integration, done
+
+1. [x] Compiled clean — all ten files, first pass, nothing to fix.
+2. [x] `Art/UI/*.png` imported at 32 PPU, Point, Uncompressed, `alphaIsTransparency`. No 9-slice
+       borders: every frame is drawn at its native sprite size, so they are never stretched.
+3. [x] `Deeper/Build Run HUD` run; the old hand-built `HUDCanvas/UltimateGauge` **and** the
+       `UltimateGaugeHUD` that drove it from the canvas root are both deleted.
+4. [x] `PlayerXP` on the Player root; `XPReward` on all four enemy prefabs, with per-enemy values.
+5. [x] Looked at in play mode, over the real room.
+
+### Two defects the integration found, both fixed
+
+**1. Every bar drew at full width forever.** `Image` ignores `type` and `fillAmount` entirely when it
+has no sprite and falls back to a plain quad, and `BuildBarVisuals` created each fill with a null
+sprite. Health read 62% and 20% as the *same 182px bar* — only the colour changed, which is why it
+looked plausible. Fixed with `Art/UI/HUD_Fill.png`, a flat 4×4 white sprite that multiplies by the
+fill colour set in code. **Any future `Type.Filled` image needs a sprite.**
+
+**2. The authored fill insets did not match where the frame art's hole is.** They were estimated at
+20 / 16 / 12; measured, the holes are 27/23/33/30, 53/17/52/17 and — the Ultimate frame, whose chunky
+end caps the eye reads as part of the bar — **119**/26/118/23. A fill sized to the estimate spills
+under the frame, so the visible portion stops being proportional to the value. `BuildRunHUD` now
+**measures the knocked-out interior from the PNG's alpha at build time** (`MeasureHole`), so
+re-generating a frame can never desync the layout from it again. This also retires the three inset
+constants.
+
+Verified by measuring the rendered pixels: fill widths came out at 0.607 / 0.702 / 0.755 of their
+sockets against `fillAmount`s of 0.610 / 0.700 / 0.760 — within a pixel on all three.
+
+### HUD restyle and the upgrade strip — owner-directed, second pass
+
+The owner's brief: swap the dash and weapon positions, simplify the weapon slot and give it a real
+weapon icon rather than the character-holding-a-weapon frame, add a dash icon, make the health bar
+smaller and simpler, and add a transparent strip of the run's upgrades down the left.
+
+- [x] **Dash and weapon swapped.** Dash left of the gauge, weapon right (`anchoredPosition` ±204).
+- [x] **`Scripts/Editor/HUDFrameArt.cs`** — draws the frame chrome (`Deeper/Generate HUD Frames`):
+      `HUD_BarSlim` 320×36, `HUD_BarSlimUltimate` 300×30, `HUD_BarSlimXP` 240×22, `HUD_SlotSquare`,
+      `HUD_SlotRound`, `HUD_SlotHex`, `HUD_SlotUpgrade`, `HUD_Disc`, `HUD_IconDash`.
+- [x] **Real weapon icons** — `HUD_IconKatana/Bow/Greatsword`, generated, and `WeaponDefinition.icon`
+      repointed at them.
+- [x] **`Scripts/Upgrades/`** — `UpgradeDefinition` + `RunUpgrades`, and `Scripts/UI/UpgradeListHUD.cs`.
+- [x] **`Data/Upgrades/`** — seven Common entries at BALANCE §9's exact values.
+
+**Why the chrome is drawn and the icons are generated.** These frames are geometry: what matters is
+an exact border width, a chamfer on whole pixels, and an interior that is *fully transparent*, because
+`BuildRunHUD.MeasureHole` reads that hole to place the fill. Asked for empty slim frames, the UI
+generator returned a heart, a money bag and a lightning bolt in a palette the game does not use — 40
+generations, rejected. A katana has material and form to interpret and is the opposite case; those
+came back right. **The split to keep: generate things with material, draw things with geometry.** The
+dash glyph moved to the drawn side for the same reason, after two generated attempts (one with a
+smear across it, one where the three chevrons merged into a blob).
+
+**Weapon icons were the character's weapon *layer*, not an icon.** `WeaponDefinition.icon` and
+`bodyLayer` both pointed at the same sprite — a frame of the paper-doll sheet, which draws the weapon
+as held, at the arm position. At icon size that reads as a tiny figure. They are separate concerns and
+are now separate assets.
+
+**The restyle went wider than the brief, deliberately.** The Ultimate bar, the XP bar and the level
+badge were not named, but they are the same heavy generated family the health bar was pulled out of,
+and a HUD carrying two frame styles at once reads as unfinished rather than as either. They now use
+the slim frames. Reverting is three `Load(...)` lines in `BuildRunHUD`. The superseded pieces —
+`HUD_BarLarge`, `HUD_BarMedium`, `HUD_BarThin`, `HUD_IconFrame`, `HUD_DashPip`, `HUD_LevelBadge` — are
+still in `Art/UI/`, referenced by nothing, kept rather than deleted because they are paid generations.
+
+**Two contrast defects only a picture caught**, both fixed: the upgrade slots were hollow outlines that
+vanished against the world and needed a translucent socket behind them; and the dash glyph sat on top
+of its own charge disc at values close enough to disappear into it when the dash was full.
+
+**The strip is real, not a mock.** `RunUpgrades.Add` applies each upgrade's modifiers through
+`PlayerStats.SetSource`, verified in play mode: MaxHP 100 → 115, MoveSpeed 5 → 5.5, DashCooldown
+1.2 → 0.96, DashDistance 3 → 3.75, DamageBonus 0 → 3, and a duplicate pick refused.
+
+**A finding for Milestone 4:** of BALANCE §9's shared pool, only the seven Commons authored here are
+expressible as `StatModifier`s. **Every Rare and Epic in that pool is behavioural** — Thorns,
+Executioner, Explosive Finish, Blink Strike, Last Stand — and needs hooks in the damage pipeline, which
+is exactly what CORE_SYSTEMS §5's "add `source` to the damage events" decision exists for. That work
+gates the upgrade pool, not the draw logic.
+
+### The HUD now wires its own sources
+
+`BuildRunHUD` points each element at the open scene's player (`PlayerPart<T>()`) instead of leaving
+every class to find one at runtime. The runtime fallbacks stay and still work; the wiring is what makes
+the connections visible in the Inspector, which is the house rule. It lives in the tool because a
+rebuild would silently discard hand-dragged references.
+
+---
+
+## Dig-Dash, spawn telegraphs and first environment art — owner-directed
+
+**Status:** ✅ Built, wired and verified in play mode. It was written blind (no Unity connection) and
+integrated in a later pass; that pass found two defects in it, both below. Divergences in
+`Docs/00-DESIGN_CHANGE_BRIEF.md` §14 and §16.
+
+**Built:**
+- [x] `Scripts/Player/DigDash.cs` — BALANCE §1's 3.0 units / 1.2 s / 0.25 s i-frames, all read from
+      `PlayerStats` so the five dash upgrades and the Hub stat land without touching it. Carries the
+      Dash-Attack Cancel.
+- [x] `Scripts/Player/DashTrail.cs` — ART_DIRECTION §6's "Dig-Dash trail", pooled afterimages.
+- [x] `Scripts/Rooms/SpawnTelegraph.cs` — a pooled ground decal, played before an enemy arrives.
+- [x] `Combat/Damageable.cs` — gained `GrantInvulnerability(float)` and `IsInvulnerable`.
+- [x] `Animation/CharacterPose.cs` — `CharacterState.Dash = 9`, appended.
+- [x] `Character/CharacterLayerView.cs` — Dash falls back to Move rather than drawing nothing.
+- [x] `Player/PlayerController.cs` — the dash branch, and `SetMotion` skipped while dashing.
+- [x] `Player/PlayerAim.cs` — facing frozen while dashing.
+- [x] `Rooms/WaveSpawner.cs` — `spawnDelay` + the `_pending` guard.
+- [x] `Testing/TestOverlay.cs` — a `DASH GO / i-FRAME / ready / n%` readout.
+- [x] `Input/InputSystem_Actions.inputactions` — `Sprint`→`Dash`; the dead `Jump`/`Crouch`/`Previous`/
+      `Next` template actions deleted; the `buttonNorth` double-bind on `Interact`+`HeavyStrike` fixed.
+      8 actions, 32 bindings, **zero duplicate binding paths** (validated by parsing the JSON).
+- [x] `Art/Placeholder/Sheets/Dash.png` — 432×470, **4 cols × 5 rows of 108×94**, 20 frames.
+- [x] `Art/Placeholder/VFX/SpawnBurst.png` — 48×48, transparent.
+- [x] `Art/Placeholder/Tiles/UpperCaves_Wang16.png` — 128×128, 16-tile Wang sheet. **Candidate only,
+      referenced by nothing** — see the art note below.
+
+### Three integration points, and why each is where it is
+
+**`PlayerController.FixedUpdate` gained a branch between knockback and the attack lunge.** Both halves
+are forced: *below* knockback because that branch is documented as outranking everything (a dash that
+shrugged off a Brute slam would be i-frames **plus** immunity to displacement, which no doc grants);
+*above* the lunge because CORE_SYSTEMS §2 requires the dash to cancel an attack in Recovery, and if the
+lunge branch ran first it would still own velocity on the frame the dash starts.
+
+**The dash exposes velocity, it does not move the body.** Same contract as `LungeVelocity`. An
+`AddForce` or a transform write is erased on the same physics step, because `FixedUpdate` writes
+`linearVelocity` outright every tick.
+
+**The Dash-Attack Cancel turned out to be three lines.** `CanCancel` already implemented BALANCE §2
+correctly and `Stop()`'s own doc comment already said the cancel would call it. The seams were left
+open on purpose and they fit.
+
+### The spawn delay nearly broke the room
+
+`CheckProgress()` runs synchronously at the end of `SpawnNextWave()`. With every spawn deferred behind
+a telegraph, the alive list is empty at that moment — so the room would have advanced the wave, or
+**declared itself cleared and opened the doors, before a single enemy existed.** Guarded with a
+`_pending` count incremented *before* the wait, and `CheckProgress` returns early while it is non-zero.
+`Clear()` also had to gain `StopAllCoroutines()`, or re-arming mid-delay lands an enemy into a room
+that has already reopened.
+
+`WaveSpawner` is now **384 lines**, past CLAUDE.md's ~300-line prompt to check whether it is doing two
+jobs. It is arguably doing three (pooling, wave sequencing, arrival timing). Worth a split next time it
+is touched.
+
+### The art finding — do Phase 0 before any more environment art
+
+The character tools anchor to an existing character and hold style perfectly: the dash came back
+indistinguishable from the shipped idle on the first try. **The freeform tools have no anchor**, and
+two environment generations were rejected before one passed — the first tileset returned a pale
+cyan-white wall, which ART_DIRECTION §2 reserves cross-biome as the *Flooded Tunnels hazard accent*.
+
+The fix that worked, and should be the standard from here: **build a forced palette from the project's
+own shipped colours and pass it as `color_image_base64`.** That took the spawn burst from an opaque
+navy-and-purple square to a correct transparent decal in one attempt.
+
+`.claude/skills/deeper-art` Phase 0 (generate and approve one canonical asset, then reference it
+everywhere) has never been done, and this is what it exists to prevent.
+
+### Integration, done
+
+1. [x] Compiled clean — all ten changed files, first pass.
+2. [x] `Dash.png` resliced as a 108×94 grid, 4 cols × 5 rows, Center pivot, 32 PPU, Point,
+       Uncompressed, `Dash_<row>_<col>` with row 0 at the top. Unity's auto-import had guessed a
+       20-sprite variable-rect slice at 100 PPU with a bottom-left pivot; that had to be replaced.
+       Same cell size as the shipped `Katana_Attacks` sheet, so the two align on one pivot.
+3. [x] **`Dash` clip added to `Anim_Body_Base.asset`** in FacingArt row order, `StrikeFrames` empty.
+       `Resolve(Dash, …)` returns a sprite for all 8 facings × 4 frames, 0 null. The rig draws
+       `Dash_2_0` for a right-facing dash — Side row, unmirrored, correct.
+4. [x] `SpawnBurst.png` imported (32 PPU, Point, Uncompressed, Center pivot).
+5. [x] `DigDash` and `PlayerXP` on `Player.prefab`'s root, every reference wired.
+       **`DashTrail` went on `Visual`, not the root** — it is a character visual and belongs beside
+       `AuraVisuals`, the other afterimage system, per the one-group-per-subsystem rule.
+       `PlayerController.dash`, `PlayerAim.dash` and `TestOverlay.dash` all wired.
+6. [x] `SpawnTelegraph` on the room's `Encounter`, beside the `WaveSpawner` it serves;
+       `WaveSpawner.telegraph` wired, and the mark's `lifetime` set from the spawner's own
+       `spawnDelay` so the two cannot drift.
+7. [x] Verification pass run in `01-VERIFICATION.md` order.
+8. [ ] **The Wang tileset is rejected, not pending.** See below — nothing to slice.
+
+### Two defects the integration found, both fixed
+
+**1. The dash covered 13.2 units for an authored 3.0, and the error scaled with frame rate.**
+`_remaining` ticked in `Update` while `PlayerController` integrates `DashVelocity` in `FixedUpdate`.
+Every physics step inside a catch-up burst therefore read the *same* `_remaining` and ran at full dash
+speed — one stalled frame is 16 steps at peak velocity. Demonstrated by changing nothing but
+`Time.maximumDeltaTime`: **13.164 units at the 0.3333 default, 3.298 clamped to one step per frame.**
+Fixed by ticking in `FixedUpdate`, and sampling `DashVelocity` half a step back so the discrete sum
+lands on the authored distance rather than ~11% short of it. Re-measured under the original
+conditions: **3.139 units.**
+
+**The same shape exists in `AttackStateMachine`** — `_elapsed += Time.deltaTime` in `Update` drives
+`LungeVelocity`, which `PlayerController` also integrates in `FixedUpdate`, so the attack lunge
+overshoots the same way. **Deliberately not changed here:** that timer also drives phase transitions,
+the Active-window opening, chain buffering and animation frame alignment, all of them tuned against
+the current behaviour. Moving it is a feel change, not a bug fix, and it should be its own pass.
+
+**2. The dash trail drew on the wrong sorting layer.** `DashTrail.Stamp` copied `bodyRenderer`'s
+layer and order — but the body renderer sits *inside* the rig's `SortingGroup`, so its authored
+`Default/0` is never what draws; the group's `Actors` at `YDepthSort`'s order is. The trail landed on
+`Default/-1`: above the Walls tilemap at `-10`, so a dash past a wall drew the trail on top of it, and
+below every enemy instead of interleaved with them by depth. Now copied from the `SortingGroup`, one
+order behind it — verified as `Actors/-170` against a group at `Actors/-169`.
+
+This is the general trap the layout rule already warns about, in a new place: **inside a
+`SortingGroup`, a renderer's own sorting layer is authored data that never reaches the screen.** Read
+the group.
+
+### The tileset is rejected
+
+`UpperCaves_Wang16.png` shipped as a candidate. On its own 32×32 grid its stone-and-moss edge runs
+**cross the cell boundaries instead of sitting inside them**, so it is not a valid 16-tile Wang set and
+a `RuleTile` built from it would seam at every join; its olive-green also sits outside the cool
+grey-purple the built rooms use. It stays in `Art/Placeholder/Tiles/` referenced by nothing. The fix is
+the Phase 0 anchor pass below, not another freeform generation.
+
+---
+
+## First Combat Room — owner-directed, Milestone 3 pulled forward
+
+**Status:** ✅ Built and verified in play mode. Divergences and invented numbers are recorded in
+`Docs/00-DESIGN_CHANGE_BRIEF.md` §13.
+
+The first room type. `Armed → Fighting → Cleared`: she walks into the room, both doors shut behind
+her, six enemies spawn, and the doors open again on the killing blow. This is the first thing in the
+project that is a game loop rather than a sandbox.
+
+**Built:**
+- [x] `Scripts/Rooms/CombatRoom.cs` — the lifecycle only. Opens and shuts doors, raises `Cleared`.
+- [x] `Scripts/Rooms/WaveSpawner.cs` — the encounter as data. One `ActorPool` per distinct prefab,
+      sized and prewarmed from the wave data itself. 1 wave is a standard Combat Room; 2–3 make it a
+      Wave Room (CORE_SYSTEMS §8) with no other change.
+- [x] `Scripts/Rooms/RoomDoor.cs` — one door: collider + sprite on or off. No tween.
+- [x] `Scripts/Rooms/RoomEntry.cs` — the trigger volume, on the new layer 8 `RoomTrigger`.
+- [x] `Prefabs/Rooms/CombatRoom_UpperCaves_01.prefab` — 28×16, 6 posts, 2 doors, 6 spawn markers,
+      mounted under `Level` in `TestScene` with the scene's own tilemaps switched off.
+- [x] `Scripts/Editor/RoomLayout.cs` — the layout as an ASCII map, plus the two things derived from it
+      (the painted tilemaps and the marker positions), so the map and the prefab cannot drift apart.
+- [x] `Scripts/Editor/PlaceholderRoomArt.cs` + `Art/Placeholder/Rooms/Door.png` — 32×64 programmer art.
+- [x] `Scripts/Testing/TestRoomControls.cs` — `F12` re-arms the room. Plus four additions to
+      `TestOverlay` for its legend and status lines.
+
+### Why four classes and not one
+
+Same reasoning as the enemy split (`Enemy` / `EnemyChase` / `TelegraphedAttack` / `EnemyDeath`): one
+job each, and a reader looking for "what shuts the door" opens the file called `RoomDoor`. `RoomEntry`
+in particular is not over-split — Unity delivers trigger callbacks to the GameObject carrying the
+collider, and the volume has to be positioned on the room's half-way line rather than at the room
+origin, so it needs its own object either way.
+
+### The one that would have bitten: `Damageable.Died` survives pooling
+
+`Died` is a plain C# event with no sender, and a pooled instance never runs `Awake` again — so a
+subscription made at spawn lives into the enemy's next life. The room's alive-tracking is therefore
+**state-driven, not a counter**: a list of `Damageable`s, pruned by `IsAlive`, unsubscribing as it
+goes. That is idempotent, so even a leaked double-subscription changes nothing, where a `--count`
+would have opened the doors a kill early. Subscribe on exactly one line (right after `pool.Get`),
+unsubscribe on exactly two (`Prune` and `Clear`), and `Clear` unsubscribes **before** releasing —
+releasing does not fire `Died`, so the order is what stops a re-armed room double-counting.
+
+### Two engine facts that decided the layout
+
+- **`EnemyChase` has no pathfinding** — straight-line steering with a stop/retreat band. Interior cover
+  must be isolated convex posts with clearance; any concave pocket traps an enemy and the room never
+  unlocks. This constrains all 18 Combat Rooms and is written in no design doc (brief §13.2).
+- **Aggro radius binds spawn placement.** `EnemyTarget.Acquired` gates all movement and attacking, and
+  the radii are 10–12. LEVEL_DESIGN §4's "spawn points at room edges" would put spawns 15–23 units from
+  the lock line in a 28-wide room, where they stand completely still (brief §13.1).
+
+### The layer-8 decision, demonstrated rather than assumed
+
+`RoomEntry` sits on a new layer **8 `RoomTrigger`**, not Default. `ThrownRock.blockingLayers` is
+Default and the rock is itself a trigger carrying a kinematic rigidbody, so a Default-layer volume
+across the room's middle destroys every Rock Slinger projectile that crosses it. Proven three ways in
+one probe: rock vs wall → despawns (the mechanism works), rock vs Entry on layer 8 → survives, rock vs
+Entry on layer 0 → despawns. **Any future room-scoped trigger volume belongs on layer 8.**
+
+Two probes that looked conclusive and were not, recorded so they are not repeated: `Physics2D.Simulate`
+does **not** fire `OnTriggerEnter2D` for a collider that starts already overlapping, and `Destroy` is
+deferred to end of frame — so a freshly-instantiated rock always reads as "survived" no matter what.
+Testing through a real `ActorPool` (where `Release` deactivates synchronously) is what made it
+measurable.
+
+### Verified in play mode
+
+`Application.runInBackground = true` first; everything driven through public methods, since simulated
+key presses never reach play mode.
+
+| Check | Result |
+|---|---|
+| Fresh play | `Armed`, both doors open, 0 alive, wave 0/1 |
+| Spring the room | `Fighting`, both doors shut, **6** spawned, one per marker, each at its definition's max HP |
+| Kill one at a time | alive steps 6→5→4→3→2→1→0, **exactly one per kill**; `Cleared` raised once; doors open |
+| Clear is `Died`-driven | `pool.Live` still **6** at the moment the doors opened — the 0.45 s corpse delay does not gate it |
+| Pooled reuse | 3 full encounters, always 6 spawned, counting never double-steps, `Encounter` child count stays **7** (6 rigs + markers) — reuse, not re-instantiation |
+| Re-arm mid-fight | 3 alive → `Arm()` → 0 alive, 0 active, doors open, `Armed`; re-entering then counts cleanly, so the aborted fight left no subscription behind |
+| The trigger itself | moving the player's rigidbody into the band → `Fighting` (the trigger-stay path) |
+| Wave Room path | 2 waves, `IsWaveRoom` true; killing to 1 remaining spawns wave 2 while the straggler lives; `Cleared` only once every wave is dead |
+| Rock vs entry volume | survives on layer 8, despawns on layer 0, despawns on a wall |
+| Left behind | console clean, `timeScale` 1, 0 stray `(Clone)` roots, scene not dirty, `CameraRig` re-enabled |
+
+**Looked at, not just asserted** — three named-camera screenshots at the room's true framing: Armed
+(door gaps open in both side walls), Fighting (both doors visibly shut, six enemies on their markers,
+the Brute behind her at the entry door), Cleared (open again, empty). Nothing renders black.
+
+### Outstanding
+
+- **Player death is now a dead end in the literal sense.** She can die inside a locked room whose doors
+  only open when the enemies are dead. `Damageable.Died` still has no subscriber on the player.
+- **No room loading, no floor sequencing.** `RoomManager` and the reshuffling bag are unbuilt;
+  `CombatRoom.Cleared` is deliberately the one event written for something that does not exist yet.
+- **No cracked tiles and no breakable wall** — the room is not LEVEL_DESIGN §3-compliant until both
+  land. The layout reserves a 2×2 zone for the first.
+- **`CameraRig` has no bounds clamp**, so standing at a door shows past the room edge into void.
+- **Feel is unjudged** — whether the fight actually clears in BALANCE §8's 30–60 s needs a human.
+- ~~**`F12` was the last free function key.**~~ **Resolved 2026-08-16** — the sandbox has a test config
+  HUD (a toggled clickable panel on the backquote key), so harness additions now cost a button rather
+  than a key. See *Wave Room + test config HUD* below.
+- **Its spawn markers are no longer consumed in authored order.** `WaveSpawner` now chooses each
+  arrival against the player's position, so this room's original "one enemy per marker" result only
+  holds when she springs it from the lock line. Re-verified; see below.
+
+---
+
+## Dash rework, Dash Attack and the chargeable Heavy — owner-directed, 2026-08-16
+
+Five items in one owner brief. Two were presentation fixes, three were new mechanics. Recorded in
+`Docs/00-DESIGN_CHANGE_BRIEF.md` §17, which is where the design consequences live — this section is
+the engineering half.
+
+- [x] **Dash direction comes from the movement keys, not facing** (`DigDash.ResolveDirection`).
+- [x] **Dash Attack** — a fourth `AttackAction`, its own `CharacterState`, its own timing row.
+- [x] **Heavy Strike charges** — a fifth `AttackPhase`, with chargeability as weapon data.
+- [x] **Dash HUD slot back to a square**, matching the weapon slot beside it.
+- [x] **New dash icon**, generated rather than drawn.
+
+### `DigDash` reads its own Move action, and that is not duplication
+
+The obvious implementation is `PlayerController.MoveInput`. It is wrong here: `DigDash` carries
+`[DefaultExecutionOrder(-10)]` so that a dash beats the attack chain buffer, which means it runs
+*before* the controller polls input and would read the **previous** frame's direction. A direction
+tapped on the same frame as the dash key would be dropped. Reading the action directly costs three
+lines and makes the ordering irrelevant.
+
+Normalized rather than raw, so an analog stick at half deflection still dashes BALANCE §1's full 3.0
+units — `DashVelocity` multiplies this vector by the distance directly.
+
+### The Dash Attack is a fourth `AttackAction`, and that exposed a live trap
+
+Adding `AttackAction.DashAttack = 3` broke five lookups at once, all of the same shape:
+
+```csharp
+action == AttackAction.Basic ? basicX : action == AttackAction.Heavy ? heavyX : ultimateX
+```
+
+A two-step ternary over a three-value enum silently treats **every future value** as the last one, so
+a Dash Attack would have inherited the Ultimate's lunge, hitstop, camera shake, hitbox radius and hit
+VFX. All five are now `switch` statements with an explicit `default`, in `AttackStateMachine`,
+`AttackHitbox` and `HitVFX`. `ActionFor` had the same bug with a worse symptom — it returned the
+*Ultimate's* InputAction for any unknown action, so R would have buffered a chain into a Dash Attack.
+
+`UltimateGauge` was the one site left alone: its `action == Heavy ? Heavy : Basic` is correct by
+construction, and BALANCE §4's table has two columns. Inventing a third there would have been a
+design decision made inside a lookup.
+
+### Charging is a phase, not a component
+
+`AttackPhase.Charging` sits in front of Windup. The alternative — a separate `HeavyCharge` component
+owning the hold and calling into the state machine — was rejected because it needs the Heavy
+InputAction, the weapon data and the animator, all of which this class already owns, and it would
+have had to take the heavy button *away* from the machine that polls it.
+
+The phase is deliberately **not committed** (`IsCommitted`, which is what `PlayerController` and
+`PlayerAim` now read instead of `IsAttacking`). While charging she walks at 0.45x and keeps turning
+to the cursor. Two consequences fell out of that and are load-bearing:
+
+- `LungeVelocity` had to switch to `IsCommitted` too. During Charging `_elapsed` is still zero, so its
+  ease-out curve reports **peak** lunge speed for the entire hold — a bug that would only have
+  appeared if anything read it, which `PlayerController` no longer does. Guarded at the source.
+- The Dash-Attack Cancel was extended to break out of a charge. A hold she cannot escape is a trap,
+  and the dash is the only escape she has.
+
+### One looping animation clip, the first on the rig
+
+Every other action clip has a length the state machine knows in advance. A charge lasts exactly as
+long as the button is held, so `CharacterAnimator.PlayLoop` wraps `_actionElapsed` instead of handing
+the pose back. It subtracts one cycle rather than zeroing, so a long hold does not stutter once per
+pass.
+
+### The art-fallback map moved onto `CharacterState`
+
+Two places need the same answer to "what do I draw when this state has no art yet" —
+`CharacterLayerView` resolves the *sprite*, `AttackStateMachine` reads the *frame count* to size the
+clip. They already had two hand-maintained copies covering different sets of states, which is a
+defect waiting to happen: the frame count would come from one clip while a different one was drawn.
+There is now one `CharacterState.FallbackArt()` extension and both call it. It also covers
+`Dash -> Move`, which `CharacterLayerView` had and `AttackStateMachine` did not.
+
+This is what lets all three new moves ship as working code independent of their art, and what will
+let the Bow and Greatsword have them for no frames at all.
+
+### Art: three clips, five directions, and a boot
+
+Generated through the `deeper-art` skill on the existing `Deeper Protagonist Katana` PixelLab
+character, v3 mode, one generation per direction.
+
+**The technique that made the difference was seeding each generation with a start frame rather than
+describing the pose.** Written as prose, "holding the katana raised overhead" produced four frames of
+her standing with no sword visible, and the dash attack came back with an orange glowing blade that
+matches nothing else in the game. Seeded from the raised-blade frame of the shipped Heavy Cleave and
+from the last frame of the shipped Dash, both came back correct first time — and as a bonus the Dash
+Attack now visually continues out of the dash pose, because it literally starts on it.
+
+Sheet layout was **measured off the shipped sheets, not assumed**: 108x94 cells with each 92x92
+PixelLab frame centred at (8,1). The sprites use a Center pivot, so packing at the frames' native
+92x92 would have shifted every new clip relative to the existing ones.
+
+The packer strips small dark blobs detached from the figure and **reports each removal** — one 28px
+stray appeared below her feet in a dash-attack frame. A cleanup pass that guessed silently would
+eventually delete part of a swing.
+
+The dash icon is generated (a winged boot) where the chevrons it replaces were drawn. This is the
+same generate-things-with-material / draw-things-with-geometry split as before, landing the other way
+this time — and `HUDFrameArt` no longer writes `HUD_IconDash`, because leaving that `Write` in place
+would have silently clobbered the generated PNG the next time anyone ran the menu item.
+
+### Outstanding
+
+- **`AttackStateMachine` is now ~640 lines and is doing two jobs** — phase/input state machine, and
+  the contact feel layer (hitstop, shake, gauge, combo, VFX dispatch). It was already over the
+  ~300-line guidance before this pass. The split worth doing is `AttackStateMachine` +
+  `AttackFeedback`; it was not done here because it moves components between prefab groups, and that
+  is its own pass with its own verification.
+- **The lunge timer bug is still unfixed** and now has a sibling: `_elapsed` ticks in `Update` while
+  `LungeVelocity` is integrated in `FixedUpdate`, exactly the shape that made the dash travel 13.2
+  units for an authored 3.0. Still deliberately left alone — that timer also drives phase transitions
+  and frame alignment, so changing it is a feel pass.
+- **The Bow and Greatsword default to chargeable.** That is a design call, flagged in change brief
+  §17c, and switching it off is a checkbox on the asset.
+- **Player death is still unbuilt**, and the Dash Attack makes the dash a more attractive thing to
+  spend offensively, which means dying with the dash on cooldown is now easier to arrange.
+
+---
+
+## HUD restyled as pixel art — owner-directed, 2026-08-16
+
+**Owner-directed:** *"Look at HUD. It's too simple for pixel game."* The previous pass had stripped
+the chrome down to a four-pixel band of one flat grey after the owner called the generated kit "too
+much" — that earlier note was about **size** (a 448×129 health bar, a fifth of the screen wide), and
+the fix overshot into a wireframe. This pass keeps every footprint from that correction and puts the
+craft back as material rather than as area. Nothing here is larger than what it replaced.
+
+- [x] **`Scripts/Editor/HUDFrameArt.cs`** rewritten (`Deeper/Generate HUD Frames`). A real plate
+      profile — outline, one lit pixel on the top and left faces, near-black on the bottom and
+      right, a dark body, and a single dithered ring fading the highlight in. Bars gained solid
+      riveted end caps and an **inverted** bevel around the channel, which is what makes a bar read
+      as cut into the plate rather than punched through it. HP gained 8 segment ticks. New pieces:
+      `HUD_Banner` (the wave plaque) and one fill column per bar.
+- [x] **`Scripts/Editor/PixelFontGlyphs.cs` + `PixelFontArt.cs`** (`Deeper/Generate HUD Font`) — a
+      5×7 bitmap face packed into `HUD_Font.png` and built into `HUD_Font.fontsettings`. The glyph
+      table is its own file because it is data, not logic.
+- [x] **`Scripts/UI/StatBar.cs`** — a chase bar: it holds where the fill was, then drains to it, so
+      the *size* of a hit reads as a block. Wired on HP only; XP and the Ultimate never fall.
+- [x] **`Scripts/Editor/BuildRunHUD.cs`** — assigns the font, adds a 1px hard drop shadow to every
+      label, wires the chase bar, loads each bar's own fill column, and puts the plaque behind the
+      wave text. Slot insets are now named constants tied to the border widths `HUDFrameArt` draws.
+- [x] **`Scripts/UI/ExperienceBarHUD.cs`** — the level badge shows the number alone.
+
+### Three couplings this created, all of them load-bearing
+
+1. **A slot's border width is duplicated in two files and must agree.** `HUDFrameArt` draws
+   `HUD_SlotSquare` at a 6px border precisely so 76 − 12 lands on **64**, the authored icon size;
+   `BuildRunHUD.SlotBorder` insets the socket, the cooldown sweep and the icon to match. They are
+   named constants on both sides rather than a shared one because the art tool must not depend on
+   the layout tool. Change one, change the other.
+2. **A segment tick may never land on a bar's exact centre column.** `MeasureHole` reads each
+   channel's *height* down that column, and an opaque tick there reports a channel 4px short, which
+   would sit every fill high inside its frame. An even segment count always puts one there, so the
+   whole tick set is nudged 2px clear — dropping that divider instead leaves a visible gap in the
+   middle of eight marks.
+3. **Each bar's fill column is generated at that bar's channel height** (26 / 20 / 14) rather than
+   shared. A shared column stretched to three heights is the one place point-filtered art gets
+   resampled by a non-integer factor, and the fill's bright top row is exactly what smears.
+
+### Verified by rendering, not by assertion
+
+`01-VERIFICATION.md` §3's "read the PNGs off disk, composite them in code, look at the image" path —
+the whole kit was drawn in a throwaway mirror of the algorithm first, composited over a cave-dark
+ground at 1×, 2× and 4×, and iterated on until it read right. Three things were wrong on the first
+render and were only visible in the picture: the body dither ran end to end and read as **woven
+mesh** at 4×, the whole ramp sat too bright and competed with the bars it frames, and the chase bar
+was louder than the health still standing behind it. A scripted check confirms the contract that
+matters — `MeasureHole` reports 292×26 / 276×20 / 222×14, each `_Fill` column matches its channel
+height exactly, and the health bar carries 7 dividers with none on the sampled centre column. The
+ported glyph table was diffed against the rendered prototype and is identical, glyph for glyph.
+
+**And it compiles.** All 72 project scripts, 0 errors, against Unity's own Roslyn and reference set
+with no editor open — the method is now `01-VERIFICATION.md` §10. That is what makes the API surface
+this pass leans on (`Font.characterInfo`, `CharacterInfo`'s corner UVs, `TextureImporterNPOTScale`,
+`Shadow`) a checked claim rather than a remembered one.
+
+### Then run for real in the editor, which found one more
+
+The three menu items were run in `TestScene` and the built HUD rendered to
+`Captures/HUD_ingame.png` (Overlay canvases need the camera trick in `01-VERIFICATION.md` §3).
+
+The font asset builds correctly and needs no caveat: `dynamic=False`, `fontSize` 14, `lineHeight`
+18, `ascent` 14, **76** `characterInfo` entries (51 authored + 25 lowercase aliases — 'x' has its
+own glyph), material on `UI/Default` with the 192×64 point-filtered atlas, and every glyph spot-check
+resolving to advance 12 and box (0,0)–(10,14). All three menu items logged **zero warnings**, which
+is itself the check that every sprite loaded, every `Wire` found its serialized field — including
+the new `ghost` and `ghostColor` — and `MeasureHole` found a hole in every frame. In the rebuilt
+HUD all 9 labels are on `HUD_Font` and all 9 carry a `Shadow`.
+
+**And the render caught a defect nothing else would have: the weapon slot drew as a solid white
+box.** `BuildRunHUD` created the icon `Image` enabled with a null sprite, which UGUI draws as a white
+quad — 64px square in the middle of the screen. It is not only an editor artefact: `WeaponIconHUD`
+is what hides an empty icon, and its `OnEnable` **returned early when `loadout` was null**, so with
+no tagged player in the scene nothing ever switched it off. Both halves are fixed — the icon is now
+built disabled (as the upgrade slots already were) and `OnEnable` always refreshes, subscribing only
+when there is a loadout. This is `01-VERIFICATION.md` §4 again: it passed every assertion.
+
+### The defect that mattered most was invisible to every check above
+
+The owner's first look at the finished HUD was **"it's the same UI, what is changed?"** — and every
+verification in this section had already passed. The art was correct, the font asset was correct,
+the layout was correct, the render I had taken was correct. What was wrong sat outside all of it:
+
+- [x] **`Scripts/UI/PixelPerfectHUDScale.cs`** — pins the canvas to `ConstantPixelSize` with a
+      whole-number `scaleFactor` from `Screen.height / 1080`, floor 1. `BuildRunHUD` adds it.
+
+`CanvasScaler` was on `ScaleWithScreenSize`, which produces a **fractional** factor at any window
+that is not exactly the reference. The editor Game view is 906×463, so the factor was **0.4498**, and
+at that factor every detail this pass added is finer than the resampling error — bevel, rivets,
+segment ticks, and the font, which drew `74 / 128` as `r4 / 128` because the 7's top stroke fell
+between two screen pixels. Rendered side by side at the same 906×463, 0.45 versus integer 1× is not
+a subtle difference; it is the difference between the old flat chrome and the new one.
+
+**The lesson is about where I rendered, not whether I rendered.** I verified at 1920×1080, the one
+resolution where the bug cannot appear, and the art is authored 1:1. Verifying a resolution-dependent
+thing at its reference resolution proves nothing about any other. Check `canvas.scaleFactor` is a
+whole number *before* concluding anything about HUD art.
+
+### Then the fix was the wrong size, and that exposed a worse bug
+
+Whole-number scaling with the art still authored 1:1 forces the factor to **1** at every window below
+1080 — the owner's next note was *"you made UI bigger in low resolutions"*. The health bar spanned a
+third of a 906px Game view instead of a sixth.
+
+- [x] **The whole kit is re-authored at half its on-screen size** and `ReferenceHeight` is 540, so the
+      normal factor at 1080p is **2**. Bars 160×18 / 150×15 / 120×11, slots 40 and 22, hex 28, banner
+      134×19, fill columns 12/9/7, every layout constant in `BuildRunHUD` halved. On-screen at 1080p
+      this is pixel-for-pixel what it was; on a small window it is half the footprint.
+- [x] **The font packs at 1× now** (`PixelFontArt.Scale`), native size 7 rendering at 14 on screen.
+      That also closes the two-pixel-grids divergence: chrome and text finally share one grid.
+- [x] The 64px weapon icons need no re-authoring — a 32-logical-px rect at factor 2 is 64 screen px,
+      so they land 1:1 exactly as before. This is why `HUD_SlotSquare`'s border is 4 (40 − 8 = 32).
+
+**The bug this uncovered is the important one.** After regenerating, the HUD rendered *completely
+wordless* — chrome perfect, not one letter. `font.characterInfo` read back flawless (76 entries,
+correct advances and UVs) and `Text` even generated the right vertex count, but
+`GetCharacterInfo` returned **false for every character**: assigning `characterInfo` to a Font that is
+already loaded does not rebuild Unity's internal glyph map. Fixed with an
+`AssetDatabase.ImportAsset(..., ForceUpdate)` after `SaveAssets`, and written up as
+`01-VERIFICATION.md` §5b.
+
+It is worth being precise about how bad this one was. It **only bites on a re-run** — the first
+generation calls `CreateAsset`, and creating the asset builds the lookup — so the tool worked
+perfectly the first time and would have silently produced an invisible font every time after. Every
+inspectable value stayed correct throughout. Nothing but rendering it would have caught it.
+
+### The dash cooldown was drawn inside-out
+
+Owner: *"there is blue background behind dash icon and it looks terrible"*. It was not a background —
+it was the cooldown wipe, and it was inverted on both axes at once.
+
+`DigDash.CooldownNormalized` returns **1 when ready**, and `DashHUD` assigned it straight to the
+sweep's `fillAmount`. So a ready dash — which is nearly all the time — drew a *full* translucent blue
+disc across the whole slot, and the disc **emptied** exactly while the cooldown was running. The one
+moment the element had something to say was the moment it went blank, and the rest of the time it was
+a permanent blue wash that read as a background.
+
+- [x] `DashHUD` fills `1f - charge` (the cooldown *remaining*) and sets `sweep.enabled = charge < 1f`,
+      so a ready dash draws nothing at all.
+- [x] The scrim is dark (`0.05, 0.05, 0.07, 0.72`), not blue — a cooldown scrim, not a tint.
+- [x] `BuildRunHUD` builds the Sweep **after** the Glyph. Sibling order is draw order, and underneath
+      the icon the scrim only darkened the socket showing through the icon's transparent pixels.
+
+Verified by rendering the slot at charge 1.0, 0.55 and 0.0: bright icon on a plain dark socket, a
+partial wedge, and a fully darkened slot.
+
+### Outstanding
+
+- **Between 1080 and 2160 the factor stays at 2**, so a 1440p display gets a proportionally smaller
+  HUD than 1080p. Inherent to whole-number scaling; noted in change brief §18f, no action planned.
+- **`HUD_BarLarge`, `HUD_BarMedium`, `HUD_BarThin`, `HUD_IconFrame`, `HUD_DashPip` and
+  `HUD_LevelBadge` are still on disk and still unreferenced**, now two restyles out of date.
+- **`HUD_SlotRound` and `HUD_Disc` are regenerated but unused** — kept only so the kit stays one
+  style if the round dash slot is ever revisited. The owner has rejected it twice.
+- **`Captures/` holds the preview PNGs** and is untracked throwaway; delete it whenever.
+- **The HUD now contains two pixel grids.** The chrome is 1:1 at the 1920×1080 reference; the font
+  is authored at 5×7 and packed at 2×, so text has a 2px grid. Deliberate — a 7px face is
+  unreadable at 1080p — but it is a second scale inside one HUD, and it compounds change brief
+  §15.5's open question about HUD-vs-world pixel density.
+- **`HUD_BarLarge`, `HUD_BarMedium`, `HUD_BarThin`, `HUD_IconFrame`, `HUD_DashPip` and
+  `HUD_LevelBadge` are still on disk and still unreferenced**, now two restyles out of date.
+- **`HUD_SlotRound` and `HUD_Disc` are regenerated but unused** — kept only so the kit stays one
+  style if the round dash slot is ever revisited. The owner has rejected it twice.
+
+---
+
 ## Milestone 1 — Foundation & Single-Weapon Combat Loop
 *(maps to Design/07 Phase 1, Days 1–10)*
 
@@ -786,7 +1442,8 @@ after every landed hit, so it would snap back on the next connect and read as br
 > **The Rising Hazard is cut (owner, 2026-08-15).** `HazardFront` and its per-biome reskins are **not to be built** — see CORE_SYSTEMS §7, now a removal notice. The cracked-tile collapse micro-system survives on its own; it was always separate. This deletes the largest reusable system Milestone 5 was going to inherit, so the "Biome 2/3 are pure reskins" assumption below is weaker than it was. Rooms also no longer need low/high flood-zone data.
 
 **Systems/features involved:**
-- Room system: room loading (no Reward Rooms — removed), room-lock logic, reshuffling-bag draw of 3–5 rooms per floor (CORE_SYSTEMS §8)
+- ~~Room-lock logic and the Wave Room batch trigger~~ — **done ahead of this milestone**, see *First Combat Room* below. Room *loading* and the reshuffling-bag draw of 3–5 rooms per floor are still unbuilt
+- Room system: room loading (no Reward Rooms — removed), reshuffling-bag draw of 3–5 rooms per floor (CORE_SYSTEMS §8)
 - Cracked tiles: collapse-under-standing-weight micro-system, Upper Caves (GDD §Biome Identity)
 - ~~Upper Caves enemy roster~~ — **done ahead of this milestone**, see *Biome 1 basic enemies*. All four exist on placeholder art. Only the Collapsed King is left.
 - Upper Caves room layouts: 6 Combat Rooms (1–2 flagged `IsWaveRoom`), 2 Reward Rooms (LEVEL_DESIGN §2–3)
@@ -797,7 +1454,7 @@ after every landed hit, so it would snap back on the next connect and read as br
 
 **Files/systems likely to be created:**
 - `Scripts/Rooms/Room.cs`, `Scripts/Rooms/RoomManager.cs` (per-floor room sequencing, deterministic shuffle)
-- `Scripts/Rooms/CombatRoom.cs` (room-lock logic, `IsWaveRoom` flag + wave-batch trigger)
+- ~~`Scripts/Rooms/CombatRoom.cs` (room-lock logic, `IsWaveRoom` flag + wave-batch trigger)~~ — **built**, and split four ways rather than one: `CombatRoom` / `WaveSpawner` / `RoomDoor` / `RoomEntry`. `IsWaveRoom` is a derived property, not a serialized flag. See *First Combat Room* below
 - ~~`Scripts/Hazards/HazardFront.cs`~~, ~~`Scripts/Hazards/UpperCavesHazard.cs`~~ — **not to be written; the Rising Hazard is cut.** The cracked-tile collapse survives as a small room-authored component (`Scripts/Rooms/CrackedTile.cs` or similar), not as a hazard skin
 - ~~`Scripts/Enemies/RockSlinger.cs`, `TunnelBrute.cs`, `DeepWarden.cs`~~ — **these were never written, on purpose.** The roster shipped as composed components plus one `EnemyDefinition` asset each; a per-enemy class would have held nothing. See *Biome 1 basic enemies*.
 - `Scripts/Enemies/BossPhaseController.cs` (weapon-check read, reused by all bosses per CORE_SYSTEMS §11)
@@ -924,3 +1581,124 @@ Carried from design docs' own "Open Items" sections — these affect implementat
 - Mini-Boss Overcharge exact clear-trigger condition (CORE_SYSTEMS §16, renumbered from §12 when the XP/Evolution/Souls/Narrative sections were added) — needs a design decision before Milestone 3/5 boss work locks it in.
 - XP level-threshold curve and per-enemy XP drop values (BALANCE §16) — explicitly unresolved in design. Milestone 4's upgrade system is now level-triggered rather than floor-triggered, so this gates it.
 - Weapon Mastery node effects (3–5 per weapon) — explicitly deferred past MVP; Milestone 6 only needs the counter, not the effects.
+
+---
+
+## Upper Caves Wave Room + test config HUD — owner-directed, 2026-08-16
+
+**Status:** ✅ Built and verified in play mode. Design consequences and invented numbers are in
+`Docs/00-DESIGN_CHANGE_BRIEF.md` §19.
+
+`/implement-room-type Wave Room` is a **layout** job, not a new type. CORE_SYSTEMS §8 calls a Wave Room
+"a variant flag on Combat Room prefabs, not a new room type", and the code already had it: `WaveSpawner`
+takes 2–3 batches, `nextWaveAtRemaining` is §8's "~1 remaining" threshold, `CombatRoom.IsWaveRoom` is
+derived from the wave count, and the *First Combat Room* pass above already verified that path. **No new
+room class was written.**
+
+**Built:**
+- [x] `Prefabs/Rooms/WaveRoom_UpperCaves_02.prefab` — 32×18, 9 posts, 2 doors, 10 spawn markers,
+      3 waves / 12 enemies. Layout 2 of the 6 Upper Caves Combat Rooms, and the 1 flagged Wave Room.
+- [x] `Scripts/Editor/Layout_UpperCaves_02.cs` — its ASCII map.
+- [x] `Scripts/Editor/Layout_UpperCaves_01.cs` — room 01's map, moved out of `RoomLayout` verbatim.
+- [x] `Scripts/Editor/RoomLayout.cs` — **refactored into the shared painter.** Every function now takes
+      a `string[] map`; added `Validate` (ragged rows and stray characters, since a map is hand-edited
+      and a short row silently shifts a whole line rather than throwing).
+- [x] `Scripts/Editor/BuildRoomPrefab.cs` — **builds a whole room prefab from its map**: hierarchy,
+      tilemaps, doors, entry volume, markers, components, wiring, save. One menu item per room.
+- [x] `Scripts/Rooms/WaveSpawner.cs` — spawn placement is now chosen at runtime (below).
+- [x] `Scripts/Testing/TestRoomSelector.cs` — loads one room prefab at a time, moves the player to its
+      `PlayerStart`, re-points `TestRoomControls`.
+- [x] `Scripts/Testing/TestConfigHUD.cs` + `Scripts/Editor/BuildTestConfigHUD.cs` — the debug menu.
+- [x] `TestRoomControls.Bind`, `TestOverlay.SetLegendVisible` — small hooks for the two above.
+
+### Why the room prefab got a builder
+
+Room 01 was assembled by hand, so every fact about it — that the floor draws at sorting order −20, that
+the entry volume is on layer 8, that a door collider is 1×2 — lived only inside 6,500 lines of YAML.
+With a second layout due and four more after it, that is four more chances to get one of them subtly
+wrong. `BuildRoomPrefab` makes those facts a dozen readable lines and derives everything positional from
+the map, so a room and its map cannot disagree. Same argument `BuildRunHUD` and `RoomLayout` already
+make. **Rooms 03–06 now cost a map and a menu item.**
+
+### The change with real reach: arrivals are placed against the player, not by authored order
+
+`WaveSpawner.NextPosition` used to cycle `spawnPoints` by an index. It now takes the marker **farthest
+from the player that is still inside the spawning enemy's aggro radius** (read off the prefab's
+`EnemyDefinition`), falling back to the old cycling order when nothing is in range.
+
+This is the synthesis of a design rule and an engine fact that had been recorded as irreconcilable
+(brief §13.1): LEVEL_DESIGN §4 wants arrivals at the room edges, `EnemyTarget.Acquired` makes anything
+beyond 10–12 units inert. Taking the farthest *in-range* marker satisfies both, and it is what lets a
+32-wide room have edge markers at all.
+
+Two details that are load-bearing:
+
+- **Markers taken inside a batch are tracked and excluded.** Every enemy in a wave resolves its position
+  on the same frame, so without this "farthest in range" returns the same winner every time and **the
+  whole batch stacks on one tile.** Cleared per wave, not per encounter. When a batch outruns the
+  in-range markers the list resets and rotates rather than stacking the remainder.
+- **The player is found by tag and cached**, the way `CameraRig` and `EnemyTarget` do it — a room prefab
+  cannot hold an Inspector reference to a player who lives outside it, and `RigRefs.Find` is wrong here
+  for the reason it is always wrong in room code (it searches from `transform.root`, which for anything
+  a spawner made is the *spawner*).
+
+### The debug menu, and the one hazard it introduced
+
+Every player system reads its `InputAction` straight off the shared `InputActionAsset`
+(`AttackStateMachine.cs`, `DigDash`, `PlayerController`, `PlayerAim`) — UGUI's `EventSystem` is nowhere
+in that path and cannot swallow a click for them. **A click on a debug button would also swing the
+katana.** `TestConfigHUD` therefore disables the whole `Player` action map while the panel is open and
+re-enables it on close *and* in `OnDisable` — a leaked disable looks exactly like an input-system bug.
+It also restores the hardware cursor, which `PlayerAim` hides, or the panel is there but unclickable.
+
+The panel opens on **backquote/tilde**, not a function key: F1–F3 are player cheats, F4–F9 spawners,
+F10 the overlay, F12 the room re-arm. The keys all still work — every button calls the same public
+method its key calls, so there is one implementation per cheat.
+
+### Verified in play mode
+
+`Application.runInBackground = true` first; everything driven through public methods.
+
+| Check | Result |
+|---|---|
+| Map integrity | 18 rows × 32, all legend characters, 9 posts each ≥4 tiles from another and ≥2 from the border |
+| Painted output | 576 floor cells, 101 wall cells (92 perimeter after 4 door gaps + 9 posts); **walls read back identical to the authored map** |
+| Marker coverage | worst floor tile is **7.21** units from its nearest marker — inside the tightest radius (10), so the cycling fallback is unreachable here |
+| Fresh load | `Armed`, `IsWaveRoom` **true**, `WaveCount` **3**, 0 alive, doors open |
+| Spring | `Fighting`, both doors shut, wave 1/3, **4** spawned |
+| Telegraph is real | at the instant of springing: `alive` **4**, active enemy objects **0** — and the room did *not* clear itself (the `_pending` guard) |
+| **Smart placement, measured** | from (6.5, 9.5): 6 of 10 markers in range at radius 10; the 4 crawlers took the **4 farthest** (8.06, 7.07, 7.07, 6.32), **each a distinct marker**; the two nearer and the four out-of-range were passed over |
+| Wave progression | 4 → kill to 1 → wave 2 spawns 5 while the straggler lives → kill to 1 → wave 3 spawns 3 → `Cleared` raised **once**, doors open. 12 kills for 12 enemies |
+| Pooled reuse | 3 full encounters, `Encounter` child count stays **13** (1 markers + 12 pooled) — reuse, not re-instantiation |
+| Re-arm mid-fight | wave 2 with 6 alive → `Arm()` → 0 alive, 0 active objects, doors open, `Armed`; re-entering counts cleanly at 1/3 with 4 |
+| **Room 01 regression** | unchanged: 6 spawned, alive steps 6→5→4→3→2→1→0 one per kill, `Cleared` once, doors open, all 6 arrivals inside their aggro radius |
+| Clear is `Died`-driven | 6 enemy objects still active at the moment the doors opened — the 0.45 s corpse delay does not gate it |
+| Room selector | load 0 → 1 → 0; player lands on each `PlayerStart` (4.5, 8.5 / 7.5, 9.5); overlay status follows (`WAVE 0/1` vs `WAVE 0/3`); outgoing room gone next frame |
+| Config HUD input gate | closed: map **enabled**, cursor hidden. open: map **disabled**, Move/Attack off, cursor shown, and a Heal click healed without touching the attack state. Closed again: fully restored |
+| Left behind | console clean, `timeScale` 1, 0 stray `(Clone)` roots, 0 active enemies, `CameraRig` re-enabled, scene saved |
+
+**Looked at, not just asserted** — four screenshots in `Captures/`: the room Armed (door gaps open in
+both side walls, 2 posts west / 7 east), mid-wave-2 (both doors visibly shut, crawlers swarming her at
+d≈0.6 while both Slingers hold at d≈5), Cleared (open again, empty), and the config HUD open. Nothing
+renders black. The first HUD capture found three real layout defects — buttons stretched by
+`childForceExpandWidth`, labels clipped to "CombatRoom_Upp", and the panel overlapping `TestOverlay`'s
+legend — all fixed in the builder rather than in the output, then re-shot.
+
+### Outstanding
+
+- **Still no player death / run-end**, and a 3-wave room lengthens the exposure: 12 enemies across 3
+  batches with no death state and no way out of a locked room at 0 HP. This is the oldest item here.
+- **2 of 6 Upper Caves layouts exist.** Four Combat Rooms still to author — now cheap, one map plus a
+  menu item each.
+- **Neither room has cracked tiles or a breakable wall**, so neither is LEVEL_DESIGN §3 compliant. The
+  breakable wall is now *possible* (Dig-Dash exists) and no room has one.
+- **Feel is still unjudged for both rooms.** The Wave Room's 260 HP is derived from room 01's untested
+  150, so if room 01 is mistuned this inherits it. BALANCE §8 wants 60–100 s; nobody has played it.
+- **`CombatRoom.Start` arms the room the frame after it is instantiated**, so anything that springs a
+  freshly-loaded room in the *same* frame gets wiped by that `Arm()`. Harmless in play (she walks in
+  later) and caught during verification, but it is a trap for the floor loader — load and spring must
+  not share a frame.
+- **The room selector is not the floor loader.** No sequencing, no reshuffling bag. `CombatRoom.Cleared`
+  is still the untouched hook.
+- **`AttackStateMachine`'s lunge still ticks its timer on `Update`** — unrelated to this pass, still the
+  same shape as the dash bug fixed earlier, still deliberately left alone.

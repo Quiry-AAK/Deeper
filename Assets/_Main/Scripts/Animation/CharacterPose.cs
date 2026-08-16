@@ -13,8 +13,8 @@ namespace Deeper.Animation
     /// animator's fixed 8fps, so the state machine must drive attack frame timing rather than
     /// letting the free-running counter do it.
     ///
-    /// Dash and Hit remain intentionally absent rather than stubbed. Death is no longer absent —
-    /// see <see cref="Death"/>.
+    /// Hit remains intentionally absent rather than stubbed. Death and Dash are no longer absent —
+    /// see <see cref="Death"/> and <see cref="Dash"/>.
     /// </summary>
     public enum CharacterState
     {
@@ -51,6 +51,92 @@ namespace Deeper.Animation
         /// enemies only until player death / run-end is built.
         /// </summary>
         Death = 8,
+
+        /// <summary>
+        /// The Dig-Dash (GDD §Player, BALANCE §1). ART_DIRECTION §3 budgets it at 4 frames and marks
+        /// it **shared across all weapons** — it is authored once on the body set, not per weapon.
+        ///
+        /// Appended rather than inserted, like every value above: this enum serialises by integer,
+        /// so renumbering would silently repoint every sprite set and every saved reference.
+        ///
+        /// Player-only. Enemies have no dash and <c>Resolve</c> returning null for them is correct.
+        /// </summary>
+        Dash = 9,
+
+        /// <summary>
+        /// The unique strike that comes out of a Dig-Dash (owner-directed). A Basic Attack pressed
+        /// during the dash or just after it lands is this move instead, so the dash reads as an
+        /// approach rather than only as a dodge.
+        ///
+        /// **In no design doc.** ART_DIRECTION §3's player budget lists Basic / Heavy / Ultimate /
+        /// Dig-Dash and nothing between them; this is a fourth weapon action. Recorded in the
+        /// change brief. Falls back to the <see cref="BasicAttack"/> clip when unauthored, so a
+        /// weapon without the art still swings rather than freezing.
+        /// </summary>
+        DashAttack = 10,
+
+        /// <summary>
+        /// The held pose while a Heavy Strike is charging (owner-directed) — blade up, feet braced.
+        ///
+        /// This is the only **looping** action clip on the rig. Every other one is a fixed-duration
+        /// one-shot, because an attack has a known length; a charge lasts exactly as long as the
+        /// player holds the button, so it plays through <c>CharacterAnimator.PlayLoop</c> and is
+        /// ended by the release rather than by a timer.
+        /// </summary>
+        HeavyCharge = 11,
+
+        /// <summary>
+        /// The released swing of a fully-charged Heavy Strike. Separate art from
+        /// <see cref="HeavyStrike"/> so the payoff looks like more than the tap did — a charge that
+        /// released into the identical animation would read as the hold having done nothing.
+        ///
+        /// Falls back to <see cref="HeavyStrike"/> art when unauthored, which is also
+        /// ART_DIRECTION §3's own rule for Heavy chain extensions.
+        /// </summary>
+        HeavyCharged = 12,
+    }
+
+    public static class CharacterStateExtensions
+    {
+        /// <summary>
+        /// The clip to draw when this state has no art authored on a sprite set, or the state
+        /// itself when it is the base case.
+        ///
+        /// **One definition, deliberately.** Both the thing that picks a clip's frame count
+        /// (<c>AttackStateMachine</c>) and the thing that resolves its sprite
+        /// (<c>CharacterLayerView</c>) need this answer, and two copies of it would drift the
+        /// moment a state was added to only one of them — the frame count would then come from a
+        /// different clip than the one being drawn.
+        ///
+        /// Every state added after the original three has an older sibling that reads acceptably
+        /// in its place, which is what lets a new action ship as working code before its animation
+        /// exists. A blank sprite is far worse than a repeated one.
+        /// </summary>
+        public static CharacterState FallbackArt(this CharacterState state)
+        {
+            switch (state)
+            {
+                // The Basic chain's later hits, and the Dash Attack, are all cuts from the same
+                // stance — the base swing stands in for any of them.
+                case CharacterState.BasicAttack2:
+                case CharacterState.BasicAttack3:
+                case CharacterState.DashAttack:
+                    return CharacterState.BasicAttack;
+
+                // ART_DIRECTION §3 already makes replaying the base Heavy the rule for chain
+                // extensions; a charge hold and a charged release are the same case.
+                case CharacterState.HeavyCharge:
+                case CharacterState.HeavyCharged:
+                    return CharacterState.HeavyStrike;
+
+                // A dash is 0.18s, so an unbound clip would blink her out for about three frames
+                // at speed — which reads as a bug in the dash rather than as missing art.
+                case CharacterState.Dash:
+                    return CharacterState.Move;
+
+                default: return state;
+            }
+        }
     }
 
     /// <summary>
