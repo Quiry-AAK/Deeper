@@ -1195,3 +1195,128 @@ a designer call.
 
 **And the standing one:** whether a rooted second inside a locked room is survivable cannot be
 answered until there is a reason to fear dying in one — there is still **no player death or run-end**.
+
+---
+
+## 21. The Secret Vault is built, and it closes two questions §8 and §11 left open (2026-08-16)
+
+**Owner-directed.** `/implement-room-type Secret Vault`. Unlike §19's Wave Room, this **is** a new room
+type: CORE_SYSTEMS §8 gives a Secret Floor a locked door, a `SecretKey` from a rare elite, and a payout,
+and none of the three existed in the build. `SecretVault_UpperCaves_01` is the **1 layout** LEVEL_DESIGN
+§2 and CONTENT_DESIGN §6 budget for the type, meant to be reused across all three biomes with tile
+dressing swapped — which is why it is named for the type and not for the Upper Caves alone.
+
+⚠️ **Not verified in play mode.** It is written, imported and wired; nobody has run it. Everything below
+is what the code does *by construction*, not what was observed. §16 is the reason that distinction is
+called out rather than assumed away — structurally-checked code is not working code, and that pass cost
+four defects to learn it. What needs checking is listed at the end of this section.
+
+### 21.1 DECIDED — the vault's replacement cost is a fight plus a spent key
+
+CORE_SYSTEMS §8 closes with a flagged hole rather than a rule. With the Rising Hazard cut (§12), "a
+Secret Floor is pure upside — it needs a new cost (a fight, a resource, a one-per-run limit) or it stops
+being a decision." **The owner chose the first two of those three.**
+
+- **The fight.** The vault chamber holds an encounter, so the payout is guarded rather than collected.
+  One wave, 6 enemies, **190 HP** — 2× Tunnel Brute, 2× Rock Slinger, 2× Cave Crawler.
+- **The resource.** The key is **consumed** on opening the door, so a second vault in the same run costs
+  a second elite. §8 says the door "requires a `SecretKey` flag" and never says the flag is spent; a flag
+  that survives opens every later vault for free, which deletes the elite's reason to exist. This is
+  engineering's reading, not a locked rule — `VaultDoor.consumeKey` is a serialized checkbox so
+  overruling it is not a recompile.
+- **No one-per-run limit**, the third option, because nothing in the build counts runs or floors yet.
+
+**Why one wave and not two or three.** §8 caps flagged Wave Rooms at 1–2 per biome's pool and the Upper
+Caves' allocation is already spent on `WaveRoom_UpperCaves_02` (§19). So the vault buys its difficulty
+with *composition* rather than with batches: 190 HP is **1.27×** room 01's 150 and well under the Wave
+Room's 260, spent on two Brutes instead of more bodies, keeping peak concurrency at the **6** room 01
+already ships. **BALANCE has no Secret Vault row at all** — not in §8's pacing table, not anywhere — so
+there is no target window to have hit or missed.
+
+### 21.2 RESOLVED — §11.3's "large XP payout vs. guaranteed Legendary" picks the Legendary
+
+§11.3 recorded that the vault's reward had been rewritten to "large XP payout" as the most literal
+translation of the deleted Glimmer, while noting *"'guaranteed Legendary offer' may be the better answer
+now that XP is a pacing resource rather than a currency."* **Built as the Legendary.** GDD,
+CORE_SYSTEMS §8 and LEVEL_DESIGN §2 all still read "large XP payout or guaranteed Legendary-tier upgrade
+offer"; only the second half is implemented, and the XP alternative is not built at all.
+
+The relic handed over is the **equipped weapon's own**, which makes CONTENT_DESIGN §4's "only offered
+when that weapon is equipped" literally true rather than a pool-filtering rule: `VaultReward` asks the
+run's weapon for its relic and never names one. `Upgrade_EndlessEdge` exists as a Legendary-tier
+`UpgradeDefinition` carrying BALANCE §12's numbers, and `ComboCounter` reads them — no stack cap, and
+the per-stack bonus reduced from 2% to **1%** to pay for it. BALANCE §13's "Legendary excluded entirely
+— guaranteed-drop only" needs no code, because the weighted pool does not exist yet (Milestone 4) and
+this relic is reachable only through the vault.
+
+**The Bow's Deadeye's Promise and the Greatsword's Mountain's Fall are not authored.** Both need a system
+that is unwritten — the Bow's Charge Shot and the Greatsword's Ultimate — so a vault entered with either
+weapon logs a warning and pays nothing. That is a build gap, not a design question.
+
+### 21.3 Divergences that need confirming or overruling
+
+1. **The vault grants; it does not offer.** §8 says "guaranteed Legendary-tier upgrade *offer*". The
+   three-card offer panel is Milestone 4 and does not exist, and with exactly one guaranteed Legendary
+   there is nothing to choose between — a one-card panel would be ceremony around a grant.
+   `VaultReward.Granted` fires with the upgrade, so the real panel takes that seam over later.
+2. **The payout lands on the clear, not on a touch.** The pedestal is a prop that reads the room's state;
+   she does not interact with it. §8 does not say which, and there is no interaction system (the same gap
+   Trapped Souls will hit).
+3. **The key is credited on the killing blow, not dropped.** `KeyReward` mirrors `XPReward` exactly:
+   there is **no pickup system anywhere in the project**, and building the first one inside a room type
+   would be a second objective smuggled in. §8's wording is "granted by defeating a rare elite spawn",
+   which this is literally. When XP orbs land, a key on the ground is the same job.
+4. **The vault is a dead end with a single floor door.** §8 calls a Secret Floor a detour off the route,
+   not a room on it, so there is nothing to walk through to. Every other room has two doors. **Say so if
+   a vault is meant to rejoin the floor** rather than being backtracked out of.
+5. **The elite that drops the key appears in no room.** `KeyReward` is on `DeepWarden.prefab`, but §19.1
+   deliberately excluded the Warden from standard pool rooms, no room places one, and there is no floor
+   sequencing to put one on the way. In a real run the key currently has **no source** — it is reachable
+   only from the sandbox's spawner or its debug button. Filling this needs the floor loader, not a design
+   ruling, but it means the whole gate is untested end to end as a *player* experience.
+
+### 21.4 Invented numbers — no design doc specifies any of these
+
+| Thing | Value | Why |
+|---|---|---|
+| Room footprint | **22×16** | LEVEL_DESIGN §2 asks a vault for function over layout novelty and gives no size. Deliberately the **smallest room in the game** — Combat Room 28×16, Wave Room 32×18 — because a vault is one fight in one chamber, not a hall |
+| Encounter | 6 enemies, **190 HP** | 1.27× room 01's 150, derived the way §19.1 derived 260; BALANCE has no vault row |
+| Key drop | **1** per elite | §8 gives no drop rate. A *chance* to drop would make the elite's entire reward invisible on the roll that fails |
+| Keys at run start | **0** | Non-zero is the testing shortcut only |
+| Interior posts | **4**, single-tile | §2's "at least 2 positioning zones", built as a character difference: an open middle lane for Bow kiting and Greatsword whiff-punish, four posts giving the Katana line-of-sight breaks to close through. 5 tiles apart, ≥2 floor tiles from any wall, so §13.2's no-pathfinding rule holds |
+| Spawn markers | **6** — 4 corners, 2 mid-edge | Farthest is **9.0 units** from the entry band, inside even the Cave Crawler's 10-unit aggro radius, so `WaveSpawner`'s cycling fallback is unreachable here. *(The layout's own comment first claimed 8 and 5-tile post clearance; both were written blind, and both are corrected to the measured values.)* |
+| Lock volume | 2 × 2.4 units | Wider and taller than the 1×2 doorway on purpose: the door's barrier stops her *before* the gap, so a volume the size of the gap is one she can never reach |
+
+### 21.5 One engineering shape with a design consequence
+
+**Relics live on the weapon asset**, as `RelicSpec` beside the `ChargeSpec` and `UltimateBuffSpec` that
+are already there — not in a relic registry keyed by weapon type. That is what lets the vault pay out
+without ever naming a weapon or a relic, and it means adding the Bow's relic later touches no room code.
+The consequence for design is small but real: **a relic is now part of a weapon's definition**, so if a
+relic is ever meant to be weapon-agnostic, or a weapon to have two, that shape has to change.
+
+**The interior wall is load-bearing, not decoration.** `VaultDoor` seals on `RoomState.Fighting` and
+reopens on the clear. This is not flavour: `EnemyChase` has no pathfinding (§13.2), so a guard following
+her back through the 1-wide doorway jams on the wall and the room never unlocks. Widening the gap is not
+a substitute, and neither is removing the wall.
+
+### 21.6 The same two §3 gaps rooms 01 and 02 have
+
+No cracked tiles and no breakable wall, so the vault is **not LEVEL_DESIGN §3 compliant** either. §3
+wants 2–4 cracked tiles per Upper Caves room and at least one breakable wall per biome; the cracked
+micro-system is still unbuilt, the breakable wall has been *possible* since §14, and now **three** rooms
+lack one. A vault is the most obvious place in the game for a Dig-Dash breakable wall — an alternate way
+in that costs no key — and that would be a design decision, not a fix.
+
+### Still outstanding, and unchanged by this
+
+**There is still no player death or run-end**, and the vault is the worst room yet for it: she is locked
+in a 22×16 chamber with two Brutes, and at 0 HP she is shoved around by enemies whose deaths are the only
+thing that opens the door. Every room type added since §13 has made this louder.
+
+### What a human still has to check
+
+The key drop crediting on a Warden kill; the door consuming exactly one key and refusing to open on
+zero; the seal holding for the whole fight; the payout arriving once on the clear and not again on a
+re-arm; and whether 190 HP in 22×16 is a fight worth a key — which is a feel judgement, and **BALANCE
+§8's 30–60 s target has now gone unmeasured for three rooms running**.

@@ -51,4 +51,8 @@ MonoBehaviour:
     DamageBonus: 0.5
     AttackSpeedBonus: 0.4
     MoveSpeedBonus: 0.15
+  relic:
+    Offer: {fileID: 11400000, guid: 609ddabc3e22efe41b2634ebb25bb0ff, type: 2}
+    ComboOverflow: 1
+    ComboBonusPerStack: 0.01
   modifiers: []

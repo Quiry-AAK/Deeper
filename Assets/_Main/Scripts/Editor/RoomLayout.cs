@@ -33,6 +33,8 @@ namespace Deeper.EditorTools
         /// `#` wall   `.` floor   `O` interior post (wall)   `D` door gap (floor; a RoomDoor fills it)
         /// `=` entry trigger footprint (floor)   `c` reserved cracked-tile zone (floor, nothing built)
         /// `P` player start   `0`-`9` spawn points
+        /// `V` key-gated vault door gap (floor; a RoomDoor plus a VaultDoor lock fill it)
+        /// `T` the Secret Vault's payout pedestal (floor)
         /// </summary>
         public const char Wall = '#';
         public const char Post = 'O';
@@ -167,7 +169,7 @@ namespace Deeper.EditorTools
             }
 
             int width = map[0].Length;
-            const string legend = "#.OD=cP0123456789";
+            const string legend = "#.OD=cPVT0123456789";
 
             for (int row = 0; row < map.Length; row++)
             {

@@ -43,11 +43,23 @@ namespace Deeper.Rooms
         [SerializeField] private RoomDoor[] doors;
 
         /// <summary>
-        /// Raised once, the frame the last enemy dies. Nothing subscribes yet: this is the hook the
-        /// floor loader will use to advance to the next room, and it is deliberately the only line
-        /// in this pass written for something that does not exist.
+        /// Raised once, the frame the last enemy dies. This is the hook the floor loader will use to
+        /// advance to the next room — still unbuilt, still deliberately the only line written for
+        /// something that does not exist.
         /// </summary>
         public event Action Cleared;
+
+        /// <summary>
+        /// Raised on every transition, with the state just entered. Added for the Secret Vault,
+        /// whose key-gated inner door has to seal when the fight starts and unseal when it ends —
+        /// <see cref="Cleared"/> alone cannot express "the room just locked", and polling
+        /// <see cref="State"/> every frame would hide the transition rather than report it.
+        ///
+        /// Separate from <see cref="Cleared"/> rather than replacing it: that one is a named
+        /// contract the floor loader is written against, and collapsing the two would make every
+        /// future subscriber filter for the one transition it cares about.
+        /// </summary>
+        public event Action<RoomState> StateChanged;
 
         private RoomState _state = RoomState.Armed;
 
@@ -96,7 +108,7 @@ namespace Deeper.Rooms
             if (encounter != null) encounter.Clear();
 
             SetDoors(false);
-            _state = RoomState.Armed;
+            SetState(RoomState.Armed);
         }
 
         /// <summary>Called by <see cref="RoomEntry"/> when the player crosses into the room.</summary>
@@ -108,7 +120,7 @@ namespace Deeper.Rooms
             // synchronously — an empty or misauthored wave array clears the moment it starts — and
             // the handler's Fighting guard has to already be satisfied when that happens, or the
             // room would lock itself and never open.
-            _state = RoomState.Fighting;
+            SetState(RoomState.Fighting);
             SetDoors(true);
 
             if (encounter != null) encounter.Begin();
@@ -118,7 +130,7 @@ namespace Deeper.Rooms
         {
             if (_state != RoomState.Fighting) return;
 
-            _state = RoomState.Cleared;
+            SetState(RoomState.Cleared);
             SetDoors(false);
 
             // The doors open on the killing blow, not once the bodies are gone: EnemyDeath holds a
@@ -126,6 +138,12 @@ namespace Deeper.Rooms
             // second the room is open with enemies still visibly falling over in it. That is the
             // right feel and is not a bug.
             if (Cleared != null) Cleared();
+        }
+
+        private void SetState(RoomState next)
+        {
+            _state = next;
+            if (StateChanged != null) StateChanged(next);
         }
 
         private void SetDoors(bool shut)

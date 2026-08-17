@@ -4311,6 +4311,7 @@ MonoBehaviour:
   resetPlayerKey: 96
   gauge: {fileID: 2119549392}
   playerHealth: {fileID: 2213790331995636207}
+  playerKeys: {fileID: 0}
   playerStart: {fileID: 0}
 --- !u!4 &910391366
 Transform:
@@ -7470,6 +7471,7 @@ MonoBehaviour:
   roomPrefabs:
   - {fileID: 1720623167024448493, guid: fb80d3a3b7c790c49af6f16063a81e3f, type: 3}
   - {fileID: 4334781843836501678, guid: 5b7fa6b2b056a1541b68d25a940ec098, type: 3}
+  - {fileID: 3535807915126249366, guid: e53003d1177ce004d9e7497b644a5024, type: 3}
   mountPoint: {fileID: 1651258543}
   startIndex: 0
   roomControls: {fileID: 868593464}

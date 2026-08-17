@@ -48,13 +48,15 @@ still not one scene per mechanic — it is turning groups of it into prefabs and
 | `Main Camera` | `Camera`, `CameraRig` | Follow + look-ahead + impact shake |
 | `Global Light 2D` | `Light2D` | Targets sorting layers `Default`, `Actors`, `Overlay` — an untargeted layer renders black |
 | `Player` | The player rig | `Prefabs/Player.prefab`, starts at **(4.5, 8.5)** — the room's walk-in position, west of the entry band |
-| `Level` | `Grid`, plus the original `Floor` / `Walls` tilemaps **switched off** | **Room prefabs mount here.** The hand-painted 28×16 tilemaps are kept but inactive; the room prefab below replaced them |
-| └─ `CombatRoom_UpperCaves_01` | The first room type | `Prefabs/Rooms/CombatRoom_UpperCaves_01.prefab` — its own `Grid`, tilemaps, two doors, entry volume and encounter |
+| `Level` | `Grid`, plus the original `Floor` / `Walls` tilemaps **switched off** | **Room prefabs mount here.** The hand-painted 28×16 tilemaps are kept but inactive; a room prefab replaced them. Only **one room is mounted at a time** — `RoomSelector` swaps them |
+| └─ *(one room prefab)* | Whichever room the selector loaded | Each brings its own `Grid`, tilemaps, doors, entry volume and encounter. Three exist: `CombatRoom_UpperCaves_01` (1 wave of 6), `WaveRoom_UpperCaves_02` (3 waves, 12), `SecretVault_UpperCaves_01` (key-gated, 1 wave of 6) |
 | `HUDCanvas` | `UltimateGaugeHUD` | The *shipped* HUD — gauge + combo readout |
 | `EventSystem` | Input System UI module | |
 | `TestHarness` | — | Everything test-only, in one group that can be deleted in one click |
 | ├─ `Dummies` | `TestSpawner` | **The room starts empty** — `F4` spawns |
-| ├─ `RoomControls` | `TestRoomControls` | `F12` re-arms the Combat Room |
+| ├─ `RoomControls` | `TestRoomControls` | `F12` re-arms the mounted room, and supplies its status line |
+| ├─ `RoomSelector` | `TestRoomSelector` | Loads **one** room prefab at a time under `Level`, moves the player to its `PlayerStart`, re-points `RoomControls`. **Not the floor loader** — no sequencing, no bag |
+| ├─ `TestConfig` | `TestConfigHUD` | The clickable debug panel, on **backquote/tilde**. Every cheat and the room list. Exists because the function keys ran out |
 | ├─ `CaveCrawlers` | `TestSpawner` | `F6`. Max 20 alive |
 | ├─ `RockSlingers` | `TestSpawner` | `F7`. Max 10. Ring radius 6, just outside its 5.5 stop distance, so it does not walk backwards the moment it spawns |
 | ├─ `TunnelBrutes` | `TestSpawner` | `F8`. Max 6 |
@@ -100,8 +102,21 @@ slots. Sharing `F11` across all four `clearKey` fields needs no code change, bec
 `TestSpawner` reads `Keyboard.current` independently and they all fire on the same press. `F5` still
 clears **only** dummies.
 
-**The function keys are now full.** `F12` went to the room. Anything added after this needs a modifier
-chord, a debug menu, or a real rethink of the harness — there is no next key.
+**The function keys are full, and the debug menu is the answer.** `F12` went to the room and there is no
+next key, so `TestConfigHUD` now holds a clickable panel on **backquote/tilde** with a button for every
+cheat plus the room list. **New harness features cost a button, not a key** — and every button calls the
+same public method its key calls, so there is one implementation per cheat, never two.
+
+| Panel button | Does | Why it has no key |
+|---|---|---|
+| `+ Secret Key` | Grants one Secret Vault key (`RunKeys.GrantSecretKey`) | Reaching the vault chamber otherwise means finding and killing a Deep Warden first. The function row was already full when this was added |
+
+**One hazard the panel introduced.** Every player system reads its `InputAction` straight off the shared
+`InputActionAsset`, and UGUI's `EventSystem` is nowhere in that path — so a click on a debug button would
+*also* swing the katana. `TestConfigHUD` disables the whole `Player` action map while the panel is open
+and re-enables it on close **and** in `OnDisable`; a leaked disable looks exactly like an input-system
+bug. It also restores the hardware cursor, which `PlayerAim` hides, or the panel is there but
+unclickable.
 
 **There is deliberately no slow-motion key.** `HitStop` restores `Time.timeScale` to a fixed normal
 after every landed hit, so a debug slow-mo would snap back to 1 on the next connect and read as a
@@ -121,10 +136,20 @@ broken key. Use the editor's own pause/step, or `HitStop`'s serialized fields.
   **`spawnOnStart` is 0**: the room starts empty by owner direction. Set it for a room that comes up
   populated. Any actor hand-placed as a child of the spawner is adopted at `Start`, so it is counted
   in the readout and removed by Clear like everything else.
-- **`TestControls`** — the player-side cheats above.
-- **`TestRoomControls`** — re-arms the Combat Room, and supplies its `ROOM state / WAVE n/N / LEFT k`
+- **`TestControls`** — the player-side cheats above, plus `GrantSecretKey`, which is a panel button
+  rather than a key.
+- **`TestRoomControls`** — re-arms the mounted room, and supplies its `ROOM state / WAVE n/N / LEFT k`
   line to the overlay. Separate from `CombatRoom` because that is shipped content and must never read
-  `Keyboard.current`; separate from `TestControls` because it is a different job.
+  `Keyboard.current`; separate from `TestControls` because it is a different job. In a **Secret Vault**
+  the line grows `KEYS n / VAULT OPEN|LOCKED / PAYOUT <relic>`, and only there — a readout that always
+  shows every system's state is one nobody reads, which is the same reason the wave counter is quiet
+  outside a Wave Room. It finds those parts by searching the room it is pointed at, because the room is
+  instantiated at runtime.
+- **`TestRoomSelector`** — mounts one room prefab at a time. **It is not the floor loader**: nothing
+  sequences rooms and nothing draws from a reshuffling bag. `CombatRoom.Cleared` is still the untouched
+  hook for that.
+- **`TestConfigHUD`** — the clickable panel, built by `Deeper/Build Test Config HUD` rather than
+  assembled by dragging, for the reason `BuildRunHUD` and `BuildRoomPrefab` are builders.
 - **`TestOverlay`** — the on-screen panel: the key legend, plus `HP / ULT % / COMBO / Dummies`. It
   exists because the game has no HP bar and no damage numbers yet, so "did that land, and for how
   much" is otherwise invisible. Refreshes on a 0.1 s unscaled interval, not per frame — this scene is
@@ -165,10 +190,11 @@ the reusable halves.
   `ActorPool` now, so a reused instance never runs `Awake` a second time; release deactivates and
   get reactivates, which is what makes `OnEnable` the right hook. `Alive` counts *active* instances,
   because pooled ones are deactivated children rather than nulls.
-- **A room** — drop the room prefab under `Level` and switch the current tilemaps off. Rooms are
-  prefabs by design (LEVEL_DESIGN), so this is the same operation the real floor loader will do.
-  *(Done once, for `CombatRoom_UpperCaves_01`. `Level/Floor` and `Level/Walls` are the switched-off
-  originals.)* Three things a second room has to get right, all learned building the first:
+- **A room** — author its map as a `Scripts/Editor/Layout_*.cs` file, add a menu item to
+  `BuildRoomPrefab`, build it, then append it to `RoomSelector`'s `roomPrefabs` list. **Do not drag it
+  under `Level` by hand any more** — the selector owns what is mounted, and a hand-placed room plus a
+  loaded one puts two `Grid`s on the same tiles. *(`Level/Floor` and `Level/Walls` are the switched-off
+  hand-painted originals.)* Three things a room has to get right, all learned building the first:
   the room root must sit at **(0,0,0)** with cell size 1 so its own `Grid` cannot disagree with
   `Level`'s; interior cover must be **isolated convex posts** with clearance, because `EnemyChase`
   has no pathfinding and a concave pocket traps an enemy into a room that never unlocks; and spawn
@@ -177,7 +203,20 @@ the reusable halves.
 - **A room-scoped trigger volume** — put it on layer **8 `RoomTrigger`**, never Default. `ThrownRock`
   despawns on entering anything in its blocking mask, and that mask is Default — a Default-layer
   volume across a room silently eats every Rock Slinger projectile crossing it. Demonstrated both
-  ways; see the engineering plan's *First Combat Room*.
+  ways; see the engineering plan's *First Combat Room*. This is why `VaultDoor` is a **child** of its
+  door rather than a trigger on the door itself: the door keeps its solid barrier on Default while the
+  lock volume sits on 8.
+- **A room the player needs a resource to enter** — the resource is a component on the **player**
+  (`RunKeys`), never on the room, and the room asks for it via `GetComponentInParent` on whatever
+  tripped the volume. The whole rig is on layer 6, so the collider that trips a lock can be her reticle
+  or her hitbox rather than the body carrying the count. Grant the resource from the panel while tuning
+  the room, and verify the drop separately — `VaultDoor.ForceUnlock` exists so the two can be tested
+  apart.
+- **Room code must never use `RigRefs.Find`.** It searches from `transform.root`, and for anything a
+  spawner made that root is the *spawner*. Rooms find the player by tag (`CameraRig` and `EnemyTarget`
+  do it the same way) and find their own parts with `GetComponentInParent`. A room prefab cannot hold an
+  Inspector reference to a player who lives outside it, which is the one case where searching is the
+  design rather than the fallback.
 - **Upgrades / curses** — they apply through `PlayerStats.SetSource(key, modifiers)`, so a test
   granter belongs next to `TestControls` as its own component (one job each), not as more keys bolted
   onto it.
@@ -209,3 +248,9 @@ clean — 0 errors, 0 warnings):
 **Not verified — needs your eyes:** actual key presses. Synthetic input never reaches play mode
 (`01-VERIFICATION.md` §2), so F1–F10 were exercised through their public methods, not through the
 keyboard.
+
+**Also not verified — the Secret Vault.** `SecretVault_UpperCaves_01`, the `+ Secret Key` button and the
+`KEYS / VAULT / PAYOUT` readout were written and imported but never run. The table above predates them.
+What needs checking is listed in the engineering plan's *Secret Vault* section; the short version is the
+key drop off a pooled Warden, the door spending exactly one key, the seal holding for the fight, and the
+payout firing once.

@@ -1,4 +1,5 @@
 using Deeper.Combat;
+using Deeper.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -43,6 +44,7 @@ namespace Deeper.Testing
         [Header("Refs — found in the scene when empty")]
         [SerializeField] private UltimateGauge gauge;
         [SerializeField] private Damageable playerHealth;
+        [SerializeField] private RunKeys playerKeys;
 
         [Tooltip("Where Reset Player puts her. Leave empty to use wherever she stands when Play " +
                  "starts.")]
@@ -76,6 +78,7 @@ namespace Deeper.Testing
 
             if (gauge == null) gauge = player.GetComponentInChildren<UltimateGauge>(true);
             if (playerHealth == null) playerHealth = player.GetComponentInChildren<Damageable>(true);
+            if (playerKeys == null) playerKeys = player.GetComponentInChildren<RunKeys>(true);
             _playerBody = player.GetComponent<Rigidbody2D>();
         }
 
@@ -113,6 +116,19 @@ namespace Deeper.Testing
         public void HealPlayer()
         {
             if (playerHealth != null) playerHealth.Refill();
+        }
+
+        /// <summary>
+        /// Hands her a Secret Vault key without making her find a Deep Warden first.
+        ///
+        /// **No key binding, on purpose.** F1-F3 are the player cheats, F4-F9 the spawners, F10 the
+        /// readout and F12 the room re-arm — the function row is full, which is exactly why
+        /// <see cref="TestConfigHUD"/> exists. New harness features cost a button now.
+        /// </summary>
+        [ContextMenu("Grant Secret Key")]
+        public void GrantSecretKey()
+        {
+            if (playerKeys != null) playerKeys.GrantSecretKey();
         }
 
         [ContextMenu("Reset Player")]

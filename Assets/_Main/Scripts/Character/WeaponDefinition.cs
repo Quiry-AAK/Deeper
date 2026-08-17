@@ -1,6 +1,7 @@
 using System;
 using Deeper.Animation;
 using Deeper.Stats;
+using Deeper.Upgrades;
 using UnityEngine;
 
 namespace Deeper.Character
@@ -158,6 +159,39 @@ namespace Deeper.Character
         public float MoveSpeedBonus;
     }
 
+    /// <summary>
+    /// This weapon's Relic — CONTENT_DESIGN §4's Legendary tier, one per weapon, "only offered when
+    /// that weapon is equipped" and never in a normal draw (BALANCE §13).
+    ///
+    /// **Weapon data rather than a relic registry**, for the reason <see cref="ChargeSpec"/> and
+    /// <see cref="UltimateBuffSpec"/> are: §4's "only when that weapon is equipped" becomes literally
+    /// true if the relic lives on the weapon, and the Secret Vault can then pay out without ever
+    /// naming a weapon or a relic. A lookup table keyed by <see cref="WeaponType"/> would be the
+    /// same data with a way to disagree with itself.
+    ///
+    /// Each field below names the one system that reads it, and a weapon leaves the others at zero —
+    /// the same shape as a weapon whose Ultimate is an Attack still carrying an
+    /// <see cref="UltimateBuffSpec"/>. Only the Katana's fields exist so far, because it is the only
+    /// weapon whose relic touches a system that is built: Deadeye's Promise needs the Bow's Charge
+    /// Shot and Mountain's Fall needs the Greatsword's Ultimate, and neither is written.
+    /// </summary>
+    [Serializable]
+    public struct RelicSpec
+    {
+        [Tooltip("The Legendary upgrade handed over. Also what the HUD's upgrade strip shows. " +
+                 "Empty means this weapon has no relic authored yet, and a vault pays nothing.")]
+        public UpgradeDefinition Offer;
+
+        [Tooltip("Endless Edge (Katana): Combo Counter stacks climb past the cap. Read by " +
+                 "ComboCounter; meaningless on a weapon without one.")]
+        public bool ComboOverflow;
+
+        [Tooltip("Endless Edge: the reduced per-stack bonus that pays for the missing cap — " +
+                 "BALANCE §12 gives 2% -> 1%, so 0.01. Read by ComboCounter, and only when Combo " +
+                 "Overflow is on.")]
+        public float ComboBonusPerStack;
+    }
+
     [CreateAssetMenu(fileName = "Weapon_", menuName = "Deeper/Character/Weapon", order = 1)]
     public sealed class WeaponDefinition : ScriptableObject
     {
@@ -205,6 +239,11 @@ namespace Deeper.Character
             Duration = 8f, DamageBonus = 0.5f, AttackSpeedBonus = 0.4f, MoveSpeedBonus = 0.15f,
         };
 
+        [Header("Relic — CONTENT_DESIGN §4, BALANCE §12")]
+        [Tooltip("The Legendary this weapon's run can be given. Guaranteed-drop only: the Secret " +
+                 "Vault, a Mini-Boss drop, or a purchased Hub guarantee — never a normal draw.")]
+        [SerializeField] private RelicSpec relic;
+
         [Header("Effects")]
         [Tooltip("Per-attack damage is timing-table data (BALANCE §2), not a stat block — most weapons carry none.")]
         [SerializeField] private StatModifier[] modifiers = new StatModifier[0];
@@ -235,6 +274,12 @@ namespace Deeper.Character
 
         /// <summary>Whether and how this weapon's Heavy Strike charges on a held button.</summary>
         public ChargeSpec HeavyCharge => heavyCharge;
+
+        /// <summary>
+        /// This weapon's Legendary. <c>Offer</c> is null on a weapon whose relic is not authored,
+        /// which is the state the Bow and Greatsword are in.
+        /// </summary>
+        public RelicSpec Relic => relic;
 
         /// <summary>
         /// Phase timings for one action. This is the seam <c>IWeapon.GetAttackTiming()</c> will

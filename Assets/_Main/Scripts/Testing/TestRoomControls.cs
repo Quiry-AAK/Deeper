@@ -1,3 +1,4 @@
+using Deeper.Player;
 using Deeper.Rooms;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -32,6 +33,10 @@ namespace Deeper.Testing
                  "room in, so this is a starting value rather than a fixed one.")]
         [SerializeField] private CombatRoom room;
 
+        private VaultDoor _vault;
+        private VaultReward _reward;
+        private RunKeys _keys;
+
         /// <summary>Lines for the on-screen legend, built from the same key field the input reads.</summary>
         public string[] Legend
         {
@@ -45,15 +50,37 @@ namespace Deeper.Testing
             {
                 if (room == null) return "ROOM none";
 
-                return "ROOM " + room.State +
-                       "   WAVE " + room.Wave + "/" + room.WaveCount +
-                       "   LEFT " + room.EnemiesAlive;
+                string line = "ROOM " + room.State +
+                              "   WAVE " + room.Wave + "/" + room.WaveCount +
+                              "   LEFT " + room.EnemiesAlive;
+
+                // Only inside a vault, for the reason the wave counter is hidden outside a Wave
+                // Room: a readout that always shows every system's state is one nobody reads.
+                if (_vault != null)
+                {
+                    line += "   KEYS " + (_keys != null ? _keys.SecretKeys.ToString() : "?") +
+                            "   VAULT " + (_vault.IsUnlocked ? "OPEN" : "LOCKED");
+                }
+
+                if (_reward != null)
+                {
+                    line += "   PAYOUT " + (_reward.HasPaid
+                        ? "taken"
+                        : (_reward.Payout != null ? _reward.Payout.DisplayName : "none authored"));
+                }
+
+                return line;
             }
         }
 
         private void Awake()
         {
             if (room == null) room = FindFirstObjectByType<CombatRoom>();
+
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null) _keys = player.GetComponentInChildren<RunKeys>(true);
+
+            BindVault();
         }
 
         /// <summary>
@@ -65,6 +92,18 @@ namespace Deeper.Testing
         public void Bind(CombatRoom target)
         {
             room = target;
+            BindVault();
+        }
+
+        /// <summary>
+        /// Picks up the vault parts of whichever room just loaded, and drops them for a room that
+        /// has none. Searched rather than wired because the room is instantiated at runtime — the
+        /// same reason <see cref="Bind"/> exists at all.
+        /// </summary>
+        private void BindVault()
+        {
+            _vault = room != null ? room.GetComponentInChildren<VaultDoor>(true) : null;
+            _reward = room != null ? room.GetComponentInChildren<VaultReward>(true) : null;
         }
 
         private void Update()

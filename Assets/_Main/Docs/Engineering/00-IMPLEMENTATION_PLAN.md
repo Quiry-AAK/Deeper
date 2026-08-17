@@ -672,7 +672,9 @@ enemies deliberately overlapping her confirms the sort order is what the numbers
 - **The Deep Warden has no aura layer.** ART_DIRECTION §4 specifies "palette-swap + 1 aura VFX layer";
   the tint ships, the aura does not. `AuraVisuals` resolves `UltimateBuff` and `AttackStateMachine`,
   so it is player-coupled and cannot be pointed at an enemy without being rewritten.
-- **No key drop.** The Warden's Secret Floor key needs the Secret Vault / key system, which does not exist.
+- ~~**No key drop.**~~ **Built** — `KeyReward` is on `DeepWarden.prefab` and grants 1 `SecretKey` on
+  death. See *Secret Vault* below. The gate is still untested as a player experience, because no room
+  places a Warden and there is no floor sequencing to put one on the way.
 - **Enemy-vs-enemy collision is unfiltered.** Layer 7 collides with itself, so a crowd will jostle.
   If it reads badly the fix is the collision matrix, not code.
 - **Feel is unjudged.** Whether a 0.35 s Crawler telegraph is actually dodgeable at speed needs a human
@@ -1448,7 +1450,8 @@ partial wedge, and a fully darkened slot.
 - ~~Upper Caves enemy roster~~ — **done ahead of this milestone**, see *Biome 1 basic enemies*. All four exist on placeholder art. Only the Collapsed King is left.
 - Upper Caves room layouts: 6 Combat Rooms (1–2 flagged `IsWaveRoom`), 2 Reward Rooms (LEVEL_DESIGN §2–3)
 - Mini-Boss: The Collapsed King, with weapon-check mechanic (CORE_SYSTEMS §11)
-- Secret Vault room + key-drop logic (CORE_SYSTEMS §8)
+- ~~Secret Vault room + key-drop logic (CORE_SYSTEMS §8)~~ — **built ahead of this milestone**, see
+  *Secret Vault* below. Not yet verified in play mode
 
 **Dependencies:** Milestone 2 (all 3 weapons must exist — room layouts need to accommodate all 3, per LEVEL_DESIGN §2 positioning-zone requirement).
 
@@ -1458,10 +1461,15 @@ partial wedge, and a fully darkened slot.
 - ~~`Scripts/Hazards/HazardFront.cs`~~, ~~`Scripts/Hazards/UpperCavesHazard.cs`~~ — **not to be written; the Rising Hazard is cut.** The cracked-tile collapse survives as a small room-authored component (`Scripts/Rooms/CrackedTile.cs` or similar), not as a hazard skin
 - ~~`Scripts/Enemies/RockSlinger.cs`, `TunnelBrute.cs`, `DeepWarden.cs`~~ — **these were never written, on purpose.** The roster shipped as composed components plus one `EnemyDefinition` asset each; a per-enemy class would have held nothing. See *Biome 1 basic enemies*.
 - `Scripts/Enemies/BossPhaseController.cs` (weapon-check read, reused by all bosses per CORE_SYSTEMS §11)
-- `Scripts/Rooms/SecretVault.cs`, `Scripts/Player/Inventory.cs` (SecretKey flag)
+- ~~`Scripts/Rooms/SecretVault.cs`, `Scripts/Player/Inventory.cs` (SecretKey flag)~~ — **built, and
+  neither file has that name.** There is no `SecretVault` room class at all: a vault is a `CombatRoom`
+  plus `VaultDoor` (the lock) and `VaultReward` (the payout), because a second room class would have
+  re-implemented the lifecycle it already has. And `Inventory` was the wrong name to revive — the
+  inventory system was deleted at the owner's direction, so the key count lives in
+  `Scripts/Player/RunKeys.cs`. See *Secret Vault* below
 - Room prefabs/scenes under `Assets/_Main/Scenes/` or `Prefabs/Rooms/`
 
-**Implementation order:** room loading + lock logic → reshuffling-bag draw → cracked tiles → 6 Combat Room layouts → Mini-Boss + weapon-check → Secret Vault + key drop → full-biome playtest. (3 base enemies are already done; Reward Rooms and the Hazard Front are cut.)
+**Implementation order:** room loading + lock logic → reshuffling-bag draw → cracked tiles → 6 Combat Room layouts → Mini-Boss + weapon-check → ~~Secret Vault + key drop~~ → full-biome playtest. (3 base enemies are already done; the lock logic, 2 of the 6 layouts and the Secret Vault are done out of order; Reward Rooms and the Hazard Front are cut.) **What is actually left in this milestone is room *loading* and the reshuffling bag, the cracked-tile micro-system, 4 more Combat Room layouts, and the Collapsed King.**
 
 **Definition of Done:** Full Biome 1 clear is playable start to finish with all 3 weapons. Matches Design/07 Phase 3 exit criteria (MVP.md's largest content-authoring risk — see below).
 
@@ -1702,3 +1710,117 @@ legend — all fixed in the builder rather than in the output, then re-shot.
   is still the untouched hook.
 - **`AttackStateMachine`'s lunge still ticks its timer on `Update`** — unrelated to this pass, still the
   same shape as the dash bug fixed earlier, still deliberately left alone.
+
+---
+
+## Secret Vault — owner-directed, 2026-08-16
+
+**Status:** 🟡 Built and imported, **not verified in play mode.** Design consequences and invented
+numbers are in `Docs/00-DESIGN_CHANGE_BRIEF.md` §21.
+
+`/implement-room-type Secret Vault`. Unlike the Wave Room above, this **is** a new type: CORE_SYSTEMS §8
+gives a Secret Floor a locked door, a `SecretKey` from a rare elite, and a payout, and none of the three
+existed. It is also the first room in the project whose gate is a *player resource* rather than a
+trigger volume.
+
+**Built:**
+- [x] `Scripts/Player/RunKeys.cs` — the run's key count. Run-scoped, reset in `OnEnable`.
+- [x] `Scripts/Enemies/KeyReward.cs` — grants a key on death. On `DeepWarden.prefab`, 1 key.
+- [x] `Scripts/Rooms/VaultDoor.cs` — the lock. Reads the key, seals for the fight, reopens on the clear.
+- [x] `Scripts/Rooms/VaultReward.cs` — the payout. Hands over the equipped weapon's relic on the clear.
+- [x] `Scripts/Character/WeaponDefinition.cs` — `RelicSpec`, beside the existing `ChargeSpec` and
+      `UltimateBuffSpec`. Authored on `Weapon_Katana.asset`.
+- [x] `Data/Upgrades/Upgrade_EndlessEdge.asset` — Legendary tier, BALANCE §12's numbers.
+- [x] `Scripts/Combat/ComboCounter.cs` — reads the relic: no cap, per-stack bonus 2% → 1%.
+- [x] `Scripts/Rooms/CombatRoom.cs` — gained `StateChanged`.
+- [x] `Scripts/Editor/Layout_SecretVault_01.cs` + `BuildRoomPrefab.BuildSecretVault` +
+      `Prefabs/Rooms/SecretVault_UpperCaves_01.prefab` — 22×16, 4 posts, 1 floor door, 1 vault door,
+      6 markers, one wave of 6 for 190 HP.
+- [x] `Scripts/Editor/PlaceholderRoomArt.cs` — vault door (iron, brass lock plate) and pedestal.
+- [x] `Scripts/Editor/RoomLayout.cs` — legend gained `V` and `T`.
+- [x] Harness: `TestControls.GrantSecretKey` + its config-HUD button, `TestRoomControls` vault readout,
+      the vault added to the room selector's list.
+
+### There is no `SecretVault` room class, on purpose
+
+The plan's Milestone 3 file list named one. A vault is a **`CombatRoom` plus two small components**: the
+lifecycle, the doors, the wave and the clear event already exist and already work, and the vault needs
+exactly two things on top — a lock that decides when one door opens, and a prize that fires on the
+clear. A `SecretVault` subclass or sibling would have re-implemented the collider-and-sprite toggle that
+`RoomDoor` *is*, giving two answers to "what does a shut door look like". Same reason `RoomDoor` and
+`CombatRoom` were split in the first place, one level down.
+
+`Inventory` was the other name in that list, and reviving it would have read as the deleted inventory
+system coming back. `RunKeys` holds one count and nothing else; a second key type gets a second field,
+not a bag.
+
+### `CombatRoom` needed a second event, not a bigger one
+
+`Cleared` cannot express "the room just locked", and the vault door has to seal on that transition —
+because `EnemyChase` has no pathfinding, so a guard following her back through the 1-wide inner doorway
+jams on the interior wall and the room never unlocks. `StateChanged` is a separate event rather than
+`Cleared` generalised: `Cleared` is a named contract the floor loader is already written against, and
+collapsing the two would make every future subscriber filter for the one transition it wants. Polling
+`State` was the other option and it hides the transition rather than reporting it.
+
+### The relic lives on the weapon asset
+
+`RelicSpec` sits beside `ChargeSpec` and `UltimateBuffSpec` for the reason those do: CONTENT_DESIGN §4's
+"only offered when that weapon is equipped" becomes *literally true* when the relic is weapon data, and
+`VaultReward` can then pay out without ever naming a weapon or a relic. A registry keyed by
+`WeaponType` would be the same data plus a way to disagree with itself.
+
+Two consequences worth knowing:
+- **The trait asks the run, the vault does not reach into the trait.** `ComboCounter` checks whether
+  `RunUpgrades` carries the weapon's relic offer, so the vault stays ignorant of what any relic *does* —
+  and the same relic arriving from a Mini-Boss drop or a Hub guarantee needs no second wiring. The
+  Greatsword's Mountain's Fall will read its own field from `UltimateGauge` the same way.
+- **Only the Katana's relic is authored.** The Bow's needs the Charge Shot and the Greatsword's needs its
+  Ultimate; neither system is written. A vault entered with either weapon logs a warning and pays
+  nothing, which is loud on purpose — a vault that silently pays nothing is indistinguishable from one
+  that has not been reached.
+
+### The lock is a child of the door, and that placement is the layer-8 rule again
+
+`VaultDoor` is a trigger volume on layer **8 `RoomTrigger`**, parented to the door so the door keeps its
+solid barrier on Default. Putting the trigger on the door object itself would put it on Default, where
+`ThrownRock.blockingLayers` despawns every rock thrown through the doorway — the same finding the first
+Combat Room demonstrated. The volume is also **2 × 2.4 units against a 1×2 doorway**, deliberately
+oversized: the door's barrier stops her *before* the gap, so a volume the size of the gap is one she can
+never reach.
+
+### One builder for every room, not a room-type branch
+
+`BuildRoomPrefab` builds vault doors and the pedestal from the same pass it builds everything else — a
+map with no `V` or `T` cells simply produces neither. A `if (isSecretVault)` branch is the thing that
+drifts. The one asymmetry is deliberate and commented at the call site: **the vault door is not in the
+array wired to `CombatRoom.doors`**, because `Arm()` opens everything in that list and would unlock the
+vault every time the room re-armed.
+
+### Not verified — what has to be checked
+
+Written and imported blind, exactly like the HUD and Dig-Dash passes, and those cost four defects
+between them. Nothing below has been observed:
+
+| Check | Why it is the risky one |
+|---|---|
+| Key drop | `KeyReward` resolves `RunKeys` in `OnEnable` and the Warden is pooled — the resolve-per-life path is the one pooling breaks |
+| Door consumes exactly one key | `TryConsumeSecretKey` is called from both `OnTriggerEnter2D` and `OnTriggerStay2D`; the `_unlocked` guard is what stops Stay spending a second key on the next frame |
+| Refuses to open on zero keys | Including that walking into it does not silently consume anything |
+| Seal holds for the whole fight | `StateChanged(Fighting)` → `door.Close()`, and the guards cannot be kited into the antechamber |
+| Payout fires once | On `Cleared`, and **not again** on a re-arm, and not twice if `Cleared` and `StateChanged` both land |
+| `ComboCounter` re-values live stacks | Taking Endless Edge mid-combo should re-price banked stacks, not clear them |
+| 190 HP in 22×16 | Feel. BALANCE §8's 30–60 s has now gone unmeasured for three rooms |
+
+### Outstanding
+
+- **Not run.** This is the first room type to be committed unverified; the brief's §21 says so too.
+- **The key has no source in a real run.** `KeyReward` is on the Warden, but no room places one and
+  there is no floor sequencing — the key is reachable only from the sandbox spawner or its debug button.
+  Needs the floor loader, not a design ruling.
+- **Two of three relics unauthored**, blocked on the Bow and Greatsword existing.
+- **Three rooms now lack cracked tiles and a breakable wall** (LEVEL_DESIGN §3). A vault is the most
+  obvious place in the game for a breakable-wall alternate entrance; that is a design call.
+- **Still no player death / run-end** — and a vault is the worst room yet for it: locked in 22×16 with
+  two Brutes.
+- **`AttackStateMachine`'s lunge still ticks its timer on `Update`.** Untouched again.

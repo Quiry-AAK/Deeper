@@ -179,6 +179,7 @@ namespace Deeper.Testing
                 Add(actionButtonRow, "Fill Ultimate", controls.FillUltimate);
                 Add(actionButtonRow, "Heal", controls.HealPlayer);
                 Add(actionButtonRow, "Reset", controls.ResetPlayer);
+                Add(actionButtonRow, "+ Secret Key", controls.GrantSecretKey);
             }
 
             for (int i = 0; i < spawners.Length; i++)
