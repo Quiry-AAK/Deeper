@@ -72,6 +72,32 @@ namespace Deeper.CameraControl
         /// </summary>
         public Vector3 ShakeOffset { get; private set; }
 
+        /// <summary>
+        /// Puts the camera on its target immediately, discarding the follow lag and any look-ahead
+        /// already built up.
+        ///
+        /// For the one case smoothing gets wrong: the target was *teleported* rather than having
+        /// walked. `FloorLoader` places the player into the run's first room in its own Start, which
+        /// runs after this rig has already positioned itself in Awake from wherever the scene's
+        /// Player prefab happened to sit — so a run would otherwise open on the camera gliding
+        /// across the level for as long as `followSmoothing` takes.
+        ///
+        /// The look-ahead velocity is cleared too, not just the position. Leaving it would have the
+        /// camera drift off the snap on the next frame, which reads as the snap having missed.
+        /// </summary>
+        public void SnapToTarget()
+        {
+            if (target == null) return;
+
+            _velocity = Vector3.zero;
+            _lookAheadCurrent = Vector2.zero;
+            _lookAheadVelocity = Vector2.zero;
+            ShakeOffset = Vector3.zero;
+            _shakeAmount = 0f;
+
+            transform.position = target.position + offset;
+        }
+
         /// <summary>Kicks the camera. Callers pass intensity in world units, typically 0.05-0.3.</summary>
         public void Shake(float amount)
         {

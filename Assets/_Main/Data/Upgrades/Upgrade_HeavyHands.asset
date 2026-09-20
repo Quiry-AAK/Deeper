@@ -16,8 +16,14 @@ MonoBehaviour:
   displayName: Heavy Hands
   description: +3 flat damage, all attacks
   tier: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e9a436099311ebb46b236f957de2a4ac, type: 3}
+  requires: {fileID: 0}
+  excludes: []
   modifiers:
   - stat: 4
     kind: 0
     value: 3
+  summary:
+    Category: 2
+    Value: +3
+    Detail: All attacks

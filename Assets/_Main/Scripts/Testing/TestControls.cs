@@ -11,8 +11,10 @@ namespace Deeper.Testing
     ///
     /// TEST-ONLY — this belongs to `TestScene` and must never end up in a real room. Its whole
     /// reason to exist is that the systems it pokes are gated on purpose: the Ultimate needs 100
-    /// landed hits to charge, and there is no healing in the game at all yet, so tuning either one
-    /// without these keys means replaying the charge every single time.
+    /// landed hits to charge, so tuning it without a key means replaying the charge every single
+    /// time; and now that <see cref="Deeper.Player.PlayerDeath"/> exists and disables her on 0 HP,
+    /// Heal Player has to reverse that too, or a death here — with no death art yet to show it —
+    /// reads as the game freezing.
     ///
     /// Keys are read straight off <see cref="Keyboard"/> rather than through the project's
     /// `.inputactions` asset, on purpose: debug keys must not appear in the player's action map,
@@ -33,8 +35,10 @@ namespace Deeper.Testing
                  "100 hits first.")]
         [SerializeField] private Key fillUltimateKey = Key.F1;
 
-        [Tooltip("Restores the player to full HP. There is no healing in the game yet and no death " +
-                 "handling, so without this a test session ends parked at 0 HP.")]
+        [Tooltip("Restores the player to full HP and, if she died, reverses PlayerDeath's disable " +
+                 "of movement/attacks/dash/aim too — Refill() alone only fixes the HP number, and " +
+                 "there is no death art yet, so a revive-less heal after a death looks exactly like " +
+                 "the game freezing rather than like she came back.")]
         [SerializeField] private Key healPlayerKey = Key.F2;
 
         [Tooltip("Teleports the player back to where she started. Contact damage and lunges push " +
@@ -45,6 +49,9 @@ namespace Deeper.Testing
         [SerializeField] private UltimateGauge gauge;
         [SerializeField] private Damageable playerHealth;
         [SerializeField] private RunKeys playerKeys;
+        [SerializeField] private PlayerXP playerXP;
+        [SerializeField] private PlayerStats playerStats;
+        [SerializeField] private PlayerDeath playerDeath;
 
         [Tooltip("Where Reset Player puts her. Leave empty to use wherever she stands when Play " +
                  "starts.")]
@@ -78,7 +85,10 @@ namespace Deeper.Testing
 
             if (gauge == null) gauge = player.GetComponentInChildren<UltimateGauge>(true);
             if (playerHealth == null) playerHealth = player.GetComponentInChildren<Damageable>(true);
+            if (playerXP == null) playerXP = player.GetComponentInChildren<PlayerXP>(true);
+            if (playerStats == null) playerStats = player.GetComponentInChildren<PlayerStats>(true);
             if (playerKeys == null) playerKeys = player.GetComponentInChildren<RunKeys>(true);
+            if (playerDeath == null) playerDeath = player.GetComponentInChildren<PlayerDeath>(true);
             _playerBody = player.GetComponent<Rigidbody2D>();
         }
 
@@ -116,6 +126,10 @@ namespace Deeper.Testing
         public void HealPlayer()
         {
             if (playerHealth != null) playerHealth.Refill();
+
+            // PlayerDeath.Revive() also refills health itself, but calling both is harmless and
+            // this stays correct even if a future Revive() stops doing that on its own.
+            if (playerDeath != null) playerDeath.Revive();
         }
 
         /// <summary>
@@ -129,6 +143,35 @@ namespace Deeper.Testing
         public void GrantSecretKey()
         {
             if (playerKeys != null) playerKeys.GrantSecretKey();
+        }
+
+        /// <summary>
+        /// Grants exactly the XP the next level costs, so the upgrade offer opens now
+        /// instead of after a wave.
+        ///
+        /// It goes through <c>PlayerXP.Add</c> rather than calling the panel directly, so
+        /// what the cheat exercises is the real trigger: the XP credit, the level-up, the
+        /// queue and the pause. A button that opened the panel would test the panel and
+        /// nothing that leads to it.
+        ///
+        /// **No key binding, on purpose** — the function row is full; see
+        /// <see cref="GrantSecretKey"/>.
+        /// </summary>
+        [ContextMenu("Grant Level")]
+        public void GrantLevel()
+        {
+            if (playerXP == null) return;
+
+            // XPToNextLevel is what remains of the current level, and Add scales its
+            // argument by the XP-gain stat — so a run carrying Quick Study would overshoot
+            // and a curse that cut XP would fall short. Add just over, and let the level
+            // check do the rest.
+            playerXP.Add((playerXP.XPToNextLevel - playerXP.XP) / Mathf.Max(0.01f, XPGain()) + 0.01f);
+        }
+
+        private float XPGain()
+        {
+            return playerStats != null ? playerStats.OreGain : 1f;
         }
 
         [ContextMenu("Reset Player")]

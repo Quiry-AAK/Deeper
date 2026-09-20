@@ -184,3 +184,45 @@ Regenerate — do not patch — when any of these are true:
 - Hazard accent colours used anywhere other than a hazard
 - Illegible silhouette, or detail that only resolves when zoomed in
 - Equipment that drifts by even one pixel against the base body in any direction or frame
+
+---
+
+## 12. Isometric tiles — the shape rule, learned the hard way
+
+Isometric tiles are the one asset class that does not follow §2's 32×32. They are **64×64 canvases
+holding a 2:1 diamond** (64 wide, 32 tall), placed on a Unity isometric `Grid` with `cellSize (2, 1)`
+at 32 PPU.
+
+**Generate floors with `tile_shape: "thin tile"`, and strip the side wall afterwards.**
+
+PixelLab's isometric tiles are little 3D blocks: a diamond top face with a side wall hanging below
+it. That wall lands in exactly the pixels the neighbouring tile's top face occupies, and this
+project's URP `Renderer2D` runs `TransparencySortMode.Default` under an orthographic camera — which
+sorts by Z, so every tile ties at z = 0 and the per-tile order inside a Tilemap is undefined. A floor
+built from block tiles renders as **a field of raised blocks with every slab edge showing**.
+
+- `"thick tile"` / `"block"`: a ~20-row side wall, and a top face ~35 rows tall whose slope measures
+  an irregular ~3.5px/row. A true 2:1 diamond is exactly 4px/row. These cannot tessellate.
+- `"thin tile"`: measured as an exact 2:1 diamond. Use it for floors.
+- Walls keep their block — a wall is *meant* to read as raised.
+
+`Deeper/Generate Hub Art` crops each `Iso/Floor_*.png` down to its bare diamond, with a two-pixel
+skirt of the diamond's **own edge colour** (not the source's wall pixels, which would paint a dark
+fringe over the neighbour when the undefined order goes the other way). It is idempotent.
+
+**Measure, do not trust.** Profile a new tile's opaque width row by row before generating a set. The
+shipped `Art/Environment/UpperCaves/Iso/*.png` profile identically to the rejected tiles, so the
+existing biome floors carry this defect too.
+
+## 13. A floor tile is stamped hundreds of times — it is wallpaper, not a picture
+
+Per-tile detail becomes a repeating motif across a whole room. The camp's first dirt tile had a small
+dark mark in it, and a floor of it read as printed wallpaper rather than ground.
+
+- Ask for **"almost featureless"**, "no marks, no rocks, no cracks", `low detail`, flat or basic
+  shading. `highly detailed` produces speckle, not texture.
+- Variety comes from **several variants picked per cell, weighted** — one dominant base with the
+  others sparse. An *even* mix is its own defect: variants differ in value as well as texture, so
+  equal weights read as mismatched floor tiles rather than as ground.
+- **Composite before committing.** Stamping the candidate tiles into an isometric patch and looking
+  at it caught every one of these; none was visible on a single tile.

@@ -1,3 +1,4 @@
+using Deeper.Core;
 using Deeper.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -55,16 +56,14 @@ namespace Deeper.Testing
         [Tooltip("Opens and closes the menu.")]
         [SerializeField] private Key toggleKey = Key.Backquote;
 
-        [Tooltip("Disabled while the menu is open, and re-enabled when it closes. Without this a " +
-                 "click on a button ALSO swings the katana: every player system reads its " +
-                 "InputAction straight off this asset, and UGUI's EventSystem is nowhere in that " +
-                 "path, so it cannot swallow the click for them.")]
-        [SerializeField] private InputActionAsset inputActions;
+        [Tooltip("Holds the game paused while the menu is open. This is what stops a click on a " +
+                 "button ALSO swinging the katana — every player system reads its InputAction " +
+                 "straight off the shared asset and UGUI's EventSystem is nowhere in that path, so " +
+                 "it cannot swallow the click for them. Shared with the upgrade offer so the two " +
+                 "panels cannot un-pause each other.")]
+        [SerializeField] private RunPause pause;
 
-        [SerializeField] private string actionMapName = "Player";
-
-        private InputActionMap _playerMap;
-        private bool _cursorWasVisible;
+        private bool _holdingPause;
 
         public bool IsOpen { get { return panel != null && panel.activeSelf; } }
 
@@ -76,7 +75,7 @@ namespace Deeper.Testing
             if (overlay == null) overlay = FindFirstObjectByType<TestOverlay>();
             if (spawners == null || spawners.Length == 0) spawners = FindObjectsByType<TestSpawner>(FindObjectsSortMode.None);
 
-            if (inputActions != null) _playerMap = inputActions.FindActionMap(actionMapName, false);
+            if (pause == null) pause = FindFirstObjectByType<RunPause>();
 
             // Every label at once, including the ones the editor builder made: LegacyUIFont is
             // internal to the runtime assembly, so the builder cannot reach it, and a Text with no
@@ -92,11 +91,11 @@ namespace Deeper.Testing
 
         private void OnDisable()
         {
-            // Both restored unconditionally on the way out. A leaked disable leaves the player
+            // Both restored unconditionally on the way out. A leaked pause hold leaves the player
             // unable to move or attack for the rest of the session, which looks exactly like a bug
             // in the input system rather than a panel that forgot to clean up; a leaked hidden
             // legend is the same mistake in a cheaper costume.
-            if (_playerMap != null) _playerMap.Enable();
+            ReleasePause();
             if (overlay != null) overlay.SetLegendVisible(true);
         }
 
@@ -125,23 +124,12 @@ namespace Deeper.Testing
 
             if (overlay != null) overlay.SetLegendVisible(!open);
 
-            if (_playerMap != null)
-            {
-                if (open) _playerMap.Disable();
-                else _playerMap.Enable();
-            }
-
-            // PlayerAim hides the hardware cursor while a reticle is drawn, which would leave this
-            // panel unclickable — the buttons are there but there is nothing to click them with.
-            if (open)
-            {
-                _cursorWasVisible = Cursor.visible;
-                Cursor.visible = true;
-            }
-            else
-            {
-                Cursor.visible = _cursorWasVisible;
-            }
+            // RunPause owns the time scale, the Player action map and the hardware cursor together —
+            // PlayerAim hides that cursor while a reticle is drawn, which would leave this panel
+            // unclickable. Refcounted there, so opening this menu over the upgrade offer and closing
+            // it again does not hand input back while the offer is still up.
+            if (open) HoldPause();
+            else ReleasePause();
 
             if (open) RefreshRoomLabel();
         }
@@ -150,6 +138,22 @@ namespace Deeper.Testing
         public void LoadRoom(int index)
         {
             if (rooms != null) rooms.Load(index);
+        }
+
+        private void HoldPause()
+        {
+            if (_holdingPause || pause == null) return;
+
+            _holdingPause = true;
+            pause.Push();
+        }
+
+        private void ReleasePause()
+        {
+            if (!_holdingPause) return;
+
+            _holdingPause = false;
+            if (pause != null) pause.Pop();
         }
 
         private void BuildButtons()
@@ -180,6 +184,7 @@ namespace Deeper.Testing
                 Add(actionButtonRow, "Heal", controls.HealPlayer);
                 Add(actionButtonRow, "Reset", controls.ResetPlayer);
                 Add(actionButtonRow, "+ Secret Key", controls.GrantSecretKey);
+                Add(actionButtonRow, "Level Up", controls.GrantLevel);
             }
 
             for (int i = 0; i < spawners.Length; i++)

@@ -16,8 +16,14 @@ MonoBehaviour:
   displayName: Long Dash
   description: +25% Dig-Dash distance
   tier: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d617e363d714ab940a77ba1e345161c1, type: 3}
+  requires: {fileID: 0}
+  excludes: []
   modifiers:
   - stat: 3
     kind: 1
     value: 0.25
+  summary:
+    Category: 5
+    Value: +25%
+    Detail: Dig-Dash distance

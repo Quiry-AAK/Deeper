@@ -835,6 +835,38 @@ Font:
     advance: 7
     flipped: 0
   - serializedVersion: 2
+    index: 39
+    uv:
+      serializedVersion: 2
+      x: 0.19642857
+      y: 0.027777778
+      width: 0.044642866
+      height: 0.19444445
+    vert:
+      serializedVersion: 2
+      x: 0
+      y: 7
+      width: 5
+      height: -7
+    advance: 7
+    flipped: 0
+  - serializedVersion: 2
+    index: 38
+    uv:
+      serializedVersion: 2
+      x: 0.25892857
+      y: 0.027777778
+      width: 0.044642866
+      height: 0.19444445
+    vert:
+      serializedVersion: 2
+      x: 0
+      y: 7
+      width: 5
+      height: -7
+    advance: 7
+    flipped: 0
+  - serializedVersion: 2
     index: 97
     uv:
       serializedVersion: 2

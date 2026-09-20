@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a415e9bc0d047a428f940aad79fa1e9, type: 3}
+  m_Name: Pool_FloodedTunnels
+  m_EditorClassIdentifier: 
+  options:
+  - prefab: {fileID: 1720623167024448493, guid: fb80d3a3b7c790c49af6f16063a81e3f, type: 3}
+    encounters: []
+  - prefab: {fileID: 5045948180093067378, guid: 2d653337d5de0e0418a94d3988a9065c, type: 3}
+    encounters: []
+  - prefab: {fileID: 2368578423717742710, guid: 3365f520b8dd7014e8d35ff277d451b2, type: 3}
+    encounters: []
+  - prefab: {fileID: 1312014241684779136, guid: 1d4061fc43c6ee54aa01a7119b3ccbba, type: 3}
+    encounters: []
+  - prefab: {fileID: 914158418864243705, guid: 6be0844b76c4a08448e2ce5867d0fc72, type: 3}
+    encounters: []
+  - prefab: {fileID: 4987971441364002, guid: c7e5d76fe677d8d4bbefc46f9ec21c20, type: 3}
+    encounters: []
+  - prefab: {fileID: 4334781843836501678, guid: 5b7fa6b2b056a1541b68d25a940ec098, type: 3}
+    encounters: []
+  themes:
+  - {fileID: 11400000, guid: 8b4408a344a071a4da40a95ff1bb11e7, type: 2}
+  minRoomsPerFloor: 3
+  maxRoomsPerFloor: 5
+  specialRooms:
+  - role: 1
+    room:
+      prefab: {fileID: 2552802750421147729, guid: bead257bb2bcada43aa3018221a23896, type: 3}
+      encounters:
+      - {fileID: 11400000, guid: f644b2a44d1469e40ab1bc445f6fb2d3, type: 2}
+  - role: 4
+    room:
+      prefab: {fileID: 3535807915126249366, guid: e53003d1177ce004d9e7497b644a5024, type: 3}
+      encounters: []

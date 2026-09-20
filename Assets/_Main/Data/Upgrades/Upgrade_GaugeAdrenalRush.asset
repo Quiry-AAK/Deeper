@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d821bfee0f81f834486887a473eff164, type: 3}
+  m_Name: Upgrade_GaugeAdrenalRush
+  m_EditorClassIdentifier: 
+  id: Upgrade_GaugeAdrenalRush
+  displayName: 'Gauge: Adrenal Rush'
+  description: +50% gauge gain at 8 or more Combo stacks
+  tier: 1
+  icon: {fileID: 21300000, guid: 5724e97326a1cb649a75720a0fd7d86b, type: 3}
+  requires: {fileID: 0}
+  excludes: []
+  modifiers: []
+  summary:
+    Category: 9
+    Value: +50%
+    Detail: At 8+ Combo stacks

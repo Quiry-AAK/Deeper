@@ -244,6 +244,14 @@ namespace Deeper.Character
                  "Vault, a Mini-Boss drop, or a purchased Hub guarantee — never a normal draw.")]
         [SerializeField] private RelicSpec relic;
 
+        [Header("Upgrade sub-pool - CONTENT_DESIGN §2")]
+        [Tooltip("This weapon's own upgrade entries, drawn alongside the shared pool whenever this " +
+                 "weapon is equipped. Lives here rather than in a WeaponType-keyed registry for the " +
+                 "reason the Relic does: §2's 'only offered when that weapon is equipped' becomes " +
+                 "true by construction, and a lookup table would be the same data with a way to " +
+                 "disagree with itself.")]
+        [SerializeField] private UpgradeDefinition[] weaponUpgrades = new UpgradeDefinition[0];
+
         [Header("Effects")]
         [Tooltip("Per-attack damage is timing-table data (BALANCE §2), not a stat block — most weapons carry none.")]
         [SerializeField] private StatModifier[] modifiers = new StatModifier[0];
@@ -280,6 +288,12 @@ namespace Deeper.Character
         /// which is the state the Bow and Greatsword are in.
         /// </summary>
         public RelicSpec Relic => relic;
+
+        /// <summary>
+        /// This weapon's upgrade sub-pool. Empty on a weapon whose entries are not authored, which
+        /// is the state the Bow and Greatsword are in.
+        /// </summary>
+        public UpgradeDefinition[] WeaponUpgrades => weaponUpgrades;
 
         /// <summary>
         /// Phase timings for one action. This is the seam <c>IWeapon.GetAttackTiming()</c> will

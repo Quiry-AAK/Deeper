@@ -56,7 +56,23 @@ namespace Deeper.EditorTools
         private static readonly Color32 Recess = new Color32(18, 17, 26, 255);
         private static readonly Color32 RivetLit = new Color32(198, 202, 212, 255);
         private static readonly Color32 RivetDark = new Color32(30, 31, 42, 255);
-        private static readonly Color32 Field = new Color32(16, 15, 22, 190);       // translucent
+        private static readonly Color32 Field     = new Color32(16, 15, 22, 190);
+
+        /// <summary>
+        /// The icon-led card's tier pips and cost mark are drawn in this near-white rather than the
+        /// steel ramp above, so <c>Image.color</c> can tint each one to its own tier colour at
+        /// runtime — the same trick the bar fills already rely on, one texture reused under
+        /// whatever colour the palette gives it.
+        /// </summary>
+        private static readonly Color32 NearWhite = new Color32(235, 235, 238, 255);
+
+        /// <summary>
+        /// The offer card's interior. Lighter and more opaque than <c>Field</c>, which is
+        /// tuned to sit over the play area: the card sits over the offer screen's own dark
+        /// scrim instead, and at Field's value the two composited to within a shade of each
+        /// other. The card read as an empty outline with nothing inside it.
+        /// </summary>
+        private static readonly Color32 CardField = new Color32(27, 26, 36, 232);
 
         [MenuItem("Deeper/Generate HUD Frames")]
         public static void Generate()
@@ -99,6 +115,52 @@ namespace Deeper.EditorTools
             // The wave banner sits over the middle of the play area, so its field is translucent —
             // an opaque plaque there hides whatever walks behind it.
             Write("HUD_Banner", Banner(134, 19, 2, 5));
+
+            // The offer card. Authored at half its on-screen size like everything else here,
+            // so 152x164 draws as 304x328 at the 1080p reference. Wide enough that a 19-
+            // character line of the 5x7 face fits between the borders, which is what sets the
+            // width — a narrower card would wrap "REFLECT 25% OF DAMAGE TAKEN" into four lines.
+            //
+            // Border 6, not 4: at 4 the plate band is a bright hairline around a very large
+            // shape and the card reads as a thin outline rather than as a piece of the same chrome
+            // the bars are made of. A bar gets away with 3 because it is 18 tall.
+            Write("HUD_Card", Card(168, 196, 6, 6));
+
+            // The offer card's icon socket. Border 4 makes the hole exactly 64, which is a
+            // 128px icon at the canvas's 2x — the same arithmetic HUD_SlotSquare does one
+            // size down. Upgrade icons are authored at 128 for this box.
+            Write("HUD_SlotIcon", Slot(72, 4, 3, true));
+
+            // The offer card's category-glyph socket, heading the card's top row. Border 3 makes
+            // the hole exactly 32, which is a 64px Cat_* glyph at the canvas's 2x — the same
+            // arithmetic as HUD_SlotIcon at half the size, and paired with
+            // BuildUpgradePanel.CategorySlotSize/CategorySlotBorder. 3 rather than 4 so the 38
+            // total fits between the card's border and the icon slot. No rivets: at border 3 a
+            // stud at the usual 2px inset would land on the channel wall, not the plate.
+            Write("HUD_SlotGlyph", Slot(38, 3, 2, false));
+
+            // The icon-led card's tier pip badge, replacing the spelled-out tier word. One
+            // pip per rarity step rather than four separate shapes, so "how rare" reads as a
+            // count the same way the HP bar's segments do. Curse gets a crossed bar instead of
+            // pips — it has no rarity to count, and the mark is meant to read as "the odd one
+            // out" rather than "worth N".
+            //
+            // 64x16, twice the strip these used to be: the badge now shares the card's top row with
+            // the 32-unit category glyph instead of hiding in a corner behind it, and at 32x8 it
+            // read as a sliver beside a shape four times its area. An Image stretches a sprite to
+            // its rect, so the size is re-emitted here rather than set only in
+            // BuildUpgradePanel.TierBadgeSize — those two numbers move together.
+            Write("HUD_TierCommon", TierPips(64, 16, 1));
+            Write("HUD_TierRare", TierPips(64, 16, 2));
+            Write("HUD_TierEpic", TierPips(64, 16, 3));
+            Write("HUD_TierLegendary", TierPips(64, 16, 4));
+            Write("HUD_TierCurse", TierCross(64, 16));
+
+            // The Curse card's cost-line marker: a short rule with a small triangle where it
+            // starts. Drawn near-white like the tier pips, and tinted to the Curse red at bind
+            // time rather than baked in, so the one texture stays reusable if that red ever
+            // retunes.
+            Write("HUD_CostMark", CostMark(24, 8));
 
             // HUD_IconDash is deliberately NOT written here. The drawn chevrons this file used to
             // emit were rejected by the owner, and the replacement is generated art — re-adding a
@@ -292,6 +354,46 @@ namespace Deeper.EditorTools
             return Bake(px, size, size);
         }
 
+        /// <summary>
+        /// The offer card: a riveted plate with a sunken translucent field for the card's contents.
+        ///
+        /// Translucent rather than opaque for the reason <see cref="Banner"/> is — the offer sits
+        /// over the room the player is standing in, and four opaque slabs across the middle of the
+        /// screen read as a different application rather than as a pause in this one. The full-screen
+        /// scrim behind them is what makes the text legible; the card only has to be darker than it.
+        /// </summary>
+        private static Texture2D Card(int width, int height, int border, int chamfer)
+        {
+            var px = NewPixels(width, height);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (Chamfered(x, y, width, height, chamfer)) continue;
+
+                    int depth = Mathf.Min(Mathf.Min(x, width - 1 - x), Mathf.Min(y, height - 1 - y));
+
+                    // The innermost border ring is an inverted bevel, so the field reads as sunk
+                    // into the plate rather than painted onto it. Same trick as Slot.
+                    Set(px, width, height, x, y,
+                        depth > border ? CardField
+                        : depth == border ? ChannelWall(x <= border || y <= border)
+                        : PlateAt(x, y, width, height));
+                }
+            }
+
+            // Inset 4 rather than the 2 a Slot uses: the chamfer eats the outer two pixels of each
+            // corner, and Rivet only draws over existing ink, so a stud out there is silently
+            // dropped instead of drawn.
+            Rivet(px, width, height, 4, 4);
+            Rivet(px, width, height, width - 6, 4);
+            Rivet(px, width, height, 4, height - 6);
+            Rivet(px, width, height, width - 6, height - 6);
+
+            return Bake(px, width, height);
+        }
+
         /// <summary>A wide plate with a translucent field, for text that sits over the play area.</summary>
         private static Texture2D Banner(int width, int height, int border, int chamfer)
         {
@@ -335,6 +437,86 @@ namespace Deeper.EditorTools
             }
 
             return Bake(px, 1, height);
+        }
+
+        /// <summary>A row of <paramref name="pips"/> filled squares, evenly spaced. The offer
+        /// card's tier badge — near-white so <c>Image.color</c> tints it per <c>TierPalette</c>.</summary>
+        private static Texture2D TierPips(int width, int height, int pips)
+        {
+            var px = NewPixels(width, height);
+
+            const int marginX = 2, marginY = 1, gap = 2;
+            int usable = width - marginX * 2 - gap * (pips - 1);
+            int pipWidth = Mathf.Max(1, usable / pips);
+            int pipHeight = height - marginY * 2;
+
+            for (int p = 0; p < pips; p++)
+            {
+                int x0 = marginX + p * (pipWidth + gap);
+                for (int y = 0; y < pipHeight; y++)
+                {
+                    for (int x = 0; x < pipWidth; x++)
+                    {
+                        Set(px, width, height, x0 + x, marginY + y, NearWhite);
+                    }
+                }
+            }
+
+            return Bake(px, width, height);
+        }
+
+        /// <summary>The Curse tier badge: a crossed bar rather than a pip count, drawn the same
+        /// near-white as <see cref="TierPips"/> so it tints to the Curse red the same way.</summary>
+        private static Texture2D TierCross(int width, int height)
+        {
+            var px = NewPixels(width, height);
+
+            int cx = width / 2, cy = height / 2;
+            int reach = height / 2 - 1;
+
+            // A rule the badge's full width, struck through by the X. The X alone is as tall as the
+            // badge but only as wide, so in the 64-unit box it left a small mark floating in empty
+            // space while Common's single pip filled the same box edge to edge — two tiers of the
+            // same badge reading at wildly different weights. Margin 2 is TierPips' own marginX, so
+            // the rule ends exactly where a pip row does.
+            const int margin = 2;
+
+            for (int x = margin; x < width - margin; x++)
+            {
+                Set(px, width, height, x, cy, NearWhite);
+                Set(px, width, height, x, cy - 1, NearWhite);
+            }
+
+            for (int d = -reach; d <= reach; d++)
+            {
+                Set(px, width, height, cx + d, cy + d, NearWhite);
+                Set(px, width, height, cx + d, cy + d - 1, NearWhite);   // 2px thick
+                Set(px, width, height, cx + d, cy - d, NearWhite);
+                Set(px, width, height, cx + d, cy - d - 1, NearWhite);
+            }
+
+            return Bake(px, width, height);
+        }
+
+        /// <summary>A short rule with a small triangle at its head, marking where a Curse card's
+        /// cost line starts. Near-white, tinted to the Curse red at bind time rather than baked
+        /// in — see <see cref="NearWhite"/>.</summary>
+        private static Texture2D CostMark(int width, int height)
+        {
+            var px = NewPixels(width, height);
+
+            int ruleY = height / 2;
+            const int triangleWidth = 6;
+
+            for (int x = triangleWidth; x < width; x++) Set(px, width, height, x, ruleY, NearWhite);
+
+            for (int x = 0; x < triangleWidth; x++)
+            {
+                int half = Mathf.Min(x, triangleWidth - 1 - x);
+                for (int y = ruleY - half; y <= ruleY + half; y++) Set(px, width, height, x, y, NearWhite);
+            }
+
+            return Bake(px, width, height);
         }
 
         // ---------------------------------------------------------------- plate profile

@@ -16,8 +16,14 @@ MonoBehaviour:
   displayName: Quick Study
   description: +20% XP from enemies
   tier: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b960a19b03ce4534ba627429fe7e3ebf, type: 3}
+  requires: {fileID: 0}
+  excludes: []
   modifiers:
   - stat: 6
     kind: 1
     value: 0.2
+  summary:
+    Category: 6
+    Value: +20%
+    Detail: XP from enemies

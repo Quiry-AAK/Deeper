@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d821bfee0f81f834486887a473eff164, type: 3}
+  m_Name: Upgrade_Overwhelm
+  m_EditorClassIdentifier: 
+  id: Upgrade_Overwhelm
+  displayName: Overwhelm
+  description: +2% damage per hit in a row, cap 5. Resets on a miss
+  tier: 1
+  icon: {fileID: 21300000, guid: 4bdce94f96ffee04db949512a0edee94, type: 3}
+  requires: {fileID: 0}
+  excludes: []
+  modifiers: []
+  summary:
+    Category: 2
+    Value: 
+    Detail: +2% per hit, cap 5, resets on a miss

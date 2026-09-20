@@ -291,8 +291,151 @@ Three things that produce confidently wrong readings:
    `errors="replace"`. `-preferreduilang:en` does *not* override it. Count `": error "` lines rather
    than trying to read them, then look up the ones that matter.
 
+### §10 addendum — the reference set is the whole difficulty (2026-08-25)
+
+Re-run on a session where the Unity MCP dropped mid-work. The recipe above is right in outline and
+lands on two traps that each produce thousands of errors that look like code faults:
+
+1. **`CS1703: Multiple assemblies with equivalent identity`.** Taking every `<HintPath>` plus every
+   DLL in `Library/ScriptAssemblies/` imports several copies of the same assembly — the editor
+   install ships duplicates under `NetStandard/compat/`, `NetStandard/ref/` and the package caches.
+   The compile aborts before reading a single project source. **Dedupe by file NAME, not by path**,
+   preferring `Library/ScriptAssemblies/`.
+2. **Then `CS0518: Predefined type 'System.Void' is not defined` × 5587.** Deduping naively drops the
+   core library, and `-nostdlib+` means nothing supplies one implicitly. The fix is to force-include
+   the core set and never let the dedupe shadow it:
+   - `Editor/Data/NetStandard/ref/2.1.0/netstandard.dll`
+   - every DLL under `Editor/Data/NetStandard/compat/2.1.0/shims/` (~120 of them)
+
+   Do **not** substitute `MonoBleedingEdge/.../mscorlib.dll` — that is a different corlib identity
+   and re-triggers trap 1.
+
+With both handled: **103 sources, 352 references, exit 0.** Also worth correcting: the diagnostics
+came out in **English** on this run, not Turkish, so grepping `error CS` works. Match on the code
+rather than the word, which is language-independent either way.
+
 **What this does not prove.** It is a compile, not a run: it confirms every API exists with the
 signature being used, and nothing about whether Unity *accepts what the code produces*, and nothing
 at all about what the result looks like. The HUD font generator compiled clean well before anyone
 knew Unity would accept the `Font` asset it builds, and the HUD it feeds still rendered a solid
 white box over the weapon slot. Compile first because it is cheap; then still run it and look.
+
+---
+
+## 11. Rendering the HUD, corrected for URP (2026-08-25)
+
+§3's recipe is right about *why* a camera is needed — a camera-specified capture excludes
+Screen Space - Overlay canvases, so the canvas has to be moved onto your own camera and put back in a
+`finally`. Two details in it do not survive contact with this project, and each produced a **blank
+image that looked exactly like a broken layout**.
+
+1. **`Camera.Render()` does not draw the canvas under URP.** The capture came back as nothing but the
+   camera's clear colour, with no warning in the console. Split the work in two: one call sets the
+   canvas to `ScreenSpaceCamera`, points it at a throwaway camera whose `targetTexture` is your
+   `RenderTexture`, and **returns**; a later call does `ReadPixels` and restores. Frames pass between
+   two MCP calls, so the camera renders in the normal player loop, which is the path URP supports.
+   Keep the camera, the texture and the saved canvas state in `static` fields between the two.
+
+2. **`FindFirstObjectByType<Canvas>()` is not `HUDCanvas`.** The sandbox has a second canvas for the
+   debug menu. Grab the wrong one and you move *it* onto your camera while `HUDCanvas` stays on
+   Overlay — which the capture excludes — so you get a blank image again, this time for a completely
+   different reason. **Find it by name.**
+
+Also worth knowing: `PixelPerfectHUDScale` drives `scaleFactor` from `Screen.height`, which is the
+editor's Game view and not the size you are rendering. Force the scaler to
+`Mathf.Max(1, height / 540)` for the capture and let the component put its own value back afterwards.
+Log the resulting `canvas.scaleFactor` in the same message as the filename — §4 exists because a
+render at the one resolution where a bug cannot occur proves nothing.
+
+## 12. `execute_code` was unusable this session — the fallback is a temporary editor script
+
+Every call, on every compiler setting and with every leading character tried, failed with
+`Compilation failed: Line 1: ﻿` — a byte-order mark reaching the CodeDom compiler. `roslyn` is not
+installed, so there was no second backend to fall back to.
+
+**The workaround that worked:** write a throwaway `Scripts/Editor/Verify*.cs` with one `[MenuItem]`
+per probe step, drive it with `execute_menu_item`, read the results out of the console with
+`read_console(filter_text: ...)`, and delete the file when the pass is done. It is slower per step
+but it is *more* reliable for a multi-step probe, because state survives between calls and menu items
+run in play mode.
+
+Two constraints it inherits: **§9 still applies** — do not edit that script while the editor is in
+play mode; stop, edit, recompile, re-enter. And every probe method that a key would normally trigger
+should already be public on the real component (`TestControls.GrantLevel`, `UpgradeCard.Pick`,
+`VaultReward.Grant`), which is why those are public and context-menued in the first place.
+
+## 9. `execute_code` can fail wholesale on a BOM (2026-09-07)
+
+In one session **every** `execute_code` call failed to compile, including `return 1 + 1;`, with the
+single error `Line 1: ﻿` — the message body being a UTF-8 byte-order mark. The transport was
+prepending a BOM to the submitted source and CodeDom rejected it as an invalid token before line 1.
+
+Nothing in the code being sent causes or fixes this; a leading newline and a leading `//` comment
+were both tried and both failed. **If the first `execute_code` call of a session returns that error,
+the tool is unusable for the whole session** — stop trying and plan around it.
+
+**It also survives an MCP reconnect.** The bridge dropped and came back mid-session; `return 1 + 1;`
+failed identically afterwards. So it is a property of the client/transport pairing, not a transient
+fault — reconnecting is not a fix and is not worth trying.
+
+What still works, and what that costs:
+
+- `read_console`, `execute_menu_item`, `refresh_unity`, `manage_camera`, `find_gameobjects`,
+  `manage_editor` (play/stop) and the `mcpforunity://` resources are all unaffected. Reading the
+  built scene back through `mcpforunity://scene/gameobject/{id}/components` is the substitute for a
+  probe, and it is how `TilemapRenderer.mode` and `sortOrder` were confirmed to be set correctly
+  while the floor still rendered wrong.
+- What is lost is **driving anything**. With simulated key input already unusable (§2), a session
+  with no `execute_code` cannot press a button, call a method, or measure damage. Verification drops
+  to "does it build clean, does play mode raise errors, does it look right" — which is real, but it
+  is not behavioural verification, and work finished in that state should be reported as unverified
+  rather than as working.
+- Put a `[ContextMenu]` on anything a probe would have called, so the owner can drive it by hand from
+  the Inspector. `WeaponSelectPanel.Open`, `HubDescent.Descend` and `WeaponCard.Pick` all carry one.
+
+## 10. A Screen Space - Overlay canvas cannot be screenshotted here — read it instead
+
+`manage_camera(action="screenshot")` renders **through a camera**, and a camera render excludes
+Screen Space - Overlay canvases by definition. Omitting the `camera` argument does not help: it falls
+back to the same path and the result still says `(camera: Main Camera)`. So the run HUD, the upgrade
+offer and the Hub's Shard counter are all invisible to a screenshot from here.
+
+Two workarounds that do **not** work, both tried:
+
+- **Switching the canvas to Screen Space - Camera.** The bridge cannot set an object-reference
+  property — `worldCamera` returns *"Failed to convert value for property 'worldCamera' to type
+  'Camera'"* for a plain name, and *"Property 'worldCamera' not found. Did you mean: worldCamera?"*
+  for an `{instanceID, component}` shape. Value-typed properties on the same component (`renderMode`,
+  `planeDistance`) set fine, so this is specifically references.
+- **The RenderTexture probe §3 already describes** — point the canvas at a throwaway camera with a
+  `targetTexture` and `ReadPixels` it. That is still the right technique and still the only way to
+  judge how the HUD *looks*, but it is written in C# and so needs `execute_code` (§9). With that gone,
+  §3's recipe is unavailable, not wrong.
+
+**What works: read the value back off the component.** `mcpforunity://scene/gameobject/{id}/components`
+reports live property values in play mode, including `Text.m_Text`, and that is usually the thing you
+actually wanted to know. The Shard counter was verified this way — balance temporarily set to 1250 in
+the asset, play, and the label read back `m_Text: "1,250"`, which proved the wiring, the draw-on-enable
+path, the number formatting and the font's comma glyph in one call.
+
+Two practical notes: the response is **large** (a `Text` dumps its whole vertex buffer), so page it
+with `?cursor=N&pageSize=1` when you know which component you want; and **refresh Unity after editing
+an asset on disk**, or you read the stale in-memory copy — the first attempt returned `"0"` for
+exactly that reason and looked like a wiring failure.
+
+## 13. Two MCP traps from the level-up beat pass (2026-09-19)
+
+**`manage_components set_property` in play mode reports failure and applies anyway.** It returns
+*"This cannot be used during play mode"*, yet the stretched `OfferReveal` timings and a camera's
+`orthographicSize` both took effect on the live instance. Do not read the error as "nothing
+changed" — check the value, and remember a play-mode change still reverts when play stops.
+
+**Play mode can end underneath a probe, and menu-item probes then run in edit mode against the
+saved scene.** A domain reload dropped the editor out of play mode mid-session. The next few probe
+calls still "worked": `Time.unscaledTime` restarted near zero and then stopped moving, the Player map
+read disabled, and a camera capture came back as the edit-mode view — while a `Play()` probe
+switched a renderer on in the *scene's* Player instance. The scene was not marked dirty, so a save
+would not have caught it either. Reloading the scene from disk discarded it. **Symptom: a clock that
+jumps back to under a second.** Check `mcpforunity://editor/state` `is_playing`, or log
+`EditorApplication.isPlaying` from the probe itself, before trusting any play-mode reading.
+

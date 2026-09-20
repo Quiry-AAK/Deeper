@@ -16,8 +16,14 @@ MonoBehaviour:
   displayName: Vitality
   description: +15 Max HP
   tier: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 671f4aedd49b3bb4bb999d2879231b6e, type: 3}
+  requires: {fileID: 0}
+  excludes: []
   modifiers:
   - stat: 0
     kind: 0
     value: 15
+  summary:
+    Category: 0
+    Value: +15
+    Detail: Max HP

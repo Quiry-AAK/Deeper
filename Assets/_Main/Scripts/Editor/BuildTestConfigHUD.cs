@@ -1,7 +1,6 @@
 using Deeper.Testing;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Deeper.EditorTools
@@ -20,12 +19,15 @@ namespace Deeper.EditorTools
     /// </summary>
     public static class BuildTestConfigHUD
     {
-        private const string InputAssetPath = "Assets/_Main/Input/InputSystem_Actions.inputactions";
 
         private static readonly string[] RoomPrefabPaths =
         {
             "Assets/_Main/Prefabs/Rooms/CombatRoom_UpperCaves_01.prefab",
             "Assets/_Main/Prefabs/Rooms/WaveRoom_UpperCaves_02.prefab",
+
+            // The Secret Vault shipped without ever being added here, so the only room that pays a
+            // Relic out could not be loaded from the menu at all.
+            "Assets/_Main/Prefabs/Rooms/SecretVault_UpperCaves_01.prefab",
         };
 
         // Drawn above both the run HUD and the overlay, because a debug menu that opens behind the
@@ -80,8 +82,11 @@ namespace Deeper.EditorTools
             so.FindProperty("roomControls").objectReferenceValue = roomControls;
             so.FindProperty("controls").objectReferenceValue = controls;
             so.FindProperty("overlay").objectReferenceValue = Object.FindFirstObjectByType<TestOverlay>();
-            so.FindProperty("inputActions").objectReferenceValue =
-                AssetDatabase.LoadAssetAtPath<InputActionAsset>(InputAssetPath);
+            // Shared with the upgrade offer. Two panels each holding their own copy of the
+            // action map used to double-toggle: the first to close handed input back while the
+            // second was still up.
+            so.FindProperty("pause").objectReferenceValue =
+                HUDLayout.EnsureRunPause(HUDLayout.FindOrCreateCanvas());
 
             SerializedProperty spawnerList = so.FindProperty("spawners");
             spawnerList.arraySize = spawners.Length;

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d821bfee0f81f834486887a473eff164, type: 3}
+  m_Name: Upgrade_VenomEdge
+  m_EditorClassIdentifier: 
+  id: Upgrade_VenomEdge
+  displayName: Venom Edge
+  description: 2 damage per tick, 4 ticks, stacks to 5
+  tier: 1
+  icon: {fileID: 21300000, guid: 155e560c61297ac4f96e6c6a83db684b, type: 3}
+  requires: {fileID: 0}
+  excludes:
+  - {fileID: 11400000, guid: f2b5b702664fc204fac7441fb2b8186c, type: 2}
+  modifiers: []
+  summary:
+    Category: 3
+    Value: 
+    Detail: 2 damage x 4 ticks, stacks to 5

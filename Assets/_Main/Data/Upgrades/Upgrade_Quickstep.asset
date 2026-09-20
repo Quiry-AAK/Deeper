@@ -16,8 +16,14 @@ MonoBehaviour:
   displayName: Quickstep
   description: -20% Dig-Dash cooldown
   tier: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: f5c42060032b48043967ffee14ae546a, type: 3}
+  requires: {fileID: 0}
+  excludes: []
   modifiers:
   - stat: 2
     kind: 1
     value: -0.2
+  summary:
+    Category: 5
+    Value: -20%
+    Detail: Dig-Dash cooldown

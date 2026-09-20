@@ -55,4 +55,18 @@ MonoBehaviour:
     Offer: {fileID: 11400000, guid: 609ddabc3e22efe41b2634ebb25bb0ff, type: 2}
     ComboOverflow: 1
     ComboBonusPerStack: 0.01
+  weaponUpgrades:
+  - {fileID: 11400000, guid: 3b8ba2c7cb255a248ad51b2453f1d1e5, type: 2}
+  - {fileID: 11400000, guid: 8446af44cf3db774ab66d89a21ea4be0, type: 2}
+  - {fileID: 11400000, guid: 085d117115277dd4ba03797f20f312bd, type: 2}
+  - {fileID: 11400000, guid: 03d0a24ab9caaf84bbabf6dc160b0da3, type: 2}
+  - {fileID: 11400000, guid: b214b23e05cef0d47b7aeaccf0ba70e0, type: 2}
+  - {fileID: 11400000, guid: ac54d0be3c4f69b448f45f4d42dec214, type: 2}
+  - {fileID: 11400000, guid: 77a6fc8bf1b948945ad78583c1fb98d7, type: 2}
+  - {fileID: 11400000, guid: 969ce83eed60a32428d4367b98955c9a, type: 2}
+  - {fileID: 11400000, guid: 85c8a37abd6a02b4e9b4db6fbdda6bdb, type: 2}
+  - {fileID: 11400000, guid: a2b78ec8ee49c644291be8545f775bfb, type: 2}
+  - {fileID: 11400000, guid: 3b2cd2b038a49674bb53741fcbc78f5b, type: 2}
+  - {fileID: 11400000, guid: ce2b521974cf57446a1c9110800af6ac, type: 2}
+  - {fileID: 11400000, guid: a6b3ff72a0505974e9f49a9586c01dda, type: 2}
   modifiers: []

@@ -1,7 +1,22 @@
 # TEST SCENE — "Deeper"
 
-`Assets/_Main/Scenes/TestScene.unity` (renamed from `SampleScene`, same GUID, still the only scene in
-Build Settings).
+`Assets/_Main/Scenes/TestScene.unity` (renamed from `SampleScene`, same GUID).
+
+**It is no longer the only scene.** Build Settings now also holds `RoomVisualTestScene` (look at a
+room), `HubScene` (the surface camp) and, as of 2026-09-08, `RunScene` — the descent itself, where
+`FloorLoader` actually runs. Each does one job:
+
+| Scene | For |
+|---|---|
+| `TestScene` | The sandbox. Park in one room and tune a weapon, an enemy, a hitbox. |
+| `RunScene` | The game loop. Sixteen floors, bosses, death, victory, back to the Hub. |
+| `RoomVisualTestScene` | Look at a room's art with a button that re-rolls it. |
+| `HubScene` | The surface camp: weapon rack, shaft, shrine, Codex. |
+
+**This scene keeps its job unchanged.** A run is a game loop and a sandbox is a place to stop one
+mechanic and stare at it; §1's argument against a scene per mechanic is not an argument against a
+scene that plays the game. `TestScene` still has `TestRoomSelector` and one room at a time, and every
+system still gets built and tuned here before it reaches `RunScene`.
 
 ---
 
@@ -83,7 +98,7 @@ recompile. The on-screen legend is generated from those same fields, so it canno
 | Key | Does | Why it exists |
 |---|---|---|
 | `F1` | Fill Ultimate Gauge | The gauge takes 100 landed hits to fill; tuning the Ultimate otherwise means recharging every time |
-| `F2` | Heal player to full | There is no healing and no death handling in the game yet, so a session otherwise ends parked at 0 HP |
+| `F2` | Heal player to full, and revive her if she died | `PlayerDeath` disables movement/attacks/dash/aim at 0 HP and only `PlayerDeath.Revive()` turns them back on — `Damageable.Refill()` alone fixes the HP number but leaves her unresponsive, which with no death art yet to show what happened reads as the game freezing rather than as a death |
 | `F3` | Reset player to start | Contact damage and lunges push her across the room over a long session |
 | `F4` | Spawn dummies | The scene starts with **none** — owner-directed. Nothing is in the room until you ask for it, so what is being tested is never mixed up with what was left lying around |
 | `F5` | Clear dummies | Removes everything the spawner owns, including any dummy hand-placed under it in the scene — those are adopted at `Start`, so the count stays honest and Clear means what it says. Pooled actors are returned rather than destroyed, so Clear costs nothing and the next Spawn is free |
@@ -110,13 +125,18 @@ same public method its key calls, so there is one implementation per cheat, neve
 | Panel button | Does | Why it has no key |
 |---|---|---|
 | `+ Secret Key` | Grants one Secret Vault key (`RunKeys.GrantSecretKey`) | Reaching the vault chamber otherwise means finding and killing a Deep Warden first. The function row was already full when this was added |
+| `Level Up` | Grants exactly the XP the next level costs (`TestControls.GrantLevel`), which opens the upgrade offer | Farming a wave for 10 XP every time you want to look at the offer screen. It goes through `PlayerXP.Add`, not straight to the panel, so what the button exercises is the real trigger — the XP credit, the level-up, the queue and the pause. The panel comes up **about 0.6s later**, after the level-up beat's slow-down and burst — that delay is the feature, not lag |
 
 **One hazard the panel introduced.** Every player system reads its `InputAction` straight off the shared
 `InputActionAsset`, and UGUI's `EventSystem` is nowhere in that path — so a click on a debug button would
-*also* swing the katana. `TestConfigHUD` disables the whole `Player` action map while the panel is open
-and re-enables it on close **and** in `OnDisable`; a leaked disable looks exactly like an input-system
-bug. It also restores the hardware cursor, which `PlayerAim` hides, or the panel is there but
-unclickable.
+*also* swing the katana. The panel therefore disables the whole `Player` action map while it is open, and
+restores the hardware cursor, which `PlayerAim` hides, or the panel is there but unclickable.
+
+**That is now `RunPause`'s job, not this panel's** (`Scripts/Core/RunPause.cs`, on `HUDCanvas`). It owns
+`Time.timeScale`, the action map and the cursor together, and it is **refcounted** — which matters the
+moment there are two panels. Before, opening the debug menu over the upgrade offer and closing it again
+handed input back to the player while the offer was still up. Both panels now push and pop the same hold,
+and both release unconditionally in `OnDisable`; a leaked hold looks exactly like an input-system bug.
 
 **There is deliberately no slow-motion key.** `HitStop` restores `Time.timeScale` to a fixed normal
 after every landed hit, so a debug slow-mo would snap back to 1 on the next connect and read as a
@@ -249,8 +269,9 @@ clean — 0 errors, 0 warnings):
 (`01-VERIFICATION.md` §2), so F1–F10 were exercised through their public methods, not through the
 keyboard.
 
-**Also not verified — the Secret Vault.** `SecretVault_UpperCaves_01`, the `+ Secret Key` button and the
-`KEYS / VAULT / PAYOUT` readout were written and imported but never run. The table above predates them.
-What needs checking is listed in the engineering plan's *Secret Vault* section; the short version is the
-key drop off a pooled Warden, the door spending exactly one key, the seal holding for the fight, and the
-payout firing once.
+**Partly verified now — the Secret Vault.** `SecretVault_UpperCaves_01` had never been added to the room
+selector, so the one room that pays out a Relic could not be loaded from the menu at all. It is in the
+list now (three rooms), and the payout was run: clearing the vault grants the equipped weapon's Relic and
+the upgrade offer presents it as a single gold card. Still unverified are the parts that need a real
+playthrough — the key drop off a pooled Warden, the door spending exactly one key, and the seal holding
+for the fight. Those are listed in the engineering plan's *Secret Vault* section.

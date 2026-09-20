@@ -46,8 +46,18 @@ namespace Deeper.EditorTools
         private static int CellHeight => GlyphHeight + Padding * 2;
 
         /// <summary>Monospaced on purpose: a HUD is mostly numbers that change every frame, and
-        /// proportional digits make "100 / 128" shuffle sideways as it counts down.</summary>
-        private static int Advance => CellWidth;
+        /// proportional digits make "100 / 128" shuffle sideways as it counts down. Internal so
+        /// <c>BuildUpgradePanel</c> can turn a text box's width into characters per line.</summary>
+        internal static int Advance => CellWidth;
+
+        /// <summary>Glyph height plus two authored pixels of leading — the font's line height at
+        /// its native size. Internal for the same reason as <see cref="Advance"/>, in the other
+        /// direction: a box's height into lines.</summary>
+        internal static int LineSpacing => GlyphHeight + 2 * Scale;
+
+        /// <summary>The ink height of one line, for the last line of a box, which needs no
+        /// leading below it.</summary>
+        internal static int LineInk => GlyphHeight;
 
         [MenuItem("Deeper/Generate HUD Font")]
         public static void Generate()
@@ -198,7 +208,7 @@ namespace Deeper.EditorTools
             SetSerialized(serialized, "m_FontSize", GlyphHeight);
             SetSerialized(serialized, "m_Ascent", GlyphHeight);
             // Two authored pixels of leading, which is 2 * Scale on screen.
-            SetSerialized(serialized, "m_LineSpacing", GlyphHeight + 2 * Scale);
+            SetSerialized(serialized, "m_LineSpacing", LineSpacing);
             SetSerialized(serialized, "m_CharacterSpacing", 0);
             SetSerialized(serialized, "m_CharacterPadding", 0);
             serialized.ApplyModifiedPropertiesWithoutUndo();

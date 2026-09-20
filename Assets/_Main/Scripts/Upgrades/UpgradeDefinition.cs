@@ -39,16 +39,34 @@ namespace Deeper.Upgrades
                  "tier-coloured slot, which is what every entry does until upgrade art exists.")]
         [SerializeField] private Sprite icon;
 
+        [Tooltip("Never offered until this upgrade is taken. CONTENT_DESIGN §2's chain extensions " +
+                 "are the only users: Triple Cut 'Requires Twin Cut', Explosive Nock requires Twin " +
+                 "Nock, Earthbreaker Chain requires Heavy Follow-Through. Empty on everything else.")]
+        [SerializeField] private UpgradeDefinition requires;
+
+        [Tooltip("Never offered once any of these is taken. §1's On-Hit Procs are the stated case — " +
+                 "Venom Edge and Bleeding Strikes are 'separate stacks, only one can be taken per " +
+                 "run'. Author BOTH sides pointing at each other: one-directional would let the " +
+                 "pair through in whichever order the draw happened to pick them.")]
+        [SerializeField] private UpgradeDefinition[] excludes = new UpgradeDefinition[0];
+
         [Tooltip("Applied through PlayerStats.SetSource under this upgrade's id, so it stacks with " +
                  "the weapon and the Hub stats instead of overwriting them.")]
         [SerializeField] private StatModifier[] modifiers = new StatModifier[0];
+
+        [Tooltip("The icon-led card's compressed line: which glyph, the big number, the short " +
+                 "detail. Extracted from description above, not a replacement for it.")]
+        [SerializeField] private EffectSummary summary;
 
         public string Id { get { return id; } }
         public string DisplayName { get { return displayName; } }
         public string Description { get { return description; } }
         public UpgradeTier Tier { get { return tier; } }
         public Sprite Icon { get { return icon; } }
+        public UpgradeDefinition Requires { get { return requires; } }
+        public UpgradeDefinition[] Excludes { get { return excludes; } }
         public StatModifier[] Modifiers { get { return modifiers; } }
+        public EffectSummary Summary { get { return summary; } }
     }
 
     /// <summary>

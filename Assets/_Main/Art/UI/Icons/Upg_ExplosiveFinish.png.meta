@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: 53757245aed00ca4f9954de844461a74
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8368565946829928654
+    second: Upg_ExplosiveFinish_0
+  - first:
+      213: 2977961892605577595
+    second: Upg_ExplosiveFinish_1
+  - first:
+      213: -5888336122295888580
+    second: Upg_ExplosiveFinish_2
+  - first:
+      213: -23679374766440846
+    second: Upg_ExplosiveFinish_3
+  - first:
+      213: -6460357639521898654
+    second: Upg_ExplosiveFinish_4
+  - first:
+      213: 6426779892588837575
+    second: Upg_ExplosiveFinish_5
+  - first:
+      213: -2731640994477887117
+    second: Upg_ExplosiveFinish_6
+  - first:
+      213: 1293017479596514774
+    second: Upg_ExplosiveFinish_7
+  - first:
+      213: -4006453708184561796
+    second: Upg_ExplosiveFinish_8
+  - first:
+      213: -8133720875881436317
+    second: Upg_ExplosiveFinish_9
+  - first:
+      213: -1819349163470132159
+    second: Upg_ExplosiveFinish_10
+  - first:
+      213: -1910999907759950536
+    second: Upg_ExplosiveFinish_11
+  - first:
+      213: -2902270327099257089
+    second: Upg_ExplosiveFinish_12
+  - first:
+      213: 1637008983388455030
+    second: Upg_ExplosiveFinish_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 105
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec87a3cd36e132470800000000000000
+      internalID: 8368565946829928654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_1
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 112
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b79c76b3098d35920800000000000000
+      internalID: 2977961892605577595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_2
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 114
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c35d3789e7d684ea0800000000000000
+      internalID: -5888336122295888580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_3
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 110
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27efa8eebbfdbaff0800000000000000
+      internalID: -23679374766440846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_4
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 107
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26fe05e84f23856a0800000000000000
+      internalID: -6460357639521898654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_5
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 89
+        width: 18
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ca71630342803950800000000000000
+      internalID: 6426779892588837575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_6
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 7
+        width: 80
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37130460df2471ad0800000000000000
+      internalID: -2731640994477887117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_7
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 92
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dd98b70c88b1f110800000000000000
+      internalID: 1293017479596514774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_8
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 73
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c77dc9a54973668c0800000000000000
+      internalID: -4006453708184561796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_9
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 77
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36b68ea25f73f1f80800000000000000
+      internalID: -8133720875881436317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_10
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 69
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14c65fc339f50c6e0800000000000000
+      internalID: -1819349163470132159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_11
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 4
+        width: 19
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 835f92475b3ca75e0800000000000000
+      internalID: -1910999907759950536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_12
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 9
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffe871fa38019b7d0800000000000000
+      internalID: -2902270327099257089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upg_ExplosiveFinish_13
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 11
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6700ef44ff2d7b610800000000000000
+      internalID: 1637008983388455030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Upg_ExplosiveFinish_0: 8368565946829928654
+      Upg_ExplosiveFinish_1: 2977961892605577595
+      Upg_ExplosiveFinish_10: -1819349163470132159
+      Upg_ExplosiveFinish_11: -1910999907759950536
+      Upg_ExplosiveFinish_12: -2902270327099257089
+      Upg_ExplosiveFinish_13: 1637008983388455030
+      Upg_ExplosiveFinish_2: -5888336122295888580
+      Upg_ExplosiveFinish_3: -23679374766440846
+      Upg_ExplosiveFinish_4: -6460357639521898654
+      Upg_ExplosiveFinish_5: 6426779892588837575
+      Upg_ExplosiveFinish_6: -2731640994477887117
+      Upg_ExplosiveFinish_7: 1293017479596514774
+      Upg_ExplosiveFinish_8: -4006453708184561796
+      Upg_ExplosiveFinish_9: -8133720875881436317
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

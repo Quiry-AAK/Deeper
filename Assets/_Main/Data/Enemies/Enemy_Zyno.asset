@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180f6e4a06c3b674f8479899c34be629, type: 3}
+  m_Name: Enemy_Zyno
+  m_EditorClassIdentifier: 
+  id: Zyno
+  displayName: Zyno
+  description: "Floor 16, second fight \u2014 the true Final Boss. PLACEHOLDER: a
+    scaled Tunnel Brute. BALANCE \xA76 leaves its HP as a Mini-Boss's, choice TBD;
+    the Molten Sentinel's 600 is that choice."
+  maxHealth: 600
+  moveSpeed: 2.1
+  attack:
+    Windup: 0.35
+    Active: 0.18
+    Recovery: 0.45
+    Damage: 8
+  cooldown: 2.2
+  aggroRadius: 24
+  attackRange: 2.6
+  stopDistance: 1.6
+  retreatDistance: 0

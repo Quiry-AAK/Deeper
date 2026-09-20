@@ -1320,3 +1320,798 @@ The key drop crediting on a Warden kill; the door consuming exactly one key and 
 zero; the seal holding for the whole fight; the payout arriving once on the clear and not again on a
 re-arm; and whether 190 HP in 22×16 is a fight worth a key — which is a feel judgement, and **BALANCE
 §8's 30–60 s target has now gone unmeasured for three rooms running**.
+
+---
+
+## 22. Floors are sequenced, and rooms are dressed (owner, 2026-08-24)
+
+**Owner-directed.** The owner asked for the Hades model — handcrafted room templates, procedurally
+selected and procedurally dressed — plus a new scene that runs it. Built and verified in play mode;
+the engineering half is in `Docs/Engineering/00-IMPLEMENTATION_PLAN.md`.
+
+**Most of this is not a divergence at all**, and that is worth stating first. `06-LEVEL_DESIGN.md`
+§1 already says "Hand-built, not procedural… pulled from a per-biome pool via a reshuffling bag",
+`01-GDD.md` §Randomization already says "Room order within a biome's pool is drawn per run via a
+reshuffling bag (not live procgen)", and Design Rule 3 already prefers "a system that generates
+variety from existing content" over more static content. The floor loader is the locked design
+finally being implemented. **No room geometry is generated**, and none ever should be.
+
+The owner also gave explicit, one-off permission to edit `Docs/Design/*` for this work, and then
+directed that the linear/branching question needed no document change. **Nothing in `Design/` was
+edited** — staying linear means there was nothing to reopen. Everything below is recorded here as
+usual.
+
+### 22.1 PROPOSED — room dressing is a new system with no design doc and no MVP tier
+
+`RoomTheme` + `RoomDressing` give one handcrafted layout a different look each time it is drawn:
+weighted floor and wall tile variants picked per cell, a random quarter-turn per floor cell, and
+ground decals scattered on a baked eligibility mask.
+
+**Nothing in `Design/` describes this.** The nearest thing is §2's "biome-specific tile dressing"
+for the Secret Vault, which is about reusing one layout across biomes, not about varying a room per
+visit. It is also absent from `08-MVP.md`'s tiers entirely. Under Rule 1 that makes it a scope
+addition needing a cut, an extension, or a demotion — raised here rather than assumed.
+
+Two constraints it adopts, both to avoid inventing anything:
+- **Nothing is tinted.** Both shipped tile assets carry `TileFlags.LockColor`, so `Tilemap.SetColor`
+  is a silent no-op on them — no error, no effect. Unlocking per cell would work, but tinting is
+  also the mechanism most likely to drift into §2's reserved hazard accents by accident, since a hue
+  shift on grey stone wanders orange without anyone deciding to. Variety comes from *which tile*.
+- **Decoration never collides**, and that is structural rather than a rule to remember: decor is a
+  third Tilemap whose tiles are authored `ColliderType.None` and which carries no
+  `TilemapCollider2D`. `EnemyChase` has no pathfinding, so one stray solid cell in open floor can
+  trap an enemy in a room that then never unlocks. The cost is that decor is **ground-plane only** —
+  a Tilemap cannot Y-sort per cell, and anything waist-high also reads as cover that does not block.
+
+### 22.2 CONFLICT — the Secret Vault cannot be on a linear route
+
+`02-CORE_SYSTEMS.md` §8 calls a Secret Floor a **detour** off the route. `06-LEVEL_DESIGN.md` §1
+locks "Linear, no branching". A detour requires the branch §1 rules out, and the built
+`SecretVault_UpperCaves_01` is a **one-door dead end** by design.
+
+In an eastward corridor every room is walked out of, so the vault is currently **excluded from the
+floor pool** — enforced by geometry rather than omission: `RoomBag.Draw` refuses any layout whose
+`RoomConnection.HasExit` is false. It remains fully playable in `TestScene` and loses nothing.
+
+Three options, and this is the owner's call, not engineering's:
+(a) give the vault an east door and make it an on-route key-gated room, which contradicts "detour";
+(b) make it a floor's terminal room, which needs floors to end somewhere rather than run on;
+(c) leave it out of runs permanently and reach it another way.
+
+### 22.3 DECIDED — the two PixelLab tools fail in opposite directions
+
+Recorded because it cost four rejected generations and will recur for every future biome.
+`create_image_pixflux` gets the **palette** right (with the project's own colours forced via
+`color_image_base64`, every returned colour came from that set) and the **form** wrong — it shades
+the image as a picture, so a 32×32 floor candidate came back with edge rows averaging 51–58 against
+an interior of 75, which cannot repeat. `create_topdown_tileset` gets the **form** right — its base
+tiles tile perfectly seamlessly — and the **palette** wrong, returning navy blue, which is the
+Flooded Tunnels family and the same class of mistake §2 already flagged for the first tileset.
+
+**The resolution is a luminance remap onto the shipped ramp after generation**, which is pixel-exact
+and is the same palette-swap-as-variant technique `05-ART_DIRECTION.md` §68 already uses for the
+Deep Warden. This is an engineering technique, not a design change — but it is worth the designer
+knowing that **generated environment art will always be recoloured onto the locked palette rather
+than trusted to arrive on it.**
+
+### 22.4 CONFLICT — "descend" is currently "walk east"
+
+`01-GDD.md` says floors are "connected linearly downward" and Descend is one of the four core verbs
+(Rule 5). What is built is a corridor running east, with the floor number incrementing silently and
+**no floor-transition presentation at all**. The door pipeline supports west and east only —
+`BuildDoorColumns` buckets by column and has no north/south concept anywhere.
+
+This is a real gap between the built thing and the pitch, and it needs a design answer rather than a
+quiet engineering choice: a stairwell room, a fade, a descent beat, or north/south doors.
+
+### 22.5 Invented numbers
+
+- **Rooms per floor is rolled uniformly in [3, 5]** per floor. §8 and §5 say "3–5" and never say how
+  it is chosen; uniform is the obvious reading, not a stated one.
+- **`decorDensity` 0.12** — the fraction of eligible floor cells taking a decal. No doc has a number
+  for this; it is a serialized field so retuning costs no recompile.
+- **A one-cell margin around doors, the entry band, spawn markers, the player start, the pedestal
+  and the reserved cracked-tile zone.** Walls and interior posts get no margin, because a decal
+  against a wall reads well; the margin exists for things a decal would be *misread* against.
+- **The Upper Caves palette was extended by two steps** — one darker (26,24,32) and one lighter
+  (140,133,148) than the shipped tiles — to give the 3–5 step ramp `style-guide.md` §4 requires.
+  §2 specifies a "6–8 colour core" and does not enumerate it, so this fills a gap rather than
+  contradicting one. **No orange-red was used**, per §2's reservation.
+
+### 22.6 A seed exists, and it is not the Post-MVP "seeded runs" feature
+
+`RunSeed` holds one `System.Random` for the run and logs its seed. `08-MVP.md` lists daily/weekly
+seeded runs and ghost replay as explicitly Post-MVP; **this is not those**. There is no seed UI,
+nothing saved, nothing shown to a player — only a number logged so a floor-order bug can be
+reproduced by typing it back into the Inspector. Flagged so it is not mistaken for the feature.
+
+### 22.7 Stale doc noticed, not fixed
+
+`03-CONTENT_DESIGN.md` §6 still lists **2 Reward Rooms per biome** and still omits the Trapped Soul
+Room, months after §8 and §2 removed and added them respectively. Already recorded in §11; repeated
+here only because a room-pool implementation reading §6 literally would build a deleted room type.
+The matching error inside `Engineering/00-IMPLEMENTATION_PLAN.md` is an engineering doc and is
+fixable in place — offered, not assumed.
+
+### 22.8 The scene is a room-visual sandbox, not a run scene (owner, 2026-08-24)
+
+The owner corrected the deliverable: what was wanted was **another test scene for looking at room
+visuals**, with a button that re-rolls the room, not a scene that plays a floor. `RoomLabScene`
+replaces `RunScene`, which was deleted.
+
+No design consequence — `02-TEST_SCENE.md` §1 already frames the sandbox as where everything is
+"built and tuned first" before reaching a real game scene, and a room lab is that. The floor loader
+survives as built and verified code with no scene; it is still CORE_SYSTEMS §8's reshuffling bag,
+which `08-MVP.md` lists as MUST SHIP.
+
+> ✅ **SUPERSEDED (owner, 2026-09-08).** `RunScene` is back and the floor loader is mounted in it —
+> see §25. The room-visual sandbox stays, and so does `TestScene`; the project now has three scenes
+> that each do one job.
+
+### 22.9 Generated environment art is always recoloured, never trusted to arrive on palette
+
+Recorded so the designer knows how every future biome's art will be produced. PixelLab's tileset
+tool gets tiling **form** right and has no palette parameter at all — it returned navy for one
+request and green for another, and navy is the *Flooded Tunnels* family, the same class of mistake
+§2 already flagged. The freeform image tool is the mirror: it obeys a forced palette exactly, and
+shades the image as a picture so the result cannot repeat.
+
+Every environment asset is therefore luminance-remapped onto the biome's locked ramp after
+generation. That is an engineering technique, not a design change, and the ramps contain no reserved
+hazard accent. **One rule it forced is worth knowing:** floors and walls must occupy different bands
+of the ramp, because a plain remap made a floor and its wall five luma apart and the wall ring
+disappeared in play mode.
+
+---
+
+## 23. The level-up upgrade offer is built (owner-directed, 2026-08-25)
+
+The screen `08-MVP.md` protects above everything else — *Movement → Combat → Dig-Dash → **Upgrade
+Pick** → Descend*, `09-DESIGN_RULES.md` Rule 13 — now exists. `PlayerXP.LeveledUp` had been firing
+into an empty room since §15; it now pauses the game and opens a three-card offer with the
+always-visible Curse slot, exactly as `CORE_SYSTEMS` §12 and §9 describe.
+
+**The owner's scope for this pass was the UI and the content, not the effects.** Every upgrade and
+Curse the docs currently name is authored with a real generated icon, drawn from a real weighted
+pool, and taken through `RunUpgrades.Add`. What is *not* built is the behavioural half — see §23.6.
+
+### 23.1 What is now true against the locked docs
+
+| Doc | Requirement | State |
+|---|---|---|
+| GDD §Core Loop 4 | "the game pauses and presents an upgrade offer" | Built. `Time.timeScale = 0`, Player action map disabled, cursor forced visible. |
+| CORE_SYSTEMS §9, §12 | 3 cards, one weighted draw across shared + weapon sub-pool, **not tier-gated** | Built. A Common, a Rare and an Epic can and do appear together. |
+| CORE_SYSTEMS §9 | 4th slot always a Curse, from its own pool, never mandatory | Built. |
+| BALANCE §13 | Common/Rare/Epic 65/30/5, 55/35/10, 45/40/15 by biome | Authored as data on `UpgradePool`. |
+| CONTENT_DESIGN §1 | The shared pool | 24 entries authored — see §23.4 on the count. |
+| CONTENT_DESIGN §2a | The Katana sub-pool | 13 entries authored — see §23.4. |
+| CONTENT_DESIGN §3 | The 8 Curses | All 8 authored. MVP asked for 4–5 as MUST SHIP. |
+| ART_DIRECTION §5 | Common white/grey, Rare blue, Epic purple, Legendary gold; Curse red/black | Built — see §23.3 on which red. |
+| ART_DIRECTION §6 | Curse-pick flash red, normal pick white/gold | Built. |
+| CORE_SYSTEMS §13 | Every 5th level is an **Evolution** offer | **Not built** — see §23.5. |
+
+### 23.2 The card's geometry and typography are invented, because no doc specifies any
+
+`ART_DIRECTION` §5 gives four border colours and "red/black for the Curse", and that is the entire
+art spec for this screen. Everything else below was decided in engineering and needs a designer's eye:
+
+- **Card 168 × 196 authored units** (336 × 392 on screen at 1080p), four across with a 12-unit gap
+  between the three upgrades and a **30-unit gap before the Curse** — the wider gap is what stops the
+  Curse reading as the fourth item in a list of four, which is §5's stated goal.
+- **The width is set by text, not taste.** 168 minus padding leaves 148 units, which at the pixel
+  face's 7-unit monospaced advance is 21 characters per line.
+- **The height is set by the worst case** — a Curse with a three-line cost line. Every card in a row
+  must be the same height, so an upgrade with two lines of description has space beneath it.
+- **§18a's open question is answered by default, not by decision.** The HUD's 5×7 uppercase face now
+  owns this screen too, so every card renders in caps. That was §18a's question 1 and it is still a
+  designer's call to confirm; two glyphs (`'` and `&`) had to be added to the face because four names
+  in the pool own an apostrophe.
+- **Card text must stay inside a 53-glyph set.** `Gambler's Edge` renders because the apostrophe was
+  added; an arrow or an em dash would render as a hole in the middle of a word and nothing catches
+  it. This is why BALANCE §10's "Stack cap 10 → 14" is authored as "Combo stack cap 10 up to 14".
+
+### 23.3 The Curse card is crimson, not the hazard red
+
+`ART_DIRECTION` §5 asks for "a red/black treatment". §2 reserves **orange-red** *exclusively* for
+hazard telegraphs, and §15.4 already confirmed that reservation covers UI chrome. The Curse card and
+its cost line therefore use the crimson family the health bar already uses, not the hazard accent.
+Same call, same reason, recorded so the two reds stay distinguishable.
+
+### 23.4 Two counts in `CONTENT_DESIGN` do not add up, and BALANCE was followed
+
+- §1 says "That's 24 shared entries" and its own tables list **25** rows — which becomes **24** once
+  the three dead currency entries (Keen Eye, Lucky Find, Glimmer Magnet) are replaced by the two live
+  ones (Quick Study, Insight Magnet). `BALANCE` §9 lists exactly those 24 and is internally
+  consistent, so **24 is what was authored**. §11's "the pool is 23 now" is off by one.
+- §2a's footer says "15 entries per weapon", but the section itself strikes through **Finisher+ and
+  Echo Slash**. The Katana pool is **13**. The footer, and MVP's "reduce weapon sub-pools from 15",
+  both need the number corrected.
+- **The Bow and Greatsword sub-pools are deliberately not authored.** Neither weapon exists, so every
+  entry would name a system that does not.
+
+### 23.5 The Evolution milestone is not built, and cannot be
+
+`CORE_SYSTEMS` §13 replaces every 5th level's offer with 2–3 mutually exclusive Evolution choices,
+and `08-MVP.md` lists one Evolution Tier per weapon as MUST SHIP. **The content does not exist** —
+§13's own Open Items list "the 2 Evolution choices per weapon — content, not just the slot". Level 5
+therefore shows a normal offer. This is a content gap, not an engineering one; the panel has the seam.
+
+Still open from §11 and unaffected by this pass: **whether the Evolution offer also shows a Curse**,
+and the per-floor-vs-per-level scoping of "only one Curse can be taken per floor", the Second Curse
+Slot, and Sixth Sense's guaranteed-Rare+ slot. The panel currently offers a Curse on **every** level,
+which is the literal reading of §9's "a 4th slot is always populated".
+
+### 23.6 What a pick actually does — and does not
+
+`RunUpgrades.Add` applies each pick's `StatModifier`s through `PlayerStats`, verified in play mode
+through the real panel: Vitality took Max HP 100 → 115, Fleet Foot move speed 5 → 5.5, Heavy Hands
+damage bonus 0 → 3. **That is seven entries out of 45.** Every other upgrade and all eight Curses are
+behavioural — Thorns, Explosive Finish, Blink Strike, Glass Cannon, Overclock — and land as data with
+a name, a description and an icon that changes no number. They need hooks in the damage pipeline that
+do not exist.
+
+This is deliberate and was the owner's instruction for this pass. It does mean **a run can currently
+take a Curse and receive neither its upside nor its downside**, which is a live gameplay hole in the
+same class as the buff Ultimate discarding Combo stacks.
+
+Two pool rules from §1 and §2 *are* enforced, because they are draw logic rather than effects:
+Venom Edge and Bleeding Strikes exclude each other ("only one can be taken per run"), and Triple Cut
+is never offered before Twin Cut.
+
+### 23.7 No reroll and no skip, because no doc has one
+
+Grepping `Design/` for reroll, re-roll or banish returns nothing outside the room lab's button. §3
+makes the *Curse* declinable — by taking one of the three upgrades instead — but no doc says the
+three upgrades may be declined. Neither was built. If either is wanted, it is a design decision.
+
+### 23.8 The Secret Vault now presents its Relic instead of granting it silently
+
+§21.3.1 said "`VaultReward.Granted` fires with the upgrade, **so the real panel takes that seam over
+later**". It has. Clearing a Secret Vault opens the panel on a single centred gold card reading
+**RELIC RECOVERED / CLAIM IT**, with no Curse beside it — a guaranteed Legendary is not an offer, and
+pairing it with a Curse would turn a reward into a decision the design never asked for.
+
+The vault still does the granting; the panel is the ceremony around it. §8's wording is still
+"guaranteed Legendary-tier upgrade **offer**", and this is a presentation, so that word is now the
+only thing left stale in that clause.
+
+### 23.9 Upgrade icons: 46 generated assets, and the palette that made them usable
+
+Every entry has a 128×128 icon generated through PixelLab with a **forced palette built from 25
+colours the game already draws** — the Upper Caves greys and browns, the HUD's steel ramp, the four
+tier colours and the bar fills. Objectively verified: **all 46 use only those 25 colours, and not one
+has a semi-transparent pixel.** `Art/StyleAnchor/UI_IconPalette.png` is written from a committed table
+by `Deeper/Generate Icon Palette`, and **contains no hazard accent**, so §2's reservation cannot be
+broken decoratively even by accident.
+
+One icon has a design consequence rather than an art one: **Greed's Toll's card says its cost is
+missing.** §12 recorded that the Rising Hazard cut left that Curse pure upside; rather than invent a
+downside, the card reads "COST PENDING: THE HAZARD IT PAID WAS CUT". It is the only card in the game
+that admits to being unfinished, and it should stop being true rather than be reworded.
+
+---
+
+## 24. The Hub is built — a surface camp with a weapon rack and a shaft (owner, 2026-09-07)
+
+The owner asked for the Hub, as a **walkable place** rather than a menu screen, lit as a **night
+surface camp at the mine mouth**. Built: the camp itself, weapon select (working), descend (working),
+and the stat shrine placed but stubbed. `Scenes/HubScene.unity`, built by `Deeper/Build Hub Scene`.
+
+Most of this is design that already exists — GDD §Game Loop 1 ("Player starts in a small surface
+camp"), §Player ("chooses 1 of 3 weapons in the Hub before descending... all 3 unlocked from the
+start"), and CORE_SYSTEMS §1's weapon lock. The items below are where it goes past the docs.
+
+### 24a. PROPOSED — a fourth palette that ART_DIRECTION §2 does not have
+
+§2's table has three biomes: Upper Caves, Flooded Tunnels, Molten Depths. The Hub is above ground and
+belongs to none of them, so a palette was invented: **packed brown earth and muted olive grass inside
+a grey stone retaining wall, washed cool by a moonlight ambient.** It is deliberately the highest-value
+contrast in the game — every biome is a dark hole, and the one safe place is outdoors.
+
+The night is **not baked into the tiles**. They are authored at neutral daylight value and the camp's
+`Light2D` ambient (0.55, 0.60, 0.86) makes it night, which is style-guide §8's own recommendation —
+bake form, light mood. Asking the generator for "moonlit" art as well darkened everything twice and
+looked muddy; that was tried and rejected.
+
+**Needs a designer decision:** does the Hub get a row in §2's table, and is this the right direction
+for it?
+
+### 24b. CONFLICT — the campfire is the one warm light, and warm is a reserved colour
+
+ART_DIRECTION §2 reserves orange-red, pale cyan-white and bright yellow-orange **exclusively** for
+hazard telegraphs, "never reused for decorative purposes". The camp's fire is decorative and warm,
+and it is the strongest colour in the scene — that is the entire point of it, because it is what
+makes the camp read as safe against a cold night.
+
+Argued for shipping it as-is: the reservation is a **readability** rule, and its purpose is that a
+player reads "that colour means danger" instantly. The Hub contains no hazards, no enemies and no
+telegraphs of any kind, so there is nothing there for it to be confused with. The flame is also held
+to a muted amber rather than the saturated hazard orange.
+
+This is the same *class* of conflict as the Katana Ultimate's cyan-white arcs already recorded in §2,
+but with a better defence, and it is flagged rather than quietly taken. **If the reservation is meant
+to be absolute regardless of context, the fire needs re-colouring and the camp loses its focal point.**
+
+### 24c. The stat shrine is placed but does nothing, on purpose
+
+CONTENT_DESIGN §7's Hub Stat System and the Relic Vault are Milestone 6 and are not built — there is
+no Shard currency, no save file and no run-end award. The shrine is still placed, carrying a
+`HubNotice` that answers "THE SHRINE IS COLD. NO SHARDS TO SPEND YET."
+
+A station with no listener reads in play as a *broken* fixture: the prompt says the key works and
+pressing it does nothing. Saying "not yet" costs one line of text and reads as unfinished instead.
+
+### 24d. Descending leads to `TestScene`, because no run scene exists
+
+There is no scene that plays a run — `FloorLoader` is written but mounted nowhere. The shaft
+therefore loads the sandbox. This is an engineering gap, not a design change, and the destination is
+a serialized field. **It does mean the Hub→Run→Hub loop of MVP §30 is only half real**: you can
+descend, and nothing brings you back.
+
+> ✅ **RESOLVED (owner, 2026-09-08).** The shaft leads to `RunScene`, and the run-end screen's
+> Return to Hub button leads back. **MVP §30's Hub→Run→Hub loop is closed**, with Shards carrying
+> over — verified in play mode. See §25.
+
+### 24e. Two numbers with no design source
+
+- **Camp size, 16×14 cells.** LEVEL_DESIGN sizes combat rooms, not the Hub. Chosen so the whole camp
+  is legible at once at the current camera.
+- **Station reach, 1.6 units** (against a 1.4×0.7 blocker). Invented; it is the distance at which E
+  starts working, and it has to exceed the box she cannot walk into.
+
+### 24f. Not a design matter, but the designer should know
+
+The camp's first builds looked wrong for a reason that turned out to be **in the tile art, not the
+code**: generated isometric tiles ship with a thick side wall that a 2:1 grid cannot hide, so floors
+rendered as a field of raised blocks. **The shipped Upper Caves floor tiles have the identical
+defect** and every room in the game is drawing floors that way. Separately, the project has no
+pixel-perfect camera, so the world renders at a fractional zoom. Both are written up in the
+engineering plan; both are plausible answers to "the tiles look bad", and both are the owner's call
+to schedule.
+
+### 24g. Usable fixtures are now marked, and the camp stopped lying about its lanterns
+
+No design doc says how an interactable object announces itself — GDD §UI lists the HUD, the upgrade
+screen and the Hub screen, and nothing covers world-space affordance. Invented, and flagged here:
+
+- A **floating mark above every usable fixture** — a dim chevron at distance, an **E keycap** in
+  range. Scenery deliberately gets none; the mark *is* the distinction between the weapon rack and
+  the crates.
+- **Every lantern post moved to stand beside a station**, so "lit means usable" is true across the
+  camp. They were previously free scenery, which made the camp actively misleading.
+
+Both are **bone-white on near-black, with no colour coding at all**, and that is the design-relevant
+part: ART_DIRECTION §2 reserves orange-red, pale cyan-white and bright yellow-orange exclusively for
+danger. The obvious treatment for "you can use this" is a warm glow, and it is exactly the treatment
+the palette forbids. If a designer later wants interactables colour-coded, §2 has to give them a
+colour that is not one of the three reserved ones — otherwise the Hub teaches a colour language that
+the biomes then contradict.
+
+**Open question for the designer:** does this marker generalise to the whole game — chests, doors,
+Trapped Souls, the Secret Vault pedestal — or is the Hub a special case? It was built as if it
+generalises (nothing in it is camp-specific), but that is an engineering guess, not a design call.
+
+### 24h. The Shard total is on screen, and it is honest about being empty
+
+GDD §UI lists "Shard total" first on the Hub Screen, so the readout itself needs no design decision.
+Three things around it do:
+
+- **It always reads 0**, because nothing awards Shards. GDD §Currency and BALANCE §14 compute them
+  once at run end from Levels Gained and Depth Reached, and there is no run end — §24d's missing run
+  scene is the same hole seen from the other side. The counter is real, the currency is not yet.
+- **Shards do not persist between sessions.** `ShardBank` is a ScriptableObject, so a balance set at
+  runtime survives the editor session and is discarded in a build. That is wrong for a *permanent*
+  currency and is knowingly temporary — Milestone 6's `SaveData` is what makes it true.
+- **The icon is violet** — `168,115,219`, the Epic tier colour the game already ships. Worth stating
+  because the intuitive choice for a precious mineral is gold, and gold sits close enough to
+  ART_DIRECTION §2's reserved bright yellow-orange to be a bad habit to start. **If a designer wants
+  Shards to read as gold, §2 has to say so explicitly**, the way it would have to for the interaction
+  markers in §24g.
+
+**Open question:** the shrine's stub currently says "THE SHRINE IS COLD. NO SHARDS TO SPEND YET."
+Once Shards can be earned but the Hub Stat System still is not built, that line becomes wrong in a new
+way — it will be shards you *have* and cannot spend. Whoever builds the award should revisit it.
+
+### 24i. The tent is now the Codex, and the descent is played rather than cut to
+
+Two design-touching decisions from the polish pass (owner, 2026-09-08).
+
+**PROPOSED — the Codex lives in her tent.** The tent was inert scenery and, at 3.6 x 3.5 world units,
+the largest object in the camp; the owner's note was that it is "too big for decoration" and should
+be removed if it will never do anything. It now does: CORE_SYSTEMS §15 banks **Memory Fragments**
+into a Hub **Codex**, and MVP §29 lists a Codex UI stub as MUST SHIP. Nothing in the design says
+*where* the Codex is, so putting it in her tent is a placement invention — a small one, and the
+alternative was deleting a fixture the Hub will need a home for anyway. It is stubbed exactly like
+the shrine, answering "NO MEMORIES RECOVERED YET."
+
+**The Hub now has four stations**: weapon rack (works), mine shaft (works), stat shrine (stub) and
+Codex (stub). The Relic Vault, the fifth thing GDD §UI lists on the Hub Screen, still has no fixture.
+
+**The descent is a played sequence, not an instant load.** Pressing E at the shaft locks input, walks
+her into the pit, sinks her behind the brick lip and fades to black before the run loads — about 1.2
+seconds. No design doc describes a Hub→run transition at all, so its existence and its timings are
+invented and listed here with §24e's other unsourced numbers: approach 0.45s, sink 0.7s over 1.6
+units, fade 0.55s.
+
+It is worth a designer's attention because **it is the one moment the Hub exists to set up** — the
+handoff from safety to the descent — and a hard cut reads as the game glitching rather than as going
+underground. If the narrative layer (`Design/10-NARRATIVE.md`) ever wants a line, a look back at the
+camp, or Zyno's voice on the way down, this sequence is where it goes.
+
+---
+
+## 25. The run is playable end to end, on placeholder bosses (owner, 2026-09-08)
+
+The owner asked for two things: rooms are too big ("we only use first half of the room"), and a
+descent that means something when a room is cleared. Placeholders for all bosses so a run can be
+finished, and the floor system built so the room types that do not exist yet drop in later.
+
+A run now goes Hub → Floor 1 → 3–5 rooms per floor → Mini-Boss on floors 5, 10 and 15 → Floor 16's
+two fights → a Death/Victory screen → back to the Hub with Shards. **Nothing in the locked design
+changed**; what follows is what engineering had to invent because no doc specifies it, plus the
+gaps the placeholders leave.
+
+### 25.1 Invented — every room dimension in the game
+
+**No design doc gives a room a size.** LEVEL_DESIGN §2 describes room *character* ("at least 2
+viable player positioning zones"), §4 says a Wave Room "needs larger open space", and §6 wants a
+"large open arena" for a Mini-Boss — all relative, none numeric. The numbers were therefore invented
+when the first room was built, and have now been invented again, smaller:
+
+| Room | was | now | world footprint |
+|---|---|---|---|
+| Combat Room ×6 | 28 × 16 | **16 × 10** | 26.0 × 13.0 |
+| Wave Room | 32 × 18 | **20 × 12** | 32.0 × 16.0 |
+| Secret Vault | 22 × 16 | **16 × 10** | 26.0 × 13.0 |
+| Mini-Boss arena | — | **20 × 14** | 34.0 × 17.0 |
+| Final Boss arenas ×2 | — | **22 × 16** | 38.0 × 19.0 |
+
+The arithmetic a designer needs: on the isometric grid a `w × h` map draws a diamond **`(w+h)` wide
+by `(w+h)/2` tall**, so the footprint depends only on the sum. The camera shows **28.4 × 16** world
+units. The old Combat Room was 44 × 22 — a room and a half wide — which is why the owner could only
+ever see part of one.
+
+**The relative order §2 and §6 ask for is preserved**: a standard Combat Room is the smallest fight
+room, the Wave Room is larger than it, and the boss arenas are larger again. Only the absolute
+numbers moved.
+
+**A tuning question, not a design one** — but worth a designer's eye, because room size sets fight
+density, and BALANCE §8's 30–60s clear target for a standard Combat Room has not been re-measured
+against a room a third of the old area.
+
+### 25.2 Invented — the composition of five new fights
+
+Combat Rooms 2–6 needed encounters. Each is one batch of at most six bodies (the peak concurrency
+room 01 already proved readable) for **145–170 HP** against room 01's authored 150, which keeps all
+six in BALANCE §8's 30–60s band. What varies is composition, matched to the layout: the
+ranged-leaning fight in the room with the long approach, the swarm in the room ringed with cover.
+BALANCE §8 gives a clear-time target and no per-room roster, so these are engineering's.
+
+### 25.3 Invented — everything about a boss except its HP
+
+Five placeholder bosses exist: **The Collapsed King, The Drowned Custodian, The Molten Sentinel, The
+Depth Warden and Zyno**. Each is a prefab variant of the Tunnel Brute with its own stat asset, scaled
+1.6× and tinted — the technique ART_DIRECTION §4 already uses for the Deep Warden Elite.
+
+**HP is BALANCE §6 verbatim**: 350 / 450 / 600 / 1200. **Zyno's is a choice this pass made** — §6
+says it "reuses an existing Mini-Boss's HP/phases for MVP (specific choice TBD)", and a TBD cannot
+be built, so it takes the Molten Sentinel's 600. That choice is the designer's to confirm or change.
+
+Everything else is invented: move speed 2.1, attack cooldown 2.2s, attack range 2.6, stop distance
+1.6, and an **aggro radius of 24** — the one number that is not taste, because at the Brute's 12 a
+boss stands still in a 34 × 17 arena until the player walks most of the way to it.
+
+### 25.4 CONFLICT — no boss has phases or a weapon-check
+
+BALANCE §6 gives every boss a phase count (2 / 2 / 3 / 3) and a phase-transition trigger, and
+CONTENT_DESIGN §5 gives every one a weapon-check moment — the Collapsed King's rubble shield that
+the Greatsword breaks in one hit, the Drowned Custodian's snipeable homing projectiles, the Molten
+Sentinel's Hyper Armor window, the Depth Warden's Phase 3 check. GDD §Bosses calls that moment the
+point of a boss: "just a moment where weapon choice matters at peak tension."
+
+**None of it exists.** There is no boss phase system, and each of these fights is one large enemy in
+a locked room that chases and slams. The room type, the arena, the sequencing and the run's ending
+are real; the boss design is not. This is the largest single gap the pass leaves and it is flagged
+here rather than quietly logged as done.
+
+Related: LEVEL_DESIGN §6 calls Floor 16 "the only room in the game that changes its own geometry
+mid-fight". `FinalBossArena_01` and `_02` are flat boxes that do not.
+
+### 25.5 DECIDED — Biomes 2 and 3 are Upper Caves in a different colour
+
+Owner's call, taking "all 16 floors" over "Biome 1 only". Flooded Tunnels and Molten Depths have
+themes and tiles but **no room layouts and no enemy roster** (CONTENT_DESIGN §5 defines both rosters;
+neither is built). Floors 6–15 therefore draw the Upper Caves' seven layouts and its three basic
+enemies, dressed in the deeper biome's theme, and floors 6–10 / 11–15 differ from floors 1–5 only in
+how they look.
+
+Expressed as data — two pool assets listing the Upper Caves rooms — rather than as a fallback in
+code, so building the real content is an Inspector change. A designer reading "Biome 2 is playable"
+should read it as "Biome 2 has a colour", not as content.
+
+### 25.6 The Secret Vault is now *declared* and still not on the route
+
+§22.2's conflict is unchanged: CORE_SYSTEMS §8 calls a Secret Floor a *detour*, and a detour needs
+the branch LEVEL_DESIGN §1 rules out. What changed is only that the vault now has a named slot
+(`RoomRole.SecretVault`) on all three biome pools, filled and never drawn. The seam exists; the
+design question is untouched and still needs an answer.
+
+The same is true of the **Trapped Soul Room** (CORE_SYSTEMS §14, LEVEL_DESIGN §2): its role is
+declared, no room fills it.
+
+### 25.7 Invented — the run-end screen's wording and its delay
+
+GDD §UI specifies the Death/Victory screen's contents exactly — "depth reached, Shards earned, run
+time, weapon used, Return to Hub button" — and all five are on it. What it does not give is the
+words or the timing: the titles **"YOU DIED"** and **"DESCENT COMPLETE"**, the 1.1s pause between the
+killing blow and the screen (long enough for the death animation and the last hitstop to read as the
+end of a fight rather than a cut), and the screen's own geometry, are engineering's, on the same
+footing as §23.2's card measurements.
+
+One design-touching detail: **it is one screen for both endings**, differing in its title and its
+accent colour. GDD §Game Loop 7 has two outcomes reporting the same five numbers, and BALANCE §14
+pays identically on "death or victory".
+
+### 25.8 A death currently draws her standing up
+
+`CharacterState.Death` falls back to `Idle`, because ART_DIRECTION §3's death frames do not exist for
+the protagonist (the enemies have theirs). At 0 HP she stops moving, her collider goes off and the
+screen opens over her — she does not fall over. A placeholder, and the fallback is a single line to
+delete once the art lands. Noted because "the player dies" now reads as a finished feature and its
+most visible part is missing.
+
+### 25.9 Not a design matter, but the designer should know
+
+The pass found three pre-existing bugs, all fixed, and one of them is worth a designer's attention
+because it explains a complaint: **the entry trigger that springs a room was sized to the axis-aligned
+bounding box of a diagonal band**, so it covered roughly twice the intended area and reached into
+both halves of the room. Fights were springing earlier and from further away than any map looked like
+it should — which is a large part of what "we only use first half of the room" was describing. Room
+pacing measured before 2026-09-08 was measured against a trigger twice the authored size.
+
+---
+
+## 26. PROPOSED — a new effect-category taxonomy for the icon-led offer card (owner, 2026-09-17)
+
+**Not approved.** The offer card was rebuilt icon-led: a tier pip badge in place of the spelled-out
+tier word, and a small effect-category glyph plus a compressed value/detail line in place of the full
+prose description. That glyph needed something to key off, and no design doc defines one, so
+engineering invented a 12-value `UpgradeCategory` enum (`Scripts/Upgrades/EffectSummary.cs`): Health,
+Defense, Damage, OnHit, Movement, Dash, Experience, HeavyStrike, Combo, Gauge, Ultimate, Utility.
+
+**This is a different axis from `CONTENT_DESIGN` §2a's `Category` column**, and the doc comment on
+the enum says so explicitly rather than letting the two quietly disagree. §2a's column answers "which
+pool/sub-pool is this drawn from" (Shared/Katana/Bow/Greatsword, or a tag like "Build-defining");
+`UpgradeCategory` answers "what does picking it up change on screen". They agree for most of the 46
+entries and diverge on three, all Katana-only:
+
+| Entry | §2a's `Category` | This taxonomy | Why they diverge |
+|---|---|---|---|
+| Windcutter | Build-defining | `Damage` | It grants +15% Basic Attack range and +1 pierce — a damage-shape effect, whatever pool it draws from |
+| Deathmark | Build-defining | `HeavyStrike` | The bonus applies to "the next Heavy Strike" specifically |
+| Thousand Cuts | Alt Ultimate | `Ultimate` | The one entry where the two axes actually agree — flagged anyway so the table is complete |
+
+Two more judgment calls worth recording alongside the mapping:
+
+- **Thorns is tagged `Defense`, not `Damage`**, even though its effect (reflect 25% of damage taken)
+  deals damage back to the attacker. It follows §1's own Survivability placement rather than what the
+  number happens to do mechanically.
+- **Overclock (Curse: +20% attack speed) has no clean bucket in §1's six headers.** Assigned `Damage`
+  for lack of a better fit — attack speed is a damage-rate effect, but it is not damage the way Heavy
+  Hands or Executioner are. Flagged as the one genuinely arbitrary placement in the set.
+
+**The Greed's Toll cost line is a wording decision, not a taxonomy one, and is recorded here because
+it was made in the same pass.** `BALANCE` §11 already flags this Curse as broken rather than tuned —
+its cost was a faster Rising Hazard, and the Hazard was cut (§12 above). The card's compressed cost
+line keeps that admission near-verbatim ("Cost pending: its Hazard was cut" — trimmed 2026-09-18 from
+"Cost pending - the Hazard it paid was cut", which overflowed the card; see the last addendum below)
+rather than shortening it to something like "No cost", which would assert the Curse is pure upside —
+a design claim engineering does not get to make on its own.
+
+**Not covered here, and not needing its own entry:** the individual `Value`/`Detail` strings on all 46
+entries. Every one is a compression of the `description`/`upside` text CONTENT_DESIGN and BALANCE
+already authored, not a new number or a new claim — the full mapping lives in `Scripts/Editor/
+UpgradeCatalog.cs`, reviewable there. Two compression rules worth the designer knowing about, since
+they explain why some cards read the way they do rather than the way BALANCE writes them: **per-tick
+DoT values stay as authored** ("3 x 3", never the product "9", for Bleeding Strikes and Venom Edge —
+collapsing to a total would publish a number no doc states), and **an upgrade that grants a stacking
+bonus on top of a running total shows only what that pick grants** in the big `Value`, with the total
+demoted to the small `Detail` line (Gauge: Bloodrush shows "+4%" / "Basic Attack, 12% total", not "12%"
+as the headline).
+
+**What this needs from a designer:** a ruling on whether the three-entry disagreement with §2a is
+acceptable as a permanent two-axis system, or whether one of the two columns should be renamed to stop
+implying they are the same question. Nothing about this pass changes a number, a mechanic, or which
+pool an upgrade draws from — it is a presentation layer over already-authored content.
+
+**Follow-up flagged, not fixed:** `Scripts/UI/WeaponCard.cs`, the Hub's weapon-select card, still
+prints the weapon's full prose description. It was out of scope for this pass and will now read as
+visually inconsistent next to the icon-led offer card — worth a follow-up pass once (or if) the same
+treatment is wanted there.
+
+**Addendum, 2026-09-17 — the card's badge layout and description order finalized, owner-directed.**
+Three changes to `UpgradeCard.cs`/`BuildUpgradePanel.cs`, on top of the still-open taxonomy question
+above:
+
+- **The category glyph now owns the card's top-center band** — the thing worth seeing first —
+  instead of overlapping the icon's bottom-right corner. **The tier pip badge moved to a small
+  top-left corner accent** to make room, since it was already redundant with the tier-coloured
+  frame. Neither move touches the taxonomy question §26 raises; it is a position change only.
+- **`Value` and `Detail` collapsed into one line**, `"<Detail> <Value>"` (e.g. "Dig-Dash cooldown
+  -20%"), replacing the old two-line stack that read the number before what it modified. This freed
+  exactly the vertical room the category glyph's larger band needed, so the card kept its 168×196
+  size.
+- **The combined line drops from 14pt to 7pt when it doesn't fit one line at 14pt** — both sizes are
+  on-grid multiples of the packed pixel font's native size, chosen over Unity's continuous best-fit
+  specifically to avoid resampling the bitmap font off-grid (see CLAUDE.md's HUD scale-factor
+  rules). **In practice this means nearly every entry renders at 7pt**: the card's label is 148
+  units wide, and 14pt's monospaced advance (14 units) only fits 10 characters — every sampled
+  entry in play mode ("Dig-Dash cooldown -20%", "XP from enemies +20%", "Damage dealt +40%") was
+  well over that and rendered small. The two-tier switch is implemented and verified correct, but a
+  designer should confirm uniformly small description text is the intended look rather than the
+  occasional-shrink the owner asked for — the alternative is dropping the two-tier system for a
+  single fixed size, or authoring shorter `Detail` strings across the 46 entries so more of them
+  clear the 10-character bar.
+
+**Addendum, 2026-09-18 — the card rearranged to an owner mockup, and the 14pt flag above largely
+answered.** The owner supplied a drawing of the card and named what each region holds. Presentation
+only: no widget added or removed, no content edited, the card still 168×196, and the taxonomy question
+§26 opens is untouched.
+
+- **The category glyph and the tier badge now share one left-aligned top row** — glyph at the card's
+  top-left corner, badge beside it — replacing yesterday's arrangement of a centred glyph with the
+  badge tucked into the corner behind it. The badge art was re-emitted at 64×16 (from 32×8) so it
+  reads as the tier-coloured line the mockup asks for rather than a sliver.
+- **The description is now a block, not a line, and it wraps.** This corrects a real defect rather
+  than a preference: the single line did not wrap, held 21 characters at 7pt, and the seven authored
+  entries over 30 characters — Overwhelm's "Per hit, cap 5. Resets on a miss +2%" among them — were
+  drawing about 30 units past *each* edge of the card. Nobody had looked at those entries on a card.
+- **Two title lines instead of one largely answers the flag above.** "Max HP +15" and "All attacks +3"
+  now render at 14pt; the long entries still drop to 7pt, which is what the small size is for. So the
+  two-tier switch behaves as the owner originally described — an occasional shrink — rather than as a
+  uniform small. **One part of that flag stands:** all eight Curse upsides are 16 characters or more
+  and a Curse gets only the first of the block's two lines (its cost mark and cost line take the
+  rest), so **every Curse card still renders its upside at 7pt**. Whether that is acceptable, or
+  whether the eight upside strings should be compressed to 10 characters so a Curse's upside reads as
+  loudly as an upgrade's, is a designer call.
+- **`ART_DIRECTION` §5 is not contradicted by any of this.** It fixes the tier colour coding and asks
+  that the Curse card be "visually distinct with a red/black treatment"; both are unchanged, and it
+  says nothing about where on the card anything sits. Recorded here as an invented arrangement, not a
+  conflict.
+
+**Flagged in passing — four authored strings render with a lowercase x.** `PixelFontGlyphs` authors a
+real lowercase `x` (it is needed for "2x damage taken", "3 x 3", "2 x 4") while every other lowercase
+letter aliases onto its capital. So Vitality's detail `Max HP` draws as `MAx HP`, and at 14pt on the
+new block it reads as a typo. The others are Blood Debt's cost line ("-20% Max HP for the rest of the
+run") and the names `Executioner` and `Explosive Finish`. The fix is to author those four with a
+capital X — a content edit to authored strings, which is why engineering flagged it rather than
+making it. **Resolved 2026-09-18 a better way — see below.**
+
+**Addendum, 2026-09-18 — all 46 compressed lines re-authored, because collapsing them onto one line
+had broken about twenty of them.** Owner-reported, after seeing the restyled cards.
+
+**This is a consequence of the 2026-09-17 decision recorded two paragraphs above, and it is the kind
+of thing this brief exists to catch.** `UpgradeCard` renders `Detail + " " + Value` — the number
+always lands last. Those pairs were authored for the *two-line* card, where a big `Value` sat on its
+own line above a small `Detail`, so two numbers stayed visually apart. Collapsing them onto one line
+turned about twenty into nonsense, and nobody re-read the set afterwards:
+
+| Entry | What the card actually drew |
+|---|---|
+| Static Discharge | `Arcs within 3.0 4` |
+| Venom Edge | `Poison, stacks to 5 2 x 4` |
+| Gauge: Bloodrush | `Basic Attack, 12% total +4%` |
+| Windcutter | `Attack range, pierce +1 +15%` |
+| Iron Curse | `To knockback Immune` |
+| Gambler's Edge | `For the rest of the run 4th Card` |
+| Blood Debt | `Heal now Full HP` |
+| Overwhelm | `Per hit, cap 5. Resets on a miss +2%` |
+| Momentum Edge | `Stack cap 10-14` — reads as a range, means "10, raised to 14" |
+
+**What the designer needs to know:** no number, mechanic, tier, category or pool changed. Every
+rewrite was checked against that entry's own `description`/`upside`, which are untouched and are still
+what `UpgradeStatusReport` and every other reader goes through. §26's standing position — that these
+compressed lines are a presentation layer over content `CONTENT_DESIGN` and `BALANCE` already
+authored — is unchanged; this is the same compression done again, correctly. The two compression
+rules §26 records both still hold: Bleeding Strikes and Venom Edge still publish per-tick × ticks
+("3 damage x 3 ticks") and never the product, and Gauge: Bloodrush still leads with what the single
+pick grants and trails the running total.
+
+Two wordings worth a designer's eye, both kept deliberately:
+
+- **Overwhelm** now reads `+2% per hit, cap 5, resets on a miss`. §26 flags that dropping either
+  "cap 5" or "resets on a miss" misstates the stack; both survive, at the cost of being the longest
+  upgrade line in the set.
+- **Momentum Edge** now reads `Stack cap 10 to 14` rather than `10-14`. The HUD face has no arrow
+  glyph (§26's note on the glyph set still applies), and the hyphen was being read as a range.
+
+**The lowercase-x flag above is closed, by a different route than the one proposed.** Rather than
+authoring four strings with a capital X — which would have put `EXecutioner` into data every prose
+reader shares — `UpgradeCard` now uppercases its three labels at draw time. The HUD face is an
+uppercase bitmap, so this changes nothing anywhere else, and the multiplier strings keep their
+meaning: "2x damage taken" draws as `2X DAMAGE TAKEN`.
+
+**Not a design matter, but the designer should know:** verifying this pass found that the Curse
+card's cost mark has never drawn its art. `HUD_CostMark` is generated, but `BuildUpgradePanel` builds
+that `Image` with a null sprite and nothing assigns one, so UGUI draws a solid quad — a plain crimson
+bar where a rule-and-triangle should be. Same defect class as the white weapon slot in
+`01-VERIFICATION.md` §4. Flagged for a one-line engineering fix, not a design question.
+
+**Addendum, 2026-09-18 — one description size on every card, owner-directed. Closes the 14pt/7pt
+flag above.** The owner saw an offer where Executioner's line drew at 14pt beside three cards at 7pt
+("the font sizes are changing") and asked for one size. **The two-size switch is gone**: every card's
+description, name and cost line now draws at 7pt, the face's native size. 14pt was not a candidate
+for the single size — it is the only other size that stays on the pixel grid, it holds 10 characters
+to a line, and most of the 46 lines cannot be said in 20 characters (one word alone,
+`INVULNERABILITY`, is 15). This answers both open questions the earlier addenda left for a designer:
+uniformly small description text *is* the intended look, and the eight Curse upsides no longer need
+compressing to match the upgrades, because nothing renders louder than they do now.
+
+**Every line was then checked against the one size**, through UGUI's own text generator on the real
+card, not by estimate: all 46 fit. Nothing needed rewriting except one, which was already visibly
+broken in the owner's screenshot:
+
+- **Greed's Toll's cost line** is now `Cost pending: its Hazard was cut`, from
+  `Cost pending - the Hazard it paid was cut`. The old line wrapped to three lines in a box that
+  holds two, and the third drew across the card's bottom border. Same admission, same refusal to
+  claim the Curse is free — "its" carries what "it paid" did. `Downside`, the prose every other
+  reader uses, is untouched.
+
+The asset build now warns on any line that wraps past its box (one line for a name, five for an
+upgrade's summary, two each for a Curse's upside and cost line), so a future edit that overflows is
+caught when it is authored, not when it is seen.
+
+---
+
+## 27. DECIDED — a level-up beat between the pause and the offer (owner, 2026-09-18)
+
+**Owner's note:** "when level up suddenly rogue like upgrade panel is enabled it's a bit shocking maybe
+we need a vfx for level up thing." Until now the offer came up on the same frame as the killing blow
+that earned it — full-speed fight, then a frozen full-screen panel, with nothing between. The owner
+chose both the shape of the fix and its art source when asked:
+
+1. **The fight slows to a stop instead of cutting to one.** `RunPause` gained an eased entry: time
+   scale follows `(1 − p)²` from 1 to 0 over 0.45 real seconds. Only ≈0.15s of game time passes, so
+   enemies and her animation visibly wind down rather than lurching. The owner picked this over an
+   instant freeze followed by the effect.
+2. **A burst of light plays on her** — `LevelUpVFX`, a generated flipbook drawn behind her body.
+3. **The panel makes an entrance.** The scrim fades up, the heading follows, and the cards rise into
+   place one after another (`OfferReveal`). A second queued offer re-deals its cards without
+   re-fading the scrim.
+
+**How it reads against locked design.** CORE_SYSTEMS §12 — "on level-up: game pauses, upgrade panel
+opens" — is still true, with about 0.6s between the two instead of none. Input stops, and the pause
+counts as held, **on the first frame**: the ease is presentation, not a window to keep fighting in.
+ART_DIRECTION §6's must-have VFX list has no level-up effect; this adds one at the owner's direction.
+
+**Invented numbers, all serialized:**
+
+| Where | Value | What it is |
+|---|---|---|
+| `UpgradeOffer.levelUpSlowMo` | 0.45s | real time the ease to zero takes |
+| `RunPause.easeExponent` | 2 | curve shape — fast drop, crawling tail |
+| `UpgradeOffer.levelUpRevealDelay` | 0.6s | level-up to panel entrance; coupled to the burst's length |
+| `LevelUpVFX.framesPerSecond` | 14 | burst playback |
+| `OfferReveal` | scrim 0.2s, heading from 0.08s over 0.15s, first card at 0.14s, 0.06s stagger, 0.18s per card, 10-unit rise | the entrance |
+
+**Palette.** The burst is pale champagne gold into warm off-white with cool violet edges, generated
+against a forced palette of colours the game already draws: the Legendary tier gold, the level
+badge's own level-up flash, the Upper Caves ochres and violet-greys, and the Epic violet. **Bright
+yellow-orange is kept out on purpose** — style guide §3 reserves it for hazard telegraphs, and a
+level-up reading as danger is the conflict that rule exists to stop. The placeholder `HitFlash.png`
+does carry a saturated yellow (253,197,2); that is placeholder art and was not copied.
+
+**Deliberately not done:**
+
+- **No i-frames during the ease.** About 0.15s of game time passes; granting invulnerability for it
+  would be a mechanic, not presentation. The known edge is that a hit already landing in that window
+  can still kill her, and the offer can then come up alongside the death screen.
+  `RunSummaryPanel.ReturnToHub` already force-resets the time scale for exactly that case (an offer
+  open when she died), so nothing is stranded.
+- **No ease back out.** Combat resumes on the frame of the pick, as before. A symmetric ease-out
+  would delay the player's control for a transition nobody complained about.
+
+**Adjacent defect, fixed in the same pass.** ART_DIRECTION §6's pick flash (white/gold, red for a
+Curse) was built *inside* the panel, and the panel is switched off on the pick. So the flash never
+showed after the last offer of a level-up, which is every offer that is not followed by another. It
+now sits beside the panel rather than inside it.

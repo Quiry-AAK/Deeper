@@ -16,8 +16,14 @@ MonoBehaviour:
   displayName: Fleet Foot
   description: +10% move speed
   tier: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9bad83b8b3c3b4c40a6bba910e10c588, type: 3}
+  requires: {fileID: 0}
+  excludes: []
   modifiers:
   - stat: 1
     kind: 1
     value: 0.1
+  summary:
+    Category: 4
+    Value: +10%
+    Detail: Move speed

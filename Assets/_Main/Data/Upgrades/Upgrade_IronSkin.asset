@@ -16,8 +16,14 @@ MonoBehaviour:
   displayName: Iron Skin
   description: -2 flat damage taken per hit
   tier: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: bdc574b3a09352448aad3a1394e62fa0, type: 3}
+  requires: {fileID: 0}
+  excludes: []
   modifiers:
   - stat: 7
     kind: 0
     value: 2
+  summary:
+    Category: 1
+    Value: -2
+    Detail: Damage taken

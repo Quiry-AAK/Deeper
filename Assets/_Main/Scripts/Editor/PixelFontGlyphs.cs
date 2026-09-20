@@ -18,7 +18,7 @@ namespace Deeper.EditorTools
 
         /// <summary>Only uppercase is authored — the HUD is written in caps, and lowercase input is
         /// aliased onto these same cells so nothing can render blank.</summary>
-        public const string Order = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,:/%+-[]!?()x";
+        public const string Order = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,:/%+-[]!?()x'&";
 
         public static readonly string[][] Rows =
         {
@@ -73,6 +73,13 @@ namespace Deeper.EditorTools
             new[] { "...#.", "..#..", ".#...", ".#...", ".#...", "..#..", "...#." }, // (
             new[] { ".#...", "..#..", "...#.", "...#.", "...#.", "..#..", ".#..." }, // )
             new[] { ".....", ".....", "#...#", ".#.#.", "..#..", ".#.#.", "#...#" }, // x
+
+            // Added for the upgrade cards. Four of the pool's names own an apostrophe -
+            // Gambler's Edge, Greed's Toll, Deadeye's Promise, Mountain's Fall - and a glyph the
+            // face does not carry renders as a hole in the middle of the word rather than as an
+            // error anything can catch.
+            new[] { "..#..", "..#..", ".....", ".....", ".....", ".....", "....." }, // '
+            new[] { ".##..", "#..#.", "#.#..", ".#...", "#.#.#", "#..#.", ".##.#" }, // &
         };
     }
 }

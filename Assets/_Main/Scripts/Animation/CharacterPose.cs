@@ -134,6 +134,15 @@ namespace Deeper.Animation
                 case CharacterState.Dash:
                     return CharacterState.Move;
 
+                // Idle, and it is the only honest answer available: there is no Hit state to borrow
+                // from and no death art for anyone but the enemies, who bind their own rows. Without
+                // this, Death fell through to itself, resolved to an unbound clip, and drew nothing
+                // — the player would vanish on the frame she died. Standing still under the run-end
+                // screen is a placeholder; disappearing is a bug. Replace the moment ART_DIRECTION
+                // section 3's death frames exist.
+                case CharacterState.Death:
+                    return CharacterState.Idle;
+
                 default: return state;
             }
         }

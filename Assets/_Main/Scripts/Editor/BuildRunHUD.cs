@@ -28,9 +28,8 @@ namespace Deeper.EditorTools
     /// </summary>
     public static class BuildRunHUD
     {
-        private const string CanvasName = "HUDCanvas";
         private const string RootName = "RunHUD";
-        private const string ArtFolder = "Assets/_Main/Art/UI/";
+        private const string ArtFolder = HUDLayout.ArtFolder;
 
         /// <summary>
         /// The screen height at which the HUD draws at 1x — so at the 1080p design target the
@@ -42,20 +41,17 @@ namespace Deeper.EditorTools
         /// <see cref="Deeper.UI.PixelPerfectHUDScale"/> for why the factor has to be a whole number
         /// in the first place.
         /// </summary>
-        private const int ReferenceHeight = 540;
-
-        /// <summary>Kept only for the CanvasScaler's own field; the scale mode ignores it.</summary>
-        private static readonly Vector2 ReferenceResolution = new Vector2(1920f, 1080f);
+        private const int ReferenceHeight = HUDLayout.ReferenceHeight;
 
         private const float Margin = 14f;
 
         /// <summary>
         /// The pixel font's native size (see <see cref="PixelFontArt"/>), so UGUI scales nothing.
         /// </summary>
-        private const int BodyText = 7;   // 14 on screen
+        private const int BodyText = HUDLayout.BodyText;   // 14 on screen
 
         /// <summary>Exactly 2x native — the one size that stays on the grid when scaled up.</summary>
-        private const int TitleText = 14;   // 28 on screen
+        private const int TitleText = HUDLayout.TitleText;   // 28 on screen
 
         /// <summary>
         /// The border widths <see cref="HUDFrameArt"/> draws its two slots at. Anything inset to
@@ -83,6 +79,11 @@ namespace Deeper.EditorTools
             RectTransform root = NewRect(RootName, canvas.transform);
             Stretch(root);
 
+            // Sibling order is draw order. The run HUD sits under the upgrade offer, which
+            // pushes itself last for the same reason — so the two menu items can be run in
+            // either order without one covering the other.
+            root.SetAsFirstSibling();
+
             BuildHealth(root);
             BuildUpgrades(root);
             BuildExperience(root);
@@ -90,8 +91,12 @@ namespace Deeper.EditorTools
             BuildWeaponAndDash(root);
             BuildWaveIndicator(root);
 
+            // One per scene, on the canvas, so the offer screen and the debug menu share a
+            // refcount instead of each toggling player input under the other.
+            HUDLayout.EnsureRunPause(canvas);
+
             EditorUtility.SetDirty(canvas.gameObject);
-            Debug.Log("Built the run HUD under " + CanvasName + "/" + RootName + ".", canvas);
+            Debug.Log("Built the run HUD under " + HUDLayout.CanvasName + "/" + RootName + ".", canvas);
             Selection.activeGameObject = root.gameObject;
         }
 
@@ -311,8 +316,14 @@ namespace Deeper.EditorTools
                 Inset(socket, Vector4.one * UpgradeSlotBorder);
                 AddImage(socket, null, new Color(0.07f, 0.07f, 0.09f, 0.5f));
 
+                // Inset one further than the socket, which puts the icon in a 16-unit box
+                // rather than the hole own 18. That is deliberate arithmetic, not padding:
+                // upgrade icons are authored at 64 for the offer card, and 64 into 16 units is
+                // an exact half at the 2x canvas. The 18 it would otherwise get is 0.5625 —
+                // the non-integer resample of point-filtered art this whole HUD is arranged
+                // to avoid.
                 RectTransform icon = NewRect("Icon", slot);
-                Inset(icon, Vector4.one * UpgradeSlotBorder);
+                Inset(icon, Vector4.one * (UpgradeSlotBorder + 1f));
                 Image iconImage = AddImage(icon, null, Color.white);
                 iconImage.preserveAspect = true;
                 iconImage.enabled = false;
@@ -335,6 +346,7 @@ namespace Deeper.EditorTools
             var hud = group.gameObject.AddComponent<UpgradeListHUD>();
             Wire(hud, "overflowLabel", overflowLabel);
             Wire(hud, "upgrades", PlayerPart<RunUpgrades>());
+            Wire(hud, "curses", PlayerPart<RunCurses>());
             WireArray(hud, "slotRoots", slotRoots);
             WireArray(hud, "slots", slots);
             WireArray(hud, "icons", icons);
@@ -464,32 +476,7 @@ namespace Deeper.EditorTools
 
         private static Canvas FindOrCreateCanvas()
         {
-            GameObject go = GameObject.Find(CanvasName);
-            if (go == null)
-            {
-                go = new GameObject(CanvasName);
-                go.AddComponent<Canvas>();
-                go.AddComponent<CanvasScaler>();
-                go.AddComponent<GraphicRaycaster>();
-            }
-
-            var canvas = go.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-
-            var scaler = go.GetComponent<CanvasScaler>();
-            if (scaler == null) scaler = go.AddComponent<CanvasScaler>();
-            scaler.referenceResolution = ReferenceResolution;
-
-            // NOT ScaleWithScreenSize, which is what this used to be. That mode produces a
-            // fractional factor at any window size other than the reference — 0.45 in a 906x463
-            // editor Game view — and a fractional factor resamples point-filtered art off its grid
-            // until the whole HUD reads as flat untextured bars. PixelPerfectHUDScale owns the mode
-            // and the factor from here; see its summary for what that actually looked like.
-            if (go.GetComponent<PixelPerfectHUDScale>() == null) go.AddComponent<PixelPerfectHUDScale>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
-            scaler.scaleFactor = Mathf.Max(1, Screen.height / ReferenceHeight);
-
-            return canvas;
+            return HUDLayout.FindOrCreateCanvas();
         }
 
         /// <summary>
@@ -506,25 +493,17 @@ namespace Deeper.EditorTools
         /// </summary>
         private static T PlayerPart<T>() where T : Component
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            return player != null ? player.GetComponentInChildren<T>(true) : null;
+            return HUDLayout.PlayerPart<T>();
         }
 
         private static Sprite Load(string file)
         {
-            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(ArtFolder + file + ".png");
-            if (sprite == null)
-            {
-                Debug.LogWarning("Missing HUD sprite " + ArtFolder + file + ".png — the element " +
-                                 "will build without its frame art.");
-            }
-
-            return sprite;
+            return HUDLayout.Load(file);
         }
 
         private static Vector2 SizeOf(Sprite sprite, Vector2 fallback)
         {
-            return sprite != null ? new Vector2(sprite.rect.width, sprite.rect.height) : fallback;
+            return HUDLayout.SizeOf(sprite, fallback);
         }
 
         /// <summary>
@@ -602,49 +581,19 @@ namespace Deeper.EditorTools
 
         private static RectTransform NewRect(string name, Transform parent)
         {
-            var go = new GameObject(name, typeof(RectTransform));
-            go.transform.SetParent(parent, false);
-            return (RectTransform)go.transform;
+            return HUDLayout.NewRect(name, parent);
         }
 
         private static Image AddImage(RectTransform rect, Sprite sprite, Color colour)
         {
-            Image image = rect.gameObject.GetComponent<Image>();
-            if (image == null) image = rect.gameObject.AddComponent<Image>();
-
-            image.sprite = sprite;
-            image.color = colour;
-            image.raycastTarget = false;   // the HUD is a readout, it must never eat clicks
-            return image;
+            // Never clickable: the run HUD is a readout and must not eat clicks. The offer
+            // screen asks HUDLayout for the clickable variant instead.
+            return HUDLayout.AddImage(rect, sprite, colour);
         }
 
         private static Text AddText(RectTransform parent, string content, int size, TextAnchor align)
         {
-            // Always its own object. Text and Image both derive from Graphic, and Unity does not
-            // support two Graphics on one GameObject — they fight over the same canvas renderer and
-            // one of them silently does not draw.
-            RectTransform rect = NewRect("Label", parent);
-            Stretch(rect);
-
-            var text = rect.gameObject.AddComponent<Text>();
-            text.text = content;
-            text.fontSize = size;
-            text.alignment = align;
-            text.raycastTarget = false;
-            text.horizontalOverflow = HorizontalWrapMode.Overflow;
-            text.verticalOverflow = VerticalWrapMode.Overflow;
-            text.font = PixelFont();
-
-            // A hard drop shadow, offset by one *authored* pixel — which is two screen pixels,
-            // because the font is packed at 2x (see PixelFontArt). Without it the labels sit
-            // directly on the world and a pale digit over a pale floor tile is unreadable; a soft
-            // shadow would be the one anti-aliased thing left in the HUD.
-            var shadow = rect.gameObject.AddComponent<Shadow>();
-            shadow.effectColor = new Color(0f, 0f, 0f, 0.75f);
-            shadow.effectDistance = new Vector2(1f, -1f);
-            shadow.useGraphicAlpha = true;
-
-            return text;
+            return HUDLayout.AddText(parent, content, size, align);
         }
 
         /// <summary>
@@ -655,110 +604,58 @@ namespace Deeper.EditorTools
         /// </summary>
         private static Font PixelFont()
         {
-            var font = AssetDatabase.LoadAssetAtPath<Font>(ArtFolder + "HUD_Font.fontsettings");
-            if (font != null) return font;
-
-            Debug.LogWarning("No HUD_Font.fontsettings in " + ArtFolder + " — run " +
-                             "Deeper/Generate HUD Font first. Falling back to the built-in face, " +
-                             "which is anti-aliased and will not match the rest of the HUD.");
-            return Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            return HUDLayout.PixelFont();
         }
 
         /// <summary>Fills a serialized array field with references, in order.</summary>
         private static void WireArray(Object target, string field, Object[] values)
         {
-            var so = new SerializedObject(target);
-            SerializedProperty prop = so.FindProperty(field);
-            if (prop == null || !prop.isArray)
-            {
-                Debug.LogWarning("No serialized array '" + field + "' on " + target.GetType().Name);
-                return;
-            }
-
-            prop.arraySize = values.Length;
-            for (int i = 0; i < values.Length; i++)
-            {
-                prop.GetArrayElementAtIndex(i).objectReferenceValue = values[i];
-            }
-
-            so.ApplyModifiedPropertiesWithoutUndo();
+            HUDLayout.WireArray(target, field, values);
         }
 
         /// <summary>Sets a private serialized field by name, so the built HUD is wired exactly the
         /// way a human dragging references would leave it.</summary>
         private static void Wire(Object target, string field, object value)
         {
-            var so = new SerializedObject(target);
-            SerializedProperty prop = so.FindProperty(field);
-            if (prop == null)
-            {
-                Debug.LogWarning("No serialized field '" + field + "' on " + target.GetType().Name);
-                return;
-            }
-
-            if (value is Color) prop.colorValue = (Color)value;
-            else prop.objectReferenceValue = (Object)value;
-
-            so.ApplyModifiedPropertiesWithoutUndo();
+            HUDLayout.Wire(target, field, value);
         }
 
         // ---------------------------------------------------------------- anchoring
 
         private static void Stretch(RectTransform rect)
         {
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
+            HUDLayout.Stretch(rect);
         }
 
         /// <summary><paramref name="by"/> is (left, bottom, right, top) in pixels.</summary>
         private static void Inset(RectTransform rect, Vector4 by)
         {
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.offsetMin = new Vector2(by.x, by.y);
-            rect.offsetMax = new Vector2(-by.z, -by.w);
+            HUDLayout.Inset(rect, by);
         }
 
         private static void Centre(RectTransform rect, Vector2 size)
         {
-            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
-            rect.pivot = new Vector2(0.5f, 0.5f);
-            rect.anchoredPosition = Vector2.zero;
-            rect.sizeDelta = size;
+            HUDLayout.Centre(rect, size);
         }
 
         private static void AnchorTopLeft(RectTransform rect, Vector2 size, Vector2 offset)
         {
-            rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
-            rect.pivot = new Vector2(0f, 1f);
-            rect.sizeDelta = size;
-            rect.anchoredPosition = offset;
+            HUDLayout.AnchorTopLeft(rect, size, offset);
         }
 
         private static void AnchorTopRight(RectTransform rect, Vector2 size, Vector2 offset)
         {
-            rect.anchorMin = rect.anchorMax = new Vector2(1f, 1f);
-            rect.pivot = new Vector2(1f, 1f);
-            rect.sizeDelta = size;
-            rect.anchoredPosition = offset;
+            HUDLayout.AnchorTopRight(rect, size, offset);
         }
 
         private static void AnchorTopCentre(RectTransform rect, Vector2 size, Vector2 offset)
         {
-            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 1f);
-            rect.pivot = new Vector2(0.5f, 1f);
-            rect.sizeDelta = size;
-            rect.anchoredPosition = offset;
+            HUDLayout.AnchorTopCentre(rect, size, offset);
         }
 
         private static void AnchorBottomCentre(RectTransform rect, Vector2 size, Vector2 offset)
         {
-            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0f);
-            rect.pivot = new Vector2(0.5f, 0f);
-            rect.sizeDelta = size;
-            rect.anchoredPosition = offset;
+            HUDLayout.AnchorBottomCentre(rect, size, offset);
         }
     }
 }

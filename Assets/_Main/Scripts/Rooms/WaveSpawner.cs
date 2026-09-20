@@ -22,25 +22,6 @@ namespace Deeper.Rooms
     [DisallowMultipleComponent]
     public sealed class WaveSpawner : MonoBehaviour
     {
-        [Serializable]
-        private sealed class SpawnGroup
-        {
-            [Tooltip("Enemy prefab. One pool is built per distinct prefab across every wave.")]
-            public GameObject prefab;
-
-            [Tooltip("How many of it in this batch.")]
-            public int count = 1;
-        }
-
-        [Serializable]
-        private sealed class Wave
-        {
-            [Tooltip("Enemy types and counts in this batch. Group order no longer decides where " +
-                     "anything starts — each spawn picks its own marker against the player's " +
-                     "position and that enemy's aggro radius.")]
-            public SpawnGroup[] groups;
-        }
-
         [Header("Encounter")]
         [Tooltip("One element is a standard Combat Room; two or three make it a Wave Room " +
                  "(CORE_SYSTEMS §8) with no other change. BALANCE §8 targets 30–60s to clear a " +
@@ -87,6 +68,9 @@ namespace Deeper.Rooms
         public event Action AllWavesCleared;
 
         private readonly Dictionary<GameObject, ActorPool> _pools = new Dictionary<GameObject, ActorPool>();
+
+        /// <summary>Whether Awake has run. See <see cref="SetEncounter"/> for why that matters.</summary>
+        private bool _poolsBuilt;
 
         /// <summary>
         /// Everything this spawner has handed out and not yet seen die.
@@ -146,6 +130,11 @@ namespace Deeper.Rooms
         private void Awake()
         {
             BuildPools();
+
+            // Latched here rather than inside BuildPools because what it actually records is "Awake
+            // has happened", which stays true even for an encounter-less spawner that built nothing.
+            // SetEncounter reads it to refuse a swap that would strand the pools it just sized.
+            _poolsBuilt = true;
         }
 
         private void OnDisable()
@@ -154,6 +143,42 @@ namespace Deeper.Rooms
             // on the way out means a kill during scene teardown runs this class's logic against a
             // half-destroyed room.
             Clear();
+        }
+
+        /// <summary>
+        /// Replaces the authored encounter with a drawn one.
+        ///
+        /// **Must be called before this component's Awake** — in practice, while the room instance
+        /// is still parented to an inactive holder, which is why
+        /// <see cref="Deeper.Run.FloorLoader"/> mounts into one. Unity defers Awake until an object
+        /// becomes active in the hierarchy, so the pools are then sized from the drawn encounter on
+        /// their first and only build.
+        ///
+        /// Calling it later cannot be made to work quietly: <see cref="BuildPools"/> runs exactly
+        /// once and <see cref="ActorPool"/> has no dispose, so a second build would overwrite the
+        /// dictionary entry for any prefab common to both encounters and strand the first set of
+        /// prewarmed instances under this transform, where <see cref="Clear"/> can no longer reach
+        /// them. That is a leak that looks like nothing at all, so this refuses loudly instead.
+        /// </summary>
+        public void SetEncounter(EncounterDefinition definition)
+        {
+            if (definition == null)
+            {
+                Debug.LogError("SetEncounter got no definition; keeping the authored waves.", this);
+                return;
+            }
+
+            if (_poolsBuilt)
+            {
+                Debug.LogError(
+                    "SetEncounter ran after Awake, so the pools are already sized for the authored " +
+                    "encounter and this one is ignored. Configure the room while it is still " +
+                    "inactive (FloorLoader mounts into an inactive holder for exactly this reason).",
+                    this);
+                return;
+            }
+
+            waves = definition.Waves;
         }
 
         /// <summary>

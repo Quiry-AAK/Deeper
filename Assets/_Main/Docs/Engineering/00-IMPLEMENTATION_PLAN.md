@@ -8,11 +8,11 @@ Update this file (check boxes, add notes) at the end of every implementation tas
 
 **Engine:** Unity 6000.0.58f1, URP (2D Renderer), new Input System, no additional third-party packages unless a milestone below calls one out explicitly.
 
-**Current status:** Milestone 0 done. Owner-directed work has landed outside the milestone plan — see **Run Loadout**, **Player Movement, Animation & Test Level**, **Real Character Art**, **Katana attacks**, **Player prefab structure**, **Damage pipeline & training dummy**, **Biome 1 basic enemies** and **TestScene** below. Milestone 1 is largely covered by that work (movement, animation rig, test room, Attack State Machine, Katana Basic/Heavy/Ultimate, Ultimate Gauge, Combo Counter, hitbox + damage pipeline), and its "real enemy with AI" gap is now closed: the whole Upper Caves basic roster — Cave Crawler, Rock Slinger, Tunnel Brute and the Elite Deep Warden — chases, telegraphs, attacks and dies, on placeholder art. Still missing from Milestone 1: Dig-Dash and its Dash-Attack Cancel, and player death / run-end — which four enemies that can actually kill her make considerably more urgent.
+**Current status:** Milestone 0 done. Owner-directed work has landed outside the milestone plan — see **Run Loadout**, **Player Movement, Animation & Test Level**, **Real Character Art**, **Katana attacks**, **Player prefab structure**, **Damage pipeline & training dummy**, **Biome 1 basic enemies** and **TestScene** below. Milestone 1 is largely covered by that work (movement, animation rig, test room, Attack State Machine, Katana Basic/Heavy/Ultimate, Ultimate Gauge, Combo Counter, hitbox + damage pipeline), and its "real enemy with AI" gap is now closed: the whole Upper Caves basic roster — Cave Crawler, Rock Slinger, Tunnel Brute and the Elite Deep Warden — chases, telegraphs, attacks and dies, on placeholder art. Milestone 1's remaining gaps are now closed too: the Dig-Dash and its Dash-Attack Cancel, and — as of 2026-09-08 — player death and run-end, alongside a sixteen-floor run in its own scene (see **The run** at the end of this document).
 
-**The Rising Hazard was cut on 2026-08-15 (owner).** No `HazardFront`, no per-biome timer, no chase — see `Design/02-CORE_SYSTEMS.md` §7, now a removal notice. Milestones 3, 5 and 6 below are updated. Per-biome environmental mechanics (cracked tiles, water/currents, geysers) survive as room-authored components. The knock-ons are design questions, not engineering ones, and are listed in `Docs/00-DESIGN_CHANGE_BRIEF.md` §12 — chief among them that **the game now has no clock**, and that Secret Floors, Trapped Souls and Greed's Toll were all priced in time against it.
+**The Rising Hazard was cut on 2026-08-15 (owner).** No `HazardFront`, no per-biome timer, no chase — see `Design/02-CORE_SYSTEMS.md` §7, now a removal notice. Per-biome environmental mechanics (cracked tiles, water/currents, geysers) survive as room-authored components. This is no longer breaking news: the GDD's 2026-09-18 rewrite states the post-hazard world as settled fact and has dropped its inline ⚠️ hole callouts, promoting the knock-ons into numbered questions — `GDD §Open Decisions 1` (is there a clock at all), `3` (what a Trapped Soul costs), `5` (does the escape sequence survive) and `8` (Greed's Toll has no downside). They remain design calls, not engineering ones.
 
-**The design docs were amended on 2026-08-14** (owner-directed, applied from the designer's session changelog — the one and only time `Design/` was edited from this side; see `Docs/00-DESIGN_CHANGE_BRIEF.md` §11). Nothing built so far changes, but several *unbuilt* milestone items below are now stale and are corrected by that changelog, not by this file: **Reward Rooms no longer exist** (Milestone 3 room loading and room authoring), **upgrades are triggered by level-up, not floor end** (Milestone 4), **floors pull 3–5 rooms via a reshuffling bag, not 1–3 by shuffle** (Milestone 3), **Ore Shards are awarded once at run end from Levels Gained + Depth Reached, with no in-level Ore pickup** (Milestone 6), and four new systems joined MUST SHIP — XP/Leveling, Evolution Tiers, Trapped Souls, and the narrative subset (Whisper Layer, Memory Fragments, Refusal State). Design's own day-by-day re-sequencing is a deferred follow-up, so **the milestone bodies below have not been rewritten yet**.
+**The GDD was rewritten by the design owner on 2026-09-18, and the milestone bodies below have been reconciled against it** — see *GDD reconciliation* at the end of this document for the full list of what moved. Three things changed at once: divergences this file and the change brief carried as deviations are now **locked design** (the Dash Attack, the chargeable Heavy Strike, the dash travelling along the movement keys, the HUD's dash pip and upgrade strip, the icon-led offer card, one Death/Victory screen, the Secret Vault's cost and payout); the eleven `GDD §Open Decisions` replace the scattered ⚠️ callouts and are now mapped item-by-item in *Open Engineering Questions* below; and the GDD has stopped carrying hard numbers this document's serialized fields own (movement ramp, chain window, lunge distances). The earlier **2026-08-14** amendment (the designer's session changelog, applied from this side — `Docs/00-DESIGN_CHANGE_BRIEF.md` §11) is folded into that reconciliation rather than still being listed as pending: Reward Rooms are gone, upgrades are level-up triggered, floors draw 3–5 rooms via a reshuffling bag, Shards are awarded once at run end, and XP/Leveling, Evolution Tiers, Trapped Souls and the narrative subset (Whisper Layer, Memory Fragments, Refusal State) are MUST SHIP.
 
 The inventory/armor system has been **removed** at the owner's direction: a run is now one weapon chosen in the Hub, and the protagonist is a single fixed character — a woman in a hooded cape and light armour. A narrative layer was introduced in the same pass and is recorded in `Design/10-NARRATIVE.md`; a handoff for the designer listing every change and conflict is in `Docs/00-DESIGN_CHANGE_BRIEF.md`. Both are owner-directed and not locked. The player has real animated art — Idle and Move, 4 frames × 5 directions, plus a sheathed Katana layer.
 
@@ -1128,8 +1128,12 @@ InputAction, the weapon data and the animator, all of which this class already o
 have had to take the heavy button *away* from the machine that polls it.
 
 The phase is deliberately **not committed** (`IsCommitted`, which is what `PlayerController` and
-`PlayerAim` now read instead of `IsAttacking`). While charging she walks at 0.45x and keeps turning
-to the cursor. Two consequences fell out of that and are load-bearing:
+`PlayerAim` now read instead of `IsAttacking`). While charging she keeps turning to the cursor and
+can dash out. ~~She walks at 0.45x.~~ **Reversed the same day: a charge roots her** (owner,
+2026-08-16, brief §20) — `chargeMoveScale` is **0** on `Player.prefab`, and `GDD §Player` now locks
+the rooting. It is a speed of zero, never a change to `IsCommitted`, which would freeze her aim,
+make the charge undashable and hand movement to `LungeVelocity`. Two consequences fell out of the
+phase being uncommitted, and both are load-bearing:
 
 - `LungeVelocity` had to switch to `IsCommitted` too. During Charging `_elapsed` is still zero, so its
   ease-out curve reports **peak** lunge speed for the entire hold — a bug that would only have
@@ -1377,8 +1381,8 @@ partial wedge, and a fully darkened slot.
 - Dig-Dash + i-frames (GDD §Player, BALANCE §1)
 - Katana Basic Attack + Heavy Strike, hitbox/damage pipeline
 - `OnDamageDealt(source, target, amount)` event (CORE_SYSTEMS §6)
-- Ultimate Gauge (fill-on-hit, drain-on-use) + Katana Combo Counter + Combo Finisher (CORE_SYSTEMS §4, §5a)
-- Dash-Attack Cancel (CORE_SYSTEMS §2)
+- Ultimate Gauge (fill-on-hit, drain-on-use) + Katana Combo Counter + ~~Combo Finisher (CORE_SYSTEMS §4, §5a)~~ — **no finisher is owed.** The GDD now states both chain hits deal equal damage, and whether a later hit should scale as a finisher is `GDD §Open Decisions 11`. Nothing here is unbuilt against locked design; building one would be inventing the ruling
+- Dash-Attack Cancel (CORE_SYSTEMS §2), and the **Dash Attack** — a fourth weapon action, now GDD-locked (`GDD §Player`, Controls + Dodge/Mobility). Built 2026-08-16, see *Dash rework* below
 - One test enemy (Cave Crawler) with basic AI, player HP/damage-taken loop
 
 **Dependencies:** None (first gameplay milestone).
@@ -1398,7 +1402,7 @@ partial wedge, and a fully darkened slot.
 
 **Implementation order:** movement → state machine skeleton → Katana Basic/Heavy hitboxes → damage event → Ultimate Gauge → Combo Counter → Katana Ultimate → Dash-Attack Cancel → test enemy → playtest pass.
 
-**Definition of Done:** Katana's full kit (Basic/Heavy/Ultimate/Dash, incl. Dash-Attack Cancel) feels good against Cave Crawler in a single test room. Matches Design/07 Phase 1 exit criteria.
+**Definition of Done:** Katana's full kit feels good against Cave Crawler in a single test room. Matches Design/07 Phase 1 exit criteria. **The kit is now five moves, not four** — Basic (a looping 2-hit chain), Heavy (chargeable), Ultimate, Dig-Dash with its Dash-Attack Cancel, and the Dash Attack — all of them built and all of them now locked in `GDD §Player`. What this milestone still owes is feel, not code.
 
 **Potential technical risks:**
 - Designing the Attack State Machine too Katana-specific, making Milestone 2's generalization painful — mitigate by keeping windup/active/recovery timing data-driven (per-weapon values, not hardcoded) even though only one weapon exists yet.
@@ -1412,7 +1416,7 @@ partial wedge, and a fully darkened slot.
 **Goal:** Generalize Katana's concrete implementation behind the shared `IWeapon` interface (CORE_SYSTEMS §1), then implement Bow and Greatsword against it.
 
 **Systems/features involved:**
-- `IWeapon` interface: `BasicAttack()`, `HeavyStrike()`, `Ultimate()`, `OnHitLanded(target)`, `GetAttackTiming()`
+- `IWeapon` interface: `BasicAttack()`, `HeavyStrike()`, `Ultimate()`, `OnHitLanded(target)`, `GetAttackTiming()` — ⚠️ **this list is one action short.** `GDD §Player` now says the weapon determines a weapon-flavored **Dash Attack** as well, and `AttackAction` has carried a fourth value since 2026-08-16. Whatever shape the interface takes must cover four actions, not three, or the Bow and Greatsword ship with the Katana's dash lunge — the same trap the two-step ternary sprang when the action was added (see *Dash rework* below)
 - Bow: projectile hit-detection (reused for enemy ranged attacks too), Charge Shot variable windup, Piercing Shot Ultimate
 - Greatsword: wide-arc hitbox, Hyper Armor state, Ground Slam Ultimate
 - Weapon select screen (Hub stub only — full Hub is Milestone 6)
@@ -1432,6 +1436,7 @@ partial wedge, and a fully darkened slot.
 
 **Potential technical risks:**
 - `IWeapon` shaped wrong for Bow's variable-length windup (Charge Shot) if it was designed purely around Katana/Greatsword's fixed timing — this is exactly why Design/07 sequences generalization *after* one concrete implementation, not before.
+- **The Bow's signature trait now collides with a universal mechanic, and that is a risk to the abstraction, not just to the Bow.** `GDD §Player` locks a chargeable Heavy Strike on all three weapons while keeping Charge Shot as the Bow's locked signature; as built, `ChargeSpec` is data on `WeaponDefinition` and both the Bow and Greatsword default to chargeable. If the resolution is "Katana-only" (`GDD §Open Decisions 10`, brief §17c/§20), charging stops being weapon data and becomes a per-weapon branch — exactly what `IWeapon` exists to prevent. **Get the decision before generalizing**, because the answer changes whether `Charging` stays a phase on the shared state machine.
 - Projectile hit-detection needs to be reusable by enemies later (Rock Slinger, Current Wisp, etc.) — build it weapon-agnostic from the start, not Bow-specific.
 
 ---
@@ -1444,19 +1449,19 @@ partial wedge, and a fully darkened slot.
 > **The Rising Hazard is cut (owner, 2026-08-15).** `HazardFront` and its per-biome reskins are **not to be built** — see CORE_SYSTEMS §7, now a removal notice. The cracked-tile collapse micro-system survives on its own; it was always separate. This deletes the largest reusable system Milestone 5 was going to inherit, so the "Biome 2/3 are pure reskins" assumption below is weaker than it was. Rooms also no longer need low/high flood-zone data.
 
 **Systems/features involved:**
-- ~~Room-lock logic and the Wave Room batch trigger~~ — **done ahead of this milestone**, see *First Combat Room* below. Room *loading* and the reshuffling-bag draw of 3–5 rooms per floor are still unbuilt
-- Room system: room loading (no Reward Rooms — removed), reshuffling-bag draw of 3–5 rooms per floor (CORE_SYSTEMS §8)
-- Cracked tiles: collapse-under-standing-weight micro-system, Upper Caves (GDD §Biome Identity)
+- ~~Room-lock logic and the Wave Room batch trigger~~ — **done ahead of this milestone**, see *First Combat Room* below
+- ~~Room system: room loading, reshuffling-bag draw of 3–5 rooms per floor (CORE_SYSTEMS §8)~~ — **built**, see *Floor loading* (2026-08-24) and *The run* (2026-09-08). `Scripts/Run/` sequences sixteen floors and the bag refills only on a biome change, because refilling per floor resets the shuffle §8 depends on
+- Cracked tiles: collapse-under-standing-weight micro-system, Upper Caves (`GDD §Biome Identity`). **Still the only unbuilt item Biome 1's identity rests on** — and `GDD §Open Decisions 4` treats it as the benchmark Biomes 2–3 are measured against, so it is worth building before that question is answered rather than after
 - ~~Upper Caves enemy roster~~ — **done ahead of this milestone**, see *Biome 1 basic enemies*. All four exist on placeholder art. Only the Collapsed King is left.
-- Upper Caves room layouts: 6 Combat Rooms (1–2 flagged `IsWaveRoom`), 2 Reward Rooms (LEVEL_DESIGN §2–3)
-- Mini-Boss: The Collapsed King, with weapon-check mechanic (CORE_SYSTEMS §11)
+- ~~Upper Caves room layouts: 6 Combat Rooms (1–2 flagged `IsWaveRoom`), 2 Reward Rooms (LEVEL_DESIGN §2–3)~~ — **the 6 Combat Rooms and the Wave Room are authored** (`Layout_UpperCaves_01..07`), plus the Secret Vault, a Mini-Boss arena and Floor 16's two arenas: eleven prefabs. **Reward Rooms do not exist and are not to be built** — cut on 2026-08-14, and the GDD's 2026-09-18 rewrite carries no trace of them
+- Mini-Boss: The Collapsed King, with weapon-check mechanic (CORE_SYSTEMS §11). The **arena** exists; the boss in it is a scaled, tinted `TunnelBrute` variant with BALANCE §6's HP and nothing else — `GDD §Open Decisions 7`
 - ~~Secret Vault room + key-drop logic (CORE_SYSTEMS §8)~~ — **built ahead of this milestone**, see
-  *Secret Vault* below. Not yet verified in play mode
+  *Secret Vault* below. Its cost and payout are no longer invented: `GDD §Roguelike Structure` now locks one guarded fight tougher than a standard Combat Room, a guaranteed Legendary-tier payout, and **the key consumed on opening** — which is exactly what `VaultDoor.consumeKey` was carrying as an invention, so that tooltip's "INVENTED" is now out of date. **Unverified: whether the built encounter is actually *tougher* than a standard room's.** Both are six enemies; the vault's is authored on the prefab and the standard is `Encounter_UpperCaves_Standard`, and the two have not been compared on total HP or composition. Whether it can sit on the route is still open (`GDD §Open Decisions 2`)
 
 **Dependencies:** Milestone 2 (all 3 weapons must exist — room layouts need to accommodate all 3, per LEVEL_DESIGN §2 positioning-zone requirement).
 
 **Files/systems likely to be created:**
-- `Scripts/Rooms/Room.cs`, `Scripts/Rooms/RoomManager.cs` (per-floor room sequencing, deterministic shuffle)
+- ~~`Scripts/Rooms/Room.cs`, `Scripts/Rooms/RoomManager.cs` (per-floor room sequencing, deterministic shuffle)~~ — **built, and neither has that name.** Sequencing is `Scripts/Run/` (`FloorLoader`, `RoomBag`, `BiomeRoomPool`, `RunPlan`, `RoomRole`, `RunSeed`), not a `Manager` on a room; which room goes where is one method, `FloorLoader.RoleFor`
 - ~~`Scripts/Rooms/CombatRoom.cs` (room-lock logic, `IsWaveRoom` flag + wave-batch trigger)~~ — **built**, and split four ways rather than one: `CombatRoom` / `WaveSpawner` / `RoomDoor` / `RoomEntry`. `IsWaveRoom` is a derived property, not a serialized flag. See *First Combat Room* below
 - ~~`Scripts/Hazards/HazardFront.cs`~~, ~~`Scripts/Hazards/UpperCavesHazard.cs`~~ — **not to be written; the Rising Hazard is cut.** The cracked-tile collapse survives as a small room-authored component (`Scripts/Rooms/CrackedTile.cs` or similar), not as a hazard skin
 - ~~`Scripts/Enemies/RockSlinger.cs`, `TunnelBrute.cs`, `DeepWarden.cs`~~ — **these were never written, on purpose.** The roster shipped as composed components plus one `EnemyDefinition` asset each; a per-enemy class would have held nothing. See *Biome 1 basic enemies*.
@@ -1469,13 +1474,13 @@ partial wedge, and a fully darkened slot.
   `Scripts/Player/RunKeys.cs`. See *Secret Vault* below
 - Room prefabs/scenes under `Assets/_Main/Scenes/` or `Prefabs/Rooms/`
 
-**Implementation order:** room loading + lock logic → reshuffling-bag draw → cracked tiles → 6 Combat Room layouts → Mini-Boss + weapon-check → ~~Secret Vault + key drop~~ → full-biome playtest. (3 base enemies are already done; the lock logic, 2 of the 6 layouts and the Secret Vault are done out of order; Reward Rooms and the Hazard Front are cut.) **What is actually left in this milestone is room *loading* and the reshuffling bag, the cracked-tile micro-system, 4 more Combat Room layouts, and the Collapsed King.**
+**Implementation order:** ~~room loading + lock logic → reshuffling-bag draw~~ → cracked tiles → ~~6 Combat Room layouts~~ → Mini-Boss + weapon-check → ~~Secret Vault + key drop~~ → full-biome playtest. **What is actually left in this milestone is three things:** the cracked-tile micro-system, **the Collapsed King as a real boss** (the arena and a placeholder with BALANCE §6's HP exist; no phase system, no weapon-check — `GDD §Open Decisions 7`), and the layout work LEVEL_DESIGN §3 asks for on top of the six that exist — cracked tiles and a breakable wall, which no room has.
 
 **Definition of Done:** Full Biome 1 clear is playable start to finish with all 3 weapons. Matches Design/07 Phase 3 exit criteria (MVP.md's largest content-authoring risk — see below).
 
 **Potential technical risks:**
-- Room-layout authoring (18 total Combat Rooms across all biomes eventually) is explicitly flagged in Design/07 and LEVEL_DESIGN.md as the single biggest schedule risk — this milestone alone authors 6 of them. Reward Rooms are cut, but floors now draw **3–5** rooms from that same pool of 6, so the same layouts are seen far more often per run.
-- ~~`HazardFront` must generalize to Biome 2/3 variants~~ — moot, the system is cut. **The residual risk is the opposite one:** with no hazard to reskin, Biomes 2 and 3 have much less to inherit from this milestone, and what differentiates them is now an open design question (GDD §Biome Identity, DESIGN_RULES Rule 5).
+- Room-layout authoring (18 total Combat Rooms across all biomes eventually) is explicitly flagged in Design/07 and LEVEL_DESIGN.md as the single biggest schedule risk — this milestone alone authors 6 of them. **Retired for Biome 1, proven for the rest:** the six exist, and authoring them is now an ASCII map in a `Layout_*.cs` plus one press of `Deeper/Build All Room Prefabs`. The live version of the risk is repetition, not authoring — floors draw **3–5** rooms from a pool of 7, verified at 61 rooms over a sixteen-floor run.
+- ~~`HazardFront` must generalize to Biome 2/3 variants~~ — moot, the system is cut. **The residual risk is the opposite one:** with no hazard to reskin, Biomes 2 and 3 have much less to inherit from this milestone, and what differentiates them is `GDD §Open Decisions 4` (DESIGN_RULES Rule 4/5).
 
 ---
 
@@ -1485,13 +1490,14 @@ partial wedge, and a fully darkened slot.
 **Goal:** The run-to-run build-variety layer.
 
 **Systems/features involved:**
-- Weighted-draw upgrade system (CONTENT_DESIGN §1, BALANCE §13)
-- Shared upgrade pool (24 entries, CONTENT_DESIGN §1 / BALANCE §9)
-- Weapon-specific sub-pools (45 entries total, CONTENT_DESIGN §2 / BALANCE §10)
-- Curse pool (8 entries, CONTENT_DESIGN §3 / BALANCE §11) + always-visible 4th slot
-- Upgrade screen UI (ART_DIRECTION §5)
+- ~~Weighted-draw upgrade system (CONTENT_DESIGN §1, BALANCE §13)~~ — **built**, see *Milestone 4, first half* below
+- ~~Shared upgrade pool (24 entries, CONTENT_DESIGN §1 / BALANCE §9)~~, ~~Curse pool (8 entries, CONTENT_DESIGN §3 / BALANCE §11) + always-visible 4th slot~~ — **authored as data**: 38 upgrades and 8 Curses with generated icons
+- Weapon-specific sub-pools (45 entries total, CONTENT_DESIGN §2 / BALANCE §10) — the Katana's 13 live on `WeaponDefinition`; the Bow's and Greatsword's are blocked on Milestone 2
+- ~~Upgrade screen UI (ART_DIRECTION §5)~~ — **built, and the GDD now describes what was built**: `GDD §UI` has stopped saying "icon, name, short description" and specifies the icon-led card (tier-colored border, unique icon, effect-category glyph, compressed effect line). No engineering change; it stops being a recorded divergence
+- **The effects themselves — the second half of this milestone, and the bulk of it.** `Docs/Engineering/03-UPGRADE_STATUS.md` is the generated inventory: only what is expressible as a `StatModifier` runs, and every Curse is data only. This is what gates the milestone, not the UI
+- **Evolution offers every 5th level** (`GDD §Core Gameplay Loop` 4, `GDD §UI`, CORE_SYSTEMS §13) — GDD-locked, **unbuilt**, and blocked on content rather than code: §13's two Evolutions per weapon are an open item in the design doc itself, so `UpgradeOffer` presents an ordinary draw on every level including the fifth
 
-**Dependencies:** Milestone 3 (upgrades are offered at floor-end, needs the room/floor loop to exist).
+**Dependencies:** ~~Milestone 3 (upgrades are offered at floor-end, needs the room/floor loop to exist).~~ **Wrong since 2026-08-14 and still wrong when the panel was built: upgrades are triggered by level-up, not floor end** (`GDD §Core Gameplay Loop` 4). The dependency is therefore XP — `PlayerXP` and `XPReward` — not the floor loop, which is why the offer screen shipped before a run existed. What it does still need from Milestone 3 is a *reason to level*, i.e. enemies worth XP.
 
 **Files/systems likely to be created:**
 - `Scripts/Upgrades/UpgradeDefinition.cs` (data-driven — likely a `ScriptableObject` per upgrade so content authoring doesn't require code changes per entry)
@@ -1500,13 +1506,13 @@ partial wedge, and a fully darkened slot.
 - `Scripts/UI/UpgradeScreen.cs`
 - Modifier application hooks on `PlayerController`/`IWeapon` implementations (many upgrades modify existing systems rather than adding new ones — per Design Rule 2, implement as parameter changes on existing components, not new systems per upgrade)
 
-**Implementation order:** weighted-draw core (generic, tier-aware per BALANCE §13) → shared pool wired to effects → weapon sub-pools → Curse pool + 4th slot → upgrade screen UI → full-run playtest for build variety.
+**Implementation order:** ~~weighted-draw core (generic, tier-aware per BALANCE §13)~~ → **shared pool wired to effects** → weapon sub-pools → ~~Curse pool + 4th slot~~ → ~~upgrade screen UI~~ → Evolution offer → full-run playtest for build variety. The order ran UI-first at the owner's direction; what is left is the middle of it.
 
-**Definition of Done:** A full Biome 1 run generates genuinely different builds run-to-run. Matches Design/07 Phase 4 exit criteria.
+**Definition of Done:** A full Biome 1 run generates genuinely different builds run-to-run. Matches Design/07 Phase 4 exit criteria. **Not met, and the gap is not the screen:** picking a card records it and draws it on the HUD strip, but only `StatModifier` upgrades change how the run plays, so two runs with different cards currently play the same. `03-UPGRADE_STATUS.md` is the live count.
 
 **Potential technical risks:**
 - 69 total upgrade entries (24 shared + 45 weapon-specific) + 8 curses is a lot of individual effect implementations — MVP.md explicitly allows shipping a reduced subset (~12–15 shared, ~8–10 per weapon) if this runs long; flag early if it's trending that way rather than discovering it on Day 32.
-- `ScriptableObject`-per-upgrade only pays off if the effect-application code is genuinely data-driven (e.g., a small set of effect "kinds" with numeric parameters) — if every upgrade needs bespoke code anyway, the `ScriptableObject` layer is just overhead. Decide this after the first ~5 upgrades are implemented, not upfront.
+- `ScriptableObject`-per-upgrade only pays off if the effect-application code is genuinely data-driven (e.g., a small set of effect "kinds" with numeric parameters) — if every upgrade needs bespoke code anyway, the `ScriptableObject` layer is just overhead. **Half-answered by the first pass:** seven of 38 are pure `StatModifier` bundles and need no code at all, which is the data-driven case working; the other 31 and all 8 Curses each need a hook in the damage pipeline that does not exist. The decision still owed is which hooks to add, not whether to keep the assets.
 
 ---
 
@@ -1514,6 +1520,8 @@ partial wedge, and a fully darkened slot.
 *(maps to Design/07 Phase 5, Days 33–40)*
 
 **Goal:** Content-scale the Biome 1 pattern across the remaining two biomes — pure content authoring, no new core systems if Milestone 3 generalized correctly.
+
+> **`GDD §Open Decisions 4` governs this whole milestone and should be answered before any of it is authored.** As built, `Pool_FloodedTunnels` and `Pool_MoltenDepths` hold Biome 1's layouts and roster under their own themes — floors 6–16 are Upper Caves in a different colour, which is the palette-swap DESIGN_RULES Rule 4/5 rejects. The seams are two pool assets and no code, so the answer decides how much of the list below is real: new rooms, new enemies, a stronger environmental hook, or all three.
 
 **Systems/features involved:**
 - Flooded Tunnels: enemies (Eel Diver, Current Wisp, Bloated Drifter, Elite: Tideheart), rooms with water patches and currents, Mini-Boss (Drowned Custodian). ~~Low/high water-tile data, hazard variant (rising water + room geometry change)~~ — cut with the Rising Hazard
@@ -1530,11 +1538,11 @@ partial wedge, and a fully darkened slot.
 
 **Implementation order:** Flooded Tunnels (enemies → rooms → Mini-Boss) → Molten Depths (same order) → cross-biome playtest.
 
-**Definition of Done:** A full 3-biome run (floors 1–15) is completable. Matches Design/07 Phase 5 exit criteria.
+**Definition of Done:** A full 3-biome run (floors 1–15) is completable. Matches Design/07 Phase 5 exit criteria. **Completable already** — sixteen floors were driven end to end on 2026-09-08 — so this criterion no longer separates done from not done. The honest one is `GDD §Open Decisions 4`'s: a Flooded Tunnels floor plays differently from an Upper Caves floor, rather than looking different.
 
 **Potential technical risks:**
-- If this phase does *not* run faster than Milestone 3 per-biome, it means Milestone 3's systems weren't actually generalized — that's a signal to stop and fix the abstraction rather than push through with biome-specific hacks (Design Rule 2).
-- ~~Water/lava room-geometry changes require low/high tile-zone data~~ — moot, cut with the Rising Hazard. **The replacement risk is design-side:** without their hazards, Biomes 2 and 3 differ from Biome 1 mainly in enemy roster and tile art, which DESIGN_RULES Rule 5 says is not enough. Raise it before authoring 12 rooms against it.
+- If this phase does *not* run faster than Milestone 3 per-biome, it means Milestone 3's systems weren't actually generalized — that's a signal to stop and fix the abstraction rather than push through with biome-specific hacks (Design Rule 2). **The room half already passes:** a biome is a `BiomeRoomPool` asset and a theme, and standing up two placeholder biomes cost no code.
+- ~~Water/lava room-geometry changes require low/high tile-zone data~~ — moot, cut with the Rising Hazard. **The replacement risk is design-side and now numbered:** `GDD §Open Decisions 4`. Raise it before authoring 12 rooms against it.
 
 ---
 
@@ -1543,31 +1551,34 @@ partial wedge, and a fully darkened slot.
 
 **Goal:** Close the loop — death/victory return the player to a Hub that actually matters.
 
+> **Half of this milestone is already built, out of order and at the owner's direction** — see *The Hub* (2026-09-07) and *The run* (2026-09-08). The loop itself closes: Hub → weapon select → descend → sixteen floors → death or victory → summary → back to the Hub with Shards, verified in play mode. What is left is what makes the Hub *matter*: the bosses being bosses, and everything the player spends Shards on.
+
 **Systems/features involved:**
-- Final Boss: The Depth Warden — **her father** — multi-phase (BALANCE §6). ⚠️ Its phases were themed on the 3 biome hazards, which are cut; they need re-theming before this is buildable
-- **Zyno, fought immediately after the father — MUST SHIP** (CONTENT_DESIGN §5). MVP version reuses an existing Mini-Boss's moveset/arena, palette-swapped, with his own dialogue. Which Mini-Boss is undecided. This is unscheduled work: Design/07 Day 41 budgets one boss, not two
-- Escape sequence (post-boss 45s countdown). It was specified as reusing the Hazard system, which no longer exists — it is now a small standalone timer, and worth confirming it survives at all
-- Hub Stat System: Core Stats + Miner's Traits (CONTENT_DESIGN §7, BALANCE §15)
-- Ore → Ore Shard conversion (BALANCE §14)
-- Death/Victory screens (GDD §UI)
-- Relic Vault, Weapon Mastery stub (tracking only, per MVP.md)
+- Final Boss: The Depth Warden — **her father** — multi-phase (BALANCE §6). ⚠️ Its phases were themed on the 3 biome hazards, which are cut; they need re-theming before this is buildable. A placeholder exists with §6's 1200 HP and nothing else (`GDD §Open Decisions 7`)
+- **Zyno, fought immediately after the father — MUST SHIP** (CONTENT_DESIGN §5). MVP version reuses an existing Mini-Boss's moveset/arena, palette-swapped, with his own dialogue. Which Mini-Boss is undecided. This is unscheduled work: Design/07 Day 41 budgets one boss, not two. Floor 16 **is** two fights in two arenas already; both are placeholders
+- Escape sequence (post-boss 45s countdown). ~~It was specified as reusing the Hazard system, which no longer exists~~ — `GDD §Victory` now states it plainly as the only timer left, and `GDD §Open Decisions 5` is the call on whether it survives at all. **Do not build it until that is answered**; victory currently ends on Zyno's arena clearing
+- Hub Stat System: Core Stats + **Marks** (CONTENT_DESIGN §7, BALANCE §15). Unbuilt — the stat shrine is placed in the Hub and answers "not yet" via `HubNotice`
+- ~~Ore → Ore Shard conversion (BALANCE §14)~~ — **stale naming and a stale system: there is no Ore, and no conversion.** Shards are computed once at run end from Levels Gained and Depth Reached (`GDD §Progression`), which `Scripts/Run/RunEnd.cs` does and `Meta/ShardBank` banks. **Built**
+- ~~Death/Victory screens (GDD §UI)~~ — **built as one screen**, `Scripts/UI/RunSummaryPanel.cs`, which is what `GDD §UI` now specifies: one screen for both outcomes, distinguished by title and accent colour
+- Relic Vault, Weapon Mastery stub (tracking only, per MVP.md). Unbuilt. The Relic itself exists (the Katana's, on `WeaponDefinition.RelicSpec`), so the Vault's job is purchase and guarantee, not content
+- **Persistence.** `Meta/ShardBank` is a `ScriptableObject` seam, not a save file: a runtime write sticks for the editor session and is discarded in a build, so a player who closes a build loses their Shards. `SaveData` below is what fixes that, and every caller already speaks to `Add`/`TrySpend`
 
 **Dependencies:** Milestone 5 — but weakened: the Final Boss arena was specified as incorporating "all 3 biome hazard types in sequence," and those no longer exist. What the degrading arena is built from is now an open design question (LEVEL_DESIGN §6).
 
 **Files/systems likely to be created:**
-- `Scripts/Enemies/DepthWarden.cs` (multi-phase, own dedicated arena logic per LEVEL_DESIGN §6)
-- `Scripts/Meta/SaveData.cs` (persistent Ore Shards, Hub Stat ranks, Weapon Mastery counters, discovered Relics)
-- `Scripts/Meta/HubStatSystem.cs`, `Scripts/Meta/CoreStat.cs`, `Scripts/Meta/MinersTrait.cs`
-- `Scripts/Meta/OreConversion.cs`
-- `Scripts/UI/HubScreen.cs`, `Scripts/UI/DeathVictoryScreen.cs`
+- `Scripts/Enemies/DepthWarden.cs` (multi-phase, own dedicated arena logic per LEVEL_DESIGN §6). **The shared piece Milestone 3 also needs is `BossPhaseController`** — no boss of the five has a phase, a transition or a weapon-check, and there is no system for one
+- `Scripts/Meta/SaveData.cs` (persistent Shards, Hub Stat ranks, Weapon Mastery counters, discovered Relics) — **the one unbuilt thing the built half already depends on**, per the `ShardBank` note above
+- `Scripts/Meta/HubStatSystem.cs`, `Scripts/Meta/CoreStat.cs`, `Scripts/Meta/Mark.cs` (renamed from Miner's Trait on 2026-08-14). `PlayerStats.SetSource` is the seam these apply through — its `StatType` vocabulary was built to mirror the Core Stats table for exactly this
+- ~~`Scripts/Meta/OreConversion.cs`~~ — not to be written; there is no Ore. `Scripts/Run/RunEnd.cs` computes the award, `Scripts/Meta/ShardBank.cs` holds it
+- ~~`Scripts/UI/HubScreen.cs`, `Scripts/UI/DeathVictoryScreen.cs`~~ — **built, and neither has that name.** The Hub is a walkable scene rather than a screen (`Scripts/Hub/` + `WeaponSelectPanel`, `ShardCounterHUD`, `HubPromptHUD`); the summary is `Scripts/UI/RunSummaryPanel.cs`, one screen for both outcomes
 - `Scripts/Meta/RelicVault.cs`, `Scripts/Meta/WeaponMastery.cs` (stub: counter tracking only)
 
-**Implementation order:** Final Boss → escape sequence → Hub Stat System → Ore→Shard conversion + Death/Victory screens → Relic Vault + Weapon Mastery stub → full end-to-end playtest.
+**Implementation order:** ~~Final Boss → escape sequence~~ (both blocked: the phases need re-theming, and `GDD §Open Decisions 5` decides whether the escape exists) → **boss phases + weapon-check, the thing all five bosses share** → Hub Stat System → ~~Shard award + Death/Victory screen~~ (built) → `SaveData` → Relic Vault + Weapon Mastery stub → full end-to-end playtest.
 
-**Definition of Done:** Hub → Run → Death/Victory → Hub loop works end to end. Matches 08-MVP.md's MUST SHIP list, all items checked.
+**Definition of Done:** ~~Hub → Run → Death/Victory → Hub loop works end to end.~~ **Met on 2026-09-08.** The remaining criterion is 08-MVP.md's MUST SHIP list, which this loop does not yet satisfy: no boss has a phase or a weapon-check, nothing persists across a build, and there is nothing to spend Shards on.
 
 **Potential technical risks:**
-- Save data format needs to be settled once and be forward-compatible-ish, since it's the first thing touched by every subsequent post-MVP content pass — avoid a schema that requires a migration for every new Miner's Trait added later.
+- Save data format needs to be settled once and be forward-compatible-ish, since it's the first thing touched by every subsequent post-MVP content pass — avoid a schema that requires a migration for every new Mark added later.
 - Final Boss arena is explicitly a one-off, non-reused layout (LEVEL_DESIGN §6) — don't try to force it through the generic `Room` system if it doesn't fit; a bespoke controller is the correct call here, not a violation of Design Rule 2 (reuse applies to systems, not to a deliberately unique set-piece).
 
 ---
@@ -1583,12 +1594,31 @@ partial wedge, and a fully darkened slot.
 
 ## Open Engineering Questions
 
-Carried from design docs' own "Open Items" sections — these affect implementation but are design calls, not engineering ones. Flagged here so they're not missed, per Design Rule 9 (undefined terms/decisions get resolved, not left ambiguous):
+Two lists, because they have two different owners. The first is **`GDD §Open Decisions`** — the eleven numbered design questions the 2026-09-18 rewrite collected out of the scattered ⚠️ callouts. They are design calls, not engineering ones (Design Rule 9); what this file adds is *what each one blocks here and in which milestone*, so the two documents can be read against each other by number. The second list is what engineering is still missing that the eleven do not cover.
 
-- ~~Hazard-touch: confirmed instant-kill~~ — **the Rising Hazard is cut entirely (owner, 2026-08-15).** Nothing hazard-related gets built. The open question it leaves is a design one: **does anything replace the descent clock?** Secret Floors, Trapped Souls and Greed's Toll were all priced in time against it and are currently free.
-- Mini-Boss Overcharge exact clear-trigger condition (CORE_SYSTEMS §16, renumbered from §12 when the XP/Evolution/Souls/Narrative sections were added) — needs a design decision before Milestone 3/5 boss work locks it in.
-- XP level-threshold curve and per-enemy XP drop values (BALANCE §16) — explicitly unresolved in design. Milestone 4's upgrade system is now level-triggered rather than floor-triggered, so this gates it.
-- Weapon Mastery node effects (3–5 per weapon) — explicitly deferred past MVP; Milestone 6 only needs the counter, not the effects.
+### Blocked on `GDD §Open Decisions`
+
+| # | The question | What it blocks here | Milestone |
+|---|---|---|---|
+| 1 | Is there a clock at all? | Nothing in flight — but it is the **only** open item that would add a new system rather than fill an existing seam, and #3, #5 and #8 all resolve differently depending on it. Engineering should not invent a substitute clock. | — (new system) |
+| 2 | Can the Secret Vault sit on a floor's route? | `RoomRole.SecretVault` is declared on all three pools and **never drawn**; `FloorLoader.RoleFor` has no line for it. On-route needs a second doorway on the layout — `RoomConnection.HasExit` reads doorway *columns*, so the prefab changes, not the loader. | 3 |
+| 3 | What does freeing a Trapped Soul cost? | The whole room type. `RoomRole.TrappedSoul` is declared and unfilled; a cost of "a fight" is a Combat Room variant, a cost of "HP" or "an upgrade slot" is not. | 3 |
+| 4 | Are Biomes 2 and 3 mechanically distinct enough? | **Governs Milestone 5 entirely** — see the note at the top of it. Both pools currently hold Biome 1's content under a different theme. | 5 |
+| 5 | Does the Floor 16 escape sequence survive? | The escape timer, and with it whether `RunEnd` gains a third outcome (escaped / caught) or stays two. | 6 |
+| 6 | "Descend" plays as "walk east." | Floor-transition presentation in `FloorLoader`, which butts each room east of the last and increments a number silently. A stairwell room is a room type; a fade is not — the answer decides which. | 3 |
+| 7 | No boss has a phase or a weapon-check. | `BossPhaseController`, the one system all five bosses share, and therefore the Collapsed King in Milestone 3 as much as the Depth Warden in Milestone 6. All five are scaled `TunnelBrute` variants carrying BALANCE §6's HP. | 3 + 6 |
+| 8 | Greed's Toll has no downside. | That Curse's effect, in Milestone 4's behavioural half. It is the one entry whose *upside* can be implemented without knowing the answer, which is the trap. | 4 |
+| 9 | What is "Deeper" once the story resolves? | Nothing buildable — it decides whether post-run-1 content exists at all. Named here so it is not mistaken for an engineering gap. | post-MVP |
+| 10 | Does charging belong on every weapon's Heavy Strike? | **The shape of `IWeapon`.** Charging is `ChargeSpec` data on `WeaponDefinition` today, which is only correct if it stays universal; "Katana-only" makes it a per-weapon branch. See Milestone 2's risks. | 2 |
+| 11 | Does the Basic chain need a finisher, and does it touch the Combo Counter? | Per-hit chain damage in `AttackStateMachine` (equal today) and whether `ComboCounter` grows a second entry point. Cheap either way — one timing row and one call — which is why it has stayed open harmlessly. | 1 (+4 hooks) |
+
+### Engineering-owned, or design-open but outside those eleven
+
+- **XP level-threshold curve and per-enemy XP drop values** (BALANCE §16) — explicitly unresolved in design, and now load-bearing: levelling is what triggers every upgrade offer, so the curve is the pacing of Milestone 4's entire content layer. `PlayerXP` and `XPReward` carry invented placeholders.
+- **Mini-Boss Overcharge exact clear-trigger condition** (CORE_SYSTEMS §16, renumbered from §12 when the XP/Evolution/Souls/Narrative sections were added) — needs a design decision before Milestone 3/5 boss work locks it in. Not covered by `GDD §Open Decisions 7`, which is about phases, not about Overcharge.
+- **Weapon Mastery node effects** (3–5 per weapon) — explicitly deferred past MVP; Milestone 6 only needs the counter, not the effects.
+- **Which damage-pipeline hooks the 31 non-`StatModifier` upgrades need**, and in what order — engineering's own call, gating Milestone 4's second half. `03-UPGRADE_STATUS.md` is the inventory to work from.
+- **The Ultimate still consumes the Combo Counter and discards it** (brief §7h) — a live gameplay hole rather than an open question, carried since the Ultimate became a buff. It makes casting at zero stacks optimal. Unlike the eleven above, this one has a wrong answer running in the build right now.
 
 ---
 
@@ -1824,3 +1854,1430 @@ between them. Nothing below has been observed:
 - **Still no player death / run-end** — and a vault is the worst room yet for it: locked in 22×16 with
   two Brutes.
 - **`AttackStateMachine`'s lunge still ticks its timer on `Update`.** Untouched again.
+
+---
+
+## Floor loading, room selection and room dressing — owner-directed, 2026-08-24
+
+**Status:** 🟢 System built and **verified in play mode**. Art is started, not finished — see
+*Outstanding*. Design consequences are in `Docs/00-DESIGN_CHANGE_BRIEF.md` §22.
+
+The owner asked for the Hades model: handcrafted room templates, procedurally selected and
+procedurally dressed, plus a new scene that runs it. That is not a departure from locked design —
+`LEVEL_DESIGN` §1 and `CORE_SYSTEMS` §8 already specify exactly this, and Design Rule 3 asks for it.
+What is genuinely new is the **dressing** layer, which appears in no design doc.
+
+This closes the longest-standing gap in the project: `CombatRoom.Cleared` had been written for a
+floor loader that did not exist since the first room shipped. It finally has a subscriber.
+
+**Built:**
+- [x] `Scripts/Rooms/Wave.cs` + `SpawnGroup.cs` — extracted from `WaveSpawner`'s private nested types
+- [x] `Scripts/Rooms/EncounterDefinition.cs` — a fight as content; budgets **derived**, never typed
+- [x] `Scripts/Rooms/RoomConnection.cs` — west door, east door, arrival marker
+- [x] `Scripts/Rooms/RoomTheme.cs` + `RoomDressing.cs` — the look, and applying it
+- [x] `Scripts/Run/` — `RunSeed`, `RoomBag`, `RoomOption`, `BiomeRoomPool`, `FloorLoader`
+- [x] `Scripts/Editor/BuildRoomLabScene.cs` + `Scenes/RoomLabScene.unity` +
+      `Scripts/Testing/RoomLab.cs` / `RoomLabHUD.cs`
+- [x] `Scripts/Editor/BuildRoomTiles.cs` — `Data/Tiles/` had no generator at all before this
+- [x] `Prefabs/Rig/Main Camera.prefab` + `Global Light 2D.prefab`, extracted from `TestScene`
+- [x] `Deeper/Build Combat Room Prefab` — room 01 predated the builder and could not be rebuilt
+- [x] `Data/Encounters/`, `Data/Themes/`, `Data/Rooms/Pool_UpperCaves.asset`, `Art/Environment/`
+
+### Rooms are placed adjacent, not teleported between
+
+The decision the whole design rests on. Each room is mounted east of the last and the one behind is
+destroyed. It deletes four problems at once: the next room's own `RoomEntry` band is already the
+arrival trigger, so **no exit volume, no arrival marker and no new legend character were needed**;
+`CameraRig` needs no change; and the `Start`-arms-the-room trap recorded above under *Wave Room*
+cannot fire, because she has to walk the length of a room to reach the next band.
+
+Alignment is `next = behind.EastAnchor.position + right − next.WestAnchor.localPosition`. Expressed
+in door positions rather than room widths, so the 32×18 Wave Room — whose west door sits a tile
+higher than a 28×16 Combat Room's — comes out shifted down by exactly that tile with no special
+case. Verified across 9 mounts: 0 → 28 → 60 → 88 → 120 → 148 → 180 → 208 → 240, Wave Rooms at y −1.
+
+### The encounter must be swapped while the room instance is inactive
+
+`WaveSpawner.BuildPools` runs in `Awake` exactly once and `ActorPool` has no dispose, so a second
+build would overwrite the pool dictionary for any prefab common to both encounters and strand the
+first set of prewarmed instances under the `Encounter` transform, where `Clear()` can no longer
+reach them — a leak that looks like nothing at all. `FloorLoader` therefore instantiates into an
+**inactive staging root**, where Unity defers `Awake`, configures, then reparents. `SetEncounter`
+latches `_poolsBuilt` and refuses loudly if called later, so the failure can never be silent.
+
+### Extracting Wave/SpawnGroup did not change a single prefab byte
+
+They were `private sealed class` nested types, so an encounter could not be authored from outside
+the component that owned it. Promoting them to public top-level types with **identical field names**
+left all three room prefabs' YAML byte-identical, because Unity serialises a by-value
+`[Serializable]` class as an untyped nested mapping keyed by field name — no type token is written.
+Confirmed both ways: the prefabs still read back 1/3/1 waves and 6/12/6 enemies through the editor,
+and `EncounterDefinition` serialises to the same shape. The one thing that would break it is
+`[SerializeReference]`, which *does* write a type token; there is a comment on the class saying so.
+
+### Two door hooks, and why one is not enough
+
+Once the room behind is destroyed, a cleared room's west door opens onto void. Closing it needs
+**both** of `CombatRoom`'s events, because of ordering: `Arm()` runs `SetDoors(false)` *then*
+`SetState(Armed)`, so `StateChanged(Armed)` lands after the open; but the clear runs
+`SetState(Cleared)` → `SetDoors(false)` → `Cleared()`, so `StateChanged(Cleared)` lands *before* it
+and only the `Cleared` event lands after. Subscribing to `StateChanged` alone is right in one
+ordering and wrong in the other. `CombatRoom` itself needed no change at all.
+
+### Verification
+
+| Check | Result |
+|---|---|
+| Camera/light extraction | TestScene plays identically; light kept all 3 sorting layers; scene keeps its `target` override while the prefab falls back to the tag |
+| Wave/SpawnGroup promotion | Prefab YAML byte-identical; Unity reads back 3 waves / 12 enemies and 1 wave / 6 |
+| `EncounterDefinition` budget | `Encounter_UpperCaves_Standard` derives **150 HP**, matching room 01's authored number |
+| `RoomConnection` wiring | Room 01 west (0.5, 8.0) / east (27.5, 8.0); vault correctly `hasExit=False` |
+| Rebuilt room 01 | Renders pixel-identical to the hand-built original |
+| Floor sequencing | 9 rooms over 2 floors; floor 1 rolled 4 rooms, floor 2 rolled 5; no immediate repeats |
+| Adjacency | Exact, including the y-offset for the taller Wave Room |
+| Dressing varies | Every room reported a different `RoomDressing.Signature` |
+| Live room count | **2** in steady state — the climb to 9 was the deferred-`Destroy` artifact of driving 8 mounts inside one frame, confirmed by re-reading on a later frame |
+| Real art through the pipeline | Two floor and two wall variants visibly mixed per cell |
+| Left behind | Console clean — 0 errors, 0 warnings throughout; no stray `(Clone)` roots |
+
+### The two art tools fail in opposite directions, and the fix is a recolour
+
+Worth writing down, because it cost four rejected generations to find and it will recur for Biomes
+2 and 3:
+
+- **`create_image_pixflux` gets the palette right and the form wrong.** With the project's own
+  colours passed as `color_image_base64`, *every returned colour* came from that set — the forced
+  palette works exactly as the earlier spawn-burst finding claimed. But it shades the image as a
+  **picture**, applying a scene-level top-left shadow: measured on a 32×32 floor candidate, edge rows
+  averaged 51–58 against an interior of 75. A tile with a dark top-left border cannot repeat, and
+  generating larger and slicing does not help — at 128×128 it draws a cave floor *scene*, with
+  boulders and sweeping arcs, so the slices disagree wildly in brightness.
+- **`create_topdown_tileset` gets the form right and the palette wrong.** It is the tool
+  `references/pipeline.md` actually prescribes for tilesets, and its base tiles repeat **perfectly
+  seamlessly**. But it takes no palette parameter, and it returned navy blue — which is the *Flooded
+  Tunnels* family, the same class of mistake the change brief already records for the first tileset.
+- **The fix is a luminance remap onto the shipped ramp**, applied after generation. It is pixel-exact
+  — no resampling, so no off-grid fringe — and it is the same palette-swap-as-variant technique
+  ART_DIRECTION §68 already uses for the Deep Warden. The floor came out on (51,48,56), which *is*
+  the shipped floor base, plus one lighter step.
+
+`Art/StyleAnchor/UpperCaves_Palette.png` holds the forced palette and its README records why each
+colour is in it. `Art/Environment/UpperCaves/` holds the accepted output, including the full
+recoloured 16-tile Wang sheet for a future `RuleTile` pass.
+
+### Outstanding
+
+- **Biomes 2 and 3 have one theme each and no enemies**, so they cannot be played — no rooms, no
+  roster, no mini-boss. Their tiles exist so the theme system is proven across all three palettes.
+- **Upper Caves has 3 themes and 62 decals**; more layouts would help more than more art now.
+- ~~**Only 2 layouts in the pool.**~~ **Resolved 2026-09-08** — seven, which is `LEVEL_DESIGN` §2's
+  full 6 Combat + 1 Wave for the biome.
+- **The Secret Vault is not in the floor pool.** In an eastward corridor every room is walked out of
+  and the vault is authored with one door. §8 calls a Secret Floor a *detour*, and a detour needs the
+  branch §1 rules out. Change brief §22.2 — a design question, not a bug.
+- ~~**No Mini-Boss room exists.**~~ **Resolved 2026-09-08** — `MiniBossArena_01` plus both Floor 16
+  arenas, on placeholder bosses. The seam is now `BiomeRoomPool.RoomFor(RoomRole)`, and a role with
+  no room still warns and draws a Combat Room rather than failing.
+- ~~**`FloorLoader` has no scene.**~~ **Resolved 2026-09-08** — `RunScene` is back, built by
+  `Deeper/Build Run Scene`, and the Hub's shaft leads to it. See *The run* below.
+- **No floor-transition presentation**, whenever a run scene does come back. GDD calls a descent
+  "linearly downward"; the loader walks east with the floor number incrementing silently. Brief §22.4.
+- ~~**The camera lags on the first frame of a run.**~~ **Resolved 2026-09-08** by the one-line snap
+  this entry proposed: `CameraRig.SnapToTarget()`, called from `FloorLoader.PlacePlayerAt`.
+- ~~**Still no player death / run-end.**~~ **Resolved 2026-09-08**, and it was the oldest item in
+  this document — `PlayerDeath` on the rig, `RunEnd` for the award, `RunSummaryPanel` for the screen.
+- **`execute_code` over MCP is broken in this environment** — every snippet, down to
+  `return 1 + 1;`, fails with a line-1 BOM error, in and out of play mode and after a forced
+  refresh. Verification used temporary `[MenuItem]` probes driven by `execute_menu_item` and read
+  back through `read_console`. Still true on 2026-09-08. Worth adding to `01-VERIFICATION.md`.
+- **`AttackStateMachine`'s lunge still ticks its timer on `Update`.** Untouched again.
+
+---
+
+## Room art and the Room Lab — owner-directed, 2026-08-24
+
+**Status:** 🟢 Built and verified. Replaces the run scene, which the owner did not want.
+
+Three owner corrections after the first pass: the new scene should be a **room-visual sandbox with a
+re-roll button**, not a run scene; the art set was far too small; and the credit budget should be a
+gate that asks once, not something deliberated over on every call.
+
+### The Room Lab replaces the run scene
+
+`Scenes/RoomLabScene.unity`, generated by `Deeper/Build Room Lab Scene`. One button mounts a fresh
+room: a layout drawn from the bag, a theme drawn from the biome, an encounter drawn from the
+layout's list. A readout names all three so what you are looking at is never a guess.
+
+**There is no player in it** (owner, 2026-08-24), and that is what makes it a lab rather than a
+level. Three consequences, each of which needed handling:
+
+- **The camera frames the whole room** instead of following anyone, measured from the room's tilemap
+  renderers rather than a stored size — the layouts are 28×16, 32×18 and 22×16, and a lab that only
+  fitted the first would crop the others. `CameraRig` is disabled rather than removed, so the prefab
+  is untouched and the reason is visible in the Inspector.
+- **Nothing crosses the entry band**, so the encounter is sprung directly. It is started on the
+  room's `StateChanged(Armed)`, **not** inline at mount: `CombatRoom.Start` runs `Arm()` at the end
+  of that same frame and `Arm` calls `encounter.Clear()`, so anything spawned inline is released a
+  moment later. That is precisely the "load and spring must not share a frame" trap recorded when
+  the floor loader was built — walked into once here, and caught by a screenshot with no enemies in
+  it rather than by an assertion.
+- **`Begin()` rather than `PlayerEntered()`**, so the room stays Armed with its doors open. Entering
+  would shut them and hide the doorways; a lab wants the arrivals and the door gaps visible at once.
+  With no player to measure against, `WaveSpawner` falls back to cycling the authored markers in
+  order, which is exactly the right behaviour for judging where a layout puts its enemies.
+
+`RoomLab` is test-only and deliberately **not** `FloorLoader`: sequencing a floor, destroying what
+is behind her and aligning doorways are all irrelevant when the question is "does this room look
+right". It reuses the shipped content pipeline rather than a parallel one — same `BiomeRoomPool`,
+`RoomBag`, `RoomTheme` and `RoomDressing` — so what is judged here is what ships.
+
+`RunScene` and `BuildRunScene` were deleted. `FloorLoader` is kept: it is CORE_SYSTEMS §8's
+reshuffling bag, which MVP lists as MUST SHIP, and it is verified. It simply has no scene until the
+run flow is the objective.
+
+### The art pipeline: generate for form, recolour for palette
+
+The two PixelLab tools fail in exactly opposite directions, and knowing which to use for what is the
+whole finding:
+
+| Tool | Form | Palette | Use for |
+|---|---|---|---|
+| `create_topdown_tileset` | ✅ base tiles repeat **seamlessly** | ❌ no palette parameter — returned navy, then green | floors and walls |
+| `create_image_pixflux` | ❌ shades the image as a *picture* | ✅ `color_image_base64` is obeyed exactly | nothing tiling |
+| `create_1_direction_object` | ✅ real transparency, 64 candidates per call | ❌ no palette parameter | decals and props |
+
+Measured, not guessed: a 32×32 floor from `pixflux` came back with edge rows averaging 51–58 luma
+against an interior of 75 — a dark top-left border that cannot repeat. Generating larger and slicing
+does not help; at 128×128 it draws a cave floor *scene*, with boulders, so the slices disagree. And
+`no_background: true` was ignored outright (1024 of 1024 pixels opaque), which is the **same defect
+the change brief already recorded** for the spawn-burst VFX.
+
+So: generate with the tool that gets the form right, then **remap luminance onto the biome's locked
+ramp**. Pixel-exact, no resampling, no off-grid fringe — the same palette-swap-as-variant technique
+ART_DIRECTION §68 already uses for the Deep Warden. The recipe lives in the change brief §22.3; the
+ramps are in the harvest script's `RAMPS` table and none of them contains its biome's reserved
+hazard accent.
+
+**Floors and walls must take different bands of that ramp.** A plain luminance remap put
+`Floor_Collapsed` at 78 luma and `Wall_Collapsed` at 83 — two obviously different source materials
+landing five steps apart, and the wall ring vanished into the floor in play mode. Floors now map to
+the lower band and walls to the upper, and walls additionally **stretch** their own range across it,
+because one generated wall was so low-contrast that an absolute map parked all of it at the bottom
+of the band (11 luma of separation). All five pairs now clear 19+.
+
+### What was generated
+
+| Set | Count | Cost |
+|---|---|---|
+| Wang tilesets → 1 floor + 1 wall each | 5 (3 Upper Caves, 1 Flooded, 1 Molten) | ~5 × 16–25 |
+| Ground decals and debris, Upper Caves | **62 usable** from one 64-candidate pack | 20 |
+
+62 decals for 20 generations is why `create_1_direction_object` at size ≤42 is the right tool for
+these: it returns 64 candidates in one call. Two were rejected automatically — one blank, one at 86%
+coverage, which would have hidden the tile under it rather than decorating it.
+
+New committed tools, both reproducible from the art on disk rather than assembled by dragging:
+- `Deeper/Generate Room Tiles` — imports every PNG under `Art/Environment/<biome>/` with
+  ART_DIRECTION §1's settings and writes a matching `Tile` asset. **Collider type comes from the
+  file name**: `Wall_*` collides, everything else does not, so the dangerous option has to be asked
+  for. `Data/Tiles/` had no generator at all before this.
+- `Deeper/Generate Room Themes` — one `RoomTheme` per floor/wall pair found. Each theme keeps its
+  **own** floor and wall; mixing every tile into every theme would average them into one look, which
+  is the opposite of the point.
+
+### Verification
+
+Played in `RoomLabScene`. Two rolls produced visibly different rooms: different wall texture
+(stippled vs layered rock), different floor, different debris scatter. The wall ring reads as a wall
+with its door gap; interior posts read as posts; decals sit on open floor and never on a doorway,
+the entry band or a spawn marker. Console clean — 0 errors, 0 warnings. `TestScene` still plays
+identically.
+
+### The PixelLab budget gate
+
+`.claude/hooks/pixellab-budget.mjs`, wired as a `PreToolUse` hook on `mcp__pixellab__.*` in
+`.claude/settings.json`. It sums the generation cost of every call and asks for confirmation once the
+session would pass 100, then raises its own ceiling by another 100 so approving once does not mean
+being asked on every call afterwards. Read-only calls cost nothing. A hook rather than a skill
+because it must fire automatically with nothing typed — a skill only loads when invoked.
+
+Cost estimates are deliberately the documented **worst case** (a tileset counts 25, a 1-direction
+object 40): over-counting is the safe direction for a spend gate. Verified by pipe-test — silent at
+99, asks at 101 — and confirmed firing in the live session.
+
+---
+
+## Milestone 4, first half — the upgrade offer screen (owner-directed, 2026-08-25)
+
+The owner asked for **the UI and the content, not the effects**: the offer screen, every upgrade and
+Curse the docs name, authored with real icons, with no behavioural implementation behind them.
+
+### Built
+
+- [x] **`Scripts/Upgrades/UpgradePool.cs`** — the weighted draw. BALANCE §13's three biome rows as
+      authored data; Legendary filtered out; already-taken excluded; prerequisites and mutual
+      exclusions honoured.
+- [x] **`Scripts/Upgrades/CursePool.cs`** — flat uniform draw, its own pool per §13.
+- [x] **`Scripts/Upgrades/CurseDefinition.cs`** — upside and downside as two fields.
+- [x] **`Scripts/Upgrades/RunCurses.cs`** — the run's Curses. Records only; applies nothing.
+- [x] **`Scripts/UI/UpgradeCard.cs`** — the view. Draws an upgrade or a Curse.
+- [x] **`Scripts/UI/UpgradeOffer.cs`** — the binder: queue, draw, present, pick, flash.
+- [x] **`Scripts/UI/TierPalette.cs`** — ART_DIRECTION §5's colours, shared by the card and the strip.
+- [x] **`Scripts/Core/RunPause.cs`** — refcounted `Time.timeScale` + action map + cursor.
+- [x] **`Scripts/Editor/UpgradeCatalog.cs`** + **`BuildUpgradeAssets.cs`** — 38 upgrades and 8 Curses
+      as a committed table, written to assets **in place** so GUIDs survive.
+- [x] **`Scripts/Editor/HUDLayout.cs`** — `BuildRunHUD`'s primitives, extracted so two layout tools
+      share one canvas contract.
+- [x] **`Scripts/Editor/BuildUpgradePanel.cs`** — `Deeper/Build Upgrade Panel`.
+- [x] **`HUD_Card` + `HUD_SlotIcon`** in `HUDFrameArt`, and **46 generated 128×128 icons**.
+- [x] **The Secret Vault presents its Relic** through the panel (change brief §21.3.1's seam).
+- [x] `WeaponDefinition.weaponUpgrades` — the Katana's 13 entries live on the weapon asset.
+
+### Not built, and why
+
+- **Every effect that is not a `StatModifier`.** Seven of 38 upgrades are expressible today; the rest
+  and all eight Curses need damage-pipeline hooks. This was the finding recorded when the strip was
+  built, and it is still the thing gating the second half of Milestone 4.
+- **The Evolution milestone** (CORE_SYSTEMS §13). Its content is an open item in the design doc.
+- **Reroll and skip.** In no doc.
+- **Bow and Greatsword sub-pools.** Neither weapon exists.
+
+### The draw picks a tier first, then an entry — not one weighted list
+
+The obvious implementation weights every candidate by its tier's number and draws from that. It gets
+BALANCE §13's published table wrong, and increasingly wrong as content lands: with 14 Commons and 2
+Epics in the candidate set, per-entry weighting turns "Epic 5%" into 5×2 / (65×14 + 30×7 + 5×2) —
+about **1%**. Choosing the tier first makes the published percentage the actual percentage regardless
+of how many entries each tier happens to hold. A tier with no candidates left is skipped rather than
+rolled and discarded, so a late run that has taken every Common still gets three cards.
+
+### `RunPause` exists because three things must move together
+
+Zeroing `Time.timeScale` is not a pause. Every player system reads its `InputAction` straight off the
+shared asset and UGUI's EventSystem is nowhere in that path, so without disabling the Player map a
+click on a card **also swings the katana** — `TestConfigHUD` found that first and this is its recipe.
+And `PlayerAim` hides the hardware cursor, so a modal panel under it has buttons and nothing to click
+them with.
+
+It is **refcounted**, and that is why it is one object rather than a field on each panel.
+`TestConfigHUD` had no refcount: with two panels open, the first to close re-enabled input underneath
+the second. `TestConfigHUD` now routes through `RunPause` and that class of bug is gone.
+
+### Two `HitStop` defects the pause exposed, both fixed
+
+1. **An in-flight freeze un-paused the panel.** `HitStop.Run()` runs on *unscaled* time and
+   unconditionally writes `Time.timeScale = normalScale` when it expires — about 50ms after any
+   landed hit. This is not a corner case: **the killing blow that pays the XP is exactly the hit that
+   freezes.** `RunPause.Push` now calls a new `HitStop.Cancel()` first. Verified in play mode: a
+   0.5s freeze, a level-up in the same call, and `timeScale` still 0 long after the freeze would have
+   ended.
+2. **`HitStop.OnEnable`'s self-heal stomped a hard pause.** Its domain-reload guard was
+   `timeScale <= frozenScale + ε`, and `0 <= 0.0201` is true, so any re-enable during a pause resumed
+   the game. Now guarded with `timeScale > 0f`.
+3. **A freeze starting AFTER the pause, from the same hit, was not covered by either fix above —
+   found live, 2026-09-17.** The owner reported the level-up panel not actually pausing; two static
+   reviews of `RunPause`/`HitStop`/`UpgradeOffer` found nothing wrong, because nothing *was* wrong in
+   either class read alone — the bug is in the order two independent event chains run from one hit.
+   `AttackHitbox.Sweep()` calls `target.TakeDamage()` before it fires `Landed`. On a killing blow,
+   `TakeDamage` synchronously cascades `Damageable.Died` → `XPReward` → `PlayerXP.Add` →
+   `UpgradeOffer.Open()` → `RunPause.Push()` (`Time.timeScale = 0`) — all before `TakeDamage` returns.
+   Only afterward does `Sweep()` fire `Landed`, which reaches `AttackStateMachine.HandleLanded` →
+   `HitStop.Freeze()` **for that same hit**. `Freeze()` unconditionally set `Time.timeScale =
+   frozenScale` on the spot, and ~50ms later its coroutine unconditionally restored `normalScale = 1`
+   — both writes landing *after* `Push()`, so the pause was overwritten and then, moments later, fully
+   released while the panel sat on screen with `RunPause` still holding. `Push`'s existing
+   `hitStop.Cancel()` call (item 1 above) does not help: it guards a freeze already in flight when the
+   pause starts, not one that starts a moment later in the same call chain. Confirmed with a live
+   repro that reordered the two calls exactly as combat does (`PlayerXP.Add` then `HitStop.Freeze()`)
+   and read `Time.timeScale` back at each step: `0` → `0.02` → `1`, with `RunPause._holds` still `1`
+   throughout. Fixed by giving `HitStop` a `RunPause` reference (found by `FindFirstObjectByType`,
+   the same fallback `UpgradeOffer`/`TestConfigHUD` already use, since `RunPause` is a scene object
+   and `HitStop` lives on the player prefab) and refusing to start a freeze at all while
+   `pause.IsPaused` — re-verified with the same repro: `Time.timeScale` now reads `0` → `0` → `0`
+   through the whole panel lifetime, including with the sandbox's debug menu stacked on top
+   (`_holds` 2 → 1 → 0, released exactly once on the final pick), and ordinary (unpaused) hitstop is
+   unaffected.
+
+### Icon size is arithmetic, not preference
+
+Icons are authored at **128** and drawn in a **64-unit** box inside `HUD_SlotIcon` (72 units, 4-unit
+border). The canvas scales by a whole number from a 540 reference, so that box is 128 screen px at
+1080p — a 1:1 draw — and 64 px in a short window, an exact half. The run HUD's strip draws the same
+file in a **16-unit** box, an exact quarter. Every draw of these files is an integer ratio.
+
+That last number moved: the strip's icon rect was 18 units, which would have resampled a 128px icon
+by 0.5625 — precisely the non-integer resample the whole HUD contract exists to prevent. It is inset
+one unit further now.
+
+### The card is a fifth bigger than the first attempt, and the picture is why
+
+The first `Card(152, 164, 4, 6)` composited over the real chrome read as **a thin outline with
+nothing in it**: a 4-unit plate band around a 152-unit shape is a hairline, and `Field` — tuned to sit
+over the play area — composited against the offer's own scrim to within a shade of it. Border 6, a
+new `CardField` that is lighter and more opaque, and 168 × 196. The rivets moved from inset 2 to
+inset 4 as well: the chamfer eats the outer corner pixels and `Rivet` only draws over existing ink,
+so the studs were being silently dropped.
+
+The icon was half the size it should have been in the same picture. Neither fault would have shown up
+in any assertion.
+
+### Text is vertically centred between the name and the cost line
+
+Every card in the row is the same height, and that height is set by the worst case — a Curse with a
+three-line cost. Top-aligning a two-line upgrade in that box left a third of the card visibly empty.
+The body box is now much taller than its text and middle-aligned; the cost box hugs the bottom.
+
+### Verification
+
+Compiled clean, then run — twice, because the first pass's card sizing was wrong and only the render
+showed it.
+
+- Panel opens on `PlayerXP.LeveledUp`; `timeScale` 0, Player map disabled, cursor visible.
+- **One `Add(400)` took level 2 → 7 and produced five offers in sequence, not one.** `PlayerXP.Add`
+  loops its level check and raises `LeveledUp` five times synchronously; an unqueued panel would have
+  opened five times in one frame and thrown four offers away.
+- Picking closes the panel and returns `timeScale` to exactly 1 — never a sampled value.
+- Stats move through the real panel: Vitality 100 → 115 Max HP, Fleet Foot 5 → 5.5 move speed, Heavy
+  Hands 0 → 3 damage bonus. Behavioural picks change nothing, as intended.
+- Draws are mixed-tier, exclude what the run already holds, and include Katana entries.
+- Curse picks land in `RunCurses` and appear in the run's strip.
+- Secret Vault: cleared, and the panel presented Endless Edge alone on a gold card.
+- **Rendered at 1920×1080 (`scaleFactor` 2) and at the owner's 906×463 (`scaleFactor` 1)** — both
+  whole numbers, both legible, the 726-unit card row fits the short window.
+
+### Outstanding
+
+- The behavioural half of the pool — the second half of Milestone 4, and what gates it.
+- Evolution content (CORE_SYSTEMS §13 open item).
+- Whether the Curse should appear on every level or every floor (change brief §11, still open).
+- `Greed's Toll` has no downside and its card says so.
+- The Bow's and Greatsword's sub-pools and relics.
+- **Still no player death or run-end.** A pause now exists, but there is still no way for a run to
+  finish.
+
+### Two verification gotchas found this session
+
+Both are in `01-VERIFICATION.md` now. In short: `Camera.Render()` does not draw the canvas under URP,
+and `FindFirstObjectByType<Canvas>()` finds the debug menu's canvas as readily as the HUD's.
+
+---
+
+## Milestone 4 — the offer card goes icon-led (owner, 2026-09-17)
+
+**Goal:** compress the card's tier word and full prose description into a tier pip badge, an
+effect-category glyph and a short value/detail line, without touching a single mechanic or number —
+presentation only, over content already authored for the prose pass above.
+
+### Built
+
+- [x] **`Scripts/Upgrades/EffectSummary.cs`** — the 12-value `UpgradeCategory` enum and the
+      `EffectSummary` struct (`Category`, `Value`, `Detail`) every upgrade and Curse now carries.
+- [x] **`UpgradeDefinition.summary`** / **`CurseDefinition.upsideSummary` + `.costLine`** — the
+      Curse keeps its downside as a plain string rather than a second `EffectSummary`, so a Curse
+      card never shows two competing numeric callouts.
+- [x] **`UpgradeCatalog.cs`** tagged all 46 entries (Category/Value/Detail, plus a `CostLine` per
+      Curse) and **`BuildUpgradeAssets.cs`** gained a text guard — every character checked against
+      `PixelFontGlyphs.Order`, `Value` capped at 10 chars, the longest word in `Detail`/`CostLine`
+      capped at 21, the line at 42 — reported alongside the existing `missingIcons` count.
+- [x] **`Scripts/UI/UpgradeCardArt.cs`** — `CategoryGlyphs`/`TierBadges`, the two sprite lookups the
+      card draws from, each an explicit `switch` with a commented `default` per the project's
+      enum-ternary rule.
+- [x] **`UpgradeCard.cs`** rebuilt: `tierLabel`/`bodyLabel` (`Text`) are gone, replaced by
+      `tierBadge`/`categoryBadge` (`Image`) and `valueLabel`/`detailLabel` (`Text`), plus a
+      Curse-only `costMark`. Both `Bind` overloads route through one `DrawSummary(EffectSummary)`.
+      `TierPalette.NameOf` deleted — its only caller was the removed `tierLabel`.
+- [x] **`HUDFrameArt.cs`** gained `HUD_TierCommon/Rare/Epic/Legendary/Curse` (32×8 pip badges, a
+      crossed bar for Curse) and `HUD_CostMark` (24×8, rule + triangle) — drawn near-white so
+      `UpgradeCard` tints each one through `TierPalette`, the same trick the bar fills use.
+- [x] **12 generated `Cat_*` glyphs** in `Art/UI/Icons/`, 64×64, through `deeper-art` with the same
+      forced palette as `Upg_*`/`Curse_*`. One reject on the first batch: "triple speed-chevron and
+      dust puff" for `Cat_Dash` came back as a cartoon rally car — regenerated with an explicit
+      "no vehicle, no car" clause, which returned a clean speed-streak glyph.
+- [x] **`BuildUpgradePanel.cs`** lays out the new widgets per a fixed table (below) and wires both
+      lookups via `WireCardArt`, keyed by field name == enum name == file name.
+- [x] **`UpgradeStatusReport.cs`** gained a Category column on both the upgrade and Curse tables, so
+      a mistagged entry (left at the enum's default) is something a reader can actually spot.
+
+### The new layout, top edge down, 10-unit pad
+
+**Superseded twice — see "the card's layout, to the owner's mockup" below for what is actually
+built.** Kept because the arithmetic under it (why 196, why 32, why 64) is still the arithmetic.
+
+| y | h | Object | Notes |
+|---|---|---|---|
+| 10 | 8 | `TierBadge` | 32×8, tier-tinted |
+| 22 | 72 | icon slot | unchanged |
+| 66 | 32 | `CategoryBadge` | 32×32, untinted, corner-pinned to the icon slot (below) |
+| 98 | 11 | `Name` | unchanged, font 7 |
+| 112 | 20 | `Value` | font 14 — 2× native, the only other size that stays on the pixel grid |
+| 134 | 22 | `Detail` | font 7, wraps |
+| 156 | 8 | `CostMark` | Curse only |
+| 166 | 20 | `Cost` | Curse only, wraps |
+
+186 + 10 bottom pad = 196 — the card's height is unchanged from the prose pass; nothing here made it
+taller or shorter, only rearranged what fills it.
+
+### Icon size is arithmetic, not preference — again, one size down
+
+The same rule the unique icon follows (128px in a 64-unit box, an exact 2× at the canvas's own 2×
+factor) governs the category glyph: authored at **64px** in a **32-unit** box, half the unique icon's
+ratio in both dimensions. The glyph's box is not centred under the icon socket — it is pinned to the
+socket's bottom-right corner, offset +50 from the card's own centre, which lands its left edge 2 units
+into the socket's 4-unit steel frame and clear of the 64-unit hole. That 2-unit figure is checked
+against `BuildUpgradePanel`'s own `SlotBorder`/`SlotSize` constants in the same file, the same
+cross-tool-constant discipline `HUD_SlotIcon`'s border already uses against the unique icon.
+
+### Verification
+
+Compiled clean throughout (0 errors at every stage: after the data-model pass, after the 46-entry
+catalog pass, after the layout/wiring pass). `Deeper/Build Upgrade Assets` logged **0 card-text
+problems** across all 46 entries on the first run — the glyph-set and length guard caught nothing,
+which means the catalog pass respected the HUD face's character set and the length budgets on the
+first attempt. Rendered at both **1920×1080 (`scaleFactor` 2)** and the owner's **906×463
+(`scaleFactor` 1)** via the corrected URP two-call recipe (`01-VERIFICATION.md` §11): tier pips read
+as a count, the Curse card's crossed bar and cost mark are visibly distinct, no white boxes anywhere
+(the null-sprite guard covers both new `Image`s), and the longest strings in the set — Overwhelm's
+32-char detail, Greed's Toll's 41-char cost line, Gauge: Adrenal Rush's 19-char name — all wrap or fit
+as measured. One render-harness-only defect found and fixed in the throwaway verify script, not the
+product: `GrantCard` is active and unbound at build time until something calls `Bind`/`Clear` on it,
+and a probe that binds the row's four cards directly (skipping `UpgradeOffer`) has to clear it too, or
+it sits centred over the row as an empty frame. `UpgradeOffer.ShowOffer` already does this in the real
+flow. Play-mode pick flow confirmed end to end: `TestControls.GrantLevel` → real cards drawn → an
+upgrade pick lands in `RunUpgrades` (`Count` 0→1), a Curse pick lands in `RunCurses` (`Count` 0→1),
+and `UpgradeOffer.PresentGrant` — the exact call `VaultReward.Grant` makes — presents and picks
+cleanly too (`RunUpgrades.Count` 1→2). `RunPause.IsPaused` and `Time.timeScale` traced `true`/`0` →
+`false`/`1` correctly across all three picks, confirming the pause fix documented above survives this
+rebuild. Console stayed clear of `HUDLayout.Wire`/`Load` warnings throughout both scenes' rebuilds.
+
+### The card's layout, to the owner's mockup (owner, 2026-09-18)
+
+The owner supplied a card mockup and mapped its boxes onto the existing widgets. Presentation only —
+no new widget, no content change, the card still 168×196.
+
+- [x] **The category glyph and the tier badge now share one left-aligned top row.** The glyph heads
+      it at the card's top-left corner; the badge sits beside it, vertically centred on the glyph's
+      taller band. Both positions are derived in `BuildUpgradePanel` (`TierBadgeX`/`TierBadgeY`) from
+      the two sizes and one `BadgeGap`, so resizing either badge keeps the pair on one row.
+- [x] **`HUD_TierCommon/Rare/Epic/Legendary/Curse` re-emitted at 64×16**, twice the strip they were —
+      at 32×8 the badge read as a sliver of chrome beside a shape four times its area. An `Image`
+      stretches a sprite to its rect, so the size had to move in `HUDFrameArt` as well as in
+      `BuildUpgradePanel`; the two are commented as one pair. `TierCross` gained a full-width rule
+      through its X, because in the wider box the bare X was a small mark floating in empty space
+      while Common's single pip filled the same box edge to edge.
+- [x] **The description block is now the card's whole lower half and it wraps** — `Summary` grew from
+      148×20 at y 136 to 148×48 at y 138, `HorizontalWrapMode.Wrap`. **This fixed a live defect:** the
+      line did not wrap, and at 21 characters per line the seven authored entries over 30 characters
+      were drawing roughly 30 units past *each* edge of the card. `CostMark` and `Cost` did not move —
+      they sit inside that block, and the three rects overlap on purpose.
+- [x] ~~**`UpgradeCard` chooses the font size against the block, not against one line.**~~
+      **Superseded the same day — the card now has one size; see "One description size" below.**
+      `titleCharBudget`
+      / `titleWordBudget` were replaced by `titleLineChars` (10) and `titleLines` (2), both wired from
+      `BuildUpgradePanel` so they cannot go stale, and `FitsAtTitleSize` runs two tests: the string
+      must fit the lines it is allowed, **and** no single word may be wider than one of them — the
+      block wraps at spaces only, so a word with no break in it overflows sideways however short the
+      whole string is. An upgrade gets both lines and is centred in the block; a Curse gets the first
+      line only and is pinned to the top, because the cost mark and cost line take the rest.
+- [x] This **largely answers the flag the 2026-09-17 addendum in change brief §26 raised** — "nearly
+      every entry renders at 7pt". With two title lines instead of one, "MAX HP +15" and
+      "ALL ATTACKS +3" now render at 14. The long entries still drop to 7, which is what that size is
+      for. All eight Curse upsides are 16 characters or more, so in practice every Curse renders small.
+
+| y | h | Object | Notes |
+|---|---|---|---|
+| 8 | 38 | `CategorySlot` | 38×38 `HUD_SlotGlyph` socket, top-LEFT at x 8 (added later — see "A socket for the category glyph") |
+| 11 | 32 | `CategoryBadge` | 32×32, untinted, inside the socket at x 11 (was a bare child of the card at 10, 10) |
+| 19 | 16 | `TierBadge` | 64×16, tier-tinted, top-left at x 54 (was 50, 18) |
+| 46 | 72 | icon slot | unchanged |
+| 122 | 11 | `Name` | unchanged, font 7 |
+| 138 | 48 | `Summary` | font 7 (was 14 or 7 — see "One description size"), **wraps**; centred on an upgrade, top-aligned on a Curse |
+| 156 | 8 | `CostMark` | Curse only, inside the block above |
+| 166 | 20 | `Cost` | Curse only, wraps, inside the block above |
+
+**Verification.** Compiled clean at every stage. `execute_code` was BOM-broken for the whole session
+(`01-VERIFICATION.md` §9), so the probe was a throwaway `Scripts/Editor/VerifyUpgradeCard.cs` driven by
+menu items (§12) and deleted afterwards. Every rect read back off the built `Card0` matches the table
+above. Rendered through §11's two-call URP recipe at the owner's **906×463 (`scaleFactor` 1)** and at
+**1920×1080 (`scaleFactor` 2)**, with a sample offer bound deliberately to cover each case: Vitality
+(10 chars, one title line), Heavy Hands (14, two title lines), Overwhelm (36, drops to 7 and wraps)
+and the Curse Starving Blade (33, drops to 7, two lines, clear of its cost mark). Nothing overflows
+the card at either size.
+
+**Two harness notes worth keeping**, both of which produced a capture that looked like a broken
+layout. §11's recipe leaves the canvas at its authored sorting, and a Screen Space - Camera canvas
+sorts against sprites by **sorting layer**, not by z — at the default `Default/0` the room's walls
+drew straight through the cards even with `planeDistance` at 1. Force `Overlay/999` for the capture
+and restore it. And `planeDistance` itself has to be small: `Camera.main` sits at z −10, so the
+recipe's 10 puts the canvas at exactly z 0, in the plane of the room sprites.
+
+**Flagged, not fixed — a font quirk now visible on the card.** `PixelFontGlyphs` authors a real
+lowercase `x` (for "2x damage taken", "3 x 3") while every other lowercase letter aliases onto its
+capital. So `Max HP` renders as `MAx HP`, and at 14pt on the description block it reads as a typo.
+Four authored strings hit it: Vitality's `Max HP`, Blood Debt's cost line, and the names Executioner
+and Explosive Finish. Fixing it is a content edit (author those four with a capital X) rather than a
+font change, since the lowercase glyph is deliberate — left for the owner to call. **Fixed the next
+day, a better way — see below.**
+
+### All 46 card lines re-authored (owner, 2026-09-18)
+
+Owner-reported off the screenshots above: about twenty of the compressed lines did not read as
+English. **The cause is the 2026-09-17 collapse, not the writing.** `UpgradeCard` draws
+`Detail + " " + Value`, so the number always lands last; the pairs were authored for the two-line card
+where a big `Value` sat above a small `Detail` and two numbers stayed apart. On one line they became
+`Arcs within 3.0 4`, `To knockback Immune`, `Per hit, cap 5. Resets on a miss +2%`.
+
+- [x] **One rule, no code change, recorded in `UpgradeCatalog`'s class doc.** Because the join can
+      only put `Value` last: **one trailing number** keeps the split (`"Move speed"` + `"+10%"`);
+      **two numbers, a word-shaped value, or a whole sentence** goes into `Detail` with `Value` left
+      empty, which `DrawSummary` already handled and Flow State already shipped. That took the
+      empty-`Value` entries from 1 to 22. The trailing number stays preferred wherever the line reads
+      as English that way — leading with it is the fallback, not a new house style, because the
+      owner's 2026-09-17 objection to "a number, then what it modified" still stands.
+- [x] **21 entries rewritten, 25 confirmed and left byte-identical.** No number, mechanic, tier,
+      category or pool changed; each rewrite was checked against that entry's own
+      `description`/`upside`, which are untouched.
+- [x] **Momentum Edge reads `Stack cap 10 to 14`**, not `10-14`, which was being read as a range
+      rather than a cap raised from one value to the other. Still no arrow — the glyph set has none.
+- [x] **`UpgradeCard.Caps`** uppercases the name, summary and cost labels at draw time, which closes
+      the lowercase-`x` flag above in one place instead of four authored strings — authoring
+      `EXecutioner` would have corrupted the string for every prose reader. **`ToUpperInvariant`,
+      never `ToUpper`:** this machine's locale is Turkish, where `ToUpper` maps `i` to the dotted `İ`,
+      which is not in `PixelFontGlyphs.Order` and would render as a hole in every word with an i.
+
+**Verification.** `Deeper/Build Upgrade Assets` rebuilt all 46 with **0 card-text problems** — that is
+the glyph-set and length guard, and it appends its count to the build log only when non-zero. A
+read-only dump over the regenerated `.asset` files reproduced every rendered line with the font's
+uppercasing and the 14pt/7pt decision, and all 46 were read against their source prose: nothing over
+the 42-char `Detail` limit, no character outside the face's set, **12 entries now render at 14pt**
+(up from almost none before the two-line block). Rendered through §11's two-call URP recipe at the
+owner's **906×463** and at **1920×1080** with two sample bindings — one covering the capital-X fix
+(`MAX HP +15`), the longest rewritten line (`4 DAMAGE ARCS TO ONE ENEMY WITHIN 3.0`) and a Curse cost
+line carrying the multiplier (`2X DAMAGE TAKEN`); the other covering the worst case for the Curse
+card, Starving Blade's 38-character upside, which wraps to two 7pt lines and clears the cost mark with
+room to spare.
+
+**Found while verifying, not fixed — the Curse cost mark has never drawn its art.** `HUDFrameArt`
+generates `HUD_CostMark` (24×8, a rule with a triangle head), but `BuildUpgradePanel.cs:311` builds
+that `Image` with a **null sprite** and nothing assigns one — `UpgradeCard.Bind(CurseDefinition)` only
+sets `enabled` and `color`. UGUI draws a null-sprite `Image` as a solid quad, so every Curse card has
+been showing a plain crimson bar. Same defect class as the white weapon slot in `01-VERIFICATION.md`
+§4, and the same reason it went unnoticed: nothing is null, nothing errors, no assertion fails. The
+fix is one argument — `HUDLayout.Load("HUD_CostMark")` in place of `null` — plus a panel rebuild in
+`TestScene` and `RunScene`. Left for the owner, being outside this pass's scope.
+
+### One description size, and a fit check that counts lines (owner, 2026-09-18)
+
+Owner-reported off a screenshot of a live offer: Executioner's line drew at 14 beside three cards at
+7 ("the font sizes are changing"), and Greed's Toll's cost line ran across the card's bottom border.
+
+- [x] **One size.** `UpgradeCard` no longer touches `fontSize`; `titleFontSize`, `bodyFontSize`,
+      `titleLineChars`, `titleLines` and `FitsAtTitleSize` are deleted, and `BuildUpgradePanel.Label`
+      no longer takes a size, so every card text box is `HUDLayout.BodyText` by construction. 7, not
+      14, because 14 is the only other on-grid size and holds 10 characters a line. The header
+      ("LEVEL 2") stays at `TitleText` — it is not card text.
+- [x] **`EffectSummary.Line`** is the Detail-then-Value join, moved off the card so the fit check
+      measures the exact string that draws.
+- [x] **The fit check counts wrapped lines, not characters.** `BuildUpgradeAssets.CheckCardText` used
+      a flat 42-char limit as "two lines of 21"; Greed's Toll's 41-char cost line passed it and wrapped
+      to three, because a word that misses the end of one line carries its whole length to the next.
+      It now word-wraps at `BuildUpgradePanel.LineChars` (21) and compares against each box's budget —
+      `SummaryLines` 5, `CurseUpsideLines` 2, `CostLines` 2, and one line for a name. Those budgets are
+      derived from the card's rects and from `PixelFontArt.Advance`/`LineSpacing`/`LineInk` (now
+      internal, and `m_LineSpacing` reads the same property), so resizing a box moves its budget.
+- [x] **Greed's Toll's cost line** is `Cost pending: its Hazard was cut` (was
+      `Cost pending - the Hazard it paid was cut`). Change brief §26, last addendum.
+- [x] Panel rebuilt and saved in `TestScene` and `RunScene`; the stale serialized fields are gone.
+
+**Verification.** Compiled clean. `Deeper/Build Upgrade Assets`: 0 problems. **Negative test:** with
+the old Greed's Toll line put back, the same build reported `1 card-text problem(s)` — the check
+catches the defect it exists for (the warning text itself did not come through `read_console`,
+presumably the console's warning filter; the count is appended to the build log line either way).
+A throwaway probe (§12 fallback — `execute_code` hit the BOM failure again) then ran all 46 entries
+through **UGUI's own `TextGenerator`** on the real built card in play mode: every line at size 7,
+**0 over budget**, and each line count matched the fit check's arithmetic exactly. Rendered at the
+owner's **906×463 (`scaleFactor` 1)** and **1920×1080 (`scaleFactor` 2)**: the screenshot's own offer
+(Executioner, Windcutter, Momentum, Greed's Toll), the longest upgrade line (Blink Strike, 3 lines),
+the longest name (Gauge: Adrenal Rush), 2-line cost lines (Blood Debt) and a 2-line Curse upside
+(Starving Blade, which clears its cost mark). All text inside the frames, one size throughout.
+
+### A socket for the category glyph (owner, 2026-09-18)
+
+Owner, off a screenshot of the Quickstep card: the top-left glyph is "a bit naked" — it sat bare on
+the card field while the icon under it has a steel slot.
+
+- [x] **`HUD_SlotGlyph`, drawn by `HUDFrameArt`: `Slot(38, 3, 2, false)`.** Border 3 makes the hole
+      exactly 32, the `Cat_*` glyphs' 64px at the canvas's 2x — `HUD_SlotIcon`'s arithmetic at half
+      size. Drawn rather than generated because it is chrome (CLAUDE.md's material/geometry split).
+      Not `HUD_SlotSquare`, which has the same 32 hole but at 40 units touches the card's border or
+      the icon slot wherever it goes. No rivets: at border 3 a stud lands on the channel wall.
+- [x] **`BuildUpgradePanel` builds it the way it builds the icon slot** — a `CategorySlot` holding a
+      `Socket` plate, the `CategoryBadge` glyph inset by the border, and a `SlotFrame` over both — at
+      `CategorySlotInset` 8, which leaves a unit of field inside the card's border and ends 2 units
+      short of the icon slot at x 48. The tier badge's position is still derived, now off the socket
+      (54, 19). The two sockets share one `SocketColour`. `UpgradeCard` is untouched: the socket is
+      static chrome, and the `categoryBadge` wiring still points at the glyph.
+
+**Verification.** Offline mockup first, off the real card PNGs: a 36-unit, 2-border variant was too
+faint to count as a background and was dropped. Then compiled clean; `Deeper/Generate HUD Frames`
+left all 33 existing frame PNGs byte-identical (hashed before and after) and added only
+`HUD_SlotGlyph`; the panel was rebuilt and saved in `TestScene` and `RunScene` (the frame is referenced
+5 times in each, one per card). A throwaway probe read `Card0`'s rects back as designed — socket
+(8, 8) 38×38, glyph 32×32, tier badge (54, 19) — and rendered Quickstep, Vitality, Gauge: Adrenal
+Rush and Greed's Toll at **906×463 (`scaleFactor` 1)** and **1920×1080 (`scaleFactor` 2)**: crisp on
+the pixel grid, clear of the card border and the icon slot on every card, the Curse card included.
+
+---
+
+## The Hub — surface camp, weapon select and descend (owner-directed, 2026-09-07)
+
+**Goal:** the place a run starts from. GDD §Game Loop 1 calls it "a small surface camp"; this builds
+it as a walkable isometric scene rather than a menu, because the owner asked for one and because a
+menu would make the tile and prop work pointless.
+
+**Scope built:** the camp, the weapon rack (working), the mine shaft (working), the stat shrine
+(placed, stubbed). Shards, the Hub Stat System and the Relic Vault are still Milestone 6.
+
+### Files
+
+- `Scripts/Hub/HubStation.cs` — "she is standing here and pressed E". One class for every fixture;
+  what a station *does* belongs to whatever subscribes to its `Used` event.
+- `Scripts/Hub/HubDescent.cs` — the shaft. Refuses to descend with no weapon and says so.
+- `Scripts/Hub/HubNotice.cs` — a fixture that is placed but unbuilt, answering "not yet".
+- `Scripts/Run/RunConfig.cs` — the chosen weapon, as an asset, so it survives the load into the run.
+- `Scripts/UI/HubPromptHUD.cs`, `WeaponSelectPanel.cs`, `WeaponCard.cs`.
+- `Scripts/Editor/Layout_Hub_01.cs` — the camp's authored ASCII map.
+- `Scripts/Editor/BuildHubScene.cs` — builds `Scenes/HubScene.unity` (`Deeper/Build Hub Scene`).
+- `Scripts/Editor/BuildHubArt.cs` — imports the camp art (`Deeper/Generate Hub Art`).
+- `Scripts/Editor/BuildRunConfig.cs` — writes `Data/Run/RunConfig.asset` (`Deeper/Build Run Config`).
+- `Art/Environment/SurfaceCamp/` — 5 floor tiles, 1 wall block, 7 fixture sprites, via PixelLab.
+
+**Order:** Generate Hub Art → Generate Isometric Tiles → Generate Hub Markers → Import HUD Icons →
+Build Run Config → Build Shard Bank → Build Hub Scene. Only the last has to be last; it reads what
+all the others write, and warns rather than failing when one has not been run.
+
+### What was reused, and the one thing that was deliberately not
+
+`RoomLayout` supplies the isometric projection, the wall painting and the marker lookup, so the
+camp's fixtures land on the same diamonds its tilemap draws. `Validate` grew an `extraLegend`
+overload rather than having the camp's characters added to the shared legend — sharing the *rules*,
+not the vocabulary of one map.
+
+`IsometricRoomView` is **not** used. Its whole purpose is re-rolling a pooled room's visuals on every
+mount, and the camp is the one place in the game that must look identical every visit. It is also
+load bearing: a station's trigger volume has to sit exactly where its art is drawn, which a random
+scatter cannot promise.
+
+### An isometric FLOOR tile must carry no side wall — binding on all future tile art
+
+The camp's first three builds came out as a **field of raised blocks with every slab edge showing**.
+This is worth reading before generating any isometric tile, because two plausible causes were
+investigated and both were wrong:
+
+1. *Not* `TilemapRenderer.mode`. The built renderer read back `mode: 1` (Individual) — the value the
+   room builders' comments blame this symptom on.
+2. *Not* `TilemapRenderer.sortOrder`. It read back `TopRight`, and flipping it to `BottomLeft`
+   changed **nothing on screen**. It was never being applied: `Assets/Settings/Renderer2D.asset` has
+   `m_TransparencySortMode: 0` (Default), which under an orthographic camera sorts by Z. Every tile
+   sits at z = 0, so they all tie and per-tile order inside a Tilemap is undefined.
+
+The cause was the art. Profiling the PNG row by row: a generated tile is a small 3D block — a
+diamond top face followed by a **20-row full-width side wall**. Cells step 32px apart vertically, so
+the tile in front covers only ~6 of those rows and 14px of wall shows on every cell. PixelLab's
+`tile_shape` is the control:
+
+- **Floors: `"thin tile"`, then strip the wall entirely.** `BuildHubArt.FlattenFloorTiles` crops each
+  `Iso/Floor_*.png` to its bare top-face diamond. Nothing ever sees the underside of the ground, and
+  with no wall there is nothing to reveal — a far more durable fix than persuading the renderer to
+  sort. It is idempotent, so it is safe to re-run.
+- **Walls: keep the block.** A wall is *meant* to read as raised, and `Wall_Stone` renders correctly.
+- `"thick tile"` and `"block"` also produce a top face that is ~35 rows tall against a 32px lattice —
+  an irregular ~3.5px/row slope where a true 2:1 diamond is exactly 4px/row. `"thin tile"` measured
+  as an exact 2:1. **Measure a new tile's row profile before trusting it.**
+
+The crop leaves a **two-pixel skirt of the diamond's own edge colour**. An exact diamond tapers to
+nothing at each vertex, so neighbours meet at a point rather than overlapping and the background
+showed through as a speck on every tile. The skirt must copy edge colour, not the source's wall
+pixels — with the draw order undefined, a wall-coloured skirt would sometimes paint a dark fringe
+over the neighbour.
+
+### The shipped biome tiles have the same defect
+
+`Art/Environment/UpperCaves/Iso/*.png` profile identically to the rejected camp tiles (opaque rows
+12–63, widest row ~32, full-width band below it). Every room in the game is drawing floors with a
+20px side wall on a 32px lattice. This was not touched — it is a re-generate of five shipped tiles
+plus a re-run of the flatten, and it is the owner's call.
+
+### The world has no pixel-perfect camera
+
+`Prefabs/Rig/Main Camera.prefab` is orthographic size 8 with no `PixelPerfectCamera` anywhere in the
+project. At a 768px viewport that renders the world at **1.5×**, and at 1080p at **2.109×** — a
+fractional zoom, which resamples point-filtered art off its own grid exactly as
+`PixelPerfectHUDScale` exists to prevent for the HUD. This is the world-space twin of a lesson the
+project has already learned once and is a plausible root cause of "the game looks blurry". Not
+changed here: it alters framing in every scene, so it is a project-wide decision.
+
+### Descend goes to `TestScene`, because there is no run scene
+
+`Scripts/Run/FloorLoader.cs` is written and `Data/Rooms/Pool_UpperCaves.asset` exists, but the loader
+is **mounted in no scene** — there is no scene that plays a run. `HubDescent.runScene` is a serialized
+scene *name* (never a build index, which renumbers silently), so pointing it at a real run scene when
+one exists is a field change, not a code change.
+
+### Verified
+
+Built clean with no wiring warnings — every `HUDLayout.Wire` call found its field, so the panel, the
+prompt, the shaft and the shrine are all wired rather than falling back at runtime. Play mode enters
+with **zero errors and zero warnings** and the camp renders with the player in it and the night
+ambient applied.
+
+**`HubStation`'s detection is verified**, by the trick below. **The keypress is not.** E cannot be
+pressed from here — simulated key input never reaches play mode (`01-VERIFICATION.md` §2) — and
+`execute_code` was broken this session, so `WeaponSelectPanel.Open()` and `HubDescent.Descend()`
+could not be driven either. Both carry `[ContextMenu]` attributes for exactly this and can be
+right-clicked in the Inspector. **Treat what happens after the key as unverified until someone plays
+it**; the project's standing lesson is that structurally-checked code is not working code.
+
+### Interaction markers — indicating which fixtures are usable (owner-directed, same pass)
+
+The camp answered "press E" but never "this is usable at all", so the rack was indistinguishable
+from the crates until you walked into it. Two layers were added, both scoped to that one question:
+
+- `Scripts/Hub/StationMarker.cs` — a floating mark above each usable fixture: a dim chevron from
+  across the camp, brightening into an **E keycap** in range. A world `SpriteRenderer`, not a
+  world-space canvas: the HUD is authored at half size under `PixelPerfectHUDScale`'s whole-number
+  factor, and a UGUI element out here would fight that scale for nothing.
+- `Scripts/Editor/HubMarkerArt.cs` — draws both sprites (`Deeper/Generate Hub Markers`). **Drawn, not
+  generated**, by CLAUDE.md's own split: a chevron and a keycap are pure symbols with no material to
+  interpret. The E is read straight out of `PixelFontGlyphs`, so the key on screen is the same
+  letterform as the prompt line rather than two people's idea of an E.
+- The lantern posts moved in `Layout_Hub_01`. They used to be free scenery, which made the camp lie —
+  lit things you could use, lit things you could not. One now stands beside each station and nowhere
+  else, so "lit means usable" is true by construction. Costs no new art.
+
+The marker is **unlit** (`Sprites-Default`), so the night ambient does not tint it blue along with
+the world; it is an interface element that happens to live in the world.
+
+**Its height is measured from the art's opaque top, not its canvas** — `BuildHubScene.ContentHeight`
+reads the PNG's bytes. The first build used the canvas height and the shaft's marker floated clean
+out of frame, because generated props are centred on a square canvas with whatever transparent
+padding that leaves. Measuring means a new fixture needs no new number.
+
+**Verification, and the trick worth reusing.** Simulated input is unusable and `execute_code` was
+down, but the *spawn point is authored data* — moving `P` next to the rack in `Layout_Hub_01`,
+rebuilding and playing put her in range deterministically, through the real spawn path. The marker
+swapped to the keycap while the shaft's stayed a chevron. That confirms `HubStation`'s
+`OnTriggerStay2D` filter and its unscaled presence window both work in play mode. `P` was moved back
+afterwards. **Editing authored layout data is a usable substitute for a probe in a session with no
+scripting.**
+
+### The Shard counter — GDD §UI's first Hub Screen item (owner-directed, 2026-09-08)
+
+The camp had no Shard readout at all. Added:
+
+- `Scripts/Meta/ShardBank.cs` — the balance, as a `ScriptableObject`, with `Add` / `TrySpend` and a
+  `BalanceChanged` event. **The first file in `Scripts/Meta/`**, which until now was one of the
+  folders deliberately not scaffolded ahead of need.
+- `Scripts/UI/ShardCounterHUD.cs` — the readout. Subscribes rather than polling in Update, unlike the
+  run HUD's bars: those read values that change every frame, this reads one that changes a handful of
+  times per session.
+- `Scripts/Editor/BuildShardBank.cs` — writes `Data/Meta/ShardBank.asset` (`Deeper/Build Shard Bank`).
+  **Re-running never touches the balance**; it is one of only two assets a running game writes to.
+- `Art/UI/HUD_IconShard.png` — a faceted violet crystal, generated through the documented icon recipe
+  (`create_image_pixflux`, 64×64, `UI_IconPalette.png` forced as `color_image_base64`). The violet is
+  `168,115,219` — the Epic tier colour the game already ships, chosen because it is emphatically not
+  one of ART_DIRECTION §2's three reserved hazard accents.
+- `Scripts/Editor/ImportHUDIcons.cs` — applies the sprite contract to every `Art/UI/HUD_Icon*.png`
+  (`Deeper/Import HUD Icons`).
+
+**`Art/UI/` had no importer, and that was a live trap.** `HUDFrameArt` sets the contract on the chrome
+it draws and `ImportUpgradeIcons` covers `Art/UI/Icons/`, but the weapon and dash icons between them
+were imported by hand in some earlier pass. Any new icon dropped in that folder would have arrived at
+Unity's defaults — 100 PPU, bilinear — and read as a blurry half-size smudge in its slot. The new tool
+covers the whole `HUD_Icon*` set rather than the one file that prompted it, and warns (rather than
+rescaling) when an icon is not 64×64, because rescaling point-filtered art off its grid is the defect
+and not the cure.
+
+**Why 64×64 specifically:** the HUD draws an icon into a 32-unit authored square and the canvas scales
+by 2 at the 1080p reference, so a 64px source lands 1:1 on screen. The 128px upgrade icons are a
+different case — they are drawn much larger on the offer cards.
+
+**Hub-only, deliberately.** ART_DIRECTION §5's in-run HUD has no Shard row, and rightly: Shards are
+awarded once at run end and spent between runs, so a counter during a descent would be a number that
+cannot change, watched by a player who cannot spend it. It is built by `BuildHubScene` onto the Hub's
+canvas and exists nowhere else.
+
+**What this is not.** It is a seam, not a save file. Milestone 6 owns `Scripts/Meta/SaveData.cs`,
+which will hold Shards alongside Hub stat ranks, Weapon Mastery counters and discovered Relics, and
+will actually persist; when it arrives it should *back* `ShardBank` rather than replace it, since the
+run-end award and the shrine's purchases will already be calling `Add` and `TrySpend`. Today the
+balance survives an editor session and is discarded in a build, the same ScriptableObject behaviour
+`RunConfig` relies on. **Nothing awards Shards** — BALANCE §14's formula has no run end to run at — so
+the asset ships at 0 and carries a `Grant 250 Shards` context menu so the counter can be seen working.
+
+**Verified — and the method is worth reusing, because a Screen Space Overlay canvas cannot be
+screenshotted here.** `manage_camera` renders through a camera, which by definition excludes Overlay
+canvases; switching the canvas to Screen Space - Camera to work around that failed too, because the
+bridge cannot set an object-reference property (`worldCamera`) at all. And `execute_code` is still
+broken, so the documented RenderTexture probe was unavailable.
+
+What worked instead: **read the label's text back out of the live scene.** With the bank's balance
+temporarily set to 1250 by editing `ShardBank.asset` directly, play mode, then
+`mcpforunity://scene/gameobject/{id}/components` on the `Amount` object, which reports
+`m_Text: "1,250"`. That single value proves four things at once — the counter is genuinely wired to
+the asset rather than falling back, `OnEnable` draws on the way in and not only on a change, the `N0`
+invariant format produces the comma, and **the hand-authored 5×7 bitmap face actually has a comma
+glyph and renders it** (`characterCountVisible: 5`, 20 verts = 5 quads), which was a real risk worth
+closing. The reported glyph positions also place the number at group-x 54.5–89 against a slot ending
+at 40, so the layout does not collide. The balance was set back to 0 afterwards.
+
+Generalising: **reading a component's properties back is the substitute for a screenshot when the
+thing you need to check is a value rather than an appearance**, and it is far cheaper than a picture.
+Pair it with an offline composite (the icon was checked against `HUD_SlotSquare` at true 1:1 scale in
+the scratchpad) when appearance matters too.
+
+### Hub polish pass — walls, colliders, sky, and the shaft split (owner-directed, 2026-09-08)
+
+Five owner-reported defects, and what each turned out to be.
+
+**Walls were half buried.** `Wall_Stone.png` is a 64px block whose top face is a diamond centred on
+row 19, with 28px of body below it — so its *bottom* face centres on row 47. The sprite imports with
+a Center pivot (row 32), so drawing it at the plain cell centre sank 15px of wall under the floor and
+left 13px standing. Fixed by lifting every block `15/32` of a unit and stacking `WallCourses = 2`,
+which puts the top at 1.75 units against a 1.5-unit player. The second course is the same sprite
+offset by its own height, so no second piece of art was needed. **Both courses sort from the cell,
+not from where they are drawn** — a raised course is not further back, and sorting it by its own y
+would let the upper course of a near wall lose to the lower course of the wall behind it.
+
+That in turn made a new layout rule: **nothing stands within two cells of the wall.** At 1.75 units
+the wall is now tall enough to swallow a fixture placed against it, and the stat shrine — one cell
+from the east wall — was half buried in stonework. It moved inboard.
+
+**Colliders were all one size.** `AddBlocker` used a shared 1.4 x 0.7 box, argued for on the grounds
+that a per-prop number is a per-prop thing to get wrong. That was simply wrong: measured footprints
+run from a 1.0-unit lantern post to a 4.75-unit mine shaft, so the big fixtures were walk-through and
+the small ones were surrounded by invisible wall. Both the blocker and the station's reach are now
+derived from `ContentWidth` of the fixture's own art, so they cannot drift apart — **and that
+coupling is load bearing**: with reach left at a fixed 1.6 while the blocker grew to match the art,
+the shaft's blocker would have held her further away than she could reach and pressing E at the
+shaft would never have worked.
+
+**The background was black.** Now a deep desaturated indigo on the Hub's *camera instance* — not the
+shared rig prefab, because a cave has no sky. Note for future screenshots: `manage_camera` with
+`view_position` renders through a throwaway camera that does **not** inherit the clear colour, so a
+positioned capture shows white and looks like the setting failed. Capture the real camera to check it.
+
+**The tent was inert and oversized.** At 3.6 x 3.5 units it was the largest thing in the camp and did
+nothing. It is now the **Codex** station — CORE_SYSTEMS §15 banks Memory Fragments into a Hub Codex
+and MVP lists a Codex UI stub — carrying the same `HubNotice` treatment as the shrine. Recorded in
+the change brief as a placement decision.
+
+**One sprite could not express the mine shaft.** A sprite gets one sorting order, so the player was
+always entirely in front of the headframe or entirely behind it, and descending requires being both
+at once. `BuildHubArt.SplitShaft` cuts `Prop_Headframe.png` at row 128 into `Prop_ShaftBack` (tower,
+platform, pit) and `Prop_ShaftFront` (the brick lip), **both keeping the full 160x160 canvas** so they
+align by construction with no offsets to maintain. The lip sorts 1.6 units nearer the camera than its
+own cell, which is what puts her inside the structure.
+
+**A false start worth recording:** the first attempt offset the shaft's *art* back by 1.6 units so
+the marked cell would be the pit. That pushed the whole structure into the south wall. The art was
+already correct — only the point she climbs down at was wrong — so the offset moved to a `Mouth`
+child object (verified at world (5, 6.6) against a cell centre of (5, 5.0)). **Move the target, not
+the art.**
+
+#### A bug in the flatten tool, found by its own log
+
+`Generate Hub Art` re-flattened tiles that were already flat, cropping them a second time. The
+idempotence check asked whether the row below the diamond's axis was full width — but the 2px skirt
+the tool itself adds makes that row full width too, so a finished tile was indistinguishable from an
+unprocessed block. It now measures the silhouette's **height** instead, which the skirt cannot fool:
+a bare diamond is ~32 rows, a block 50+. The affected tiles were restored from source and reflattened
+once. **Symptom to recognise: a "generated" log line naming a diamond axis that has moved since the
+last run.**
+
+**Verified:** compiles clean, builds clean with 4 stations and no wiring warnings, play mode raises
+no errors, and the camp was composited offline at full size to judge the art — the editor's Game view
+is currently 900x239, which is far too short to review an isometric scene in.
+
+**Not verified: the descent animation itself.** It cannot be triggered without pressing E, and
+`execute_code` is still down. `HubDescent.Descend()` carries a `[ContextMenu]` for exactly this.
+
+#### The background, second attempt — a flat colour was never going to work
+
+The first pass set the camera's clear colour to a near-black indigo and called it done. The owner's
+reply was that it looked the same, and they were right twice over: (0.055, 0.062, 0.11) is
+indistinguishable from black, **and a flat colour is the wrong answer regardless**. The camp is a
+14-unit diamond and the Game view is currently ~60 world units across, so most of the screen is that
+colour and the camp reads as a cut-out pasted onto nothing.
+
+`PaintSurround` fixes it with ground instead: 22 cells of unlit moorland past the walls, fading out
+so the camp sits on a hillside at night. No new art — it reuses the camp's own grass tiles, tinted
+dark. The sky colour was also lifted to (0.09, 0.105, 0.185) so it reads as sky rather than as void.
+
+**The fade is one tilemap per band, and that shape is forced by a Unity behaviour worth knowing.**
+The obvious implementation is one tilemap with `SetTileFlags(pos, TileFlags.None)` followed by
+`SetColor` per cell. It looks perfect in the editor and **silently loses every colour the moment the
+scene reloads into play mode**, because a `Tile` asset rewrites both colour and flags from itself in
+`GetTileData` on every refresh. What that looked like was a full-bright green field covering the
+screen. `Tilemap.color` is a serialized property of the component and survives, so the bands are six
+real tilemaps instead.
+
+**A wrong diagnosis, recorded because it nearly cost a lot of time.** That full-bright field made the
+whole frame look as though 2D lighting had stopped working in play mode, and the next move would have
+been to go digging through `Renderer2D.asset` and the light's target sorting layers. It was measured
+instead: raw grass albedo is R156 G162 B57 and the same grass in play mode reads R133 G141 B65 — a
+blue shift, so the ambient *is* applied. Naive gamma maths predicts R86, which is what made it look
+unlit; the project renders in **linear colour space**, where a 0.55 multiply lands far brighter than
+0.55 of the 8-bit value. **Sample the pixels before concluding a light is off** — comparing two
+screenshots by eye is worthless when one of them has a bright new object filling half the frame.
+
+#### Colliders and the mine shaft, second pass (owner-directed, 2026-09-08)
+
+**The colliders were wrong twice over, and deriving them from the art's width only fixed half of it.**
+
+1. *Vertical placement.* A prop pivots at its **canvas** bottom, but a generated sprite is centred on
+   a square canvas and carries transparent padding underneath — 13px on the shrine, which is 0.4
+   world units of daylight under a stone obelisk. Every fixture is now dropped by its own measured
+   `Bottom` so the drawn pixels touch the cell.
+2. *Where the footprint actually is.* For an isometric prop the lowest drawn pixel is the **bottom
+   vertex** of its base diamond, not the diamond's centre. A collider centred on the pivot therefore
+   sat half a diamond in front of the thing it was meant to be inside. `FootprintCentre` puts it at
+   `Bottom + Width/4`, and the station's trigger uses the same point.
+
+`Measure` now returns Top/Bottom/Width in one pass and **everything positional derives from it** —
+planting, collision, reach and marker height — so those four cannot drift and a new prop still needs
+no hand-tuned numbers. Verified numerically: the shaft's blocker lands at world (5, 5.906) against a
+cell centre of (5, 5.0), i.e. centred on the hole rather than in front of it.
+
+**The mine shaft is two pieces of art now, not one sprite cut in half.** The previous attempt sliced
+the shipped headframe at row 128 into "back" and "front lip". That could not work and the owner
+called it: the tower's legs run down *through* the platform, so no horizontal cut separates the
+structure from the ground it stands on — the split has to be **semantic**, ground and top.
+
+- `Prop_ShaftPit` — a flat hole with a stone rim, drawn on the **Default** layer at
+  `GroundPieceSortingOrder`, under every actor. She walks over it.
+- `Prop_ShaftTower` — the open timber headframe, drawn on **Actors** and Y-sorted at the same cell,
+  so she passes between its legs: in front from the south, behind from the north.
+
+The `Fixture` table gained `Ground` and `Companion` to express this generally rather than
+special-casing the shaft in code. The pit owns the footprint — collider, reach and the descent
+`Mouth` all derive from its bounds — because a hole is what stops you and what you climb into; the
+tower carries no collider, since two colliders on one fixture would disagree.
+
+**Prompt note for regenerating these:** `view: "low top-down"` gave the pit raised brick walls, a box
+rather than a hole. `view: "high top-down"` produced the flat, flush opening the ground layer needs.
+Standing structures want `low top-down`; ground features want `high top-down`.
+
+**Two false trails, both from positioned screenshots.** `manage_camera` with `view_position` renders
+through a throwaway camera that inherits neither the clear colour nor the 2D lighting, so the moor
+appeared as bright grey slabs and the sky as white. Both were correct all along — confirmed by
+capturing the real camera in play mode. **Judge lighting and background only from a play-mode capture
+of the actual camera.** Also worth knowing: the editor can be left in play mode by an earlier call,
+and menu items then run inside it and log nothing useful — check `mcpforunity://editor/state` for
+`is_playing` when a menu item produces no output.
+
+#### Shaft alignment, and "beside" in an isometric map (owner-directed, 2026-09-08)
+
+**The tower stood at the mouth of the hole, not over it.** Both shaft pieces bottom-pivot on their
+own lowest drawn pixel, and for the pit that pixel is the *front vertex* of the opening — so aligning
+the two by their baselines planted the tower on the near lip. `AddCompanion` now stands it at the
+ground piece's footprint centre (`Width/4`, the same measurement the colliders use), which is what
+puts a tower over a hole rather than in front of one.
+
+The mark above it is measured from the companion too. Taking it from the ground piece alone put the
+shaft's keycap inside the tower's roof; it now clears the tower's real top by the authored gap
+(verified: marker at world y 11.47 against a tower top of 11.16).
+
+**"Beside" is a diagonal step in this map, not an adjacent character.** Screen position is `x - y`
+across and `x + y` back, so the cell level with and one step to the side of `(x, y)` is
+`(x + 1, y - 1)`. A neighbour in the map *string* is diagonal on screen and reads as standing in
+front — which is exactly how the shrine's lantern looked. Every lantern is now on that diagonal from
+the station it lights.
+
+**Spawn placement is now a constraint, not a free choice.** Station reach is derived per fixture, so
+the shaft's is 2.65 units and the Codex tent's 2.6 where everything used to be 1.6. Two successive
+spawns landed inside one of those and she arrived with a keycap already showing. `P` is at (6, 7),
+whose nearest station is the rack at 3.2 units. **Anything moved in this layout has to be re-checked
+against all four reaches**, because they are no longer the same size as each other.
+
+**Shaft moved to (7, 2), against the south wall (owner-directed).** Safe to sit there now only
+because the art offset is gone: the earlier version placed the sprite 1.6 units back, which is what
+drove the structure into the wall and prompted moving it inboard in the first place. With the tower
+standing on the pit's footprint centre instead, the pit's own bottom edge lands on its cell and the
+wall tops are ~2.3 units clear.
+
+**A stale character found while doing it.** `GroundFor` still tested `symbol == 't'` for "this cell is
+grass" — the tent's old scenery letter, left behind when it became the Codex station `C`. The tent had
+therefore been standing on bare dirt instead of its grass shelf ever since. Nothing errored and no
+warning fired; the map simply painted the wrong ground under one fixture. **When a legend character is
+renamed, grep for the old letter** — the layout file validates its own map, but code that switches on
+those characters is not covered by anything.
+
+---
+
+## The run — right-sized rooms, a sixteen-floor descent and an ending (owner-directed, 2026-09-08)
+
+**Status:** 🟢 Built and **verified in play mode**. Console clean throughout — 0 errors, 0 warnings.
+
+The owner's two notes were "rooms are a lot big… we only use first half of the room" and "there is
+only one room now — when that room is cleared the game doesn't mean anything; we want a fully
+functional run". Placeholders for all bosses, and the floor system built so the room types that do
+not exist yet drop in rather than forcing a rewrite.
+
+**Closes four items this document has carried, one of them the oldest in it:**
+
+- ~~**`FloorLoader` has no scene.**~~ `RunScene` exists and `Deeper/Build Run Scene` builds it.
+- ~~**No Mini-Boss room exists.**~~ `MiniBossArena_01`, plus both Floor 16 arenas.
+- ~~**Only 2 layouts in the pool.**~~ Seven: LEVEL_DESIGN §2's full 6 Combat + 1 Wave.
+- ~~**Still no player death / run-end.**~~ `PlayerDeath`, `RunEnd` and `RunSummaryPanel`.
+
+### Built
+
+- [x] `Scripts/Run/RoomRole.cs` — Combat / MiniBoss / FinalBoss / TrueFinalBoss / SecretVault / TrappedSoul
+- [x] `Scripts/Run/RunPlan.cs` + `Data/Run/RunPlan.asset` — which biome each floor draws from
+- [x] `Scripts/Run/RunEnd.cs` — both endings, BALANCE §14's award, the Shard payout
+- [x] `Scripts/Player/PlayerDeath.cs` — on `Player.prefab/Combat`
+- [x] `Scripts/UI/RunSummaryPanel.cs` + `Scripts/Editor/BuildRunSummaryPanel.cs`
+- [x] `Scripts/Editor/BuildRunScene.cs` + `Scenes/RunScene.unity`
+- [x] `Scripts/Editor/BuildRunContent.cs` — 3 biome pools, the run plan, 5 placeholder bosses
+- [x] `Layout_UpperCaves_03..07`, `Layout_MiniBossArena_01`, `Layout_FinalBossArena_01/_02`
+- [x] `Layout_UpperCaves_01`, `_02` and `Layout_SecretVault_01` resized
+- [x] `Deeper/Build All Room Prefabs` — eleven rooms in one press
+- [x] `CameraRig.SnapToTarget()`; `CharacterState.Death` art fallback; `HubDescent` → `RunScene`
+
+### Room size is arithmetic, not taste
+
+An isometric `w × h` map draws a diamond **`(w+h)` wide by `(w+h)/2` tall** — the footprint depends
+only on the *sum*. The camera is ortho 8, so it shows **28.4 × 16** world units at 16:9. Combat
+Room 01 was 28×16 cells = **44 × 22 units**, a room and a half wide; the Wave Room was 50 × 25.
+
+Sizes are now chosen per room from what is in it. Measured off the built prefabs:
+
+| Room | cells | world | |
+|---|---|---|---|
+| Combat ×6 | 16 × 10 | 26.0 × 13.0 | fits the view |
+| Wave Room | 20 × 12 | 32.0 × 16.0 | overflows, on purpose (LEVEL_DESIGN §4) |
+| Secret Vault | 16 × 10 | 26.0 × 13.0 | fits |
+| Mini-Boss arena | 20 × 14 | 34.0 × 17.0 | §6's "large open arena" |
+| Final Boss arenas | 22 × 16 | 38.0 × 19.0 | the largest rooms in the game |
+
+**No design doc specifies a room dimension**, so this is tuning rather than a design change. Change
+brief §25.
+
+The entry band also moved. It used to sit on the map's half-way line, because aggro radii are 10–12
+and a lock sprung at the doorway left the far half standing still. At 26 units across the whole room
+is inside that radius, so the band is now four to five cells inside the west door — leaving it at the
+middle of a room this size would spring the fight with two thirds of the floor behind her.
+
+### Three defects the pass found, all pre-existing
+
+**1. A diagonal band's bounding box is not the band.** `BuildEntry` sized the entry trigger to the
+`=` cells' *axis-aligned* bounds. On a diamond grid a column of cells is a 2:1 diagonal, so that box
+is a rectangle roughly twice the band's area reaching into both halves of the room. At 16×10 it
+swallowed the player start: the run mounted its first room, `RoomEntry.OnTriggerStay2D` fired on the
+frame she was placed on the arrival marker, six enemies arrived on top of her, and **she died
+without a key being pressed**. The old 28×16 layout cleared it by half a tile, which is the only
+reason it had never shown up — and is also why the fight there sprang earlier than the map looked
+like it should, which is a large part of what "we only use first half of the room" was describing.
+Now a `PolygonCollider2D` on the band's true parallelogram, derived from the same basis vectors
+`RoomLayout.CellCentre` uses.
+
+**2. A single-doorway room reported an exit.** `BuildConnection` split doors on the room's projected
+mid-line and then fell back to "if nothing landed east of centre, use the far door anyway, or the bag
+would treat this as a dead end it is not" — exactly backwards for a room that *is* one. The Secret
+Vault has one west doorway of two cells; both sit left of the mid-line, the fallback fired, and one
+of its own west doors came back as its exit. `RoomConnection.HasExit` was therefore **true for the one
+room in the game authored to be a detour**, so `RoomBag.Draw(needsExit)` — the only guard against
+mounting an unwalkable room mid-floor — would have drawn it onto the route. Zyno's arena is authored
+the same way and would have hit it too. Now read off the map's `D` **columns**: one distinct column is
+a dead end, two are a through-room, and no projection is involved.
+
+**3. `FloorLoader` refilled the bag every floor.** `AdvanceFrom` called `_bag.Fill(pool.Options)` on
+each floor boundary, which resets the shuffle — CORE_SYSTEMS §8's "drawn through without immediate
+repeats" only holds if the draw survives a floor. It now refills **only when the biome changes**.
+
+### The trapped-enemy rule is now checked, not trusted
+
+`EnemyChase` has no pathfinding, so an enemy that walks into a concave pocket stays in it — and a
+Combat Room only unlocks when every enemy is dead, so the player is sealed in a room with an enemy
+she cannot reach and no door. Nothing errors and nothing warns; the only symptom is a fight that
+never ends. With six new layouts authored in one pass that stopped being an acceptable thing to eyeball.
+
+`RoomLayout.ValidatePosts` now runs inside every room build: no post touching a wall or another post
+8-way, two clear cells to any solid on each axis, three cells between posts. A single isolated post
+is convex and can never form a pocket, which is why isolation is the whole rule. All eleven layouts
+pass. It reports rather than refuses — a post one cell too close is a map somebody is mid-edit on,
+and refusing to build would hide everything else that changed.
+
+Worth stating because it is invisible in the map string: **two posts that look comfortably apart on
+adjacent rows are one cell apart on the grid.**
+
+### Roles are the seam the unbuilt room types plug into
+
+`FloorLoader` used to hardcode `if (isLastOfFloor && _floor % 5 == 0)` for the Mini-Boss and nothing
+else. Every remaining room type would have added another branch beside it. Now every design rule
+about ordering is in one method:
+
+```csharp
+private RoomRole RoleFor(int floor, int roomIndex, bool isLast)
+{
+    if (final > 0 && floor >= final) return roomIndex == 0 ? FinalBoss : TrueFinalBoss;
+    if (isLast && floor % 5 == 0)    return MiniBoss;
+    return Combat;
+}
+```
+
+`BiomeRoomPool.RoomFor(role)` returns the biome's room for a role, or **null**, and null is a
+supported answer: the loader warns and draws an ordinary Combat Room. That is what lets a role be
+declared before its room exists — `SecretVault` and `TrappedSoul` are both in that state. Adding the
+Trapped Soul room later is a prefab, a `RoleRoom` entry and one line in `RoleFor`. **A role is a
+property of the floor plan, not of the room prefab**, which is why one `MiniBossArena_01` serves all
+three biomes with only its encounter swapped.
+
+### Biomes 2 and 3 are a placeholder expressed in data, not a fallback in code
+
+`Pool_FloodedTunnels` and `Pool_MoltenDepths` hold the **same Upper Caves layouts and roster** under
+their own themes, so the biome change reads visually while the content stays Biome 1's. When Flooded
+Tunnels gets its own rooms and enemies, those arrays change and no code does. Owner's call
+(2026-09-08); change brief §25.
+
+### Placeholder bosses are prefab variants, and only their HP is design
+
+Each is a **variant of `TunnelBrute`** — CONTENT_DESIGN §5 describes every Mini-Boss and the Depth
+Warden as a slow, high-HP, telegraphed slammer, which is what the Brute already is, and the project
+has done this once before: the Deep Warden Elite is this prefab with a different `EnemyDefinition`
+and a tint (ART_DIRECTION §4). **HP is BALANCE §6 verbatim** — 350 / 450 / 600 / 1200, and 600 for
+Zyno, whose row leaves the choice TBD. Everything else is invented and is in the change brief.
+
+**None of them has phases or a weapon-check moment**, which §6 and CONTENT_DESIGN §5 both specify
+for every one. There is no boss phase system; these are single-wave encounters against a large
+enemy. That is the gap this pass knowingly leaves.
+
+### Verification
+
+Driven by `[MenuItem]` probes through `execute_menu_item` and read back through `read_console` —
+`execute_code` is still broken in this project and simulated key presses never reach play mode
+(01-VERIFICATION.md). The probe file was deleted afterwards.
+
+| Check | Result |
+|---|---|
+| Room footprints | Measured off the built prefabs; all six Combat Rooms 26.0 × 13.0, inside the 28.4 × 16 view |
+| Dead ends | `HasExit` **false** for `SecretVault_UpperCaves_01` and `FinalBossArena_02`, true for the other nine |
+| Fight does not spring on arrival | First room stays `Armed` after the player is placed — defect 1, fixed |
+| Whole run | **61 rooms over 16 floors**, driven twice with different seeds |
+| Rooms per floor | 3–5 every floor (`4 5 3 4 4 5 5 5 4 3 4 3 4 3 3`), and exactly **2** on floor 16 |
+| Biome switch | Pool changes at floor 6 and floor 11, theme and ambient light with it |
+| Roles | Mini-Boss arena is the last room of floors 5, 10 and 15; floor 16 is `FinalBossArena_01` then `_02` |
+| Bag | All seven layouts drawn; no immediate repeats within a floor |
+| Real clear chain | Sprang room 03, killed its 5 enemies → doors opened → next room mounted |
+| Post placement | All 11 layouts pass `RoomLayout.ValidatePosts` — no pocket an enemy can be trapped in |
+| Live room count | **2** in steady state after 61 mounts; **0** stray `(Clone)` roots |
+| Death | Killed at floor 16 → death state, summary opens, `timeScale` 0 |
+| Shards, death | Depth 16, +0 levels → **160** = (0 × 15) + (16 × 10), banked |
+| Victory | Cleared Zyno's arena → `RunCompleted` → summary reads **Victory** |
+| Shards, victory | Depth 16, +2 levels → **190** = (2 × 15) + (16 × 10), banked |
+| Return to Hub | Loads `HubScene`, `timeScale` back to 1, Shard counter present and updated |
+| Hub → run | `HubDescent` descends into `RunScene`; the run starts and logs its seed |
+| Left behind | 0 errors, 0 warnings across every pass; `ShardBank` reset to 0 after testing |
+
+### Outstanding
+
+- **No boss has phases, a phase transition or a weapon-check.** BALANCE §6 and CONTENT_DESIGN §5
+  specify all three for all five. The placeholders are one large enemy in a room.
+- **Biomes 2 and 3 still have no rooms and no roster.** Floors 6–16 are Upper Caves content in a
+  different colour. The seams are the two pool assets.
+- **No floor-transition presentation.** GDD calls a descent "linearly downward"; the loader still
+  walks east with the floor number incrementing silently. Brief §22.4, unchanged.
+- **The Secret Vault is still not on the route.** It is now declared as `RoomRole.SecretVault` on all
+  three pools and **never drawn** — §8's "detour" needs the branch LEVEL_DESIGN §1 rules out. The
+  role existing is the seam; the design question is untouched. Brief §22.2.
+- **The Trapped Soul room does not exist.** Its role is declared, nothing fills it.
+- **Floor 16's arena does not change its own geometry**, which LEVEL_DESIGN §6 calls the one thing
+  that makes it Floor 16.
+- **A death still draws her standing up.** `CharacterState.Death` falls back to `Idle` because
+  ART_DIRECTION §3's death frames do not exist. She stops moving and the screen opens over her;
+  she does not fall over.
+- **Nothing has been played by hand at the new room size.** Every check above is a probe measurement
+  or a driven mount. Whether a 26 × 13 room *feels* right is the owner's call and one number to
+  retune — the map string in `Layout_UpperCaves_01.cs`. Relatedly, only room 03 has had a real fight
+  played out in it; the other five pass the geometric post check but have not been walked.
+- **`AttackStateMachine`'s lunge still ticks its timer on `Update`.** Untouched again.
+
+---
+
+## GDD reconciliation — the 2026-09-18 rewrite
+
+**Documentation pass. No code was written and no behaviour changed** — this is the engineering plan
+being made accurate against a GDD the design owner rewrote, nothing more. `Design/` was not touched
+from this side (it has one owner, and this is not it).
+
+### Divergences that are now locked design
+
+Each of these was carried above, or in `00-DESIGN_CHANGE_BRIEF.md`, as *built but not design*. The
+GDD now describes them, so the engineering status is unchanged and the **divergence** is closed. They
+are listed rather than deleted because the build-log sections above still describe them as deviations
+and a reader needs to know the ground moved.
+
+| Built | Recorded as | Now locked in |
+|---|---|---|
+| **Dash Attack** — a fourth `AttackAction` on Basic during/just after a dash | brief §17, *Dash rework* | `GDD §Player` (Controls, Dodge/Mobility), and named as something **the weapon determines** |
+| **Chargeable Heavy Strike**, rooting her, cancellable by dash | brief §17c, §20 | `GDD §Player` (Heavy Strike), `GDD §Combat` (Attack Timing) — on all three weapons, with the Katana-only option kept open as #10 |
+| **Dig-Dash travels along the held movement keys**, falling back to facing | brief §17 | `GDD §Player` (Dodge/Mobility) |
+| **Dash cooldown pip** and **the run's upgrade strip** on the HUD; no Heavy cooldown icon | brief §15, §18 | `GDD §UI` (HUD) |
+| **Icon-led offer card** — tier border, unique icon, category glyph, compressed effect line | brief §26, *Milestone 4 — the offer card goes icon-led* | `GDD §UI` (Upgrade Screen) |
+| **One Death/Victory screen**, distinguished by title and accent | *The run* | `GDD §UI` (Death/Victory Screen) |
+| **Secret Vault**: elite-dropped key, locked door, a guarded fight, a guaranteed Legendary payout (the weapon's Relic), **key consumed on opening** | brief §21, `VaultDoor.consumeKey`'s "INVENTED" tooltip | `GDD §Roguelike Structure` (Secret Floors). Its "tougher than a standard Combat Room" is the one clause the build has not been checked against — see Milestone 3 |
+| **Attacks lunge rather than root**, with no BALANCE row for the distances | brief §7m | `GDD §Combat` (Attack Movement), which now says so explicitly |
+
+**One consequence worth stating plainly, because it is the only one that costs work:** the `IWeapon`
+contract in Milestone 2 is written for three actions and the GDD now specifies four. Corrected there.
+
+**Two class comments now say the opposite of the GDD** and are worth a line each on the next pass
+through those files — not now, because this was a documentation pass: `DashHUD` opens with "**This
+element is in no design doc**" (`GDD §UI` now names the dash pip), and `VaultDoor.consumeKey`'s
+tooltip calls key consumption "INVENTED" (`GDD §Roguelike Structure` now locks it). Both are
+comments, so nothing behaves wrongly; both would mislead the next reader.
+
+### Numbers the GDD handed back
+
+The rewrite dropped the hard numbers it used to carry — the movement ramp, the chain window and the
+per-action lunge distances. They now live **only** as serialized fields, which is where Design Rule 8
+wants placeholders, but it also means nothing outside the prefab records them:
+
+- `PlayerController.accelerationTime` 0.055 / `.decelerationTime` 0.085
+- `AttackStateMachine.chainWindow` 0.25
+- `AttackStateMachine.basicLunge` 0.75 / `.heavyLunge` 1.15 / `.ultimateLunge` 0.9 / `.dashAttackLunge` 1.4, front-loaded over `lungeFraction` 0.45
+
+If any of these is ever meant to be balanced rather than tuned by feel, it needs a BALANCE row; until
+then the prefab is the source of truth and `04-BALANCE.md` should not be read as disagreeing.
+
+### Newly tracked — the Whisper Layer HUD line area
+
+`GDD §UI` lists it as a HUD element (CORE_SYSTEMS §15) and has since 2026-08-14, when the narrative
+subset joined MUST SHIP. **Nothing in this document tracked it and nothing implements it**: there is
+no class in `Scripts/UI/` for it, `BuildRunHUD` lays out no such element, and its only appearance in
+the codebase is inside `DashHUD`'s comment, where it is quoted as one of the elements `GDD §UI` asks
+for. Tracking it here so it stops falling between the milestone plan (where the narrative systems
+have no milestone at all) and the HUD passes (which built every *other* element `GDD §UI` names).
+
+- [ ] **Whisper line area** — a HUD text line, driven by whatever raises Zyno's lines. The HUD half is
+      small and well-understood (`HUDLayout` + one class, the same shape as `WaveIndicatorHUD`, which
+      is the existing precedent for an element that shows itself only sometimes). **What does not
+      exist is the source**: no Whisper system, no dialogue data, no trigger points. Do not build the
+      label first — an element with nothing to say is indistinguishable from a broken one.
+- [ ] **Memory Fragments and the Refusal State** (CORE_SYSTEMS §15) are in the same position — MUST
+      SHIP, no milestone, no code. The Hub's Codex station is placed and stubbed (`HubNotice`), which
+      is the only seam any of it has.
+
+### Still to check elsewhere
+
+`00-DESIGN_CHANGE_BRIEF.md` has not been re-read against this rewrite. Several of its entries now
+describe behaviour the GDD has absorbed (the rows in the first table above) and should be retired or
+re-tagged in a pass of its own — that is the designer's document, not this one, and editing it from
+here is exactly the split this project keeps.
+
+---
+
+## The level-up beat — slow-mo, a burst, and a dealt-in offer (owner-directed, 2026-09-18)
+
+**Owner's note:** the upgrade offer appearing on the frame of the killing blow was "a bit shocking".
+The owner chose an eased slow-down into the pause (over an instant freeze) and PixelLab art (over
+code-drawn geometry). Change brief §27 carries the design side and every invented number.
+
+### Built
+
+- [x] **`Core/RunPause.cs` — `Push(float easeIn)`.** The first hold can ramp `Time.timeScale` to 0
+      over real seconds (`(1 − p)^easeExponent`, exponent 2) instead of cutting to it. Input, cursor and
+      the HitStop cancel all happen on the first frame, and **`IsPaused` is true from the first frame**
+      — which is what keeps `HitStop.Freeze` out of the ramp, since it already refuses while paused.
+      An instant `Push()` mid-ease snaps to 0; the last `Pop()` lands on the fixed `normalScale`.
+      `fixedDeltaTime` is left alone: every Rigidbody2D in the game already interpolates, so slow
+      motion stays smooth without a second value to restore.
+- [x] **`UI/UpgradeOffer.cs` — the beat.** A level-up takes the eased hold immediately and opens the
+      panel `levelUpRevealDelay` (0.6s) later. Level-ups arriving during the beat only queue, so a
+      multi-level drop gets one slow-down and one burst. The Secret Vault grant and the `Enqueue`
+      probe still open at once. Picks are refused until the entrance has settled.
+- [x] **`UI/OfferReveal.cs`** — the entrance: scrim fade, heading fade, cards rising 10 units with a
+      stagger. **No scaling**: positions snap to whole canvas units and fades go through
+      `CanvasGroup.alpha`, so nothing resamples off the pixel grid. The first offer of a hold gets
+      the full entrance; the next queued one re-deals only its cards and heading.
+- [x] **`Player/LevelUpVFX.cs`** on `Visual`, drawing on a new `Visual/LevelUpBurst` child —
+      `Sprite-Unlit-Default`, order −1, **behind** her body inside her SortingGroup, so it
+      depth-sorts with her and never buries her silhouette (the aura flame's failure). Unscaled
+      flipbook; a second raise mid-clip does not restart it.
+- [x] **`Editor/ImportLevelUpVFX.cs`** — `Deeper/Import Level-Up VFX`: import contract, slice
+      `Art/VFX/LevelUp.png` as one row of square cells (`LevelUp_0_<col>`, ids kept by name across
+      re-runs), and create-or-find the renderer and component on `Player.prefab`. Runs without the
+      sheet, wiring an inert component — that is how the beat was verified before the art existed.
+- [x] **`Editor/BuildUpgradePanel.cs`** — CanvasGroups on the scrim, a new `Heading` wrapper and
+      every card; `OfferReveal` built and wired. Rebuilt in **TestScene** and **RunScene**.
+- [x] **Pick-flash defect fixed.** The flash was built inside `Panel`, which `UpgradeOffer` switches
+      off on the pick — so ART_DIRECTION §6's pick flash never showed after the last offer of a
+      level-up. Confirmed on disk in both scenes before the change (`Flash <- Panel <- UpgradePanel`);
+      it is now a sibling of `Panel`.
+
+### Verification
+
+`execute_code` failed every call on the BOM (01-VERIFICATION §9) and Roslyn is not installed, so this
+ran through a throwaway `Editor/VerifyLevelUpBeat.cs` of menu items (§12), deleted afterwards. Timings
+were stretched on the live instance (4s ease, 6s delay, and a slowed entrance) so MCP round trips
+could sample mid-beat.
+
+- **The ramp follows its curve**: 0.517 at 1.13s and 0.176 at 2.32s into a 4s ease ((1−p)² gives
+  0.517 and 0.176), then exactly 0. `IsPaused` true and the Player map disabled from the first sample.
+- Panel inactive until the delay, then open. Cards at rest at (−279, −99, 81, 279) — whole units — and
+  mid-deal at whole units too (y −6, −7, −2).
+- **A pick during the entrance is refused** (panel stays open, pending count unchanged); after it
+  settles the pick lands, and `timeScale` returns to **exactly 1** with input re-enabled.
+- **The flash now shows after the last pick** — active, enabled, alpha 1, parent `UpgradePanel`.
+- **`Add(400)`: level 2 → 7, one beat, five offers.** The second offer re-dealt with the scrim held at
+  1.00 and the heading faded back in from 0; the pause held at 0 across the hand-off.
+- **Killing blow, in its real order**: a Cave Crawler killed through `TakeDamage` levelled her 1 → 2
+  inside the call, and the `HitStop.Freeze` issued straight after — what `AttackHitbox.Landed` does —
+  was refused (`_running` null). The ease carried on along its curve.
+- **Debug menu mid-ease** snapped the scale to 0; closing it did **not** resume the game while the
+  offer still held.
+- **Vault grant**: no beat, instant pause, full entrance, card at its authored (0, −20).
+
+- **The burst, with the real art**: a `GrantLevel` fires it in the same frame as the pause (frame
+  `LevelUp_0_0`, playing); 1.3s later it has run out (`LevelUp_0_8`, renderer off) and the panel is
+  up. Seen in the game at 1 fps (`Play` context menu) through `Main Camera`: ring round her feet,
+  beam and sparkles behind her body, her silhouette intact, depth-sorted against the training dummy.
+- **RunScene smoke test**: `Add(400)` took 1 → 7 — one beat, one burst, six offers queued; the pick
+  flashed and the next offer re-dealt. No console errors in either scene.
+
+### Art — `Art/VFX/LevelUp.png`, 9 frames of 96×96
+
+Generated through the `deeper-art` skill, both approvals by the owner. **Record for regeneration:**
+
+- **Forced palette** (pixflux `color_image_base64`), every colour already shipped: warm off-whites
+  (253,252,246) and (252,252,232); the level badge's level-up flash (255,240,184); Legendary gold
+  (230,189,92); Upper Caves ochres (176,152,106), (150,126,84); Epic violet (168,115,219);
+  violet-greys (140,133,148), (117,110,124), (87,82,92). **No hazard yellow-orange.**
+- **Key frame**: `create_image_pixflux`, 96×96, `no_background`, `outline: lineless`,
+  `shading: medium shading`, `detail: medium detail`, `view: low top-down`, seed 1807 — "magical
+  level-up aura VFX sprite… a flat glowing ring on the floor… a tall tapering beam of light… 3-tone
+  ramp: bright warm off-white core, pale gold middle, cool violet outer edges; a few tiny square
+  sparkles…" plus the style guide §10 vocabulary.
+- **It took four generations and a hand edit, and the reason matters for next time.** Attempt 1
+  (seed 4242, "narrow vertical column") drew a flat single-tone bar — style guide §11 reject. Attempt
+  2 (above) was right in everything but the floor: a **solid violet disc**, 1,281 px of one colour.
+  Two img2img passes asking for a thin ring (strength 150, then 60) kept the disc; the second turned
+  it into a stone pedestal. PixelLab reads "ring on the floor" as a platform. **The disc was hollowed
+  by a direct pixel edit** — the outer three pixels kept as a violet → gold → cream ramp, the beam's
+  columns untouched, the rest cleared — owner-approved over a 20–40-generation `inpaint_image`.
+- **Clip**: `animate_image` from the edited key frame, 8 frames (+ the seed as frame 0), seed 1807 —
+  "a burst of light fading out: the tall beam of light thins and dissolves upward…, the thin ring on
+  the floor spreads slightly outward while fading away, the small gold sparkles drift upward and wink
+  out". `animate_image` takes no forced palette: 418 off-palette pixels across 8 frames, some
+  drifting toward saturated yellow, **snapped to the nearest forced-palette colour**. The pixel grid
+  held (binary alpha on every frame).
+- **The generated ring never fades** — frames 4–8 hold it at full strength — so `LevelUpVFX` fades
+  alpha over the last `fadeOutFrames` (4) rather than letting it blink off. Total cost: 6 generations.
+
+### Outstanding
+
+- **No ease back out** on the pick — deliberate, combat resumes on that frame (brief §27).
+- **Every queued offer's header reads the final level** ("LEVEL 7" on all five after a 2 → 7 drop).
+  Pre-existing: `ShowOffer` reads `experience.Level` at show time. Not changed in this pass.
+- `UpgradeOffer.cs` is now ~430 lines, past the ~300-line prompt. The entrance was split out into
+  `OfferReveal` for exactly that reason; what is left is the binder plus its queue.

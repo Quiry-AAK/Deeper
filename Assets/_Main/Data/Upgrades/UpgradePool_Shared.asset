@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a504e61ffd13de34b95a97f85b726dde, type: 3}
+  m_Name: UpgradePool_Shared
+  m_EditorClassIdentifier: 
+  shared:
+  - {fileID: 11400000, guid: 78d9216252770594b9fa87355e475625, type: 2}
+  - {fileID: 11400000, guid: c6fff163b0c22694c81a35dd96b5ef48, type: 2}
+  - {fileID: 11400000, guid: 6099928390e984f40820dbcbe146fbf7, type: 2}
+  - {fileID: 11400000, guid: 7517eac25d431724cbc9ae449656a833, type: 2}
+  - {fileID: 11400000, guid: d12d035168ae4c74d9a81451ab5ed54d, type: 2}
+  - {fileID: 11400000, guid: 92bc5f3dadcc1064b89472675a5edb52, type: 2}
+  - {fileID: 11400000, guid: 1c452b271fdf91c45b28e93b6f4be04f, type: 2}
+  - {fileID: 11400000, guid: f2b5b702664fc204fac7441fb2b8186c, type: 2}
+  - {fileID: 11400000, guid: 37b37986f90d11642bdd9110f0d70d38, type: 2}
+  - {fileID: 11400000, guid: 65bb79e148c0bdb4fa0c1101e36d5530, type: 2}
+  - {fileID: 11400000, guid: b3ebbe54dbe6dd24fbe5b791d75e23c5, type: 2}
+  - {fileID: 11400000, guid: dd6fb63bd6ae6934eab314a92ff31a85, type: 2}
+  - {fileID: 11400000, guid: cfd2ea332a6af2447a87af3fe8e012aa, type: 2}
+  - {fileID: 11400000, guid: 77f5b3853942a1b4a86eb718b350eaea, type: 2}
+  - {fileID: 11400000, guid: a2b54187954044943ab8de5252a630c3, type: 2}
+  - {fileID: 11400000, guid: 83207d203b552f14c8fb82db31bfe53f, type: 2}
+  - {fileID: 11400000, guid: cc2d5e25bc2fe444bb1df31eccde0487, type: 2}
+  - {fileID: 11400000, guid: 41f55b727e3647c438313e5826341c7f, type: 2}
+  - {fileID: 11400000, guid: 9e2fdd6089eebdd4fa9cbc48f7757843, type: 2}
+  - {fileID: 11400000, guid: 9d45d4692801c1e4f8cfe68d563cbb46, type: 2}
+  - {fileID: 11400000, guid: 40a4c3a3398ac1a4080b34d2aa296335, type: 2}
+  - {fileID: 11400000, guid: 3a43b0ae74777b7428cf83e7cf0fb5b6, type: 2}
+  - {fileID: 11400000, guid: a368ec12a78759148bea01dc92d4413d, type: 2}
+  - {fileID: 11400000, guid: 573ca293acc319947a2d13e75f5f79de, type: 2}
+  weightsPerBiome:
+  - Common: 65
+    Rare: 30
+    Epic: 5
+  - Common: 55
+    Rare: 35
+    Epic: 10
+  - Common: 45
+    Rare: 40
+    Epic: 15

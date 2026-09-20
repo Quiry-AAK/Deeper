@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b75c1b575f13a34cad6d3000ca70d24, type: 3}
+  m_Name: RunPlan
+  m_EditorClassIdentifier: 
+  stages:
+  - pool: {fileID: 11400000, guid: 597c443baeb32a4488edd94ee47fd41a, type: 2}
+    throughFloor: 5
+  - pool: {fileID: 11400000, guid: 9b950cadfecfd2d42b8a0897676bce56, type: 2}
+    throughFloor: 10
+  - pool: {fileID: 11400000, guid: a62ce5842cada7c488829852e9c4ff8c, type: 2}
+    throughFloor: 15
+  - pool: {fileID: 11400000, guid: a62ce5842cada7c488829852e9c4ff8c, type: 2}
+    throughFloor: 16

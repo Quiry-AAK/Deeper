@@ -1,5 +1,6 @@
 using System;
 using Deeper.Character;
+using Deeper.UI;
 using Deeper.Upgrades;
 using UnityEngine;
 
@@ -10,11 +11,10 @@ namespace Deeper.Rooms
     /// which is the equipped weapon's Relic (CONTENT_DESIGN §4: one per weapon, only offered when
     /// that weapon is equipped, never in a normal draw).
     ///
-    /// **It grants rather than offers, and that is a recorded divergence** (change brief). The
-    /// three-card offer panel is Milestone 4 and does not exist; with exactly one guaranteed
-    /// Legendary there is nothing to choose between, so a one-card panel would be ceremony around a
-    /// grant. <see cref="Granted"/> is the seam the real offer takes over — it fires with the
-    /// upgrade, so a panel can present it instead of this handing it straight to the run.
+    /// **It grants rather than offers, and that is a recorded divergence** (change brief): with
+    /// exactly one guaranteed Legendary there is nothing to choose between, so the payout is handed
+    /// over and then *shown*, rather than drawn. <see cref="Granted"/> is still raised with the
+    /// upgrade, and <c>UpgradeOffer.PresentGrant</c> now puts it on screen as a one-card reward.
     ///
     /// The vault never names a relic: it asks the run's weapon for its own. That is why adding the
     /// Bow's Deadeye's Promise later needs no change here — the same rule ChargeSpec and
@@ -99,6 +99,17 @@ namespace Deeper.Rooms
             if (!upgrades.Add(offer)) return false;
 
             _paid = true;
+
+            // The panel presents what was just granted, so the payout is something the player sees
+            // rather than a number that changes behind them. The vault still does the granting: with
+            // exactly one guaranteed Legendary there is nothing to choose between, and the panel is
+            // ceremony around a grant, not a one-card draw.
+            //
+            // Found rather than wired: a room prefab is loaded at runtime and never sees the scene's
+            // HUD authored, so there is no reference for the Inspector to hold.
+            UpgradeOffer panel = FindFirstObjectByType<UpgradeOffer>(FindObjectsInactive.Include);
+            if (panel != null) panel.PresentGrant(offer);
+
             if (Granted != null) Granted(offer);
             return true;
         }

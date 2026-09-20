@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d821bfee0f81f834486887a473eff164, type: 3}
+  m_Name: Upgrade_InsightMagnet
+  m_EditorClassIdentifier: 
+  id: Upgrade_InsightMagnet
+  displayName: Insight Magnet
+  description: XP is pulled in from 3.0 units away
+  tier: 1
+  icon: {fileID: 21300000, guid: 44d9f7a429d9cd647bcc83a63a4c6b99, type: 3}
+  requires: {fileID: 0}
+  excludes: []
+  modifiers: []
+  summary:
+    Category: 6
+    Value: 3.0
+    Detail: XP pull range
