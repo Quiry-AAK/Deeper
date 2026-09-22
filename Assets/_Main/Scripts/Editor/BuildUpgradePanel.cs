@@ -178,6 +178,36 @@ namespace Deeper.EditorTools
         /// a 128px icon lands on it 1:1 at the canvas's 2x. Both numbers are named on both
         /// sides — HUDFrameArt draws the slot and must not depend on this file.
         /// </summary>
+        // ---- The carrying strip: every pick this run already holds, along the top band.
+        // Owner-directed (2026-09-20). The readout left the play screen because a run takes an
+        // uncapped number of upgrades; this is the glance-sized half of where it went, and the
+        // pause menu is the full one. Icons alone, because there is no room here for anything
+        // else: the card row below is 726 units wide and the short window is 906. ----
+
+        /// <summary>Small enough that two dozen fit across the band, and the one slot in the kit
+        /// drawn for exactly this job.</summary>
+        private static readonly Vector2 StripSlotSize = new Vector2(22f, 22f);
+
+        private const float StripSlotBorder = 2f;
+        private const float StripSlotGap = 3f;
+
+        /// <summary>
+        /// Slots in the strip. Not the pause menu's 48: this is a glance, not the inventory, and
+        /// 24 at a 25-unit pitch is 597 units, which still clears the right edge of the 906-unit
+        /// short window with the label in front of it. Past 24 the overflow count takes over and
+        /// the pause menu is where the rest are.
+        /// </summary>
+        private const int StripSlots = 24;
+
+        /// <summary>Screen margin, matching the run HUD's.</summary>
+        private const float StripMargin = 14f;
+
+        /// <summary>Width of the CARRYING label: 8 characters at the face's 7-unit advance, plus
+        /// a gap before the first socket.</summary>
+        private const float StripLabelWidth = 60f;
+
+        private const float StripLabelGap = 6f;
+
         private static readonly Vector2 SlotSize = new Vector2(72f, 72f);
 
         private const float SlotBorder = 4f;
@@ -232,6 +262,13 @@ namespace Deeper.EditorTools
             // put that card 91 units off-centre with three empty gaps beside it.
             UpgradeCard grant = BuildCard(panel, "GrantCard", 0f, centred: true);
 
+            UpgradeListHUD carrying = BuildCarryingStrip(panel);
+
+            // Built after the strip so the popup is the panel's last child and draws over every
+            // socket in it. The component goes on the root, outside the panel that toggles, so it
+            // is never disabled - its Awake is what hides the popup in the first place.
+            HUDLayout.Wire(carrying, "tooltip", HUDLayout.AddUpgradeTooltip(root, panel, panel));
+
             // On the ROOT, after Panel — not inside it. UpgradeOffer hides Panel the moment a card
             // is picked, and a flash built inside it was switched off on the very frame it was
             // meant to show: the last pick of every offer went through with no flash at all.
@@ -278,6 +315,77 @@ namespace Deeper.EditorTools
         }
 
         // ---------------------------------------------------------------- pieces
+
+        /// <summary>
+        /// The strip of everything this run is already carrying, along the top of the offer.
+        ///
+        /// Anchored to the screen's top-left corner rather than to the centred card row, because
+        /// it is not part of the offer - it is the context the offer is read against, and it has
+        /// to stay out of the row's way at every window size.
+        ///
+        /// Left-aligned and growing rightward on purpose: <c>UpgradeListHUD</c> hides its unfilled
+        /// sockets, so a centred row would visibly drift sideways as a run filled it.
+        /// </summary>
+        private static UpgradeListHUD BuildCarryingStrip(RectTransform parent)
+        {
+            Sprite slotArt = HUDLayout.Load("HUD_SlotUpgrade");
+
+            float pitch = StripSlotSize.x + StripSlotGap;
+            float width = StripLabelWidth + StripLabelGap + StripSlots * pitch - StripSlotGap;
+
+            RectTransform group = HUDLayout.NewRect("Carrying", parent);
+            HUDLayout.AnchorTopLeft(group, new Vector2(width, StripSlotSize.y),
+                                    new Vector2(StripMargin, -StripMargin));
+
+            RectTransform labelRect = HUDLayout.NewRect("Label", group);
+            HUDLayout.AnchorTopLeft(labelRect, new Vector2(StripLabelWidth, StripSlotSize.y),
+                                    Vector2.zero);
+            Text label = HUDLayout.AddTextIn(labelRect, "CARRYING", HUDLayout.BodyText,
+                                             TextAnchor.MiddleLeft);
+            label.color = new Color(0.62f, 0.64f, 0.70f, 1f);
+
+            var slotRoots = new GameObject[StripSlots];
+            var frames = new Image[StripSlots];
+            var icons = new Image[StripSlots];
+            var picks = new Object[StripSlots];
+
+            for (int i = 0; i < StripSlots; i++)
+            {
+                HUDLayout.PickSlot slot = HUDLayout.AddPickSlot(group, "Slot" + i, slotArt,
+                                                                StripSlotSize, StripSlotBorder);
+                HUDLayout.AnchorTopLeft(slot.Rect, StripSlotSize,
+                                        new Vector2(StripLabelWidth + StripLabelGap + i * pitch, 0f));
+
+                slotRoots[i] = slot.Root;
+                frames[i] = slot.Frame;
+                icons[i] = slot.Icon;
+                picks[i] = slot.Pick;
+            }
+
+            RectTransform overflow = HUDLayout.NewRect("Overflow", group);
+            HUDLayout.AnchorTopLeft(overflow, new Vector2(StripSlotSize.x * 2f, StripSlotSize.y),
+                                    new Vector2(StripLabelWidth + StripLabelGap + StripSlots * pitch, 0f));
+            Text overflowLabel = HUDLayout.AddTextIn(overflow, string.Empty, HUDLayout.BodyText,
+                                                     TextAnchor.MiddleLeft);
+            overflowLabel.color = new Color(0.62f, 0.64f, 0.70f, 1f);
+
+            var hud = group.gameObject.AddComponent<UpgradeListHUD>();
+            HUDLayout.Wire(hud, "overflowLabel", overflowLabel);
+            HUDLayout.Wire(hud, "upgrades", HUDLayout.PlayerPart<RunUpgrades>());
+            HUDLayout.Wire(hud, "curses", HUDLayout.PlayerPart<RunCurses>());
+
+            // Held back from the pause menu's 1: the cards are what the player is here to read,
+            // and a full-strength row of icons above them competes with the choice.
+            HUDLayout.Wire(hud, "dim", 0.8f);
+
+            HUDLayout.WireArray(hud, "slotRoots", slotRoots);
+            HUDLayout.WireArray(hud, "slots", frames);
+            HUDLayout.WireArray(hud, "icons", icons);
+            HUDLayout.WireArray(hud, "picks", picks);
+
+            HUDLayout.WireTierPalette(hud);
+            return hud;
+        }
 
         /// <summary>
         /// The full-screen dim behind the cards.

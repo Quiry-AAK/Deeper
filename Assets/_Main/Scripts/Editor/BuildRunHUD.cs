@@ -3,7 +3,6 @@ using Deeper.Combat;
 using Deeper.Player;
 using Deeper.Rooms;
 using Deeper.UI;
-using Deeper.Upgrades;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,9 +21,12 @@ namespace Deeper.EditorTools
     /// Idempotent — it deletes the previously generated root and rebuilds, so it is safe to run
     /// repeatedly while tuning.
     ///
-    /// ART_DIRECTION §5 corners: HP top-left, XP + level top-right, Ultimate Gauge and weapon icon
-    /// bottom-centre. The dash pip sits beside the gauge; GDD §UI does not list it (see the change
-    /// brief) but it belongs with the other things the player spends.
+    /// <b>Corners, as of 2026-09-20 (owner-directed).</b> ART_DIRECTION §5 puts HP top-left and
+    /// XP top-right; both now sit together **bottom-left** with the level badge, because those are
+    /// the numbers that say how the run is going and splitting them across two opposite corners
+    /// made the player's eye travel for one reading. Depth keeps the top-right corner they left.
+    /// The Ultimate Gauge, dash slot and weapon icon stay bottom-centre — those are what she
+    /// *spends*, not what she has. Recorded in the change brief.
     /// </summary>
     public static class BuildRunHUD
     {
@@ -59,7 +61,15 @@ namespace Deeper.EditorTools
         /// slides under the frame or leaves a gap of world showing through the hole.
         /// </summary>
         private const float SlotBorder = 4f;
-        private const float UpgradeSlotBorder = 2f;
+
+        /// <summary>Between the level badge and the bars it sits beside, in the bottom-left
+        /// cluster. Wide enough that the hexagon's chamfered corner clears the bar's end cap.</summary>
+        private const float BadgeGap = 6f;
+
+        /// <summary>Between the health bar and the XP bar under it. One unit less than
+        /// <see cref="BadgeGap"/> so the pair reads as one stacked element rather than as two
+        /// bars that happen to be near each other.</summary>
+        private const float BarGap = 3f;
 
         /// <summary>
         /// The chase bar's colour, written to both its Image and to <c>StatBar.ghostColor</c> —
@@ -79,14 +89,14 @@ namespace Deeper.EditorTools
             RectTransform root = NewRect(RootName, canvas.transform);
             Stretch(root);
 
-            // Sibling order is draw order. The run HUD sits under the upgrade offer, which
-            // pushes itself last for the same reason — so the two menu items can be run in
-            // either order without one covering the other.
+            // Sibling order is draw order, and the run HUD is the bottom of the four roots on this
+            // canvas — the offer, the pause menu and the summary screen each push themselves last
+            // as they are built, so the menu items can be run in any order without one of them
+            // ending up under the HUD it is meant to cover.
             root.SetAsFirstSibling();
 
-            BuildHealth(root);
-            BuildUpgrades(root);
-            BuildExperience(root);
+            BuildStatus(root);
+            BuildDepth(root);
             BuildUltimate(root);
             BuildWeaponAndDash(root);
             BuildWaveIndicator(root);
@@ -102,62 +112,93 @@ namespace Deeper.EditorTools
 
         // ---------------------------------------------------------------- elements
 
-        private static void BuildHealth(RectTransform parent)
+        /// <summary>
+        /// The run's status cluster, bottom-left: the level badge, the health bar above the XP bar.
+        ///
+        /// One method rather than the two it replaces, because the three pieces are now measured
+        /// off each other — the badge is centred against the bars' combined height and the bars
+        /// start past the badge. Split across two builders those numbers would have to be repeated
+        /// in both, which is how a layout stops surviving a retune.
+        /// </summary>
+        private static void BuildStatus(RectTransform parent)
         {
             // HUD_BarSlim, not the generated HUD_BarLarge it replaces: at 448x129 that piece was a
             // fifth of the screen wide and an eighth of it tall, which is what "too big" meant.
             // This one is 160x18 authored, which is the same 320x36 on screen at the canvas's 2x —
             // the chrome pass that followed added material, not size.
-            const string Art = "HUD_BarSlim";
-            Vector2 size = SizeOf(Load(Art), new Vector2(160f, 18f));
+            const string HealthArt = "HUD_BarSlim";
+            const string ExperienceArt = "HUD_BarSlimXP";
 
-            RectTransform group = NewRect("Health", parent);
-            AnchorTopLeft(group, size, new Vector2(Margin, -Margin));
-
-            // The one bar with a chase bar. HP is the only value here that falls, and the only one
-            // where how big the drop was matters more than where it landed.
-            StatBar bar = BuildBar(group, Art, new Color(0.62f, 0.16f, 0.22f, 1f), withGhost: true);
-
-            var hud = group.gameObject.AddComponent<HealthBarHUD>();
-            Wire(hud, "bar", bar);
-            Wire(hud, "health", PlayerPart<Damageable>());
-        }
-
-        private static void BuildExperience(RectTransform parent)
-        {
-            const string Art = "HUD_BarSlimXP";
             Sprite badge = Load("HUD_SlotHex");
-            Vector2 size = SizeOf(Load(Art), new Vector2(120f, 11f));
             Vector2 badgeSize = SizeOf(badge, new Vector2(28f, 28f));
+            Vector2 healthSize = SizeOf(Load(HealthArt), new Vector2(160f, 18f));
+            Vector2 experienceSize = SizeOf(Load(ExperienceArt), new Vector2(120f, 11f));
 
-            RectTransform group = NewRect("Experience", parent);
-            AnchorTopRight(group, size, new Vector2(-Margin - badgeSize.x - 6f, -Margin));
+            // Both bars share one left edge, past the badge; the badge is centred against the pair
+            // rather than sitting on the baseline, so a 28-unit hexagon reads as belonging to a
+            // 32-unit stack instead of hanging off the bottom of it.
+            float barsX = Margin + badgeSize.x + BadgeGap;
+            float stackHeight = experienceSize.y + BarGap + healthSize.y;
 
-            // No chase bar: XP only ever climbs, so there is nothing behind the fill to show.
-            StatBar bar = BuildBar(group, Art, new Color(0.44f, 0.62f, 0.44f, 1f), withGhost: false);
-
-            // The badge is a sibling of the bar's group so the bar's own rect stays exactly the
-            // frame art — anchoring the badge inside it would make the fill inset arithmetic lie.
+            // The badge is a SIBLING of the bars, not a child of one, so each bar's own rect stays
+            // exactly its frame art — anchoring the badge inside a bar would make the fill inset
+            // arithmetic MeasureHole does lie.
             RectTransform badgeRect = NewRect("LevelBadge", parent);
-            AnchorTopRight(badgeRect, badgeSize, new Vector2(-Margin, -Margin + 7f));
+            AnchorBottomLeft(badgeRect, badgeSize,
+                             new Vector2(Margin, Margin + (stackHeight - badgeSize.y) * 0.5f));
             AddImage(badgeRect, badge, Color.white);
 
             Text levelLabel = AddText(badgeRect, "1", BodyText, TextAnchor.MiddleCenter);
             levelLabel.color = new Color(0.85f, 0.83f, 0.78f, 1f);
 
-            // Depth sits under the XP bar, the only free corner left once §5's three are placed.
+            RectTransform health = NewRect("Health", parent);
+            AnchorBottomLeft(health, healthSize,
+                             new Vector2(barsX, Margin + experienceSize.y + BarGap));
+
+            // The one bar with a chase bar. HP is the only value here that falls, and the only one
+            // where how big the drop was matters more than where it landed.
+            StatBar healthBar = BuildBar(health, HealthArt, new Color(0.62f, 0.16f, 0.22f, 1f),
+                                         withGhost: true);
+
+            var healthHud = health.gameObject.AddComponent<HealthBarHUD>();
+            Wire(healthHud, "bar", healthBar);
+            Wire(healthHud, "health", PlayerPart<Damageable>());
+
+            RectTransform experience = NewRect("Experience", parent);
+            AnchorBottomLeft(experience, experienceSize, new Vector2(barsX, Margin));
+
+            // No chase bar: XP only ever climbs, so there is nothing behind the fill to show.
+            StatBar experienceBar = BuildBar(experience, ExperienceArt,
+                                             new Color(0.44f, 0.62f, 0.44f, 1f), withGhost: false);
+
+            var experienceHud = experience.gameObject.AddComponent<ExperienceBarHUD>();
+            Wire(experienceHud, "bar", experienceBar);
+            Wire(experienceHud, "levelLabel", levelLabel);
+            Wire(experienceHud, "experience", PlayerPart<PlayerXP>());
+        }
+
+        /// <summary>
+        /// The floor readout, alone in the top-right corner the XP bar used to share with it.
+        ///
+        /// It stays up here rather than joining the cluster below because it is the only number on
+        /// screen about the *run* rather than about her — how far down this descent has got, not
+        /// what she is carrying into the next fight.
+        /// </summary>
+        private static void BuildDepth(RectTransform parent)
+        {
+            // Wide enough for the longest string it ever holds: "FLOOR 16 / 16" is 13 characters
+            // at the pixel face's 7-unit advance. It is right-aligned, so extra width costs nothing
+            // and too little would clip the left of the line rather than move it.
+            float width = 13f * PixelFontArt.Advance;
+
             RectTransform depth = NewRect("Depth", parent);
-            AnchorTopRight(depth, new Vector2(size.x, 14f), new Vector2(-Margin - badgeSize.x - 6f, -Margin - size.y - 3f));
+            AnchorTopRight(depth, new Vector2(width, 14f), new Vector2(-Margin, -Margin));
+
             Text depthLabel = AddText(depth, "FLOOR 1 / 16", BodyText, TextAnchor.MiddleRight);
             depthLabel.color = new Color(0.66f, 0.64f, 0.62f, 1f);
 
-            var depthHud = depth.gameObject.AddComponent<DepthIndicatorHUD>();
-            Wire(depthHud, "label", depthLabel);
-
-            var hud = group.gameObject.AddComponent<ExperienceBarHUD>();
-            Wire(hud, "bar", bar);
-            Wire(hud, "levelLabel", levelLabel);
-            Wire(hud, "experience", PlayerPart<PlayerXP>());
+            var hud = depth.gameObject.AddComponent<DepthIndicatorHUD>();
+            Wire(hud, "label", depthLabel);
         }
 
         private static void BuildUltimate(RectTransform parent)
@@ -278,78 +319,6 @@ namespace Deeper.EditorTools
             var weaponHud = weapon.gameObject.AddComponent<WeaponIconHUD>();
             Wire(weaponHud, "icon", weaponImage);
             Wire(weaponHud, "loadout", PlayerPart<RunLoadout>());
-        }
-
-        /// <summary>
-        /// The run's upgrade strip, down the left edge under the health bar (owner-directed).
-        ///
-        /// Slots are pre-built and switched on as upgrades arrive rather than instantiated, so a
-        /// level-up — which already pauses and opens a panel — does no allocation on top of that.
-        /// </summary>
-        private static void BuildUpgrades(RectTransform parent)
-        {
-            Sprite slotArt = Load("HUD_SlotUpgrade");
-            Vector2 slotSize = SizeOf(slotArt, new Vector2(22f, 22f));
-
-            float healthHeight = SizeOf(Load("HUD_BarSlim"), new Vector2(160f, 18f)).y;
-            const int SlotCount = 10;
-            const float Gap = 3f;
-
-            RectTransform group = NewRect("Upgrades", parent);
-            AnchorTopLeft(group, new Vector2(slotSize.x, (slotSize.y + Gap) * SlotCount),
-                          new Vector2(Margin, -Margin - healthHeight - 7f));
-
-            var slotRoots = new GameObject[SlotCount];
-            var slots = new Image[SlotCount];
-            var icons = new Image[SlotCount];
-
-            for (int i = 0; i < SlotCount; i++)
-            {
-                RectTransform slot = NewRect("Slot" + i, group);
-                AnchorTopLeft(slot, slotSize, new Vector2(0f, -i * (slotSize.y + Gap)));
-                slotRoots[i] = slot.gameObject;
-
-                // The frame goes on the slot object itself, because UpgradeListHUD tints that
-                // Image to the upgrade's tier colour. The socket is a child underneath it: a
-                // hollow outline alone vanished against the world — see the change brief.
-                RectTransform socket = NewRect("Socket", slot);
-                Inset(socket, Vector4.one * UpgradeSlotBorder);
-                AddImage(socket, null, new Color(0.07f, 0.07f, 0.09f, 0.5f));
-
-                // Inset one further than the socket, which puts the icon in a 16-unit box
-                // rather than the hole own 18. That is deliberate arithmetic, not padding:
-                // upgrade icons are authored at 64 for the offer card, and 64 into 16 units is
-                // an exact half at the 2x canvas. The 18 it would otherwise get is 0.5625 —
-                // the non-integer resample of point-filtered art this whole HUD is arranged
-                // to avoid.
-                RectTransform icon = NewRect("Icon", slot);
-                Inset(icon, Vector4.one * (UpgradeSlotBorder + 1f));
-                Image iconImage = AddImage(icon, null, Color.white);
-                iconImage.preserveAspect = true;
-                iconImage.enabled = false;
-                icons[i] = iconImage;
-
-                // Added last so the frame draws over its own socket and icon.
-                RectTransform frameRect = NewRect("Frame", slot);
-                Stretch(frameRect);
-                slots[i] = AddImage(frameRect, slotArt, Color.white);
-
-                slot.gameObject.SetActive(false);
-            }
-
-            RectTransform overflow = NewRect("Overflow", group);
-            AnchorTopLeft(overflow, new Vector2(slotSize.x, 11f),
-                          new Vector2(0f, -SlotCount * (slotSize.y + Gap)));
-            Text overflowLabel = AddText(overflow, string.Empty, BodyText, TextAnchor.MiddleCenter);
-            overflowLabel.color = new Color(0.78f, 0.79f, 0.82f, 1f);
-
-            var hud = group.gameObject.AddComponent<UpgradeListHUD>();
-            Wire(hud, "overflowLabel", overflowLabel);
-            Wire(hud, "upgrades", PlayerPart<RunUpgrades>());
-            Wire(hud, "curses", PlayerPart<RunCurses>());
-            WireArray(hud, "slotRoots", slotRoots);
-            WireArray(hud, "slots", slots);
-            WireArray(hud, "icons", icons);
         }
 
         private static void BuildWaveIndicator(RectTransform parent)
@@ -607,12 +576,6 @@ namespace Deeper.EditorTools
             return HUDLayout.PixelFont();
         }
 
-        /// <summary>Fills a serialized array field with references, in order.</summary>
-        private static void WireArray(Object target, string field, Object[] values)
-        {
-            HUDLayout.WireArray(target, field, values);
-        }
-
         /// <summary>Sets a private serialized field by name, so the built HUD is wired exactly the
         /// way a human dragging references would leave it.</summary>
         private static void Wire(Object target, string field, object value)
@@ -638,9 +601,9 @@ namespace Deeper.EditorTools
             HUDLayout.Centre(rect, size);
         }
 
-        private static void AnchorTopLeft(RectTransform rect, Vector2 size, Vector2 offset)
+        private static void AnchorBottomLeft(RectTransform rect, Vector2 size, Vector2 offset)
         {
-            HUDLayout.AnchorTopLeft(rect, size, offset);
+            HUDLayout.AnchorBottomLeft(rect, size, offset);
         }
 
         private static void AnchorTopRight(RectTransform rect, Vector2 size, Vector2 offset)

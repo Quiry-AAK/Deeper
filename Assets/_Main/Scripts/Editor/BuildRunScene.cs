@@ -74,6 +74,11 @@ namespace Deeper.EditorTools
             // the other two panels then attach to.
             BuildRunHUD.Build();
             BuildUpgradePanel.Build();
+
+            // Between the offer and the summary, and the order is the draw order: the pause menu
+            // covers the run HUD, and the summary covers the pause menu — once a run is over there
+            // is nothing left to pause.
+            BuildPauseMenu.Build();
             BuildRunSummaryPanel.Build();
 
             HUDLayout.Wire(loader, "runPlan", AssetDatabase.LoadAssetAtPath<RunPlan>(RunPlanAsset));
@@ -97,6 +102,13 @@ namespace Deeper.EditorTools
 
             RunSummaryPanel summary = Object.FindFirstObjectByType<RunSummaryPanel>(FindObjectsInactive.Include);
             if (summary != null) HUDLayout.Wire(summary, "run", end);
+
+            // Wired here rather than inside BuildPauseMenu, because the pause menu is built FIRST
+            // so that the summary screen ends up drawing over it — at that point there is no
+            // summary panel in the scene to find. PauseMenu falls back to a runtime search, but the
+            // house rule is that the connection is visible in the Inspector.
+            var menu = Object.FindFirstObjectByType<PauseMenu>(FindObjectsInactive.Include);
+            if (menu != null) HUDLayout.Wire(menu, "summary", summary);
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene, ScenePath);

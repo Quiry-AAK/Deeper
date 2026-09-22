@@ -1,5 +1,6 @@
 using Deeper.Core;
 using Deeper.UI;
+using Deeper.Upgrades;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -214,6 +215,154 @@ namespace Deeper.EditorTools
             return text;
         }
 
+        // ---------------------------------------------------------------- taken picks
+
+        /// <summary>The pieces of one socket in a taken-picks readout, in the order
+        /// <c>UpgradeListHUD</c> wants them wired.</summary>
+        public struct PickSlot
+        {
+            public RectTransform Rect;
+            public GameObject Root;
+            public Image Frame;
+            public Image Icon;
+            public UpgradeSlot Pick;
+        }
+
+        /// <summary>
+        /// One socket of a taken-picks readout: a dark socket, the pick's icon, the tier-tinted
+        /// frame over both, and the <see cref="UpgradeSlot"/> that answers the pointer.
+        ///
+        /// Shared rather than copied because both panels that carry a readout build the same pieces
+        /// in the same order - only the art and the size differ. The caller anchors
+        /// <see cref="PickSlot.Rect"/> itself: a grid and a strip lay the same socket out
+        /// differently, and that is the only part that is not common.
+        ///
+        /// Built <b>inactive</b>. <c>UpgradeListHUD</c> switches a slot on when a pick fills it; an
+        /// empty outline sitting there would read as something the player is missing.
+        /// </summary>
+        public static PickSlot AddPickSlot(RectTransform parent, string name, Sprite art,
+                                           Vector2 size, float border)
+        {
+            RectTransform rect = NewRect(name, parent);
+            rect.sizeDelta = size;
+
+            RectTransform socket = NewRect("Socket", rect);
+            Inset(socket, Vector4.one * border);
+            AddImage(socket, null, new Color(0.07f, 0.07f, 0.09f, 0.7f));
+
+            RectTransform iconRect = NewRect("Icon", rect);
+            Inset(iconRect, Vector4.one * border);
+            Image icon = AddImage(iconRect, null, Color.white);
+            icon.preserveAspect = true;
+
+            // Off until something assigns a sprite. An Image with a null sprite draws a solid white
+            // quad, which is exactly how the HUD's weapon slot once shipped as a white box.
+            icon.enabled = false;
+
+            // Added last so the frame draws over its own socket and icon. Clickable, and this is
+            // the one place a readout is meant to be: it is what the pointer hits, and UGUI bubbles
+            // the event up to the UpgradeSlot on the root.
+            RectTransform frameRect = NewRect("Frame", rect);
+            Stretch(frameRect);
+            Image frame = AddImage(frameRect, art, Color.white, clickable: true);
+
+            var pick = rect.gameObject.AddComponent<UpgradeSlot>();
+
+            rect.gameObject.SetActive(false);
+
+            return new PickSlot
+            {
+                Rect = rect, Root = rect.gameObject, Frame = frame, Icon = icon, Pick = pick,
+            };
+        }
+
+        /// <summary>The hover popup's plate. 168 wide so it inherits the offer card's
+        /// 21-characters-per-line budget at <see cref="BodyText"/>; <c>HUDFrameArt</c>'s HUD_Tooltip
+        /// carries the arithmetic behind the 86.</summary>
+        public static readonly Vector2 TooltipSize = new Vector2(168f, 86f);
+
+        private const float TooltipPad = 10f;
+
+        /// <summary>
+        /// The popup a taken-pick icon raises on hover: name, description, and a Curse's cost.
+        ///
+        /// <paramref name="host"/> carries the component and must stay active - its <c>Awake</c> is
+        /// what hides the popup in the first place. The popup itself is parented to
+        /// <paramref name="parent"/>, so closing that panel takes it with it, and is clamped inside
+        /// <paramref name="bounds"/>.
+        /// </summary>
+        public static UpgradeTooltip AddUpgradeTooltip(RectTransform host, RectTransform parent,
+                                                       RectTransform bounds)
+        {
+            RectTransform popup = NewRect("Tooltip", parent);
+            AnchorCentreOffset(popup, TooltipSize, Vector2.zero);
+
+            // Never clickable. It follows the pointer around the readout, and one that ate the
+            // pointer would take the hover off the very slot that opened it - the popup would
+            // flicker open and closed for as long as the cursor sat still.
+            AddImage(popup, Load("HUD_Tooltip"), Color.white);
+
+            // The stack, measured down from the popup's top edge: padding, a header at twice the
+            // face's native size, a gap, then a five-line body block. The cost rect overlaps the
+            // lower part of that block rather than sitting under it - an upgrade owns the whole
+            // block, a Curse pins its two-line upside to the top and leaves the rest to the cost.
+            // The same overlap the offer card uses, for the same reason: one fixed block both kinds
+            // of entry draw into beats resizing a rect at bind time.
+            Text header = TooltipLabel(popup, "Header", 16f, TooltipPad, TitleText, false);
+            Text body = TooltipLabel(popup, "Body", 45f, 30f, BodyText, true);
+            Text cost = TooltipLabel(popup, "Cost", 27f, 48f, BodyText, true);
+
+            cost.gameObject.SetActive(false);
+
+            var tooltip = host.gameObject.AddComponent<UpgradeTooltip>();
+            Wire(tooltip, "panel", popup.gameObject);
+            Wire(tooltip, "headerLabel", header);
+            Wire(tooltip, "bodyLabel", body);
+            Wire(tooltip, "costLabel", cost);
+            Wire(tooltip, "bounds", bounds);
+            WireTierPalette(tooltip);
+
+            popup.gameObject.SetActive(false);
+            return tooltip;
+        }
+
+        private static Text TooltipLabel(RectTransform popup, string name, float height, float y,
+                                         int size, bool wrap)
+        {
+            RectTransform rect = NewRect(name, popup);
+            AnchorTopLeft(rect, new Vector2(TooltipSize.x - TooltipPad * 2f, height),
+                          new Vector2(TooltipPad, -y));
+
+            return AddTextIn(rect, string.Empty, size, TextAnchor.UpperLeft, wrap);
+        }
+
+        /// <summary>
+        /// Writes ART_DIRECTION section 5's tier colours onto a component's serialized
+        /// <c>TierPalette</c>.
+        ///
+        /// They are serialized rather than const, so a tool has to put them there - a struct field
+        /// left at its C# default would be five invisible blacks.
+        /// </summary>
+        public static void WireTierPalette(Object view)
+        {
+            TierPalette palette = TierPalette.Default;
+
+            var so = new SerializedObject(view);
+            SerializedProperty prop = so.FindProperty("palette");
+            if (prop == null)
+            {
+                Debug.LogWarning("No serialized 'palette' on " + view.GetType().Name);
+                return;
+            }
+
+            prop.FindPropertyRelative("Common").colorValue = palette.Common;
+            prop.FindPropertyRelative("Rare").colorValue = palette.Rare;
+            prop.FindPropertyRelative("Epic").colorValue = palette.Epic;
+            prop.FindPropertyRelative("Legendary").colorValue = palette.Legendary;
+            prop.FindPropertyRelative("Curse").colorValue = palette.Curse;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
         // ---------------------------------------------------------------- wiring
 
         /// <summary>Fills a serialized array field with references, in order.</summary>
@@ -294,6 +443,17 @@ namespace Deeper.EditorTools
         {
             rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
             rect.pivot = new Vector2(0f, 1f);
+            rect.sizeDelta = size;
+            rect.anchoredPosition = offset;
+        }
+
+        /// <summary>Bottom-left, which is where the run's status cluster lives — HP, XP and the
+        /// level badge, grouped there so the numbers that say how a run is going share one
+        /// corner (owner, 2026-09-20).</summary>
+        public static void AnchorBottomLeft(RectTransform rect, Vector2 size, Vector2 offset)
+        {
+            rect.anchorMin = rect.anchorMax = new Vector2(0f, 0f);
+            rect.pivot = new Vector2(0f, 0f);
             rect.sizeDelta = size;
             rect.anchoredPosition = offset;
         }

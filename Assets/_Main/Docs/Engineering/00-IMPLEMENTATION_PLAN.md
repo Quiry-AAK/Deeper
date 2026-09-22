@@ -3122,7 +3122,7 @@ and a reader needs to know the ground moved.
 | **Dash Attack** — a fourth `AttackAction` on Basic during/just after a dash | brief §17, *Dash rework* | `GDD §Player` (Controls, Dodge/Mobility), and named as something **the weapon determines** |
 | **Chargeable Heavy Strike**, rooting her, cancellable by dash | brief §17c, §20 | `GDD §Player` (Heavy Strike), `GDD §Combat` (Attack Timing) — on all three weapons, with the Katana-only option kept open as #10 |
 | **Dig-Dash travels along the held movement keys**, falling back to facing | brief §17 | `GDD §Player` (Dodge/Mobility) |
-| **Dash cooldown pip** and **the run's upgrade strip** on the HUD; no Heavy cooldown icon | brief §15, §18 | `GDD §UI` (HUD) |
+| **Dash cooldown pip** and **the run's upgrade strip** on the HUD; no Heavy cooldown icon | brief §15, §18 | `GDD §UI` (HUD). **The upgrade strip was removed from the HUD on 2026-09-20** — the GDD clause is now contradicted rather than satisfied; see brief §28.2 |
 | **Icon-led offer card** — tier border, unique icon, category glyph, compressed effect line | brief §26, *Milestone 4 — the offer card goes icon-led* | `GDD §UI` (Upgrade Screen) |
 | **One Death/Victory screen**, distinguished by title and accent | *The run* | `GDD §UI` (Death/Victory Screen) |
 | **Secret Vault**: elite-dropped key, locked door, a guarded fight, a guaranteed Legendary payout (the weapon's Relic), **key consumed on opening** | brief §21, `VaultDoor.consumeKey`'s "INVENTED" tooltip | `GDD §Roguelike Structure` (Secret Floors). Its "tougher than a standard Combat Room" is the one clause the build has not been checked against — see Milestone 3 |
@@ -3281,3 +3281,114 @@ Generated through the `deeper-art` skill, both approvals by the owner. **Record 
   Pre-existing: `ShowOffer` reads `experience.Level` at show time. Not changed in this pass.
 - `UpgradeOffer.cs` is now ~430 lines, past the ~300-line prompt. The entrance was split out into
   `OfferReveal` for exactly that reason; what is left is the binder plus its queue.
+
+---
+
+## The HUD regrouped, and a pause menu (owner-directed, 2026-09-20)
+
+Owner-directed, outside the milestone plan. Driven by one observation: *"We'll have a lot of upgrades
+so if we put it on main screen it would be a problem."* A run has no upgrade cap and no level cap, so
+the in-run upgrade strip could only grow off the screen or lie through its overflow count.
+
+### Built
+
+- **`Scripts/UI/PauseMenu.cs`** — Escape opens a pause screen: RESUME, ABANDON RUN, and the grid of
+  everything the run is carrying. Takes a `RunPause` hold, so time, the Player action map and the
+  hardware cursor move together.
+- **`Scripts/UI/UpgradeSlot.cs`** — one socket's identity: which pick it is showing, and the pointer
+  events it raises.
+- **`Scripts/UI/UpgradeTooltip.cs`** — the hover popup. Header is the pick's name in its tier colour,
+  body is `UpgradeDefinition.description` verbatim; a Curse adds its `downside` in the Curse red.
+- **`Scripts/Editor/BuildPauseMenu.cs`** — `Deeper/Build Pause Menu`. A fourth root under
+  `HUDCanvas`, beside `RunHUD`, `UpgradePanel` and `RunSummaryPanel`.
+- **`BuildRunHUD`** — `BuildHealth` + `BuildExperience` merged into `BuildStatus`, anchored
+  bottom-left; `BuildDepth` split out to the top-right corner; `BuildUpgrades` **deleted**.
+- **`BuildUpgradePanel`** — a `CARRYING` strip of up to 24 sockets along the offer screen's top band.
+- **`HUDLayout`** — gained `AnchorBottomLeft`, and the three things both readouts need:
+  `AddPickSlot`, `AddUpgradeTooltip`, `WireTierPalette`.
+- **`HUDFrameArt`** — `HUD_Tooltip`, the popup's plate. The offer card's own `Card` routine at
+  168×86; no new drawing code.
+- **`UpgradeListHUD`** — kept and reused rather than replaced. It already did this job; it gained a
+  parallel `picks` array and a `tooltip` reference, and its `dim` default moved from 0.65 to 1.
+
+### The readout is mounted twice, and that is why nothing was rewritten
+
+The pause grid and the offer strip are the same component with different anchoring. `UpgradeListHUD`
+reaches its sockets as wired arrays, so grid-versus-row is entirely the layout tool's business — a
+second list component would have been a second copy of the fill, the tier tint, the Curse ordering
+and the overflow count.
+
+What that forced into `HUDLayout` is the socket itself (`AddPickSlot`) and the popup
+(`AddUpgradeTooltip`). Both were written inside `BuildPauseMenu` first and moved out the moment the
+offer strip needed them — the same reason `HUDLayout` was extracted from `BuildRunHUD` in the first
+place.
+
+### Three things that would have been bugs
+
+1. **`Button.onClick.AddListener` from an editor tool does not serialise.** The first draft wired
+   RESUME and ABANDON that way; those listeners are runtime-only, so both buttons would have been
+   dead the moment the scene reloaded. `PauseMenu` now holds the two `Button` references and
+   subscribes in `OnEnable`, which is what `RunSummaryPanel` already does for its Return button.
+2. **Abandon must keep its pause hold.** `RunEnd.Finish` defers opening the summary by its own delay
+   on the unscaled clock, so the killing blow's hitstop can play out. Popping the hold at the click
+   would have handed the player a live game for that window with her own death screen landing on top
+   of it. `PauseMenu` subscribes to `RunEnd.Ended` and releases there instead.
+3. **A socket deactivated under the cursor never gets a pointer-exit.** Closing the menu with the
+   pointer resting on an icon would have stranded the popup on screen. `UpgradeSlot.OnDisable`
+   raises `Unhovered` itself, and `UpgradeTooltip.Dismiss` ignores a slot that is not the one it is
+   showing — without that second half, sliding along a row of icons would close the popup that had
+   just opened, because UGUI raises the new socket's enter before the old one's exit.
+
+### The pause menu is built BEFORE the summary panel
+
+`BuildRunScene` order is now: run HUD → offer → pause menu → summary. Each tool pushes its root to
+last sibling, so that order *is* the draw order, and the summary has to end up on top — once a run is
+over there is nothing left to pause. The consequence: `BuildPauseMenu` cannot find a
+`RunSummaryPanel` to wire, so `BuildRunScene` wires that one reference afterwards.
+
+### Verification
+
+- **Compiles clean.** 161 sources, 352 references, exit 0, 0 errors, 0 warnings in any touched file
+  — the offline Roslyn recipe in `01-VERIFICATION.md` §10.
+- **Built and play-tested in the editor, 2026-09-20.** The four menu items were run, both scenes
+  saved, and every item on the outstanding list below was exercised in play mode at the owner's real
+  window size. Results follow.
+
+### Built and verified in play mode (2026-09-20)
+
+Run in order: `Deeper/Generate HUD Frames` → `Build Run HUD` → `Build Upgrade Panel` →
+`Build Pause Menu` in `TestScene`, then `Deeper/Build Run Scene` for `RunScene`. No console errors
+or warnings in any of it. Regenerating the frames left every existing PNG **byte-identical** —
+`HUD_Tooltip.png` is the only new asset, which is the check that the frame generator did not quietly
+restyle the shipped chrome while adding one plate.
+
+| Check | Result |
+|---|---|
+| `canvas.scaleFactor` whole number | **1** at 906×463 (`463/540` → 0 → clamped to 1) |
+| Bottom-left cluster | Level badge `x[14..42]`, HP `x[48..208]`, XP `x[48..168]` — ends at 208, clear of the dash slot at 330 |
+| Pause grid geometry | `x[354..716] y[79..349]` — exactly 8×40+7×6 and 6×40+5×6; content band 526 wide centred at 190 |
+| Escape pauses / resumes | `IsPaused` true, `timeScale` 0, cursor shown; resume restores `timeScale` 1 |
+| Menu refuses to open over an offer | `CanOpen` **False** while `UpgradeOffer.IsOpen` |
+| Hover popup | Name in tier colour + authored description, on both readouts |
+| Right-hand column | Popup lands `x[704..872]` inside a 906 screen — on screen, not clipped |
+| Curse | `BLOOD DEBT` header red, cost line `-20% MAX HP…` red |
+| Offer `CARRYING` strip | 11 picks along the top band `x[14..677] y[427..449]`; raycast at each card centre hits that card's own `Frame`, not the strip |
+| ABANDON → CONFIRM | First press arms (`CONFIRM?`), second ends the run: summary `YOU DIED`, depth 1, **10 Shards** paid to `ShardBank`, Return to Hub |
+
+Two notes for whoever reads this next:
+
+- **The right-hand popup does not need to flip at 906 wide.** `UpgradeTooltip` clamps against the
+  full-screen `Panel`, not the content band, so a popup off the grid's right edge still has room and
+  is simply placed there. The flip is a backstop for a genuinely narrower window; it was not
+  exercised and remains unproven.
+- **`PauseMenu.Toggle()` is unguarded on purpose** and will happily open the menu over the offer.
+  Only `Update`'s Escape path consults `CanOpen`. That is correct today because `Update` is the sole
+  caller, but any second caller — a button, a gamepad binding — that reaches for `Toggle()` gets
+  the unguarded door. Worth folding the guard into `Toggle` if one ever appears.
+
+### Pre-existing, noticed while looking, not touched
+
+`HUD_BarSlimXP`'s frame is asymmetric — a full bottom edge and end caps but a much lighter top edge,
+where `HUD_BarSlim` (HP) and `HUD_BarSlimUltimate` are closed on all four sides. It is committed
+generated art that this pass did not change (the regeneration was byte-identical), so it is recorded
+here rather than fixed: it is a look-at-it call for the owner, not a defect.

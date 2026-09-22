@@ -789,7 +789,12 @@ anyone retunes it.
 
 ### New scope, owner-directed: the run's upgrade strip
 
-The HUD now carries a faint column of the upgrades the run is holding, down the left edge under the
+> **Superseded 2026-09-20 — see §28.** This element is no longer on the play screen at all. Everything
+> below about *why* an in-run readout exists still stands and is still not in any design doc; only
+> its location changed. The strip is now a grid on the pause menu and a compact icon row on the
+> offer screen.
+
+The HUD carried a faint column of the upgrades the run is holding, down the left edge under the
 health bar. **GDD §UI lists no such element** — ART_DIRECTION §5 covers the upgrade *offer* screen and
 its rarity colour coding, but nothing in-run. It is here because a roguelike run is defined by its
 picks and the player currently has no way to check what they took. It reuses §5's card colours
@@ -2115,3 +2120,119 @@ does carry a saturated yellow (253,197,2); that is placeholder art and was not c
 Curse) was built *inside* the panel, and the panel is switched off on the pick. So the flash never
 showed after the last offer of a level-up, which is every offer that is not followed by another. It
 now sits beside the panel rather than inside it.
+
+---
+
+## 28. The HUD's corners are regrouped, and the upgrade readout leaves the play screen (owner, 2026-09-20)
+
+Four changes, one pass. The driver is the second one; the rest followed from it.
+
+### 28.1 CONFLICT — HP, XP and the level badge share the bottom-left corner
+
+ART_DIRECTION §5 puts HP top-left and XP top-right. They are now together, **bottom-left**, with the
+level badge at the far left of the pair. The owner's reasoning: those are the numbers that say how
+the run is going, and splitting them across two opposite corners made the eye travel for one reading.
+
+What did **not** move, and deliberately:
+
+- **The Ultimate Gauge, the dash slot and the weapon icon stay bottom-centre.** Those are what she
+  *spends*; the cluster is what she *has*. Piling all six into one corner would have made the corner
+  the HUD.
+- **The depth readout keeps the top-right corner** the XP bar vacated. It is the only number on
+  screen about the descent rather than about her.
+
+§5's corner assignment is therefore wrong as written. Nothing else in it changed — the bars, their
+colours, the chase bar and the segment ticks are all as they were.
+
+### 28.2 CONFLICT — the in-run upgrade readout is off the play screen entirely
+
+> **This one contradicts locked design, and it is the most important line in this section.**
+> `GDD §UI`'s HUD list — as rewritten by the design owner on 2026-09-18 — includes *"a faint strip
+> listing the upgrades taken this run (tier-colored, for reference)"*. That element has now been
+> **removed from the in-run HUD** at the same owner's direction. The strip was folded into the GDD
+> five weeks after it was built and two days before it was taken out again; this is a Rule 14 reopen
+> of a clause that has never been wrong, only overtaken.
+
+The strip recorded further up this document is gone from the HUD. The owner's reason, verbatim in
+substance: *"We'll have a lot of upgrades so if we put it on main screen it would be a problem."*
+
+A run has **no cap on how many upgrades it takes and no max level**, so a column of sockets down the
+edge of the screen either grows off it or starts lying through its overflow count. The readout now
+appears only where the game is already stopped:
+
+- **The pause menu** (§28.3), as a grid of 48 sockets — the complete view.
+- **The level-up offer screen**, as a compact row of up to 24 sockets along the top band, labelled
+  `CARRYING` — the glance-sized view, so a pick is made against what the run already holds.
+
+**It is icons alone, with a hover popup** (owner-directed): the socket shows the pick's art in its
+tier colour, and pointing at it opens a plate with the upgrade's **name as a header and its
+description underneath**. A Curse shows its upside with its cost under it in the Curse red. No new
+text is authored for this — the popup draws `UpgradeDefinition.description` and
+`CurseDefinition.upside`/`downside` verbatim, which is the same prose CONTENT_DESIGN writes and
+`UpgradeStatusReport` reads. The offer card's compressed `EffectSummary` line is deliberately not
+reused: that line exists because a card is 21 characters wide, and the popup is not.
+
+**What each doc says now, precisely:**
+
+| Clause | Doc | Status after this pass |
+|---|---|---|
+| "a faint strip listing the upgrades taken this run (tier-colored, for reference)" in the HUD list | `GDD §UI` | **Contradicted.** No such element is on the play screen. Its content moved to the pause menu and the offer screen. |
+| HP top-left, XP top-right, Ultimate and weapon bottom-centre | `ART_DIRECTION §5` | **Contradicted** for HP and XP — see §28.1. The rest holds. |
+| A hover tooltip, anywhere | — | **Not in any doc.** No tooltip exists elsewhere in the project either. |
+| A pause screen | — | **Not in any doc.** See §28.3. |
+| An always-visible readout of taken picks on the offer screen | `ART_DIRECTION §5`, `GDD §UI` (Upgrade Screen) | **Not in either.** Both describe the three cards and the Curse card only. |
+
+The *reason* the readout exists is unchanged and still undocumented: a roguelike run is defined by
+its picks, and the player has no other way to check what they took twenty minutes ago.
+
+### 28.3 DECIDED — the run has a pause menu, on Escape
+
+`Scripts/UI/PauseMenu.cs`, `Scripts/Editor/BuildPauseMenu.cs`. A scrim, a `PAUSED` header, a button
+column of **RESUME** and **ABANDON RUN**, and the upgrade grid beside it. It takes a `RunPause` hold
+like every other modal, so time, the Player action map and the hardware cursor all move together.
+
+**GDD §UI lists no pause screen.** The MVP tiers do not mention one either. It is here because the
+upgrade readout needed somewhere to live and a roguelike with no pause is its own problem.
+
+Three engineering notes the designer may want to know:
+
+1. **Escape is read off the keyboard device, not through an `InputAction`.** `RunPause` disables the
+   whole Player map while it holds, so a key bound through the shared asset would switch itself off
+   the instant the menu opened. The sandbox's debug menu already does it this way.
+2. **It refuses to open over the level-up offer or the run-end screen.** A level-up is a forced
+   choice, and once the run is over there is nothing left to pause.
+3. **The grid holds 48 sockets, which cannot overflow today.** `RunUpgrades` refuses duplicates and
+   the authored content is 38 upgrades and 8 Curses, so 46 is the hard ceiling a run can reach. The
+   overflow count is kept as the thing that tells the truth if that content ever grows.
+
+### 28.4 PROPOSED — abandoning a run pays out as a death
+
+**ABANDON RUN ends the run through the same path dying does** (`RunEnd.Finish(Died)`), so BALANCE
+§14's Shard award for the depth reached is paid exactly as it would have been had she died there.
+The run-end screen then reads `YOU DIED`. It takes two clicks: the first swaps the button to
+`CONFIRM?`.
+
+**No design doc specifies abandoning, so this is invented.** The alternatives, for the designer to
+rule on:
+
+- **Pay as a death** (what is built). Quitting a bad run costs the player their time and nothing
+  else, which is the forgiving reading and the one that needs no new outcome.
+- **Forfeit the Shards.** Makes quitting strictly worse than fighting on, which is the reading that
+  protects the descent's tension. It needs a third `RunEnd.Outcome`, a summary screen that reads
+  `ABANDONED`, and a decision about whether a player who abandons at Floor 15 really earns nothing.
+- **No abandon at all.** The only exits stay dying and winning.
+
+A second question inside it: the summary screen currently says `YOU DIED` for an abandoned run,
+which is a small lie. It is left that way rather than inventing a third piece of screen wording.
+
+### 28.5 Not a design matter, but the designer should know
+
+- **The pool will run dry on a long run.** `RunUpgrades.Add` refuses duplicates, and the authored
+  content is 38 upgrades plus the equipped weapon's sub-pool. With levels uncapped, a long enough run
+  exhausts what can be offered and the draw has nothing left to show. This is not new and this pass
+  neither causes nor fixes it — but the owner's "we don't limit upgrade count or max level" makes it
+  reachable rather than theoretical. It needs either stacking upgrades (CONTENT_DESIGN does not say
+  whether they stack), more content, or a level cap.
+- **Two new HUD pieces were drawn, not generated:** `HUD_Tooltip`, the popup's plate, which is the
+  offer card's plate at 168×86; and nothing else — the grid and the strip reuse `HUD_SlotSquare` and
+  `HUD_SlotUpgrade`, which already existed.

@@ -5,20 +5,25 @@ using UnityEngine.UI;
 namespace Deeper.UI
 {
     /// <summary>
-    /// The run's upgrade strip, down the left edge — one slot per upgrade and Curse taken.
+    /// The readout of everything a run is carrying — one socket per upgrade and Curse taken.
     ///
-    /// **Owner-directed, and in no design doc.** GDD §UI lists no in-run readout of what a run is
-    /// carrying; ART_DIRECTION §5 only covers the *offer* screen. It is here because a roguelike run
-    /// is defined by its picks and the player has no other way to check what they took twenty
-    /// minutes ago.
+    /// **Owner-directed, and in no design doc.** GDD §UI lists no in-run readout of a run's picks;
+    /// ART_DIRECTION §5 only covers the *offer* screen. It is here because a roguelike run is
+    /// defined by its picks and the player has no other way to check what they took twenty minutes
+    /// ago.
     ///
-    /// Held deliberately faint (<see cref="dim"/>). It is a reference you consult, not a readout you
-    /// track — at full opacity a growing column down the side of the screen competes with the fight
-    /// for attention, which is exactly what the corner-anchored HUD in §5 is arranged to avoid.
+    /// **It is not on the play screen, and that is the point** (owner, 2026-09-20). It used to be a
+    /// strip down the left edge under the health bar. A run takes an uncapped number of upgrades,
+    /// so that column either grew off the screen or started lying through its overflow count. Two
+    /// panels mount this instead, both of them places where the game is already stopped: the pause
+    /// menu, as a grid, and the level-up offer, as a compact strip along its top band.
     ///
-    /// The slots are pre-built by <c>BuildRunHUD</c> and switched on as picks arrive rather than
-    /// instantiated on the fly: a level-up already pauses and opens a panel, and allocating there is
-    /// avoidable work at the one moment the frame budget is already spent.
+    /// **Icons alone.** The name and the description live in <see cref="UpgradeTooltip"/>, raised
+    /// by hovering a socket — which is what lets one row hold a dozen picks instead of three.
+    ///
+    /// The slots are pre-built by the layout tool and switched on as picks arrive rather than
+    /// instantiated on the fly: a level-up already pauses and opens a panel, and allocating there
+    /// is avoidable work at the one moment the frame budget is already spent.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class UpgradeListHUD : MonoBehaviour
@@ -43,15 +48,26 @@ namespace Deeper.UI
         [Tooltip("The pick's own art, drawn inside its slot. Same length and order as slots.")]
         [SerializeField] private Image[] icons = new Image[0];
 
-        [Tooltip("Shows '+3' when a run carries more picks than there are slots, so the strip " +
+        [Tooltip("Which pick each slot is currently showing, so a hover can name it. Same " +
+                 "length and order as slots.")]
+        [SerializeField] private UpgradeSlot[] picks = new UpgradeSlot[0];
+
+        [Tooltip("The popup those slots raise on hover. One per panel — this readout is mounted " +
+                 "twice, and a slot finding its own popup would find whichever was first in the " +
+                 "scene rather than the one beside it.")]
+        [SerializeField] private UpgradeTooltip tooltip;
+
+        [Tooltip("Shows '+3' when a run carries more picks than there are slots, so the readout " +
                  "never silently lies about how many were taken.")]
         [SerializeField] private Text overflowLabel;
 
         [Header("Look")]
-        [Tooltip("Alpha the whole strip is drawn at. It is a reference, not a live readout, and at " +
-                 "full opacity it competes with the fight.")]
+        [Tooltip("Alpha the whole readout is drawn at. 1 on the pause menu, where it is the thing " +
+                 "the player came to look at; held back on the offer screen, where the cards are. " +
+                 "It was 0.65 everywhere while this lived over the play area and had to stay out " +
+                 "of the fight's way — neither panel it mounts on now has a fight behind it.")]
         [Range(0f, 1f)]
-        [SerializeField] private float dim = 0.65f;
+        [SerializeField] private float dim = 1f;
 
         [Tooltip("ART_DIRECTION §5's offer-card colour coding, shared with the offer card so a tier " +
                  "reads the same in the strip as it did on the card it was picked from.")]
@@ -73,6 +89,10 @@ namespace Deeper.UI
 
         private void OnEnable()
         {
+            // Here rather than in Awake: a panel that is rebuilt or re-enabled hands out fresh
+            // slots, and Watch is written to be safe to call twice.
+            if (tooltip != null) tooltip.Watch(picks);
+
             if (upgrades != null) upgrades.Changed += Refresh;
             if (curses != null) curses.Changed += Refresh;
 
@@ -98,7 +118,15 @@ namespace Deeper.UI
                 // The whole slot object goes off, not just its colour: an empty slot outline down
                 // the side of the screen would read as something the player is missing.
                 if (slotRoots[i] != null) slotRoots[i].SetActive(filled);
-                if (!filled) continue;
+
+                if (!filled)
+                {
+                    // Emptied as well as hidden. A hidden slot cannot be hovered, but one switched
+                    // back on by a later pick would carry the previous run's binding into the frame
+                    // before Refresh reaches it.
+                    if (i < picks.Length && picks[i] != null) picks[i].Clear();
+                    continue;
+                }
 
                 // Upgrades first, then Curses. Two lists rather than one because they are different
                 // types held by different components — the run's Curses carry no stat modifiers, so
@@ -107,6 +135,12 @@ namespace Deeper.UI
 
                 Sprite art = isCurse ? curses.Taken[i - upgradeCount].Icon : upgrades.Taken[i].Icon;
                 Color tint = isCurse ? palette.Curse : palette.ColourOf(upgrades.Taken[i].Tier);
+
+                if (i < picks.Length && picks[i] != null)
+                {
+                    if (isCurse) picks[i].Show(curses.Taken[i - upgradeCount]);
+                    else picks[i].Show(upgrades.Taken[i]);
+                }
 
                 if (i < slots.Length && slots[i] != null)
                 {

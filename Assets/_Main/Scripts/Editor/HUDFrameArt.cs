@@ -126,6 +126,18 @@ namespace Deeper.EditorTools
             // the bars are made of. A bar gets away with 3 because it is 18 tall.
             Write("HUD_Card", Card(168, 196, 6, 6));
 
+            // The hover popup behind a taken pick's name and description. Same plate as the offer
+            // card, so the two read as one family, and the same 168 width — which is what carries
+            // BuildUpgradePanel's 21-characters-per-line budget over to it, since both draw the
+            // same face at HUDLayout.BodyText with the same 10-unit padding.
+            //
+            // 86 tall is measured, not chosen: 10 of padding, a 16-unit header at TitleText, a
+            // 4-unit gap, a 45-unit body block (five lines at the face's 9-unit line spacing) and
+            // 10 of padding again. Five lines is one more than the longest authored description
+            // needs (Upgrade_ThousandCuts, 62 characters, wraps to four), and exactly what a Curse
+            // needs for its two-line upside stacked over its three-line cost.
+            Write("HUD_Tooltip", Card(168, 86, 6, 6));
+
             // The offer card's icon socket. Border 4 makes the hole exactly 64, which is a
             // 128px icon at the canvas's 2x — the same arithmetic HUD_SlotSquare does one
             // size down. Upgrade icons are authored at 128 for this box.

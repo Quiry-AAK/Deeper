@@ -439,3 +439,29 @@ would not have caught it either. Reloading the scene from disk discarded it. **S
 jumps back to under a second.** Check `mcpforunity://editor/state` `is_playing`, or log
 `EditorApplication.isPlaying` from the probe itself, before trusting any play-mode reading.
 
+
+## 14. Check the active scene between every build menu item (2026-09-20)
+
+Two Unity editors were connected to the MCP bridge at once — this project and an unrelated one. Two
+things follow, and the second cost a real mistake.
+
+**The bridge does not default to the project you are working in.** `mcpforunity://instances` listed
+both; the session's default was the *other* one, and `mcpforunity://project/info` was answering for
+it. Pin the target before touching anything:
+`set_active_instance(instance="Deeper@<hash>")`. Read `mcpforunity://editor/state` afterwards and
+confirm `unity.instance_id` is the project you meant.
+
+**The open scene can change under you mid-sequence, and every builder writes to whatever is open.**
+`Deeper/Build Run HUD`, `Build Upgrade Panel` and `Build Pause Menu` all resolve their canvas with
+`GameObject.Find("HUDCanvas")` in the *active* scene. The editor reported `TestScene` open, those
+three ran, and by the save the active scene was `HubScene` — so the run HUD, the offer panel and the
+pause menu were all built into the surface camp, and `manage_scene(action="save")` wrote them there.
+The save's own response is what exposed it: it names the scene it saved, and it said `HubScene`.
+
+The fix cost nothing because `HubScene` was clean in git (`git checkout --` restored it exactly), but
+the failure is silent: every builder logged success, the console had no errors, and the objects were
+real — just in the wrong scene.
+
+So: **call `manage_scene(action="get_active")` immediately before and after each builder**, and read
+the scene name out of the save response rather than assuming. `isDirty` flipping to `true` on the
+scene you expected is the cheap positive confirmation that the build landed where you meant.
