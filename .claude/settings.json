@@ -1,4 +1,11 @@
 {
+  "enabledMcpjsonServers": ["unity-editor-mcp"],
+  "env": {
+    "UNITY_PROJECT_PATH": ".",
+    "UNITY_NON_INTERACTIVE": "1",
+    "UNITY_NO_PAGER": "1",
+    "UNITY_NO_BANNER": "1"
+  },
   "hooks": {
     "PreToolUse": [
       {

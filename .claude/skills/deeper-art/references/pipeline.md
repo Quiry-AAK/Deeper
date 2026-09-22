@@ -23,8 +23,7 @@ calling. Parameter names and options change; do not generate from memory of this
 | Credit balance | `get_balance` |
 | What already exists | `list_characters`, `list_objects`, `list_topdown_tilesets` |
 
-Read `mcpforunity://custom-tools` and the PixelLab project list (`list_projects`) once per session
-before assuming what's available.
+Read the PixelLab project list (`list_projects`) once per session before assuming what's available.
 
 ---
 

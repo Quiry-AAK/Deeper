@@ -3,6 +3,18 @@
 Environment-specific gotchas for verifying work in this project. Everything here was learned the
 expensive way; re-deriving it costs a lot of wasted tool calls.
 
+> **2026-09-22 — MCP bridge replaced.** Everything below was learned on MCP for Unity
+> (`mcp__UnityMCP__*`), which has been removed. The project now uses Unity's own MCP server
+> (`mcp__unity-editor-mcp__*`, from the Unity CLI + `com.unity.pipeline`). Tool mapping:
+> `execute_code` → `eval` (Roslyn) · `read_console` → `console` (no text filter; follow with the
+> `since` cursor) · `manage_camera` screenshot → `capture_game_view` · `execute_menu_item` → `menu` ·
+> `manage_editor` play/stop → `editor_play` / `editor_stop` · `refresh_unity` → `recompile` ·
+> `mcpforunity://` resources → `editor_status`, `get_scene_hierarchy`, `find_gameobjects`,
+> `get_component_properties`. **Not yet re-checked here:** the `execute_code` BOM failure and its
+> fallback (§5, §9, §12) were specific to the old bridge. On MiniGames, `capture_game_view
+> source=screen` does capture Screen Space - Overlay canvases in play mode, so §3 and the second §10
+> may no longer apply. Re-verify each one before relying on it, and update or strike it here.
+
 ---
 
 ## 1. The editor freezes the player loop when unfocused

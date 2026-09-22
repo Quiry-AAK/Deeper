@@ -150,7 +150,7 @@ that every assertion passed. Read `Engineering/01-VERIFICATION.md` before starti
    player loop is frozen and everything reports as "nothing happened" (§1).
 3. **Drive public methods.** Keyboard input does not reach an unfocused play mode; a virtual
    **gamepad** does, with `backgroundBehavior = IgnoreFocus` set first and restored after (§2).
-4. **Use a persistent observable** — `execute_code` compiles a fresh assembly per call, so nothing
+4. **Use a persistent observable** — MCP `eval` compiles a fresh assembly per call, so nothing
    survives between calls. Room state, alive counts and door collider states are all readable; damage
    to a parked `TrainingDummy` is the model for anything transient.
 5. **Screenshot with a named camera** — `camera="Main Camera"`, `output_folder="Captures"` outside
